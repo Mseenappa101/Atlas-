@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function NavBar() {
-  const { session, signOut } = useAuth();
+  const { user, session, signOut } = useAuth();
 
   return (
     <nav
@@ -52,7 +52,7 @@ export default function NavBar() {
                 fontSize: 14,
               }}
             >
-              {session.user?.email}
+              {user?.email}
             </span>
             <button
               onClick={signOut}
