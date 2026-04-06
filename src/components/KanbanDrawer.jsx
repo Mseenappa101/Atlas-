@@ -1,3 +1,197 @@
-export default function KanbanDrawer() {
-  return null;
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { KANBAN_STATUSES } from '../constants/statuses';
+
+export default function KanbanDrawer({ userFirm, onClose, onStatusChange, onNotesChange, onRemove }) {
+  const firm = userFirm?.firms;
+  const [notes, setNotes] = useState(userFirm?.firm_notes || '');
+
+  if (!userFirm) return null;
+
+  function handleRemove() {
+    if (window.confirm(`Remove ${firm?.name} from your list?`)) {
+      onRemove(userFirm.id);
+      onClose();
+    }
+  }
+
+  return (
+    <div
+      style={{
+        width: 300,
+        flexShrink: 0,
+        borderLeft: '1px solid #ddd6c8',
+        background: '#faf7f2',
+        padding: '1.25rem',
+        position: 'relative',
+        overflowY: 'auto',
+      }}
+    >
+      {/* Close button */}
+      <button
+        onClick={onClose}
+        style={{
+          position: 'absolute',
+          top: 12,
+          right: 12,
+          background: 'none',
+          border: 'none',
+          fontFamily: "'DM Mono', monospace",
+          fontSize: 14,
+          color: '#b0a898',
+          cursor: 'pointer',
+        }}
+      >
+        &times;
+      </button>
+
+      <div
+        style={{
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: 22,
+          fontWeight: 600,
+          color: '#1a1710',
+          marginBottom: 4,
+          paddingRight: 24,
+        }}
+      >
+        {firm?.name}
+      </div>
+
+      <div
+        style={{
+          fontFamily: "'EB Garamond', Georgia, serif",
+          fontSize: 14,
+          fontStyle: 'italic',
+          color: '#7a7260',
+          marginBottom: 16,
+        }}
+      >
+        {firm?.city}, {firm?.state}
+      </div>
+
+      {/* Status select */}
+      <div style={{ marginBottom: 16 }}>
+        <label
+          style={{
+            display: 'block',
+            fontFamily: "'DM Mono', monospace",
+            fontSize: 9,
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+            color: '#b0a898',
+            marginBottom: 6,
+          }}
+        >
+          Status
+        </label>
+        <select
+          value={userFirm.status}
+          onChange={(e) => onStatusChange(userFirm.id, e.target.value)}
+          style={{
+            width: '100%',
+            padding: '8px 10px',
+            border: '1px solid #c8bfae',
+            borderRadius: 2,
+            fontFamily: "'EB Garamond', Georgia, serif",
+            fontSize: 14,
+            color: '#1a1710',
+            backgroundColor: '#fff',
+            outline: 'none',
+            boxSizing: 'border-box',
+          }}
+        >
+          {KANBAN_STATUSES.map((s) => (
+            <option key={s} value={s}>{s}</option>
+          ))}
+        </select>
+      </div>
+
+      {/* Notes */}
+      <div style={{ marginBottom: 16 }}>
+        <label
+          style={{
+            display: 'block',
+            fontFamily: "'DM Mono', monospace",
+            fontSize: 9,
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+            color: '#b0a898',
+            marginBottom: 6,
+          }}
+        >
+          Notes
+        </label>
+        <textarea
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          onBlur={() => onNotesChange(userFirm.id, notes)}
+          style={{
+            width: '100%',
+            minHeight: 100,
+            padding: '8px 10px',
+            border: '1px solid #c8bfae',
+            borderRadius: 2,
+            fontFamily: "'EB Garamond', Georgia, serif",
+            fontSize: 14,
+            color: '#1a1710',
+            backgroundColor: '#fff',
+            outline: 'none',
+            resize: 'vertical',
+            boxSizing: 'border-box',
+          }}
+        />
+      </div>
+
+      {/* View Profile link */}
+      <Link
+        to={`/firm/${firm?.id}`}
+        style={{
+          display: 'block',
+          fontFamily: "'DM Mono', monospace",
+          fontSize: 9,
+          textTransform: 'uppercase',
+          letterSpacing: '0.05em',
+          color: '#8b6914',
+          textDecoration: 'none',
+          marginBottom: 12,
+        }}
+      >
+        View Full Profile &rarr;
+      </Link>
+
+      {/* Generate Documents placeholder */}
+      <p
+        style={{
+          fontFamily: "'EB Garamond', Georgia, serif",
+          fontSize: 13,
+          fontStyle: 'italic',
+          color: '#b0a898',
+          marginBottom: 20,
+        }}
+      >
+        Document generation available in Phase VI
+      </p>
+
+      {/* Remove button */}
+      <button
+        onClick={handleRemove}
+        style={{
+          width: '100%',
+          padding: '8px 12px',
+          background: 'transparent',
+          border: '1px solid #8b1a1a',
+          borderRadius: 2,
+          fontFamily: "'DM Mono', monospace",
+          fontSize: 9,
+          textTransform: 'uppercase',
+          letterSpacing: '0.05em',
+          color: '#8b1a1a',
+          cursor: 'pointer',
+        }}
+      >
+        Remove from List
+      </button>
+    </div>
+  );
 }

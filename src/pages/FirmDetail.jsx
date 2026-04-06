@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { getFirmById, updateFirmAiBrief } from '../lib/db';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { getFirmById, updateFirmAiBrief, addFirmToList } from '../lib/db';
 import { generateFirmBrief } from '../lib/ai';
+import useAuth from '../hooks/useAuth';
 import LoadingSkeleton from '../components/LoadingSkeleton';
 
 function stateSlug(state) {
@@ -41,9 +42,12 @@ function isBriefFresh(updatedAt) {
 
 export default function FirmDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [firm, setFirm] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [adding, setAdding] = useState(false);
   const [brief, setBrief] = useState(null);
   const [briefLoading, setBriefLoading] = useState(false);
   const [briefError, setBriefError] = useState(null);
@@ -341,7 +345,21 @@ export default function FirmDetail() {
             </div>
 
             <button
-              onClick={() => alert('Sign in to add firms — authentication coming in Phase IV')}
+              onClick={async () => {
+                if (!user) {
+                  navigate('/login', { state: { from: `/firm/${id}` } });
+                  return;
+                }
+                setAdding(true);
+                const { error: err } = await addFirmToList(user.id, firm.id);
+                setAdding(false);
+                if (err) {
+                  alert(err);
+                } else {
+                  alert('Added to your list');
+                }
+              }}
+              disabled={adding}
               style={{
                 width: '100%',
                 border: '1px solid #8b6914',
@@ -352,11 +370,12 @@ export default function FirmDetail() {
                 fontSize: 9,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
-                cursor: 'pointer',
+                cursor: adding ? 'default' : 'pointer',
+                opacity: adding ? 0.6 : 1,
                 marginBottom: 8,
               }}
             >
-              Add to My List
+              {adding ? 'Adding...' : 'Add to My List'}
             </button>
 
             {firm.careers_url && (

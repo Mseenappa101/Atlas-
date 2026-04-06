@@ -31,20 +31,24 @@ export default function NavBar() {
       </Link>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-        <NavLink to="/browse">Browse</NavLink>
-        <NavLink to="/pricing">Pricing</NavLink>
-
-        <span
-          style={{
-            width: 1,
-            height: 20,
-            backgroundColor: '#c8bfae',
-            opacity: 0.4,
-          }}
-        />
-
         {session ? (
           <>
+            <Link
+              to="/dashboard"
+              style={{
+                fontFamily: "'EB Garamond', Georgia, serif",
+                color: '#c4a55a',
+                fontSize: 14,
+                textDecoration: 'none',
+              }}
+            >
+              Dashboard
+            </Link>
+            <NavLink to="/browse">Browse</NavLink>
+            <NavLink to="/pricing">Pricing</NavLink>
+
+            <Divider />
+
             <span
               style={{
                 fontFamily: "'EB Garamond', Georgia, serif",
@@ -70,10 +74,28 @@ export default function NavBar() {
             </button>
           </>
         ) : (
-          <NavLink to="/login">Sign In</NavLink>
+          <>
+            <NavLink to="/browse">Browse</NavLink>
+            <NavLink to="/pricing">Pricing</NavLink>
+            <Divider />
+            <NavLink to="/login">Sign In</NavLink>
+          </>
         )}
       </div>
     </nav>
+  );
+}
+
+function Divider() {
+  return (
+    <span
+      style={{
+        width: 1,
+        height: 20,
+        backgroundColor: '#c8bfae',
+        opacity: 0.4,
+      }}
+    />
   );
 }
 
