@@ -1,10 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { KANBAN_STATUSES } from '../constants/statuses';
+import { useAuth } from '../context/AuthContext';
+import { getUserProfile, isPro as checkIsPro } from '../lib/db';
+import DocumentGenerator from './DocumentGenerator';
 
 export default function KanbanDrawer({ userFirm, onClose, onStatusChange, onNotesChange, onRemove }) {
+  const { user } = useAuth();
   const firm = userFirm?.firms;
   const [notes, setNotes] = useState(userFirm?.firm_notes || '');
+  const [userProfile, setUserProfile] = useState(null);
+  const [proStatus, setProStatus] = useState(false);
+
+  useEffect(() => {
+    if (!user) return;
+    async function load() {
+      const { data } = await getUserProfile(user.id);
+      if (data) setUserProfile(data);
+      const pro = await checkIsPro(user.id);
+      setProStatus(pro);
+    }
+    load();
+  }, [user]);
+
+  useEffect(() => {
+    setNotes(userFirm?.firm_notes || '');
+  }, [userFirm]);
 
   if (!userFirm) return null;
 
@@ -160,38 +181,35 @@ export default function KanbanDrawer({ userFirm, onClose, onStatusChange, onNote
         View Full Profile &rarr;
       </Link>
 
-      {/* Generate Documents placeholder */}
-      <p
-        style={{
-          fontFamily: "'EB Garamond', Georgia, serif",
-          fontSize: 13,
-          fontStyle: 'italic',
-          color: '#b0a898',
-          marginBottom: 20,
-        }}
-      >
-        Document generation available in Phase VI
-      </p>
+      {/* Document Generator */}
+      <DocumentGenerator
+        userProfile={userProfile}
+        firm={firm}
+        userFirmId={userFirm.id}
+        isPro={proStatus}
+      />
 
       {/* Remove button */}
-      <button
-        onClick={handleRemove}
-        style={{
-          width: '100%',
-          padding: '8px 12px',
-          background: 'transparent',
-          border: '1px solid #8b1a1a',
-          borderRadius: 2,
-          fontFamily: "'DM Mono', monospace",
-          fontSize: 9,
-          textTransform: 'uppercase',
-          letterSpacing: '0.05em',
-          color: '#8b1a1a',
-          cursor: 'pointer',
-        }}
-      >
-        Remove from List
-      </button>
+      <div style={{ marginTop: 20 }}>
+        <button
+          onClick={handleRemove}
+          style={{
+            width: '100%',
+            padding: '8px 12px',
+            background: 'transparent',
+            border: '1px solid #8b1a1a',
+            borderRadius: 2,
+            fontFamily: "'DM Mono', monospace",
+            fontSize: 9,
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em',
+            color: '#8b1a1a',
+            cursor: 'pointer',
+          }}
+        >
+          Remove from List
+        </button>
+      </div>
     </div>
   );
 }
