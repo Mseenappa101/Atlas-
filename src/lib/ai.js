@@ -17,7 +17,9 @@ async function callClaude(systemPrompt, userMessage, useWebSearch = false) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': import.meta.env.VITE_ANTHROPIC_API_KEY,
+        // Never ship an API key to the browser: VITE_ vars are inlined into the public bundle.
+        // Route this through a server endpoint before turning flags.aiDocs back on.
+        'x-api-key': '',
         'anthropic-version': '2023-06-01',
         'anthropic-dangerous-direct-browser-access': 'true',
       },

@@ -1,22 +1,50 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
+      white: '#FFFFFF',
+      paper: 'var(--paper)',
+      surface: 'var(--surface)',
+      ink: 'var(--ink)',
+      muted: 'var(--muted)',
+      rule: 'var(--rule)',
+      accent: { DEFAULT: 'var(--accent)', hover: 'var(--accent-hover)' },
+      status: {
+        yes: 'var(--status-yes)',
+        unknown: 'var(--status-unknown)',
+        no: 'var(--status-no)',
+      },
+    },
+    fontFamily: {
+      serif: ['Newsreader', 'Georgia', 'serif'],
+      sans: ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
+      mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+    },
+    fontSize: {
+      xs: ['13px', '1.45'],
+      sm: ['15px', '1.55'],
+      base: ['17px', '1.55'],
+      lg: ['21px', '1.4'],
+      xl: ['28px', '1.2'],
+      '2xl': ['40px', '1.1'],
+    },
+    borderRadius: {
+      none: '0',
+      sm: '2px',
+      DEFAULT: '2px',
+      md: '3px',
+    },
+    boxShadow: {
+      none: 'none',
+      drawer: '0 -8px 24px rgba(26, 26, 26, 0.12)',
+    },
     extend: {
-      colors: {
-        parchment: { DEFAULT: '#f7f3ec', dark: '#ede8df', deeper: '#e4ddd1' },
-        ink: { DEFAULT: '#1a1710', muted: '#4a4639', light: '#7a7260', faint: '#b0a898' },
-        rule: { DEFAULT: '#c8bfae', light: '#ddd6c8' },
-        gold: { DEFAULT: '#8b6914', light: '#c4a55a', pale: '#f0e6c8' },
-      },
-      fontFamily: {
-        serif: ['EB Garamond', 'Georgia', 'serif'],
-        display: ['Cormorant Garamond', 'Georgia', 'serif'],
-        mono: ['DM Mono', 'monospace'],
-      },
+      maxWidth: { content: '1120px' },
+      transitionDuration: { DEFAULT: '140ms' },
+      transitionTimingFunction: { DEFAULT: 'cubic-bezier(.2,0,0,1)' },
     },
   },
   plugins: [],
