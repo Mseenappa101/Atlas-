@@ -7,6 +7,8 @@ import { site } from '../lib/site';
 import FilterControls from '../components/directory/FilterControls';
 import FirmTable, { TablePlaceholder } from '../components/directory/FirmTable';
 import FirmPanel from '../components/directory/FirmPanel';
+import PositionsView from '../components/directory/PositionsView';
+import useListings from '../hooks/useListings';
 import { EMPTY, activeCount, applyFilters, groupByMarket, marketList, readFilters, sortFirms, writeFilters } from '../components/directory/filters';
 import { Sheet, CloseButton, Button } from '../components/ui';
 
@@ -29,6 +31,8 @@ function DirectoryPage() {
   const filters = readFilters(params);
   const sort = { key: params.get('sort') ?? 'firm', dir: params.get('dir') ?? 'asc' };
   const view = params.get('view') === 'market' ? 'market' : 'list';
+  const tab = params.get('tab') === 'positions' ? 'positions' : 'firms';
+  const { listings } = useListings();
 
   const markets = useMemo(() => marketList(firms), [firms]);
   const shown = useMemo(
@@ -61,6 +65,13 @@ function DirectoryPage() {
     setParams(next, { replace: true });
   }
 
+  function setTab(t) {
+    const next = new URLSearchParams(params);
+    if (t === 'positions') next.set('tab', 'positions');
+    else next.delete('tab');
+    setParams(next, { replace: true });
+  }
+
   const search = params.toString() ? `?${params}` : '';
   const open = (firm) => navigate(`/directory/${firm.id}${search}`);
   const close = useCallback(() => navigate(`/directory${search}`), [navigate, search]);
@@ -85,7 +96,31 @@ function DirectoryPage() {
         )}
       </header>
 
-      <section aria-label="Filters" className="no-print hidden border-y border-rule py-5 md:block">
+      <div role="group" aria-label="Show" className="no-print mb-4 flex gap-6 border-b border-rule">
+        {[
+          ['firms', 'Firms', firms.length],
+          ['positions', 'Open positions', listings.length],
+        ].map(([t, label, num]) => (
+          <button
+            key={t}
+            type="button"
+            aria-pressed={tab === t}
+            onClick={() => setTab(t)}
+            className={`-mb-px min-h-[44px] border-b-2 pb-2 font-serif text-lg transition-colors ${
+              tab === t ? 'border-accent text-ink' : 'border-transparent text-muted hover:text-ink'
+            }`}
+          >
+            {label}
+            {num > 0 && <span className="nums ml-2 font-mono text-xs text-muted">{num}</span>}
+          </button>
+        ))}
+      </div>
+
+      {tab === 'positions' && <PositionsView onOpenFirm={(id) => navigate(`/directory/${id}${search}`)} />}
+
+      {tab === 'firms' && (
+        <>
+      <section aria-label="Filters" className="no-print hidden border-b border-rule pb-5 pt-1 md:block">
         <FilterControls filters={filters} onChange={setFilters} markets={markets} />
       </section>
 
@@ -149,6 +184,9 @@ function DirectoryPage() {
           onSort={setSort}
           onOpen={open}
         />
+      )}
+
+        </>
       )}
 
       {openFirm && <FirmPanel key={openFirm.id} firm={openFirm} onClose={close} />}

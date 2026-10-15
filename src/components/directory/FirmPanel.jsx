@@ -2,16 +2,9 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { formatWindow, isWindowPast, longDate, shortDate } from '../../lib/firms';
 import { site } from '../../lib/site';
+import { postingTypeLabel } from '../../lib/listings';
 import { Sheet, CloseButton, StatusMark, Button, ExternalLink } from '../ui';
 
-const POSTING_LABELS = {
-  'summer-associate': 'Summer associate',
-  'law-clerk': 'Law clerk',
-  intern: 'Internship',
-  fellowship: 'Fellowship',
-  extern: 'Externship',
-  other: 'Other',
-};
 
 function useOpenListings(firmId) {
   const [listings, setListings] = useState([]);
@@ -106,7 +99,7 @@ export default function FirmPanel({ firm, onClose }) {
                   <span>
                     <span className="block">{l.title}</span>
                     <span className="nums font-mono text-xs text-muted">
-                      {[l.class_years?.join('/'), POSTING_LABELS[l.posting_type], l.deadline && `Due ${shortDate(new Date(l.deadline + 'T00:00'))}`]
+                      {[l.class_years?.join('/'), postingTypeLabel(l.posting_type), l.deadline && `Due ${shortDate(new Date(l.deadline + 'T00:00'))}`]
                         .filter(Boolean)
                         .join(' · ')}
                     </span>
