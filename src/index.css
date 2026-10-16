@@ -2,13 +2,82 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: #f7f3ec;
-  color: #1a1710;
-  font-family: 'EB Garamond', Georgia, serif;
-  margin: 0;
+:root {
+  color-scheme: light;
+
+  --app-bg: #F6F7F5;
+  --app-surface: #FFFFFF;
+  --app-text: #14181F;
+  --app-text-2: #5B6470;
+  --app-border: #E3E6E8;
+  --app-brand: #1F5C45;
+  --app-brand-hover: #174A37;
+  --app-brand-tint: #E7F0EC;
+  /* Status: the base color marks dots and borders; the -text shade meets AA for labels. */
+  --st-open: #1F7A4D;    --st-open-text: #1A6B43;   --st-open-bg: #E9F3EE;
+  --st-soon: #B7791F;    --st-soon-text: #8A5A12;   --st-soon-bg: #FBF1E2;
+  --st-closed: #8A9099;  --st-closed-text: #646B73; --st-closed-bg: #EFF1F3;
+  --st-unknown: #5B6470; --st-unknown-bg: #EFF1F3;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-canvas font-app text-t14 text-fg antialiased;
+    margin: 0;
+  }
+  :focus-visible {
+    outline: 2px solid var(--app-brand);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--app-brand-tint);
+  }
+}
+
+@layer components {
+  /* Wraps screens built on the app design system (kept for pages rendered outside the main shell). */
+  .app {
+    @apply bg-canvas font-app text-t14 text-fg antialiased;
+  }
+  .data {
+    @apply font-data;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Resume, letter and template previews render like a printed page. */
+.doc-sheet {
+  font-family: Newsreader, Georgia, serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--app-text);
+}
+.doc-sheet h2 { font-size: 21px; font-weight: 600; text-align: center; margin: 0; }
+.doc-sheet h3 {
+  font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  border-bottom: 1px solid var(--app-text); margin: 20px 0 6px; padding-bottom: 2px;
+}
+.doc-sheet p { margin: 0 0 10px; }
+.doc-sheet .center { text-align: center; }
+.doc-sheet ul { list-style: disc; padding-left: 20px; margin: 0 0 10px; }
+.doc-sheet li { margin-bottom: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+}
+
+@media print {
+  body { background: #fff; }
+  .no-print { display: none !important; }
+  .doc-sheet { border: 0; padding: 0; }
+  body[data-print='doc'] * { visibility: hidden; }
+  body[data-print='doc'] [data-printable],
+  body[data-print='doc'] [data-printable] * { visibility: visible; }
+  body[data-print='doc'] [data-printable] { position: absolute; inset: 0 auto auto 0; width: 100%; max-width: none; border: 0; padding: 0; }
 }

@@ -18,7 +18,7 @@ export default function UpgradePrompt() {
           margin: '0 0 8px',
         }}
       >
-        Unlock Document Generation
+        Document generation is part of Pro
       </h3>
       <p
         style={{
