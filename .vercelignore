@@ -1,0 +1,6 @@
+# Vercel hosts only the website. These run elsewhere (Railway) or locally,
+# and a top-level api/ folder would otherwise be treated as Vercel Functions.
+api/
+worker/
+scripts/
+supabase/
