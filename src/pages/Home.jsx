@@ -20,11 +20,11 @@ const CLASS_YEARS = [
 const NON_BIGLAW = FIRM_TYPES.filter((t) => t.value !== 'biglaw');
 
 const FAQ = [
-  ['Is Atlas free?', 'Yes. The firm directory, the state map, My List tracking, the recruiting calendar, templates and template cover letters are free. Pro ($4.99 a month) adds AI that reads your resume, rewrites your bullets and writes a cover letter for each firm.'],
+  ['Is Firmward free?', 'Yes. The firm directory, the state map, My List tracking, the recruiting calendar, templates and template cover letters are free. Pro ($4.99 a month) adds AI that reads your resume, rewrites your bullets and writes a cover letter for each firm.'],
   ['Where does the information come from?', 'From each firm’s own careers page, checked on a schedule. Every firm shows when it was last verified and links to the source, so you can confirm before you apply.'],
   ['Which firms are included?', 'Litigation and specialty boutiques, plaintiff firms, mid-size and regional firms, government offices and public interest employers. BigLaw is included, but it isn’t the focus, and it always sorts last.'],
-  ['Does Atlas apply for me?', 'No. Every firm links to its own application. Atlas helps you find the right firms, prepare your materials and keep track of where you stand with each one.'],
-  ['Is this legal advice? Is Atlas affiliated with my school?', 'No to both. Atlas is career information, and it isn’t affiliated with or endorsed by any law school or law firm.'],
+  ['Does Firmward apply for me?', 'No. Every firm links to its own application. Firmward helps you find the right firms, prepare your materials and keep track of where you stand with each one.'],
+  ['Is this legal advice? Is Firmward affiliated with my school?', 'No to both. Firmward is career information, and it isn’t affiliated with or endorsed by any law school or law firm.'],
 ];
 
 const STEPS = [
@@ -265,7 +265,7 @@ export default function Home() {
   const [onboarding, setOnboarding] = useState(false);
 
   useEffect(() => {
-    document.title = 'Atlas — Firms that hire 1Ls, beyond BigLaw';
+    document.title = 'Firmward — Firms that hire 1Ls, beyond BigLaw';
   }, []);
 
   const toForm = () => {

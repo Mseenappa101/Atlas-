@@ -61,7 +61,7 @@ export default function FirmDetail() {
       } else {
         console.log('[FirmDetail] Raw firm data:', data);
         setFirm(data);
-        document.title = `${data.name} — 1L Recruiting | Atlas`;
+        document.title = `${data.name} — 1L Recruiting | Firmward`;
       }
       setLoading(false);
     }

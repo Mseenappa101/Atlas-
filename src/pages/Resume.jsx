@@ -96,7 +96,7 @@ function ResumePage() {
   const [mode, setMode] = useState('view');
 
   useEffect(() => {
-    document.title = 'Your resume — Atlas';
+    document.title = 'Your resume — Firmward';
   }, []);
 
   function got(r) {

@@ -34,7 +34,7 @@ function NewLetter() {
   const firm = firms.find((f) => f.id === firmId) ?? null;
 
   useEffect(() => {
-    if (firm) document.title = `Cover letter for ${firm.name} — Atlas`;
+    if (firm) document.title = `Cover letter for ${firm.name} — Firmward`;
   }, [firm]);
 
   const resume = profile?.resume_data ?? null;

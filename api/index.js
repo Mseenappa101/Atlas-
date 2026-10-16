@@ -68,7 +68,7 @@ const server = createServer(async (req, res) => {
 });
 server.requestTimeout = 180_000;
 
-server.listen(config.port, () => log(`atlas api listening on :${config.port} (origins: ${config.allowedOrigins.join(', ')})`));
+server.listen(config.port, () => log(`firmward api listening on :${config.port} (origins: ${config.allowedOrigins.join(', ')})`));
 
 let stopping = false;
 function shutdown(signal) {

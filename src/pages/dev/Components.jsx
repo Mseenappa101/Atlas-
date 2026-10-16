@@ -59,7 +59,7 @@ export default function ComponentsGallery() {
   const [sheet, setSheet] = useState(false);
 
   useEffect(() => {
-    document.title = 'Components — Atlas';
+    document.title = 'Components — Firmward';
   }, []);
 
   const toggleSave = (f) =>
@@ -75,7 +75,7 @@ export default function ComponentsGallery() {
       <main className="mx-auto max-w-app px-4 py-10 md:px-8">
         <h1 className="text-t32 font-bold tracking-tight">Components</h1>
         <p className="mt-2 max-w-2xl text-t16 text-fg-2">
-          The base set for the new Atlas. Everything here is live: click, tab and use the arrow keys. Sample data.
+          The base set for the new Firmward. Everything here is live: click, tab and use the arrow keys. Sample data.
         </p>
 
         <Section title="Color">

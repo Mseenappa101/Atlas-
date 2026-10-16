@@ -240,7 +240,7 @@ export default function Calendar() {
   const shownView = view ?? (wide ? 'month' : 'list');
 
   useEffect(() => {
-    document.title = '1L recruiting calendar — Atlas';
+    document.title = '1L recruiting calendar — Firmward';
   }, []);
 
   const markets = useMemo(() => (profile?.target_market ?? '').split(',').map((s) => s.trim()).filter(Boolean), [profile]);

@@ -26,7 +26,7 @@ function Page() {
   );
 
   useEffect(() => {
-    if (firm) document.title = `${firm.name} — Atlas`;
+    if (firm) document.title = `${firm.name} — Firmward`;
   }, [firm]);
 
   return (

@@ -34,7 +34,7 @@ function DocumentsPage() {
   const [open, setOpen] = useState(null);
 
   useEffect(() => {
-    document.title = 'Your documents — Atlas';
+    document.title = 'Your documents — Firmward';
   }, []);
 
   async function remove(id) {

@@ -217,7 +217,7 @@ async function main() {
   process.on('SIGTERM', () => stop('SIGTERM'));
   process.on('SIGINT', () => stop('SIGINT'));
 
-  log(`atlas worker: mode=${config.extractMode} cycle=${config.cycleSeconds}s concurrency=${config.concurrency} budget=$${config.monthlyBudgetUsd}/mo${once ? ' (once)' : ''}`);
+  log(`firmward worker: mode=${config.extractMode} cycle=${config.cycleSeconds}s concurrency=${config.concurrency} budget=$${config.monthlyBudgetUsd}/mo${once ? ' (once)' : ''}`);
   try {
     while (!stopping) {
       const started = Date.now();

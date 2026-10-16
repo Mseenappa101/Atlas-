@@ -57,7 +57,7 @@ function ProPage() {
   const coaching = usage?.plan === 'member' || usage?.plan === 'retainer';
 
   useEffect(() => {
-    document.title = 'Pro — Atlas';
+    document.title = 'Pro — Firmward';
   }, []);
 
   // Back from Stripe checkout: switch Pro on now rather than waiting for the webhook.

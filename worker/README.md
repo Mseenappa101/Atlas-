@@ -1,4 +1,4 @@
-# ATLAS scraper worker
+# FIRMWARD scraper worker
 
 Long-running process that keeps `listings` fresh. Each cycle (default every 5 min) it:
 
@@ -42,10 +42,10 @@ npm run worker                     # loop forever (Ctrl-C / SIGTERM finishes cur
 Any small Docker host works: 1 vCPU / 2 GB RAM is enough. Chromium only starts for JS-rendered pages.
 
 ```bash
-docker build -f worker/Dockerfile -t atlas-worker .
-docker run -d --restart unless-stopped --name atlas-worker \
+docker build -f worker/Dockerfile -t firmward-worker .
+docker run -d --restart unless-stopped --name firmward-worker \
   -e VITE_SUPABASE_URL=... -e SUPABASE_SERVICE_ROLE_KEY=... -e ANTHROPIC_API_KEY=... \
-  -e LLM_MONTHLY_BUDGET_USD=40 atlas-worker
+  -e LLM_MONTHLY_BUDGET_USD=40 firmward-worker
 ```
 
 - **Hetzner** (CX22, ~€4/mo): install Docker, then run the commands above.

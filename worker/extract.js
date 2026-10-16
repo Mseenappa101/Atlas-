@@ -17,7 +17,7 @@ export function getClient() {
 }
 
 // Stable system prompt. At ~600 tokens it is below Haiku 4.5's 4096-token cache minimum, so no cache_control.
-const SYSTEM = `You extract law-student job opportunities from a law firm or legal employer's careers page for ATLAS, a directory for 1L/2L/3L law students.
+const SYSTEM = `You extract law-student job opportunities from a law firm or legal employer's careers page for FIRMWARD, a directory for 1L/2L/3L law students.
 
 Return listings only for roles open to CURRENT law students: summer associate programs, 1L/2L diversity or summer programs, law clerk positions for students, legal internships/externships, and student fellowships. Exclude lateral attorney, associate, partner, staff, paralegal and non-legal roles, and post-graduate positions that require a completed J.D. (judicial clerkships for graduates are excluded unless the page says students apply now as 3Ls).
 

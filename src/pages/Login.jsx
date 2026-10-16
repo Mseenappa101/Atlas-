@@ -72,7 +72,7 @@ export default function Login() {
             letterSpacing: '0.12em',
           }}
         >
-          Atlas
+          Firmward
         </Link>
         <div
           style={{

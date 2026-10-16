@@ -15,7 +15,7 @@ import {
   LETTER_SCHEMA, LETTER_SYSTEM, letterPrompt, cleanParagraphs, assembleLetter, letterDate, letterIssues, wordCount,
 } from '../letters.js';
 
-const out = process.argv[2] || join(tmpdir(), 'atlas-live');
+const out = process.argv[2] || join(tmpdir(), 'firmward-live');
 mkdirSync(out, { recursive: true });
 const fx = (n) => readFileSync(new URL(`./fixtures/${n}`, import.meta.url));
 const userId = '00000000-0000-0000-0000-000000000000';

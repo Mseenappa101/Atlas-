@@ -10,9 +10,9 @@ export function downloadIcs({ title, date, description = '', url = '' }) {
   const body = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Atlas//1L Directory//EN',
+    'PRODID:-//Firmward//1L Directory//EN',
     'BEGIN:VEVENT',
-    `UID:${ymd(date)}-${Math.random().toString(36).slice(2)}@atlas`,
+    `UID:${ymd(date)}-${Math.random().toString(36).slice(2)}@firmward.com`,
     `DTSTAMP:${stamp}`,
     `DTSTART;VALUE=DATE:${ymd(date)}`,
     `DTEND;VALUE=DATE:${ymd(next)}`,

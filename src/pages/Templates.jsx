@@ -5,14 +5,14 @@ import { Button } from '../components/app/controls';
 import { Modal } from '../components/app/overlays';
 import { downloadDoc, printDocument } from '../lib/documents';
 
-const download = (t) => downloadDoc(`atlas-${t.slug}.doc`, t.title, t.body);
+const download = (t) => downloadDoc(`firmward-${t.slug}.doc`, t.title, t.body);
 
 export default function Templates() {
   const [open, setOpen] = useState(null);
   const current = TEMPLATES.find((t) => t.slug === open);
 
   useEffect(() => {
-    document.title = 'Templates — Atlas';
+    document.title = 'Templates — Firmward';
   }, []);
 
   return (

@@ -1,4 +1,4 @@
-# Build from the repo root: docker build -f api/Dockerfile -t atlas-api .
+# Build from the repo root: docker build -f api/Dockerfile -t firmward-api .
 FROM node:22-slim
 
 WORKDIR /app

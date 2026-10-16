@@ -40,7 +40,7 @@ export default function Footer() {
     <footer className="app no-print border-t border-line bg-card pb-16 md:pb-0">
       <div className="mx-auto max-w-app px-4 py-10 md:px-6">
         <div className="grid gap-8 sm:grid-cols-3">
-          <Col title="Atlas" links={[['Explore', '/explore'], ['Calendar', '/calendar'], ['Templates', '/templates'], ['My List', '/my-list'], ['Pro', '/pro']]} />
+          <Col title="Firmward" links={[['Explore', '/explore'], ['Calendar', '/calendar'], ['Templates', '/templates'], ['My List', '/my-list'], ['Pro', '/pro']]} />
           <Col title="Markets" links={MARKETS.map(([l, s]) => [l, `/markets/${s}`])} />
           <Col title="Firm types" links={TYPES.map(([l, s]) => [l, `/types/${s}`])} />
         </div>

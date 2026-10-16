@@ -330,7 +330,7 @@ function ExplorePage() {
   });
 
   useEffect(() => {
-    document.title = filters.state ? `${STATE_NAMES[filters.state]} firms — Atlas` : 'Explore — Atlas';
+    document.title = filters.state ? `${STATE_NAMES[filters.state]} firms — Firmward` : 'Explore — Firmward';
   }, [filters.state]);
 
   const toggleSave = (f) => toggle(f.id);

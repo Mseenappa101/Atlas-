@@ -38,7 +38,7 @@ export default function Onboarding() {
   const fetched = useRef(false);
 
   useEffect(() => {
-    document.title = 'Get Started | Atlas';
+    document.title = 'Get Started | Firmward';
   }, []);
 
   console.log('[Onboarding] render:', { authLoading, userId: user?.id, profileLoading, fetched: fetched.current });

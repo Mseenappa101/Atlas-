@@ -20,7 +20,7 @@ export const config = {
   contactEmail: 'mseenappa101@gmail.com',
 };
 
-export const USER_AGENT = `AtlasBot/1.0 (+mailto:${config.contactEmail})`;
+export const USER_AGENT = `FirmwardBot/1.0 (+https://firmward.com; ${config.contactEmail})`;
 
 let warned = false;
 export function anthropicKey() {

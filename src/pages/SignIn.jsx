@@ -15,7 +15,7 @@ export default function SignIn() {
   const dest = next?.startsWith('/') && !next.startsWith('//') ? next : '/explore';
 
   useEffect(() => {
-    document.title = 'Sign in — Atlas';
+    document.title = 'Sign in — Firmward';
   }, []);
 
   if (!loading && session && status !== 'saving') return <Navigate to={dest} replace />;

@@ -290,7 +290,7 @@ function MyListPage() {
   const { session } = useSession();
   const [view, setView] = useState(() => {
     try {
-      return localStorage.getItem('atlas.mylist-view') ?? 'table';
+      return localStorage.getItem('firmward.mylist-view') ?? 'table';
     } catch {
       return 'table';
     }
@@ -298,11 +298,11 @@ function MyListPage() {
   const [searches, setSearches] = useState([]);
 
   useEffect(() => {
-    document.title = 'My List — Atlas';
+    document.title = 'My List — Firmward';
   }, []);
   useEffect(() => {
     try {
-      localStorage.setItem('atlas.mylist-view', view);
+      localStorage.setItem('firmward.mylist-view', view);
     } catch {
       // ignore
     }
@@ -355,7 +355,7 @@ function MyListPage() {
     setSearches((list) => list.filter((x) => x.id !== s.id));
     if (String(s.id).startsWith('local-')) {
       try {
-        const key = `atlas.saved-searches.${session.user.id}`;
+        const key = `firmward.saved-searches.${session.user.id}`;
         localStorage.setItem(key, JSON.stringify(JSON.parse(localStorage.getItem(key) ?? '[]').filter((x) => x.id !== s.id)));
       } catch {
         // ignore

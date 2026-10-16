@@ -121,7 +121,7 @@ export default function FirmDetail({ firm, listings = [], similar = [], saved, o
                 title: `${firm.name}: 1L application ${deadline === deadlineOffice.end ? 'deadline' : 'opens'}`,
                 date: deadline,
                 url: firm.applyUrl ?? firm.careersUrl ?? '',
-                description: 'From Atlas. Check the firm’s page for the current deadline.',
+                description: 'From Firmward. Check the firm’s page for the current deadline.',
               })
             }
           >

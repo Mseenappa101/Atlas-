@@ -23,7 +23,7 @@ export async function api(path, { method = 'GET', body } = {}) {
       body: body ? JSON.stringify(body) : undefined,
     });
   } catch {
-    throw new ApiError(0, { error: 'network', message: 'Couldn’t reach Atlas. Check your connection and try again.' });
+    throw new ApiError(0, { error: 'network', message: 'Couldn’t reach Firmward. Check your connection and try again.' });
   }
   const json = await res.json().catch(() => null);
   if (!res.ok) throw new ApiError(res.status, json);

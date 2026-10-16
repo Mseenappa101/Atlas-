@@ -1,4 +1,4 @@
-# ATLAS document API
+# FIRMWARD document API
 
 A small Node HTTP server (no framework) that parses and builds resumes and writes cover letters with Claude
 (`claude-sonnet-5`). It uses Supabase for auth, data and file storage. It needs migration
@@ -9,7 +9,7 @@ npm run api                       # listens on :8787
 npm run test:api                  # unit tests, no network
 node api/test/e2e.js              # HTTP end-to-end on live Supabase, no Claude spend
 E2E_CLAUDE=1 node api/test/e2e.js # same plus real parse/build/letters (about $0.10–0.20)
-node api/test/live-claude.js      # prompt checks only, writes outputs to $TMPDIR/atlas-live
+node api/test/live-claude.js      # prompt checks only, writes outputs to $TMPDIR/firmward-live
 node api/test/fixtures/make-fixtures.js  # rebuild the sample PDF/DOCX (fictional person)
 ```
 
@@ -23,7 +23,7 @@ Read from the environment, falling back to `.env.local` for local dev.
 | `SUPABASE_SERVICE_ROLE_KEY` | required | Server only. Verifies tokens and bypasses RLS. |
 | `ANTHROPIC_API_KEY` | required | Falls back to `VITE_ANTHROPIC_API_KEY`. Rename it: `VITE_` vars get bundled into the browser build. |
 | `API_PORT` | `8787` | |
-| `API_ALLOWED_ORIGINS` | `http://localhost:5173` | Comma list of exact origins, e.g. `https://atlas.example.com,http://localhost:5173`. |
+| `API_ALLOWED_ORIGINS` | `http://localhost:5173` | Comma list of exact origins, e.g. `https://firmward.com,http://localhost:5173`. |
 | `DAILY_GENERATION_CAP` | `30` | Claude calls per user per rolling 24h, counted from `generation_log`. |
 
 `e2e.js` also needs `VITE_SUPABASE_ANON_KEY` so it can sign in as the test user.
@@ -65,8 +65,8 @@ It runs like the worker: one small long-lived Node 22 process, with no build ste
 same host. They don't share a port or any state.
 
 ```
-docker build -f api/Dockerfile -t atlas-api .
-docker run --env-file .env.production -p 8787:8787 atlas-api
+docker build -f api/Dockerfile -t firmward-api .
+docker run --env-file .env.production -p 8787:8787 firmward-api
 ```
 
 Or on a plain VM, without Docker: `npm ci --omit=dev && npm run api` under systemd or pm2, next to

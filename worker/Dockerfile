@@ -1,4 +1,4 @@
-# Build from the repo root: docker build -f worker/Dockerfile -t atlas-worker .
+# Build from the repo root: docker build -f worker/Dockerfile -t firmward-worker .
 # Matches the installed playwright version (package-lock: playwright 1.59.1).
 FROM mcr.microsoft.com/playwright:v1.59.1-noble
 

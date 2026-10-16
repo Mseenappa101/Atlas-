@@ -76,7 +76,7 @@ export default function Signup() {
             letterSpacing: '0.12em',
           }}
         >
-          Atlas
+          Firmward
         </Link>
         <div
           style={{

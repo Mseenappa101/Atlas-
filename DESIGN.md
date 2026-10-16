@@ -1,4 +1,4 @@
-# ATLAS — Design Spec (Fall 2026 redesign)
+# FIRMWARD — Design Spec (Fall 2026 redesign)
 
 Status: draft for approval. Nothing in `src/` has been changed yet.
 

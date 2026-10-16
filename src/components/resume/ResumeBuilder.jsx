@@ -3,7 +3,7 @@ import { api } from '../../lib/api';
 import { answersToResume } from '../../lib/resumeFormat';
 import { Button, FieldLabel as Label, Input as TextField } from '../app/controls';
 
-const draftKey = (profile) => `atlas.resume-draft.${profile?.id ?? 'anon'}`;
+const draftKey = (profile) => `firmward.resume-draft.${profile?.id ?? 'anon'}`;
 const GRAD = { '1L': 'May 2029', '2L': 'May 2028', '3L': 'May 2027', transfer: 'May 2029', incoming: 'May 2030' };
 
 const blankJob = () => ({ employer: '', location: '', title: '', start: '', end: '', what_you_did: '' });

@@ -96,7 +96,7 @@ export default function AppNav() {
       <header className="app no-print sticky top-0 z-30 border-b border-line bg-card">
         <nav aria-label="Main" className="mx-auto flex h-14 max-w-app items-center gap-6 px-4 md:px-6">
           <Link to="/" className="inline-flex min-h-[44px] items-center text-t16 font-bold tracking-[0.18em] text-fg">
-            ATLAS
+            FIRMWARD
           </Link>
           <ul className="hidden items-center gap-1 md:flex">
             {LINKS.map(({ to, label, count: showCount }) => (

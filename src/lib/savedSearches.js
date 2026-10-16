@@ -1,6 +1,6 @@
 import { supabase } from './supabase';
 
-const LOCAL = (uid) => `atlas.saved-searches.${uid}`;
+const LOCAL = (uid) => `firmward.saved-searches.${uid}`;
 
 // Saves to saved_searches (migration 004). If that table isn't there yet, keeps it on this device.
 export async function saveSearch(userId, search) {

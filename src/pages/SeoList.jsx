@@ -61,8 +61,8 @@ function Page({ kind }) {
         heading: `Law firms hiring 1Ls in ${office?.city ?? place}`,
         firmsHere: here,
         intro: here.length
-          ? `Atlas tracks ${here.length} firm${here.length === 1 ? '' : 's'} with an office in ${place}. ${summary(here)}`
-          : `Atlas doesn’t have firms in ${place} yet.`,
+          ? `Firmward tracks ${here.length} firm${here.length === 1 ? '' : 's'} with an office in ${place}. ${summary(here)}`
+          : `Firmward doesn’t have firms in ${place} yet.`,
         description: `${here.length} law firms in ${place} for 1L summer jobs: boutiques, mid-size and regional firms first, with hiring status, application windows and direct links.`,
       };
     }
@@ -75,8 +75,8 @@ function Page({ kind }) {
       intro: !type
         ? ''
         : here.length
-          ? `Atlas tracks ${here.length} ${NOUN[slug][here.length === 1 ? 0 : 1]} across ${states} state${states === 1 ? '' : 's'}. ${here.filter((f) => f.hires === 'yes').length} confirmed to hire 1Ls.`
-          : `Atlas doesn’t have ${NOUN[slug][1]} yet. We’re adding employers regularly.`,
+          ? `Firmward tracks ${here.length} ${NOUN[slug][here.length === 1 ? 0 : 1]} across ${states} state${states === 1 ? '' : 's'}. ${here.filter((f) => f.hires === 'yes').length} confirmed to hire 1Ls.`
+          : `Firmward doesn’t have ${NOUN[slug][1]} yet. We’re adding employers regularly.`,
       description: type ? `${type.label} law firms for 1L summer jobs, with hiring status, application windows and direct application links.` : '',
     };
   }, [firms, kind, slug]);
@@ -84,7 +84,7 @@ function Page({ kind }) {
   const ranked = useMemo(() => recommended(firmsHere, null), [firmsHere]);
 
   useEffect(() => {
-    if (!loading) setMeta(`${heading} — Atlas`, description);
+    if (!loading) setMeta(`${heading} — Firmward`, description);
   }, [heading, description, loading]);
 
   const open = (f) => navigate(session ? `/firms/${f.slug}` : `/?next=${encodeURIComponent(`/firms/${f.slug}`)}`);
@@ -94,7 +94,7 @@ function Page({ kind }) {
     <div className="mx-auto max-w-3xl px-4 pb-24 pt-6 md:px-6 md:pb-12">
       <nav aria-label="Breadcrumb" className="text-t12 text-fg-2">
         <Link to="/" className="inline-flex min-h-[44px] items-center hover:underline md:min-h-0">
-          Atlas
+          Firmward
         </Link>{' '}
         / {kind === 'market' ? 'Markets' : 'Firm types'}
       </nav>
