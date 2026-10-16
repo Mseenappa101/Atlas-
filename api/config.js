@@ -9,7 +9,7 @@ const num = (v, d) => (v != null && v !== '' && !Number.isNaN(Number(v)) ? Numbe
 const list = (v, d) => (v || d).split(',').map((s) => s.trim()).filter(Boolean);
 
 export const config = {
-  port: num(process.env.API_PORT, 8787),
+  port: num(process.env.PORT ?? process.env.API_PORT, 8787), // PORT is set by hosts like Railway
   allowedOrigins: list(process.env.API_ALLOWED_ORIGINS, 'http://localhost:5173'),
   dailyCap: num(process.env.DAILY_GENERATION_CAP, 30),
   supabaseUrl: process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL,
