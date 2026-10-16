@@ -29,12 +29,13 @@ Rules:
 - apply_url: an absolute URL taken from the page's links that applies to or describes this specific role. Resolve relative links against the page URL. Prefer the listed links; null if none fits.
 - city/state: the office for the role if stated; state as a 2-letter US code.
 - summary: one sentence, at most 200 characters, describing the role and who may apply.
+- rolling: true only if the page says applications are accepted or reviewed on a rolling basis.
 - If one program covers several offices, return one listing with the office stated on the page, or city null if it spans many offices.
 - If the page has no qualifying roles, return an empty listings array.
 
 Firm fields (describe the employer, from this page only; use unknown/null/[] when the page doesn't say):
 - hires_1l: yes if the page describes a 1L summer program or 1L hiring; no only if it explicitly says it does not hire 1Ls; otherwise unknown.
-- firm_type: biglaw, mid-size, boutique, plaintiff, regional, government, public-interest, or null.
+- firm_type: litigation-boutique (small firm focused on litigation/trials), specialty-boutique (small firm focused on one non-litigation area such as IP, employment, tax, trusts or venture), plaintiff (represents plaintiffs: personal injury, class actions, mass torts), mid-size (roughly 50–300 lawyers, several practice areas), regional (full-service firm rooted in one state or region), biglaw (large national or international firm), government, public-interest, or null if unclear.
 - practice_areas: up to 4 main practice areas named on the page.
 - size: attorney headcount or size description if stated (e.g. "250 attorneys"), else null.`;
 
@@ -50,7 +51,7 @@ export const OUTPUT_SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['title', 'class_years', 'posting_type', 'city', 'state', 'window_start', 'deadline', 'apply_url', 'summary'],
+        required: ['title', 'class_years', 'posting_type', 'city', 'state', 'window_start', 'deadline', 'apply_url', 'summary', 'rolling'],
         properties: {
           title: { type: 'string' },
           class_years: { type: 'array', items: { type: 'string', enum: ['1L', '2L', '3L'] } },
@@ -61,6 +62,7 @@ export const OUTPUT_SCHEMA = {
           deadline: nullable({ type: 'string', format: 'date' }),
           apply_url: nullable({ type: 'string' }),
           summary: { type: 'string' },
+          rolling: { type: 'boolean' },
         },
       },
     },
@@ -70,7 +72,7 @@ export const OUTPUT_SCHEMA = {
       required: ['hires_1l', 'firm_type', 'practice_areas', 'size'],
       properties: {
         hires_1l: { type: 'string', enum: ['yes', 'no', 'unknown'] },
-        firm_type: nullable({ type: 'string', enum: ['biglaw', 'mid-size', 'boutique', 'plaintiff', 'regional', 'government', 'public-interest'] }),
+        firm_type: nullable({ type: 'string', enum: ['litigation-boutique', 'specialty-boutique', 'plaintiff', 'mid-size', 'regional', 'biglaw', 'government', 'public-interest'] }),
         practice_areas: { type: 'array', items: { type: 'string' } },
         size: nullable({ type: 'string' }),
       },
@@ -128,7 +130,7 @@ export function parseMessage(message, pageUrl, pageText = '') {
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const TYPES = new Set(['summer-associate', 'law-clerk', 'intern', 'fellowship', 'extern', 'other']);
-const FIRM_TYPES = new Set(['biglaw', 'mid-size', 'boutique', 'plaintiff', 'regional', 'government', 'public-interest']);
+const FIRM_TYPES = new Set(['litigation-boutique', 'specialty-boutique', 'plaintiff', 'mid-size', 'regional', 'biglaw', 'government', 'public-interest']);
 
 function absUrl(u, base) {
   if (!u) return null;
@@ -152,6 +154,7 @@ export function sanitize(out, pageUrl, pageText = '') {
     deadline: DATE_RE.test(l.deadline || '') ? l.deadline : null,
     apply_url: absUrl(l.apply_url, pageUrl),
     summary: (l.summary || '').trim().slice(0, 200) || null,
+    rolling: l.rolling === true,
   }));
   const f = out.firm || {};
   const firm = {

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Navigate, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { hasAccess } from '../lib/access';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import RequireProfile from '../components/RequireProfile';
 import useFirms from '../hooks/useFirms';
 import { latestVerified, longDate } from '../lib/firms';
 import { site } from '../lib/site';
@@ -13,12 +13,11 @@ import { EMPTY, activeCount, applyFilters, groupByMarket, marketList, readFilter
 import { Sheet, CloseButton, Button } from '../components/ui';
 
 export default function Directory() {
-  const location = useLocation();
-  if (!hasAccess()) {
-    const next = encodeURIComponent(location.pathname + location.search);
-    return <Navigate to={`/?next=${next}`} replace />;
-  }
-  return <DirectoryPage />;
+  return (
+    <RequireProfile>
+      <DirectoryPage />
+    </RequireProfile>
+  );
 }
 
 function DirectoryPage() {

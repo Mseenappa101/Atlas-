@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import useFirms from '../hooks/useFirms';
 import { FEATURED_MARKETS, FIRM_TYPES, isWindowPast, latestVerified, longDate } from '../lib/firms';
-import { hasAccess, signUp } from '../lib/access';
+import { createProfile } from '../lib/access';
+import useSession from '../hooks/useSession';
 import { site } from '../lib/site';
 import FirmTable, { TablePlaceholder } from '../components/directory/FirmTable';
 import { Button, SelectField, TextField } from '../components/ui';
@@ -31,8 +32,9 @@ function previewFirms(firms) {
 }
 
 function SignupForm({ firmCount }) {
-  const [form, setForm] = useState({ name: '', email: '', school: '', classYear: '', market: '', firmType: '' });
+  const [form, setForm] = useState({ name: '', email: '', password: '', school: '', classYear: '', market: '', firmType: '' });
   const [status, setStatus] = useState('idle');
+  const [message, setMessage] = useState('');
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
@@ -41,10 +43,16 @@ function SignupForm({ firmCount }) {
     e.preventDefault();
     setStatus('saving');
     try {
-      await signUp(form);
+      const { needsConfirmation } = await createProfile(form);
+      if (needsConfirmation) {
+        setStatus('confirm');
+        return;
+      }
+      // New profiles start with the resume step unless they came from a specific page.
       const next = params.get('next');
-      navigate(next?.startsWith('/directory') ? next : '/directory');
-    } catch {
+      navigate(next?.startsWith('/') && !next.startsWith('//') ? next : '/explore');
+    } catch (err) {
+      setMessage(err.message);
       setStatus('error');
     }
   }
@@ -53,24 +61,43 @@ function SignupForm({ firmCount }) {
     <form onSubmit={submit} className="grid gap-4 sm:grid-cols-2" aria-describedby="signup-note">
       <TextField label="Name" required autoComplete="name" value={form.name} onChange={set('name')} />
       <TextField label="Email" id="signup-email" type="email" required autoComplete="email" value={form.email} onChange={set('email')} />
+      <TextField
+        label="Password (8+ characters)"
+        type="password"
+        required
+        minLength={8}
+        autoComplete="new-password"
+        value={form.password}
+        onChange={set('password')}
+        className="sm:col-span-2"
+      />
       <TextField label="Law school" required autoComplete="organization" value={form.school} onChange={set('school')} />
       <SelectField label="Class year" required placeholder="Select" options={CLASS_YEARS} value={form.classYear} onChange={set('classYear')} />
       <SelectField label="Target market" placeholder="Select" options={MARKETS} value={form.market} onChange={set('market')} />
       <SelectField label="Target firm type" placeholder="Select" options={TYPES} value={form.firmType} onChange={set('firmType')} />
       <div className="sm:col-span-2">
         <Button type="submit" disabled={status === 'saving'} className="w-full sm:w-auto">
-          {status === 'saving' ? 'Saving…' : 'Get free access'}
+          {status === 'saving' ? 'Creating your profile…' : 'Create free profile'}
         </Button>
         <p id="signup-note" className="mt-2 text-xs text-muted">
-          Free. No spam. Unsubscribe anytime.
+          Free. No spam. Unsubscribe anytime. Already have a profile?{' '}
+          <Link to={`/signin${params.get('next') ? `?next=${encodeURIComponent(params.get('next'))}` : ''}`} className="link">
+            Sign in
+          </Link>
+          .
         </p>
         {status === 'error' && (
           <p role="alert" className="mt-2 text-sm text-accent">
-            Couldn&rsquo;t save your signup. Check your connection and try again.
+            {message}
+          </p>
+        )}
+        {status === 'confirm' && (
+          <p role="status" className="mt-2 text-sm">
+            Check your email for a confirmation link. It opens your profile.
           </p>
         )}
         <p className="sr-only" aria-live="polite">
-          {status === 'idle' && firmCount ? `Signing up opens all ${firmCount} firms.` : ''}
+          {status === 'idle' && firmCount ? `A profile opens all ${firmCount} firms.` : ''}
         </p>
       </div>
     </form>
@@ -79,7 +106,8 @@ function SignupForm({ firmCount }) {
 
 export default function Home() {
   const { firms, loading, error } = useFirms();
-  const [unlocked] = useState(hasAccess);
+  const { session, loading: sessionLoading } = useSession();
+  const unlocked = Boolean(session);
   const formRef = useRef(null);
   const navigate = useNavigate();
   const preview = useMemo(() => previewFirms(firms), [firms]);
@@ -96,6 +124,9 @@ export default function Home() {
     formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     document.getElementById('signup-email')?.focus({ preventScroll: true });
   };
+
+  // Signed-in students start on the map.
+  if (!sessionLoading && session) return <Navigate to="/explore" replace />;
 
   return (
     <main className="page">
@@ -131,15 +162,20 @@ export default function Home() {
               careers page.
             </li>
             <li>A 1L recruiting calendar, October through June.</li>
-            <li>Templates: a 1L resume, a boutique cover letter and networking emails.</li>
+            <li>Your resume, uploaded or built from a few questions, and a cover letter written for each firm you apply to.</li>
+            <li>A templates library: resume, cover letter and networking emails.</li>
           </ul>
 
           <div ref={formRef} className="mt-8 border-t border-ink pt-6">
             {unlocked ? (
               <p className="text-base">
-                You already have access.{' '}
+                You&rsquo;re signed in.{' '}
                 <Link to="/directory" className="link">
                   Open the directory
+                </Link>{' '}
+                or{' '}
+                <Link to="/resume" className="link">
+                  work on your resume
                 </Link>
                 .
               </p>
@@ -167,7 +203,7 @@ export default function Home() {
               {!unlocked && (
                 <p className="mt-4 text-sm">
                   <button type="button" onClick={toForm} className="link">
-                    Enter your email to see all {count} firms.
+                    Create a free profile to see all {count} firms.
                   </button>
                 </p>
               )}

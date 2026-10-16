@@ -1,4 +1,5 @@
 import { NavLink, Link, useLocation } from 'react-router-dom';
+import useSession from '../hooks/useSession';
 
 const LINKS = [
   { to: '/directory', label: 'Directory' },
@@ -9,6 +10,8 @@ const LINKS = [
 export default function NavBar() {
   // The landing page carries its own masthead, so the small wordmark steps aside there.
   const home = useLocation().pathname === '/';
+  const { session, loading } = useSession();
+  const links = loading ? LINKS : [...LINKS, session ? { to: '/documents', label: 'My documents' } : { to: '/signin', label: 'Sign in' }];
   return (
     <header className="no-print border-b border-rule">
       <nav aria-label="Main" className="page flex min-h-[56px] flex-wrap items-center justify-between gap-x-6">
@@ -19,8 +22,8 @@ export default function NavBar() {
             Atlas
           </Link>
         )}
-        <ul className="flex items-center gap-1 md:gap-4">
-          {LINKS.map(({ to, label }) => (
+        <ul className="flex flex-wrap items-center gap-x-1 md:gap-x-4">
+          {links.map(({ to, label }) => (
             <li key={to}>
               <NavLink
                 to={to}

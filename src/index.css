@@ -14,6 +14,21 @@
   --status-unknown: #8A6A1F;
   --status-no: #5C5A55;
   color-scheme: light;
+
+  /* App design system */
+  --app-bg: #F6F7F5;
+  --app-surface: #FFFFFF;
+  --app-text: #14181F;
+  --app-text-2: #5B6470;
+  --app-border: #E3E6E8;
+  --app-brand: #1F5C45;
+  --app-brand-hover: #174A37;
+  --app-brand-tint: #E7F0EC;
+  /* Status: the base color marks dots and borders; the -text shade meets AA for labels. */
+  --st-open: #1F7A4D;    --st-open-text: #1A6B43;   --st-open-bg: #E9F3EE;
+  --st-soon: #B7791F;    --st-soon-text: #8A5A12;   --st-soon-bg: #FBF1E2;
+  --st-closed: #8A9099;  --st-closed-text: #646B73; --st-closed-bg: #EFF1F3;
+  --st-unknown: #5B6470; --st-unknown-bg: #EFF1F3;
 }
 
 @layer base {
@@ -39,6 +54,21 @@
 }
 
 @layer components {
+  /* Wraps every screen built on the app design system. */
+  .app {
+    @apply bg-canvas font-app text-t14 text-fg antialiased;
+  }
+  .app h1, .app h2, .app h3 {
+    @apply font-app;
+  }
+  .app :focus-visible {
+    outline: 2px solid var(--app-brand);
+    outline-offset: 2px;
+  }
+  .app .data {
+    @apply font-data;
+    font-variant-numeric: tabular-nums;
+  }
   .page {
     @apply mx-auto w-full max-w-content px-4 md:px-12;
   }
@@ -87,4 +117,11 @@
 
 @media print {
   .doc-sheet { border: 0; padding: 0; }
+}
+
+@media print {
+  body[data-print='doc'] * { visibility: hidden; }
+  body[data-print='doc'] [data-printable],
+  body[data-print='doc'] [data-printable] * { visibility: visible; }
+  body[data-print='doc'] [data-printable] { position: absolute; inset: 0 auto auto 0; width: 100%; max-width: none; border: 0; padding: 0; }
 }

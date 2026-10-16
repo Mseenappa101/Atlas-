@@ -1,35 +1,35 @@
 import { supabase } from './supabase';
 
-const KEY = 'atlas.access';
-
-// The gate is a light one: it remembers a signup in this browser. Storage can be blocked, so never throw.
-export function hasAccess() {
-  try {
-    return localStorage.getItem(KEY) === '1';
-  } catch {
-    return false;
-  }
-}
-
-function grantAccess() {
-  try {
-    localStorage.setItem(KEY, '1');
-  } catch {
-    // Private mode or blocked storage: they get in for this visit only.
-  }
-}
-
-export async function signUp(form) {
-  const { error } = await supabase.from('waitlist_subscribers').insert({
+// Profile fields ride along as signup metadata; a database trigger (migration 003)
+// copies them into users, subscriptions and the email list.
+export async function createProfile(form) {
+  const { data, error } = await supabase.auth.signUp({
     email: form.email.trim().toLowerCase(),
-    full_name: form.name.trim(),
-    law_school: form.school.trim(),
-    class_year: form.classYear,
-    target_market: form.market || null,
-    target_firm_type: form.firmType || null,
-    source: 'atlas-gate',
+    password: form.password,
+    options: {
+      data: {
+        full_name: form.name.trim(),
+        school: form.school.trim(),
+        class_year: form.classYear,
+        target_market: form.market || null,
+        target_firm_type: form.firmType || null,
+      },
+    },
   });
-  // 23505 = already signed up with this email. Let them in.
-  if (error && error.code !== '23505') throw new Error(error.message);
-  grantAccess();
+  if (error) {
+    if (/already registered|already exists/i.test(error.message)) {
+      throw new Error('You already have a profile with this email. Sign in instead.');
+    }
+    if (/password/i.test(error.message)) throw new Error(error.message);
+    throw new Error('Couldn’t create your profile. Check your connection and try again.');
+  }
+  // With email confirmation on, there's no session until they click the link.
+  return { needsConfirmation: !data.session };
+}
+
+export async function signIn(email, password) {
+  const { error } = await supabase.auth.signInWithPassword({ email: email.trim().toLowerCase(), password });
+  if (error) {
+    throw new Error(/invalid/i.test(error.message) ? 'That email and password don’t match a profile.' : error.message);
+  }
 }

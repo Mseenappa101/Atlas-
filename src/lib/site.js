@@ -2,6 +2,7 @@
 export const site = {
   edition: 'Fall 2026 Edition',
   strategyCallUrl: '', // e.g. a Calendly link for the free 20-minute call
+  membershipUrl: '', // Skool signup for the $97/month membership
   correctionsEmail: '', // receives "Report outdated info"
   foundingTermsClose: 'Dec 21',
 };

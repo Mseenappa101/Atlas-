@@ -1,18 +1,6 @@
 import { useEffect, useState } from 'react';
 import { TEMPLATES } from '../content/templates';
-
-// Word and Google Docs both open an HTML document saved with a .doc extension.
-function download(t) {
-  const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>${t.title}</title>
-<style>body{font-family:Georgia,serif;font-size:11pt;line-height:1.4}h2{text-align:center;font-size:16pt;margin:0}h3{font-size:11pt;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #000;margin:14pt 0 4pt}p{margin:0 0 8pt}.center{text-align:center}ul{margin:0 0 8pt}</style>
-</head><body>${t.body}</body></html>`;
-  const url = URL.createObjectURL(new Blob(['﻿', html], { type: 'application/msword' }));
-  const a = Object.assign(document.createElement('a'), { href: url, download: `atlas-${t.slug}.doc` });
-  document.body.append(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-}
+import { downloadDoc } from '../lib/documents';
 
 export default function Templates() {
   const [open, setOpen] = useState(null);
@@ -50,7 +38,7 @@ export default function Templates() {
                   >
                     {isOpen ? 'Hide' : 'View'}
                   </button>
-                  <button type="button" className="link min-h-[44px] md:min-h-0" onClick={() => download(t)}>
+                  <button type="button" className="link min-h-[44px] md:min-h-0" onClick={() => downloadDoc(`atlas-${t.slug}.doc`, t.title, t.body)}>
                     Download <span className="font-mono text-xs">(.doc)</span>
                   </button>
                 </div>

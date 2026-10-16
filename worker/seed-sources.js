@@ -65,15 +65,17 @@ async function main() {
   }
   const haveUrl = new Set(existing.map((s) => s.url));
 
-  // One source per distinct careers URL; firm_id = first firm row with that URL.
+  // One source per distinct careers URL, taken from offices (migration 004); first office with that URL wins.
+  const names = new Map(firms.map((f) => [f.id, f.name]));
+  const offices = await selectAll((a, b) => db.from('offices').select('id, firm_id, city, state, careers_url').range(a, b));
   const byUrl = new Map();
-  for (const f of firms) {
-    const url = f.careers_url?.trim();
-    if (url && !byUrl.has(url)) byUrl.set(url, f);
+  for (const o of offices) {
+    const url = o.careers_url?.trim();
+    if (url && !byUrl.has(url)) byUrl.set(url, o);
   }
   const now = Date.now();
-  const rows = [...byUrl.entries()].filter(([url]) => !haveUrl.has(url)).map(([url, f]) => ({
-    firm_id: f.id ?? null, kind: 'page', url, employer_name: f.name, city: f.city, state: f.state,
+  const rows = [...byUrl.entries()].filter(([url]) => !haveUrl.has(url)).map(([url, o]) => ({
+    firm_id: o.firm_id, office_id: o.id, kind: 'page', url, employer_name: names.get(o.firm_id) ?? 'Unknown firm', city: o.city, state: o.state,
     next_check_at: new Date(now + Math.random() * STAGGER_MIN * 60_000).toISOString(),
   }));
 
@@ -86,8 +88,7 @@ async function main() {
     console.log('  USAJOBS_API_KEY not set — skipping USAJOBS sources');
   }
 
-  const shared = [...byUrl.keys()].filter((u) => firms.filter((f) => f.careers_url?.trim() === u).length > 1).length;
-  console.log(`sources: ${existing.length} existing, ${byUrl.size} distinct careers URLs (${shared} shared by multiple firm rows), ${rows.length} to create`);
+  console.log(`sources: ${existing.length} existing, ${byUrl.size} distinct careers URLs across ${offices.length} offices, ${rows.length} to create`);
   if (dry) { console.log('dry run — nothing written'); return; }
 
   let created = 0;

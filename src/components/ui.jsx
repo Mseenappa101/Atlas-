@@ -1,4 +1,5 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { HIRES_LABELS } from '../lib/firms';
 
 const STATUS_COLOR = { yes: 'text-status-yes', unknown: 'text-status-unknown', no: 'text-status-no' };
@@ -57,6 +58,18 @@ export function Button({ variant = 'primary', href, className = '', children, ..
     <button className={cls} {...props}>
       {children}
     </button>
+  );
+}
+
+// An in-app link that looks like a button.
+export function LinkButton({ to, variant = 'primary', className = '', children }) {
+  return (
+    <Link
+      to={to}
+      className={`inline-flex min-h-[44px] items-center justify-center rounded-sm px-5 text-sm font-medium transition-colors ${BUTTON[variant]} ${className}`}
+    >
+      {children}
+    </Link>
   );
 }
 

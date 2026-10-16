@@ -62,3 +62,5 @@ export async function queueJob(sourceId, contentHash, pageText) {
 }
 
 export const updateFirm = (id, patch) => q(getDb().from('firms').update(patch).eq('id', id));
+
+export const updateOffice = (id, patch) => q(getDb().from('offices').update(patch).eq('id', id));

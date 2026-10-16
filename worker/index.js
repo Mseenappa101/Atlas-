@@ -7,7 +7,7 @@ import { fetchLever } from './ats/lever.js';
 import { fetchUsajobs } from './ats/usajobs.js';
 import {
   dueSources, updateSource, sourcesByIds, insertSources, startRun, finishRun,
-  jobsByStatus, updateJob, updateJobs, queueJob, updateFirm,
+  jobsByStatus, updateJob, updateJobs, queueJob, updateFirm, updateOffice,
 } from './db.js';
 import { buildPageText, extractDirect, submitBatch, collectBatch, MODEL } from './extract.js';
 import { applyExtraction, closeAllForSource, listingKey } from './listings.js';
@@ -36,7 +36,7 @@ async function checkPage(source, stats) {
 
   // Discover ATS boards linked from the page; they get their own (LLM-free) sources.
   const ats = detectAts(page.html, page.links).map((a) => ({
-    ...a, firm_id: source.firm_id, employer_name: source.employer_name, city: source.city, state: source.state,
+    ...a, firm_id: source.firm_id, office_id: source.office_id, employer_name: source.employer_name, city: source.city, state: source.state,
   }));
   if (ats.length) {
     const added = await insertSources(ats);
@@ -45,7 +45,9 @@ async function checkPage(source, stats) {
 
   if (hash === source.last_content_hash) {
     // Unchanged page still counts as a fresh check of what we show for the firm.
-    if (source.firm_id) await updateFirm(source.firm_id, { last_verified_at: new Date().toISOString() });
+    const verified = { last_verified_at: new Date().toISOString() };
+    if (source.firm_id) await updateFirm(source.firm_id, verified);
+    if (source.office_id) await updateOffice(source.office_id, verified);
     return { status: `unchanged${via}` };
   }
   stats.pages_changed++;

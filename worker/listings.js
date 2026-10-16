@@ -5,22 +5,19 @@ const norm = (s) => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 
 export const listingKey = (l) => sha1(`${norm(l.title)}|${l.apply_url || ''}|${norm(l.city)}`);
 
-/** Same-name firm rows (multi-office firms share one careers page). Cached per process. */
-const firmFamilies = new Map();
-async function firmFamily(firmId) {
+/** A firm's offices (one careers page can cover several). Cached per process. */
+const officeCache = new Map();
+async function firmOffices(firmId) {
   if (!firmId) return [];
-  if (firmFamilies.has(firmId)) return firmFamilies.get(firmId);
-  const db = getDb();
-  const firm = await q(db.from('firms').select('id, name').eq('id', firmId).maybeSingle());
-  const rows = firm ? await q(db.from('firms').select('id, name, city').ilike('name', firm.name.replace(/[%_\\]/g, '\\$&'))) : [];
-  firmFamilies.set(firmId, rows);
-  return rows;
+  if (!officeCache.has(firmId)) {
+    officeCache.set(firmId, await q(getDb().from('offices').select('id, city, state').eq('firm_id', firmId)));
+  }
+  return officeCache.get(firmId);
 }
 
-function pickFirmId(source, family, city) {
-  if (!source.firm_id) return null;
+function pickOfficeId(source, offices, city) {
   const c = norm(city);
-  return (c && family.find((f) => norm(f.city) === c)?.id) || source.firm_id;
+  return (c && offices.find((o) => norm(o.city) === c)?.id) || source.office_id || null;
 }
 
 /**
@@ -30,7 +27,7 @@ function pickFirmId(source, family, city) {
 export async function applyExtraction(source, extraction) {
   const db = getDb();
   const now = new Date().toISOString();
-  const family = await firmFamily(source.firm_id);
+  const offices = await firmOffices(source.firm_id);
 
   const rows = new Map();
   for (const l of extraction.listings) {
@@ -38,7 +35,8 @@ export async function applyExtraction(source, extraction) {
     if (rows.has(key)) continue;
     rows.set(key, {
       source_id: source.id,
-      firm_id: pickFirmId(source, family, l.city),
+      firm_id: source.firm_id,
+      office_id: pickOfficeId(source, offices, l.city || source.city),
       listing_key: key,
       title: l.title,
       employer_name: l.employer_name || source.employer_name,
@@ -51,6 +49,7 @@ export async function applyExtraction(source, extraction) {
       deadline: l.deadline,
       apply_url: l.apply_url,
       summary: l.summary,
+      rolling: Boolean(l.rolling),
       status: 'open',
       last_seen_at: now,
       closed_at: null,
@@ -78,34 +77,49 @@ export async function closeAllForSource(sourceId) {
   return rows.length;
 }
 
+// Firm-level facts go on the firm; windows and links go on the office they belong to.
 async function updateFirms(source, rows, meta) {
   const db = getDb();
-  const ids = [...new Set([source.firm_id, ...rows.map((r) => r.firm_id)].filter(Boolean))];
-  const firms = await q(db.from('firms')
-    .select('id, hires_1l, firm_type, practice_areas, size').in('id', ids));
   const now = new Date().toISOString();
+  const firm = await q(db.from('firms').select('id, hires_1l, firm_type, practice_areas, size').eq('id', source.firm_id).maybeSingle());
+  if (!firm) return;
 
-  for (const f of firms) {
-    const mine = rows.filter((r) => r.firm_id === f.id);
-    const oneL = mine.filter((r) => r.class_years.includes('1L'))
-      .sort((a, b) => (a.deadline || a.window_start || '9999').localeCompare(b.deadline || b.window_start || '9999'));
-    const patch = { last_verified_at: now, source: 'Firm careers page' };
+  const oneL = rows.filter((r) => r.class_years.includes('1L'));
+  const patch = { last_verified_at: now, source: 'Firm careers page' };
+  // hires_1l: unknown -> yes/no only; an actual 1L listing is evidence enough to say yes.
+  if (oneL.length && firm.hires_1l !== 'yes') patch.hires_1l = 'yes';
+  else if (firm.hires_1l === 'unknown' && meta?.hires_1l && meta.hires_1l !== 'unknown') patch.hires_1l = meta.hires_1l;
+  if (meta) {
+    if (!firm.firm_type && meta.firm_type) patch.firm_type = meta.firm_type;
+    if (!firm.practice_areas?.length && meta.practice_areas.length) patch.practice_areas = meta.practice_areas;
+    if (!firm.size && meta.size) patch.size = meta.size;
+  }
+  await q(db.from('firms').update(patch).eq('id', firm.id));
 
-    // hires_1l: unknown -> yes/no only; an actual 1L listing is evidence enough to say yes.
-    if (oneL.length && f.hires_1l !== 'yes') patch.hires_1l = 'yes';
-    else if (f.hires_1l === 'unknown' && meta?.hires_1l && meta.hires_1l !== 'unknown') patch.hires_1l = meta.hires_1l;
-
-    if (meta) {
-      if (!f.firm_type && meta.firm_type) patch.firm_type = meta.firm_type;
-      if (!f.practice_areas?.length && meta.practice_areas.length) patch.practice_areas = meta.practice_areas;
-      if (!f.size && meta.size) patch.size = meta.size;
+  // Per office: the earliest 1L listing sets its window and link.
+  const byOffice = new Map();
+  for (const r of oneL) {
+    const id = r.office_id;
+    if (!id) continue;
+    const key = r.deadline || r.window_start || '9999';
+    const cur = byOffice.get(id);
+    if (!cur || key < (cur.deadline || cur.window_start || '9999')) byOffice.set(id, r);
+  }
+  const touched = new Set([source.office_id, ...byOffice.keys()].filter(Boolean));
+  for (const id of touched) {
+    const r = byOffice.get(id);
+    const office = { last_verified_at: now };
+    if (r) {
+      office.hires_1l = 'yes';
+      if (r.window_start || r.deadline) {
+        office.app_window_start = r.window_start;
+        office.app_window_end = r.deadline;
+        office.window_kind = 'dated';
+      } else if (r.rolling) {
+        office.window_kind = 'rolling';
+      }
+      if (r.apply_url) office.apply_url = r.apply_url;
     }
-    const first = oneL[0];
-    if (first) {
-      if (first.window_start) patch.app_window_start = first.window_start;
-      if (first.deadline) patch.app_window_end = first.deadline;
-      if (first.apply_url) patch.apply_url = first.apply_url;
-    }
-    await q(db.from('firms').update(patch).eq('id', f.id));
+    await q(db.from('offices').update(office).eq('id', id));
   }
 }

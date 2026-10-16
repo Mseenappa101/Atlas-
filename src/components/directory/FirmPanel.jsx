@@ -3,7 +3,8 @@ import { supabase } from '../../lib/supabase';
 import { formatWindow, isWindowPast, longDate, shortDate } from '../../lib/firms';
 import { site } from '../../lib/site';
 import { postingTypeLabel } from '../../lib/listings';
-import { Sheet, CloseButton, StatusMark, Button, ExternalLink } from '../ui';
+import { Sheet, CloseButton, StatusMark, Button, ExternalLink, LinkButton } from '../ui';
+import { Link } from 'react-router-dom';
 
 
 function useOpenListings(firmId) {
@@ -87,8 +88,19 @@ export default function FirmPanel({ firm, onClose }) {
 
         <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
           {firm.applyUrl && <Button href={firm.applyUrl}>Open application ↗</Button>}
+          <LinkButton to={`/letters/new?firm=${firm.id}`} variant={firm.applyUrl ? 'secondary' : 'primary'}>
+            Write a cover letter
+          </LinkButton>
           {firm.careersUrl && <ExternalLink href={firm.careersUrl}>Recruiting page</ExternalLink>}
         </div>
+        <p className="mt-3 text-xs text-muted">
+          Applying here? A coach can review your resume and letter before you send them.{' '}
+          {site.strategyCallUrl ? (
+            <a href={site.strategyCallUrl} className="link">
+              Book a free 20-minute call
+            </a>
+          ) : null}
+        </p>
 
         {listings.length > 0 && (
           <section className="mt-8">
@@ -104,7 +116,12 @@ export default function FirmPanel({ firm, onClose }) {
                         .join(' · ')}
                     </span>
                   </span>
-                  {l.apply_url && <ExternalLink href={l.apply_url}>Apply</ExternalLink>}
+                  <span className="flex shrink-0 gap-4">
+                    <Link to={`/letters/new?listing=${l.id}`} className="link whitespace-nowrap">
+                      Letter
+                    </Link>
+                    {l.apply_url && <ExternalLink href={l.apply_url}>Apply</ExternalLink>}
+                  </span>
                 </li>
               ))}
             </ul>
