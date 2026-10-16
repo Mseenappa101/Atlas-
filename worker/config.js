@@ -17,10 +17,11 @@ export const config = {
   hostGapMs: num(process.env.WORKER_HOST_GAP_SECONDS, 10) * 1000,
   monthlyBudgetUsd: num(process.env.LLM_MONTHLY_BUDGET_USD, 40),
   extractMode: process.env.EXTRACT_MODE === 'direct' ? 'direct' : 'batch',
-  contactEmail: 'mseenappa101@gmail.com',
+  // Shown to the sites the scraper visits, so they can reach us. Set CRAWLER_CONTACT_EMAIL (e.g. a firmward.org address).
+  contactEmail: process.env.CRAWLER_CONTACT_EMAIL || null,
 };
 
-export const USER_AGENT = `FirmwardBot/1.0 (+https://firmward.org; ${config.contactEmail})`;
+export const USER_AGENT = `FirmwardBot/1.0 (+https://firmward.org${config.contactEmail ? `; ${config.contactEmail}` : ''})`;
 
 let warned = false;
 export function anthropicKey() {
