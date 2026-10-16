@@ -13,6 +13,8 @@ const LAW_TITLE_RE = /\b(law|legal|attorney|clerk|paralegal|judicial)\b/i;
 /** USAJOBS Search API -> listings. One source per keyword query; employer = hiring agency. */
 export async function fetchUsajobs(source) {
   if (!config.usajobsKey) throw new Error('USAJOBS_API_KEY not set');
+  // USAJOBS requires the email the key was registered to as the User-Agent.
+  if (!config.contactEmail) throw new Error('CRAWLER_CONTACT_EMAIL not set (USAJOBS needs the email registered with the key)');
   const data = await fetchJson(source.url, {
     Host: 'data.usajobs.gov',
     'User-Agent': config.contactEmail,
