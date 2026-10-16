@@ -5,7 +5,10 @@ import LetterView from '../components/letters/LetterView';
 import CoachingNote from '../components/CoachingNote';
 import useSession from '../hooks/useSession';
 import { supabase } from '../lib/supabase';
-import { longDate } from '../lib/firms';
+import { Trash2 } from 'lucide-react';
+import { ButtonLink } from '../components/app/controls';
+
+const longDate = (d) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
 function useLetters(userId) {
   const [state, setState] = useState({ letters: [], loading: true, error: false });
@@ -46,74 +49,77 @@ function DocumentsPage() {
   }
 
   return (
-    <main className="page pt-8 md:pt-12">
-      <header className="mb-8 flex flex-wrap items-end justify-between gap-4">
+    <div className="mx-auto max-w-4xl px-4 pb-24 pt-6 md:px-6 md:pb-12">
+      <header className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-xl md:text-2xl">Your documents</h1>
-          <p className="mt-1 text-muted">
-            {[profile?.full_name, profile?.school, CLASS_LABELS[profile?.class_year]].filter(Boolean).join(' · ')}
+          <h1 className="text-t24 font-bold tracking-tight md:text-t32">Your documents</h1>
+          <p className="mt-1 text-t16 text-fg-2">
+            {[profile?.full_name, profile?.school, CLASS_LABELS[profile?.class_year]].filter(Boolean).join(' · ') || session?.user.email}
           </p>
         </div>
-        <button type="button" onClick={out} className="link min-h-[44px] text-sm">
+        <button type="button" onClick={out} className="min-h-[44px] text-t14 text-fg-2 hover:text-fg">
           Sign out
         </button>
       </header>
 
-      <section aria-labelledby="resume-h" className="border-t border-ink py-4">
-        <h2 id="resume-h" className="caps text-xs text-muted">
+      <section aria-labelledby="resume-h" className="rounded-app border border-line bg-card p-4">
+        <h2 id="resume-h" className="text-t14 font-semibold">
           Resume
         </h2>
-        <div className="mt-2 flex flex-wrap items-baseline justify-between gap-4">
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
           {profile?.resume_data ? (
-            <p>
-              <span className="font-serif text-lg">Your resume</span>{' '}
-              {profile.resume_updated_at && (
-                <span className="nums font-mono text-xs text-muted">updated {longDate(new Date(profile.resume_updated_at))}</span>
-              )}
+            <p className="text-t14">
+              Your resume{' '}
+              {profile.resume_updated_at && <span className="data text-t12 text-fg-2">updated {longDate(new Date(profile.resume_updated_at))}</span>}
             </p>
           ) : (
-            <p className="text-muted">No resume yet. Letters are written from it.</p>
+            <p className="text-t14 text-fg-2">No resume yet. Cover letters start from it.</p>
           )}
-          <Link to="/resume" className="link text-sm">
+          <ButtonLink to="/resume" variant="secondary" size="sm">
             {profile?.resume_data ? 'View or edit' : 'Add your resume'}
-          </Link>
+          </ButtonLink>
         </div>
       </section>
 
-      <section aria-labelledby="letters-h" className="border-t border-ink py-4">
-        <h2 id="letters-h" className="caps text-xs text-muted">
-          Cover letters
+      <section aria-labelledby="letters-h" className="mt-4 rounded-app border border-line bg-card">
+        <h2 id="letters-h" className="border-b border-line px-4 py-3 text-t14 font-semibold">
+          Cover letters <span className="data font-normal text-fg-2">{letters.length || ''}</span>
         </h2>
-        {loading && <div className="mt-2 h-11 border-b border-rule" aria-busy="true" />}
-        {error && <p className="mt-2">Couldn&rsquo;t load your letters. Reload the page to try again.</p>}
+        {loading && <div className="h-14 animate-pulse bg-canvas" aria-busy="true" />}
+        {error && <p className="px-4 py-3 text-t14">Couldn&rsquo;t load your letters. Reload the page to try again.</p>}
         {!loading && !error && letters.length === 0 && (
-          <p className="mt-2 text-muted">
-            None yet. Open any firm in the{' '}
-            <Link to="/directory" className="link">
-              directory
+          <p className="px-4 py-3 text-t14 text-fg-2">
+            None yet. Open any firm in{' '}
+            <Link to="/explore" className="text-brand hover:underline">
+              Explore
             </Link>{' '}
-            and choose &ldquo;Write a cover letter.&rdquo;
+            and choose &ldquo;Write cover letter.&rdquo;
           </p>
         )}
-        <ol>
+        <ol className="divide-y divide-line">
           {letters.map((l) => (
-            <li key={l.id} className="border-b border-rule py-3">
-              <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-                <span>
-                  <span className="font-serif text-base">{l.title}</span>{' '}
-                  <span className="nums font-mono text-xs text-muted">{longDate(new Date(l.created_at))}</span>
+            <li key={l.id} className="px-4 py-3">
+              <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1">
+                <span className="min-w-0">
+                  <span className="block truncate text-t14 font-medium">{l.title}</span>
+                  <span className="data text-t12 text-fg-2">{longDate(new Date(l.created_at))}</span>
                 </span>
-                <span className="flex gap-6 text-sm">
+                <span className="flex items-center gap-2">
                   <button
                     type="button"
-                    className="link min-h-[44px] md:min-h-0"
+                    className="min-h-[44px] px-2 text-t14 font-medium text-brand hover:underline md:min-h-[32px]"
                     aria-expanded={open === l.id}
                     onClick={() => setOpen(open === l.id ? null : l.id)}
                   >
                     {open === l.id ? 'Hide' : 'View'}
                   </button>
-                  <button type="button" className="link min-h-[44px] text-muted md:min-h-0" onClick={() => remove(l.id)}>
-                    Delete
+                  <button
+                    type="button"
+                    aria-label={`Delete ${l.title}`}
+                    onClick={() => remove(l.id)}
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-app text-fg-2 hover:bg-brand-tint hover:text-fg md:h-9 md:w-9"
+                  >
+                    <Trash2 size={16} aria-hidden="true" />
                   </button>
                 </span>
               </div>
@@ -131,14 +137,16 @@ function DocumentsPage() {
       </section>
 
       <CoachingNote>Applying to more than a handful of firms? A coach can help you decide where your letters will land.</CoachingNote>
-    </main>
+    </div>
   );
 }
 
 export default function Documents() {
   return (
     <RequireProfile>
-      <DocumentsPage />
+      <div className="app min-h-screen">
+        <DocumentsPage />
+      </div>
     </RequireProfile>
   );
 }

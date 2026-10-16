@@ -159,3 +159,23 @@ export function FirmList({ firms, selectedId, onSelect, onOpen, savedIds, onTogg
     </div>
   );
 }
+
+// Same look as FirmRow, as a plain button: for short lists outside a listbox (landing, SEO pages).
+export function FirmButtonRow({ firm, onClick }) {
+  return (
+    <button
+      type="button"
+      onClick={() => onClick?.(firm)}
+      className="flex min-h-[72px] w-full items-center gap-3 border-b border-line px-4 py-3 text-left transition-colors duration-150 last:border-b-0 hover:bg-canvas"
+    >
+      <MonogramTile name={firm.name} />
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-t16 font-semibold leading-tight text-fg">{firm.name}</span>
+        <span className="block truncate text-t14 text-fg-2">{[firm.typeLabel, officesLabel(firm.offices)].filter(Boolean).join(' · ')}</span>
+        <span className="mt-1 block">
+          <StatusPill status={firm.status} />
+        </span>
+      </span>
+    </button>
+  );
+}

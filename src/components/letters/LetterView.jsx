@@ -66,7 +66,7 @@ export default function LetterView({ document: doc, onChange }) {
             rows={22}
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="block w-full rounded-app border border-line bg-white px-4 py-3 font-serif text-t16 leading-relaxed"
+            className="block w-full rounded-app border border-line bg-white px-4 py-3 font-doc text-t16 leading-relaxed"
           />
           <div className="mt-3 flex items-center gap-4">
             <Button onClick={save} disabled={status === 'saving'}>

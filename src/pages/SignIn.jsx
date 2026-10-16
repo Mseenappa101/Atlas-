@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { signIn } from '../lib/access';
 import useSession from '../hooks/useSession';
-import { Button, TextField } from '../components/ui';
+import { Button, Input } from '../components/app/controls';
 
 export default function SignIn() {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -12,7 +12,7 @@ export default function SignIn() {
   const navigate = useNavigate();
   const { session, loading } = useSession();
   const next = params.get('next');
-  const dest = next?.startsWith('/') && !next.startsWith('//') ? next : '/directory';
+  const dest = next?.startsWith('/') && !next.startsWith('//') ? next : '/explore';
 
   useEffect(() => {
     document.title = 'Sign in — Atlas';
@@ -35,30 +35,33 @@ export default function SignIn() {
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
 
   return (
-    <main className="page pt-10 md:pt-16">
-      <div className="max-w-sm">
-        <h1 className="text-xl">Sign in</h1>
-        <p className="mt-2 text-muted">To your directory, resume and cover letters.</p>
-        <form onSubmit={submit} className="mt-6 space-y-4 border-t border-ink pt-6">
-          <TextField label="Email" type="email" required autoComplete="email" value={form.email} onChange={set('email')} />
-          <TextField label="Password" type="password" required autoComplete="current-password" value={form.password} onChange={set('password')} />
-          <Button type="submit" disabled={status === 'saving'} className="w-full">
+    <div className="app min-h-screen">
+      <div className="mx-auto max-w-app px-4 pb-24 pt-10 md:px-6 md:pt-16">
+        <form onSubmit={submit} className="mx-auto max-w-sm rounded-app border border-line bg-card p-6" aria-labelledby="signin-h">
+          <h1 id="signin-h" className="text-t24 font-bold tracking-tight">
+            Sign in
+          </h1>
+          <p className="mt-1 text-t14 text-fg-2">To your map, My List and documents.</p>
+          <div className="mt-5 space-y-3">
+            <Input label="Email" type="email" required autoComplete="email" value={form.email} onChange={set('email')} />
+            <Input label="Password" type="password" required autoComplete="current-password" value={form.password} onChange={set('password')} />
+          </div>
+          <Button type="submit" disabled={status === 'saving'} className="mt-5 w-full">
             {status === 'saving' ? 'Signing in…' : 'Sign in'}
           </Button>
           {status === 'error' && (
-            <p role="alert" className="text-sm text-accent">
+            <p role="alert" className="mt-3 text-t14 text-st-soon-text">
               {message}
             </p>
           )}
+          <p className="mt-5 text-t14 text-fg-2">
+            No profile yet?{' '}
+            <Link to={next ? `/?next=${encodeURIComponent(next)}` : '/'} className="font-medium text-brand hover:underline">
+              Get free access
+            </Link>
+          </p>
         </form>
-        <p className="mt-6 text-sm text-muted">
-          No profile yet?{' '}
-          <Link to={next ? `/?next=${encodeURIComponent(next)}` : '/'} className="link">
-            Create one free
-          </Link>
-          .
-        </p>
       </div>
-    </main>
+    </div>
   );
 }

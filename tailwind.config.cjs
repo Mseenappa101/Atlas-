@@ -6,18 +6,6 @@ module.exports = {
       transparent: 'transparent',
       current: 'currentColor',
       white: '#FFFFFF',
-      paper: 'var(--paper)',
-      surface: 'var(--surface)',
-      ink: 'var(--ink)',
-      muted: 'var(--muted)',
-      rule: 'var(--rule)',
-      accent: { DEFAULT: 'var(--accent)', hover: 'var(--accent-hover)' },
-      status: {
-        yes: 'var(--status-yes)',
-        unknown: 'var(--status-unknown)',
-        no: 'var(--status-no)',
-      },
-      // App design system (Explore and everything after the redesign).
       canvas: 'var(--app-bg)',
       card: 'var(--app-surface)',
       fg: { DEFAULT: 'var(--app-text)', 2: 'var(--app-text-2)' },
@@ -31,19 +19,15 @@ module.exports = {
       },
     },
     fontFamily: {
-      serif: ['Newsreader', 'Georgia', 'serif'],
-      sans: ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
-      mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+      // Hanken Grotesk is the default for everything; JetBrains Mono for dates and counts;
+      // Newsreader only inside document previews (resumes, letters).
+      sans: ['"Hanken Grotesk"', 'system-ui', 'sans-serif'],
       app: ['"Hanken Grotesk"', 'system-ui', 'sans-serif'],
       data: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+      mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+      doc: ['Newsreader', 'Georgia', 'serif'],
     },
     fontSize: {
-      xs: ['13px', '1.45'],
-      sm: ['15px', '1.55'],
-      base: ['17px', '1.55'],
-      lg: ['21px', '1.4'],
-      xl: ['28px', '1.2'],
-      '2xl': ['40px', '1.1'],
       // App scale: 12/14/16/20/24/32.
       t12: ['12px', '16px'],
       t14: ['14px', '20px'],
@@ -54,20 +38,17 @@ module.exports = {
     },
     borderRadius: {
       none: '0',
-      sm: '2px',
-      DEFAULT: '2px',
-      md: '3px',
+      DEFAULT: '6px',
       app: '6px',
       pill: '999px',
     },
     boxShadow: {
       none: 'none',
-      drawer: '0 -8px 24px rgba(26, 26, 26, 0.12)',
       pop: '0 8px 28px rgba(20, 24, 31, 0.12), 0 1px 3px rgba(20, 24, 31, 0.08)',
     },
     extend: {
-      maxWidth: { content: '1120px', app: '1280px' },
-      transitionDuration: { DEFAULT: '140ms' },
+      maxWidth: { app: '1280px' },
+      transitionDuration: { DEFAULT: '150ms' },
       transitionTimingFunction: { DEFAULT: 'cubic-bezier(.2,0,0,1)' },
     },
   },

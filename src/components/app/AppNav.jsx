@@ -43,7 +43,7 @@ function AccountMenu() {
     };
   }, [open]);
 
-  const item = 'flex min-h-[44px] w-full items-center rounded-[4px] px-3 text-left text-t14 text-fg hover:bg-canvas md:min-h-[36px]';
+  const item = 'flex min-h-[44px] w-full items-center rounded-app px-3 text-left text-t14 text-fg hover:bg-canvas md:min-h-[36px]';
   return (
     <div ref={root} className="relative">
       <button
@@ -95,7 +95,7 @@ export default function AppNav() {
     <>
       <header className="app no-print sticky top-0 z-30 border-b border-line bg-card">
         <nav aria-label="Main" className="mx-auto flex h-14 max-w-app items-center gap-6 px-4 md:px-6">
-          <Link to="/" className="text-t16 font-bold tracking-[0.18em] text-fg">
+          <Link to="/" className="inline-flex min-h-[44px] items-center text-t16 font-bold tracking-[0.18em] text-fg">
             ATLAS
           </Link>
           <ul className="hidden items-center gap-1 md:flex">

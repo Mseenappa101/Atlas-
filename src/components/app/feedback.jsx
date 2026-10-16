@@ -10,7 +10,7 @@ export function EmptyState({ title, children, action }) {
 
 // Flat blocks, gently pulsing. Shapes match the content they stand in for.
 function Block({ className }) {
-  return <span aria-hidden="true" className={`block animate-pulse rounded-[4px] bg-line ${className}`} />;
+  return <span aria-hidden="true" className={`block animate-pulse rounded-app bg-line ${className}`} />;
 }
 
 export function FirmRowSkeleton({ rows = 6 }) {

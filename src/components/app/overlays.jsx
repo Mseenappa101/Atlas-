@@ -87,7 +87,7 @@ export function BottomSheet({ open, onClose, title, children, footer }) {
         aria-modal="true"
         aria-label={title}
         tabIndex={-1}
-        className="absolute inset-x-0 bottom-0 flex max-h-[88vh] flex-col rounded-t-[12px] bg-card shadow-pop"
+        className="absolute inset-x-0 bottom-0 flex max-h-[88vh] flex-col rounded-t-app bg-card shadow-pop"
       >
         <Header title={title} onClose={onClose} />
         <div className="flex-1 overflow-y-auto p-4">{children}</div>
@@ -142,7 +142,7 @@ export function FilterMenu({ label, options, value, onChange }) {
         <fieldset id={id} className="absolute left-0 top-full z-30 mt-1 max-h-80 min-w-[220px] overflow-y-auto rounded-app border border-line bg-card p-1 shadow-pop">
           <legend className="sr-only">{label}</legend>
           {options.map((o) => (
-            <label key={o.value} className="flex min-h-[40px] cursor-pointer items-center gap-2.5 rounded-[4px] px-2.5 text-t14 hover:bg-canvas">
+            <label key={o.value} className="flex min-h-[40px] cursor-pointer items-center gap-2.5 rounded-app px-2.5 text-t14 hover:bg-canvas">
               <input type="checkbox" checked={value.includes(o.value)} onChange={() => toggle(o.value)} className="h-4 w-4 accent-[var(--app-brand)]" />
               <span className="flex-1">{o.label}</span>
               {o.count != null && <span className="data text-t12 text-fg-2">{o.count}</span>}
@@ -150,6 +150,30 @@ export function FilterMenu({ label, options, value, onChange }) {
           ))}
         </fieldset>
       )}
+    </div>
+  );
+}
+
+// Centered dialog (desktop), full-height sheet (mobile). Used for document previews.
+export function Modal({ open, onClose, title, children, footer }) {
+  const panel = useRef(null);
+  useDialog(open, panel, onClose);
+  if (!open) return null;
+  return (
+    <div className="app fixed inset-0 z-40 flex items-end justify-center md:items-center md:p-6">
+      <div aria-hidden="true" onClick={onClose} className="absolute inset-0 bg-[rgba(20,24,31,0.2)]" />
+      <div
+        ref={panel}
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
+        tabIndex={-1}
+        className="relative flex max-h-[92vh] w-full max-w-3xl flex-col rounded-t-app bg-card shadow-pop md:rounded-app"
+      >
+        <Header title={title} onClose={onClose} />
+        <div className="flex-1 overflow-y-auto bg-canvas p-4 md:p-6">{children}</div>
+        {footer && <div className="border-t border-line p-4">{footer}</div>}
+      </div>
     </div>
   );
 }

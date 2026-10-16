@@ -2,12 +2,13 @@ import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState }
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { BookmarkPlus, Map as MapIcon, Search, SlidersHorizontal } from 'lucide-react';
 import RequireProfile from '../components/RequireProfile';
-import { Button, FilterChip, Input, Select } from '../components/app/controls';
-import { FirmList } from '../components/app/firm';
+import { Button, FilterChip, Input, Segmented, Select } from '../components/app/controls';
+import { FirmCard, FirmList } from '../components/app/firm';
 import { BottomSheet, Drawer, FilterMenu } from '../components/app/overlays';
 import { EmptyState, FirmRowSkeleton } from '../components/app/feedback';
 import FirmDetail from '../components/explore/FirmDetail';
 import SaveSearch from '../components/explore/SaveSearch';
+import Positions from '../components/explore/Positions';
 import {
   EMPTY, SIZE_BUCKETS, applyFilters, chipLabelFor, chips, isFiltered, mostRestrictive, readFilters, removeChip, writeFilters,
 } from '../components/explore/filters';
@@ -33,9 +34,58 @@ function countBy(firms, fn) {
   return m;
 }
 
+// ─── COLLECTIONS ─────────────────────────────────────────────────────────────
+// Each is a plain Explore filter, so "See all" is just that filter in the URL.
+
+function collectionsFor(profile) {
+  const markets = (profile?.target_market ?? '').split(',').map((s) => s.trim()).filter(Boolean);
+  const types = (profile?.target_firm_type ?? '').split(',').map((s) => s.trim()).filter(Boolean);
+  return [
+    { title: 'Open now', filters: { status: ['open', 'rolling'] } },
+    markets.length
+      ? { title: 'Hiring 1Ls in your markets', filters: { city: markets, hires: 'yes', nobiglaw: '1' } }
+      : { title: 'Houston firms hiring 1Ls', filters: { city: ['Houston'], hires: 'yes', nobiglaw: '1' } },
+    types.length ? { title: 'Your firm types', filters: { type: types } } : null,
+    { title: 'Texas litigation boutiques', filters: { state: 'TX', type: ['litigation-boutique'] } },
+    { title: 'Opening soon', filters: { status: ['soon'] } },
+    { title: 'Plaintiff and public interest', filters: { type: ['plaintiff', 'public-interest'] } },
+    { title: 'Mid-size firms hiring 1Ls', filters: { type: ['mid-size'], hires: 'yes' } },
+  ].filter(Boolean);
+}
+
+function Collections({ firms, profile, onOpen }) {
+  const rows = useMemo(
+    () =>
+      collectionsFor(profile)
+        .map((c) => ({ ...c, firms: recommended(applyFilters(firms, { ...EMPTY, ...c.filters }), profile) }))
+        .filter((c) => c.firms.length >= 2),
+    [firms, profile]
+  );
+  if (!rows.length) return null;
+  return (
+    <section aria-label="Collections" className="mt-10 space-y-8">
+      {rows.map((c) => (
+        <div key={c.title}>
+          <div className="mb-3 flex items-baseline justify-between gap-3">
+            <h2 className="text-t20 font-semibold">{c.title}</h2>
+            <button type="button" onClick={() => onOpen(c, null)} className="inline-flex min-h-[44px] items-center text-t14 font-medium text-brand hover:underline md:min-h-0">
+              See all <span className="data">{c.firms.length}</span>
+            </button>
+          </div>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+            {c.firms.slice(0, 6).map((f) => (
+              <FirmCard key={f.id} firm={f} onOpen={(firm) => onOpen(c, firm)} />
+            ))}
+          </div>
+        </div>
+      ))}
+    </section>
+  );
+}
+
 // ─── MAP HOME ────────────────────────────────────────────────────────────────
 
-function MapHome({ firms, onPickState, onSearch }) {
+function MapHome({ firms, onPickState, onSearch, onPositions, profile, onCollection }) {
   const counts = useMemo(() => countsByState(firms), [firms]);
   const breakdown = useMemo(() => {
     const out = {};
@@ -51,6 +101,9 @@ function MapHome({ firms, onPickState, onSearch }) {
         <div>
           <h1 className="text-t24 font-bold tracking-tight md:text-t32">Where do you want to work?</h1>
           <p className="mt-1 text-t16 text-fg-2">Pick a state to see its firms, sorted by type. Boutiques and mid-size firms come first.</p>
+          <button type="button" onClick={onPositions} className="mt-1 inline-flex min-h-[44px] items-center text-t14 font-medium text-brand hover:underline md:min-h-0">
+            Or browse open positions
+          </button>
         </div>
         <form
           className="w-full md:w-80"
@@ -88,6 +141,8 @@ function MapHome({ firms, onPickState, onSearch }) {
           </ul>
         </nav>
       </div>
+
+      <Collections firms={firms} profile={profile} onOpen={onCollection} />
     </div>
   );
 }
@@ -184,7 +239,7 @@ function ExplorePage() {
   const { firms, idMap, loading, error } = useCatalog();
   const { listings } = useListings();
   const { ids: savedIds, toggle } = useMyList();
-  const { session } = useSession();
+  const { session, profile } = useSession();
   const [params, setParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -222,6 +277,7 @@ function ExplorePage() {
   const setFilters = (f) => {
     const next = writeFilters(params, f);
     next.delete('firm');
+    next.delete('collection'); // edited filters no longer match the collection's title
     setParams(next, { replace: true });
   };
   const set = (patch) => setFilters({ ...filters, ...patch });
@@ -287,8 +343,56 @@ function ExplorePage() {
     );
   }
 
+  const showTab = (t) => {
+    const next = new URLSearchParams(params);
+    if (t === 'positions') next.set('tab', 'positions');
+    else next.delete('tab');
+    setParams(next);
+  };
+
+  if (params.get('tab') === 'positions') {
+    return (
+      <div className="pb-20 md:pb-0">
+        <div className="sticky top-14 z-20 border-b border-line bg-card">
+          <div className="mx-auto flex max-w-app flex-wrap items-center gap-3 px-4 py-3 md:px-6">
+            <Button variant="ghost" size="sm" icon={MapIcon} onClick={() => setParams(new URLSearchParams())}>
+              Map
+            </Button>
+            <Segmented label="Show" value="positions" onChange={showTab} options={[{ value: 'firms', label: 'Firms' }, { value: 'positions', label: 'Open positions' }]} />
+          </div>
+        </div>
+        <div className="mx-auto max-w-app lg:border-x lg:border-line">
+          <Positions
+            params={params}
+            setParams={setParams}
+            firmById={(id) => firms.find((f) => f.id === (idMap?.get(id) ?? id))}
+            onOpenFirm={(f) => navigate(`/firms/${f.slug}`, { state: { from: location.pathname + location.search } })}
+          />
+        </div>
+      </div>
+    );
+  }
+
   if (!filtered && !loading) {
-    return <MapHome firms={firms} onPickState={(s) => set({ state: s })} onSearch={(q) => set({ q })} />;
+    const openCollection = (c, firm) => {
+      const next = writeFilters(new URLSearchParams(), { ...EMPTY, ...c.filters });
+      next.set('collection', c.title);
+      if (firm) {
+        if (!wide) return navigate(`/firms/${firm.slug}`, { state: { from: `/explore?${next}` } });
+        next.set('firm', firm.slug);
+      }
+      setParams(next);
+    };
+    return (
+      <MapHome
+        firms={firms}
+        profile={profile}
+        onPickState={(s) => set({ state: s })}
+        onSearch={(q) => set({ q })}
+        onPositions={() => showTab('positions')}
+        onCollection={openCollection}
+      />
+    );
   }
 
   const appliedChips = chips(filters);
@@ -303,6 +407,7 @@ function ExplorePage() {
             <Button variant="ghost" size="sm" icon={MapIcon} onClick={() => setParams(new URLSearchParams(), { replace: false })} className="shrink-0">
               Map
             </Button>
+            <Segmented label="Show" value="firms" onChange={showTab} options={[{ value: 'firms', label: 'Firms' }, { value: 'positions', label: 'Open positions' }]} />
             <form role="search" className="min-w-[200px] flex-1" onSubmit={(e) => e.preventDefault()}>
               <Input icon={Search} aria-label="Search firms" placeholder="Firm name, city or practice" value={filters.q} onChange={(e) => set({ q: e.target.value })} />
             </form>
@@ -339,6 +444,7 @@ function ExplorePage() {
         <section aria-label="Results" className="min-w-0 border-line lg:border-r">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-2.5">
             <p className="text-t14" aria-live="polite">
+              {params.get('collection') && <span className="mr-1.5 font-semibold">{params.get('collection')} ·</span>}
               <span className="data font-medium">{loading ? '…' : results.length}</span> {results.length === 1 ? 'firm' : 'firms'}
             </p>
             <div className="flex items-center gap-2">

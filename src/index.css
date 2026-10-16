@@ -3,19 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --paper: #F7F4EC;
-  --surface: #FBF9F4;
-  --ink: #1A1A1A;
-  --muted: #5C5A55;
-  --rule: #D9D4C7;
-  --accent: #7A1F2B;
-  --accent-hover: #5E1620;
-  --status-yes: #2F5D3A;
-  --status-unknown: #8A6A1F;
-  --status-no: #5C5A55;
   color-scheme: light;
 
-  /* App design system */
   --app-bg: #F6F7F5;
   --app-surface: #FFFFFF;
   --app-text: #14181F;
@@ -36,56 +25,45 @@
     -webkit-text-size-adjust: 100%;
   }
   body {
-    @apply bg-paper text-ink font-sans text-sm antialiased;
-    line-height: 1.55;
+    @apply bg-canvas font-app text-t14 text-fg antialiased;
     margin: 0;
   }
-  h1, h2, h3 {
-    @apply font-serif font-normal;
-  }
   :focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--app-brand);
     outline-offset: 2px;
   }
   ::selection {
-    background: var(--accent);
-    color: #fff;
+    background: var(--app-brand-tint);
   }
 }
 
 @layer components {
-  /* Wraps every screen built on the app design system. */
+  /* Wraps screens built on the app design system (kept for pages rendered outside the main shell). */
   .app {
     @apply bg-canvas font-app text-t14 text-fg antialiased;
   }
-  .app h1, .app h2, .app h3 {
-    @apply font-app;
-  }
-  .app :focus-visible {
-    outline: 2px solid var(--app-brand);
-    outline-offset: 2px;
-  }
-  .app .data {
+  .data {
     @apply font-data;
     font-variant-numeric: tabular-nums;
   }
-  .page {
-    @apply mx-auto w-full max-w-content px-4 md:px-12;
-  }
-  .caps {
-    font-variant-caps: all-small-caps;
-    letter-spacing: 0.06em;
-  }
-  .nums {
-    font-variant-numeric: tabular-nums;
-  }
-  .link {
-    @apply text-accent underline decoration-1 underline-offset-[3px];
-  }
-  .link:hover {
-    @apply text-accent-hover;
-  }
 }
+
+/* Resume, letter and template previews render like a printed page. */
+.doc-sheet {
+  font-family: Newsreader, Georgia, serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--app-text);
+}
+.doc-sheet h2 { font-size: 21px; font-weight: 600; text-align: center; margin: 0; }
+.doc-sheet h3 {
+  font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  border-bottom: 1px solid var(--app-text); margin: 20px 0 6px; padding-bottom: 2px;
+}
+.doc-sheet p { margin: 0 0 10px; }
+.doc-sheet .center { text-align: center; }
+.doc-sheet ul { list-style: disc; padding-left: 20px; margin: 0 0 10px; }
+.doc-sheet li { margin-bottom: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -97,29 +75,7 @@
 @media print {
   body { background: #fff; }
   .no-print { display: none !important; }
-}
-
-/* Template previews render like a printed page. */
-.doc-sheet {
-  font-family: Newsreader, Georgia, serif;
-  font-size: 15px;
-  line-height: 1.5;
-}
-.doc-sheet h2 { font-size: 21px; font-weight: 600; text-align: center; margin: 0; }
-.doc-sheet h3 {
-  font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-  border-bottom: 1px solid var(--ink); margin: 20px 0 6px; padding-bottom: 2px;
-}
-.doc-sheet p { margin: 0 0 10px; }
-.doc-sheet .center { text-align: center; }
-.doc-sheet ul { list-style: disc; padding-left: 20px; margin: 0 0 10px; }
-.doc-sheet li { margin-bottom: 2px; }
-
-@media print {
   .doc-sheet { border: 0; padding: 0; }
-}
-
-@media print {
   body[data-print='doc'] * { visibility: hidden; }
   body[data-print='doc'] [data-printable],
   body[data-print='doc'] [data-printable] * { visibility: visible; }

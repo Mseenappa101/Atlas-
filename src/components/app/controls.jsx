@@ -122,13 +122,13 @@ export function Select({ label, optional, options, placeholder, className = '', 
 export function FilterChip({ selected, onClick, onRemove, children }) {
   if (onRemove) {
     return (
-      <span className="inline-flex min-h-[32px] items-center gap-1 rounded-pill border border-brand bg-brand-tint pl-3 pr-1 text-t14 text-brand">
+      <span className="inline-flex min-h-[44px] items-center gap-1 rounded-pill border border-brand bg-brand-tint pl-3 pr-1 text-t14 text-brand md:min-h-[32px]">
         {children}
         <button
           type="button"
           onClick={onRemove}
           aria-label={`Remove filter: ${typeof children === 'string' ? children : ''}`}
-          className="inline-flex h-8 w-8 items-center justify-center rounded-pill hover:bg-card md:h-6 md:w-6"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-pill hover:bg-card md:h-6 md:w-6"
         >
           <X size={14} aria-hidden="true" />
         </button>
@@ -157,7 +157,7 @@ export function Segmented({ label, value, onChange, options }) {
       {options.map((o) => (
         <label
           key={o.value}
-          className={`inline-flex min-h-[40px] cursor-pointer items-center gap-1.5 rounded-[5px] px-3 text-t14 transition-colors duration-150 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-brand md:min-h-[32px] ${
+          className={`inline-flex min-h-[40px] cursor-pointer items-center gap-1.5 rounded-app px-3 text-t14 transition-colors duration-150 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-brand md:min-h-[32px] ${
             value === o.value ? 'bg-brand text-white' : 'text-fg-2 hover:text-fg'
           }`}
         >

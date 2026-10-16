@@ -90,4 +90,47 @@ Interests: [Two or three specific ones. "Distance running, Texas barbecue, resto
 <p>Best regards,<br>[Your Name]</p>
 `,
   },
+  {
+    slug: 'follow-up-after-applying',
+    title: 'Follow-up after applying',
+    description: 'A short check-in two to three weeks after you apply, when you haven’t heard back.',
+    body: `
+<p><strong>Subject:</strong> [Your Name], 1L summer application</p>
+<p>Dear [Mr./Ms. Last Name],</p>
+<p>I applied for [Firm Name]&rsquo;s 1L summer position on [date] and wanted to confirm my materials arrived. I remain very interested in [the firm&rsquo;s work in X / joining the [City] office], and I&rsquo;d be glad to send anything else that would help, including my fall grades once they&rsquo;re released.</p>
+<p>Thank you for your time.</p>
+<p>Best regards,<br>[Your Name]<br>[Law School], J.D. Candidate 2029<br>[Phone]</p>
+`,
+  },
+  {
+    slug: 'informational-interview-questions',
+    title: 'Informational interview questions',
+    description: 'Twelve questions for a 15-minute call with an attorney, grouped so you can pick three or four.',
+    body: `
+<h3>About their path</h3>
+<ul>
+<li>How did you end up at [Firm Name], and what made you choose a firm this size?</li>
+<li>What did you do the summer after your 1L year?</li>
+<li>What surprised you most about practicing in [City]?</li>
+</ul>
+<h3>About the work</h3>
+<ul>
+<li>What does a junior associate&rsquo;s week look like in your practice group?</li>
+<li>How early do associates get their own work, such as depositions, briefs or client calls?</li>
+<li>Which skills from law school do you use most?</li>
+</ul>
+<h3>About hiring</h3>
+<ul>
+<li>Does the firm hire 1Ls, and if so, when do most of those decisions get made?</li>
+<li>What makes a 1L application stand out to your hiring committee?</li>
+<li>Is there anything you wish students knew before applying here?</li>
+</ul>
+<h3>To close</h3>
+<ul>
+<li>Is there anyone else you think I should talk to?</li>
+<li>May I keep you posted on my search?</li>
+<li>What&rsquo;s the best way to follow up with you?</li>
+</ul>
+`,
+  },
 ];

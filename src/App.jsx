@@ -16,6 +16,7 @@ import Explore from './pages/Explore';
 import FirmPage from './pages/FirmPage';
 import Pro from './pages/Pro';
 import MyList from './pages/MyList';
+import { MarketPage, TypePage } from './pages/SeoList';
 
 // Pre-pivot features. Loaded only when their flag is on, so they stay out of the public bundle.
 const AuthProvider = lazy(() => import('./context/AuthContext').then((m) => ({ default: m.AuthProvider })));
@@ -30,16 +31,18 @@ const ComponentsGallery = import.meta.env.DEV ? lazy(() => import('./pages/dev/C
 function NotFound() {
   const { pathname } = useLocation();
   return (
-    <main className="page py-16">
-      <h1 className="text-xl">Page not found</h1>
-      <p className="mt-2 text-muted">
-        Nothing lives at <span className="font-mono text-xs">{pathname}</span>.{' '}
-        <a href="/directory" className="link">
-          Go to the directory
-        </a>
-        .
-      </p>
-    </main>
+    <div className="app min-h-[60vh]">
+      <div className="mx-auto max-w-app px-4 py-16 md:px-6">
+        <h1 className="text-t24 font-bold tracking-tight">Page not found</h1>
+        <p className="mt-2 text-t16 text-fg-2">
+          Nothing lives at <span className="data text-t14">{pathname}</span>.{' '}
+          <a href="/explore" className="font-medium text-brand hover:underline">
+            Go to Explore
+          </a>
+          .
+        </p>
+      </div>
+    </div>
   );
 }
 
@@ -51,6 +54,8 @@ function AppRoutes() {
       <Route path="/firms/:slug" element={<FirmPage />} />
       <Route path="/pro" element={<Pro />} />
       <Route path="/my-list" element={<MyList />} />
+      <Route path="/markets/:slug" element={<MarketPage />} />
+      <Route path="/types/:slug" element={<TypePage />} />
       <Route path="/directory" element={<Navigate to="/explore" replace />} />
       <Route path="/directory/:firmId" element={<Navigate to="/explore" replace />} />
       <Route path="/calendar" element={<Calendar />} />
@@ -89,7 +94,7 @@ export default function App() {
     <BrowserRouter>
       <SessionProvider>
       <MyListProvider>
-      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-2 focus:z-50 focus:bg-surface focus:px-3 focus:py-2">
+      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-2 focus:z-50 focus:rounded-app focus:bg-card focus:px-3 focus:py-2 focus:text-t14">
         Skip to content
       </a>
       <AppNav />

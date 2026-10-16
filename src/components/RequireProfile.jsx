@@ -5,7 +5,7 @@ import useSession from '../hooks/useSession';
 export default function RequireProfile({ children }) {
   const { session, loading } = useSession();
   const location = useLocation();
-  if (loading) return <main className="page min-h-[60vh]" aria-busy="true" />;
+  if (loading) return <div className="app min-h-[60vh]" aria-busy="true" />;
   if (!session) {
     const next = encodeURIComponent(location.pathname + location.search);
     return <Navigate to={`/?next=${next}`} replace />;

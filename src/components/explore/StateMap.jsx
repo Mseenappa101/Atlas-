@@ -110,12 +110,12 @@ export default function StateMap({ counts, breakdown, selected, onSelect }) {
         <span>Firms per state</span>
         {[...BINS].reverse().map((b) => (
           <span key={b.label} className="inline-flex items-center gap-1.5">
-            <span aria-hidden="true" className="h-3 w-3 rounded-[3px]" style={{ background: b.color }} />
+            <span aria-hidden="true" className="h-3 w-3" style={{ background: b.color }} />
             <span className="data">{b.label}</span>
           </span>
         ))}
         <span className="inline-flex items-center gap-1.5">
-          <span aria-hidden="true" className="h-3 w-3 rounded-[3px] border border-line" style={{ background: EMPTY }} />
+          <span aria-hidden="true" className="h-3 w-3 border border-line" style={{ background: EMPTY }} />
           No firms yet
         </span>
       </figcaption>

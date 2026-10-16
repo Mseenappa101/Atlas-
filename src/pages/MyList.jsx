@@ -88,7 +88,7 @@ function Notes({ row, onSave }) {
       onChange={(e) => setValue(e.target.value)}
       onBlur={() => value !== (row.notes ?? '') && onSave(row, value)}
       onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
-      className="w-full min-w-[160px] rounded-app border border-transparent bg-transparent px-2 py-1.5 text-t14 placeholder:text-fg-2 hover:border-line focus:border-line focus:bg-card"
+      className="min-h-[44px] w-full min-w-[160px] rounded-app border border-transparent bg-transparent px-2 py-1.5 text-t14 placeholder:text-fg-2 hover:border-line focus:border-line focus:bg-card lg:min-h-0"
     />
   );
 }
@@ -125,7 +125,7 @@ function ThisWeek({ rows, alerts }) {
 function TableView({ rows, onStage, onNotes, onRemove }) {
   return (
     <>
-      <div className="hidden overflow-x-auto rounded-app border border-line bg-card md:block">
+      <div className="relative hidden overflow-x-auto rounded-app border border-line bg-card lg:block">
         <table className="w-full text-left text-t14">
           <caption className="sr-only">Saved firms, sorted by deadline</caption>
           <thead className="border-b border-line text-t12 text-fg-2">
@@ -154,7 +154,7 @@ function TableView({ rows, onStage, onNotes, onRemove }) {
                     <Flag row={r} />
                   </div>
                 </td>
-                <td className="data whitespace-nowrap px-3 py-2 text-t12 text-fg-2">{r.applied_at ? fmt(new Date(r.applied_at)) : '–'}</td>
+                <td className="data whitespace-nowrap px-3 py-2 text-t12 text-fg-2">{r.applied_at ? fmt(new Date(r.applied_at)) : 'Not yet'}</td>
                 <td className="px-3 py-2"><Notes row={r} onSave={onNotes} /></td>
                 <td className="px-3 py-2">
                   <button type="button" aria-label={`Remove ${r.firm.name}`} onClick={() => onRemove(r)} className="inline-flex h-9 w-9 items-center justify-center rounded-app text-fg-2 hover:bg-brand-tint hover:text-fg">
@@ -166,10 +166,10 @@ function TableView({ rows, onStage, onNotes, onRemove }) {
           </tbody>
         </table>
       </div>
-      <ul className="space-y-2 md:hidden">
+      <ul className="space-y-2 lg:hidden">
         {rows.map((r) => (
           <li key={r.id} className="rounded-app border border-line bg-card p-3">
-            <Link to={`/firms/${r.firm.slug}`} className="flex items-center gap-2.5">
+            <Link to={`/firms/${r.firm.slug}`} className="flex min-h-[44px] items-center gap-2.5">
               <MonogramTile name={r.firm.name} size="sm" />
               <span className="text-t16 font-semibold">{r.firm.name}</span>
             </Link>
@@ -224,7 +224,7 @@ function BoardView({ rows, onStage }) {
                   onDragStart={(e) => e.dataTransfer.setData('text/plain', r.id)}
                   className="cursor-grab rounded-app border border-line bg-card p-2.5 active:cursor-grabbing"
                 >
-                  <Link to={`/firms/${r.firm.slug}`} className="block truncate text-t14 font-semibold hover:underline">{r.firm.name}</Link>
+                  <Link to={`/firms/${r.firm.slug}`} className="flex min-h-[44px] items-center truncate text-t14 font-semibold hover:underline md:min-h-0">{r.firm.name}</Link>
                   <div className="mt-1.5 flex flex-wrap gap-1">
                     <StatusPill status={r.firm.status} />
                     <Flag row={r} />
