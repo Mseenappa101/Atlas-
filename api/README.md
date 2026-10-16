@@ -23,7 +23,7 @@ Read from the environment, falling back to `.env.local` for local dev.
 | `SUPABASE_SERVICE_ROLE_KEY` | required | Server only. Verifies tokens and bypasses RLS. |
 | `ANTHROPIC_API_KEY` | required | Falls back to `VITE_ANTHROPIC_API_KEY`. Rename it: `VITE_` vars get bundled into the browser build. |
 | `API_PORT` | `8787` | |
-| `API_ALLOWED_ORIGINS` | `http://localhost:5173` | Comma list of exact origins, e.g. `https://firmward.com,http://localhost:5173`. |
+| `API_ALLOWED_ORIGINS` | `http://localhost:5173` | Comma list of exact origins, e.g. `https://firmward.org,http://localhost:5173`. |
 | `DAILY_GENERATION_CAP` | `30` | Claude calls per user per rolling 24h, counted from `generation_log`. |
 
 `e2e.js` also needs `VITE_SUPABASE_ANON_KEY` so it can sign in as the test user.

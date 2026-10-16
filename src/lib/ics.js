@@ -12,7 +12,7 @@ export function downloadIcs({ title, date, description = '', url = '' }) {
     'VERSION:2.0',
     'PRODID:-//Firmward//1L Directory//EN',
     'BEGIN:VEVENT',
-    `UID:${ymd(date)}-${Math.random().toString(36).slice(2)}@firmward.com`,
+    `UID:${ymd(date)}-${Math.random().toString(36).slice(2)}@firmward.org`,
     `DTSTAMP:${stamp}`,
     `DTSTART;VALUE=DATE:${ymd(date)}`,
     `DTEND;VALUE=DATE:${ymd(next)}`,
