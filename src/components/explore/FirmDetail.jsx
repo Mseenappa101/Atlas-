@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
-import { Bookmark, CalendarPlus, ExternalLink, PenLine } from 'lucide-react';
+import { Bookmark, CalendarPlus, ExternalLink, PenLine, Send } from 'lucide-react';
 import { Button, ButtonLink } from '../app/controls';
 import { FirmCard, MonogramTile, StatusPill } from '../app/firm';
 import { officesLabel } from '../../lib/format';
 import { downloadIcs } from '../../lib/ics';
 import { site } from '../../lib/site';
 import { postingTypeLabel } from '../../lib/listings';
+import { portalUrl } from '../../lib/application';
 
 const NP = <span className="text-fg-2">Not published</span>;
 const fmt = (d, year = false) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', ...(year ? { year: 'numeric' } : {}) });
@@ -58,6 +59,7 @@ export default function FirmDetail({ firm, listings = [], similar = [], saved, o
   const windowOffice = deadlineOffice ?? offices.find((o) => o.start || o.end);
   const differs = offices.length > 1 && new Set(offices.map((o) => `${windowText(o)}|${o.applyUrl}`)).size > 1;
   const notes = readerNotes(firm.notes);
+  const portal = portalUrl(firm);
   const report = site.correctionsEmail
     ? `mailto:${site.correctionsEmail}?subject=${encodeURIComponent(`Outdated info: ${firm.name}`)}`
     : null;
@@ -76,24 +78,26 @@ export default function FirmDetail({ firm, listings = [], similar = [], saved, o
       </header>
 
       <div className="mt-5 flex flex-wrap gap-2">
-        {firm.applyUrl ? (
-          <ButtonLink href={firm.applyUrl} icon={ExternalLink}>
-            Open application
-          </ButtonLink>
-        ) : (
-          firm.careersUrl && (
-            <ButtonLink href={firm.careersUrl} icon={ExternalLink}>
-              Open careers page
-            </ButtonLink>
-          )
-        )}
+        <ButtonLink to={`/apply/${firm.slug}`} icon={Send}>
+          {saved ? 'Open my application' : 'Start application'}
+        </ButtonLink>
         <Button variant="secondary" icon={Bookmark} aria-pressed={saved} onClick={() => onToggleSave(firm)}>
           {saved ? 'Saved to My List' : 'Add to My List'}
         </Button>
         <ButtonLink to={`/letters/new?firm=${firm.id}`} variant="secondary" icon={PenLine}>
           Write cover letter
         </ButtonLink>
+        {portal && (
+          <ButtonLink href={portal} variant="ghost" icon={ExternalLink}>
+            {firm.applyUrl && !/^mailto:/i.test(firm.applyUrl) ? 'Firm’s application' : 'Careers page'}
+          </ButtonLink>
+        )}
       </div>
+      {firm.recruitingEmail && (
+        <p className="mt-2 text-t14 text-fg-2">
+          Takes applications by email. Send yours from your application page.
+        </p>
+      )}
 
       <Section title="1L summer at a glance">
         <dl className="grid grid-cols-2 gap-2 lg:grid-cols-3">

@@ -57,6 +57,9 @@ export default function Footer() {
             .
           </p>
           <p>Career information only, not legal advice. Not affiliated with or endorsed by any law school or law firm.</p>
+          <p>
+            <Link to="/privacy" className="hover:underline">Privacy</Link> · <Link to="/terms" className="hover:underline">Terms</Link>
+          </p>
         </div>
       </div>
     </footer>

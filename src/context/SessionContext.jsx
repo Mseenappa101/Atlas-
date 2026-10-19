@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { SessionContext } from './session-context';
 
-const PROFILE_COLUMNS = 'id,email,full_name,school,class_year,target_market,target_firm_type,resume_data,resume_source,resume_updated_at';
+const PROFILE_COLUMNS = 'id,email,full_name,school,class_year,target_market,target_firm_type,resume_data,resume_source,resume_file_path,resume_updated_at';
 
 export function SessionProvider({ children }) {
   const [session, setSession] = useState(null);

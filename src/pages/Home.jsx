@@ -8,15 +8,9 @@ import { FIRM_TYPES, recommended } from '../lib/catalog';
 import { Button, FilterChip, Input, Select } from '../components/app/controls';
 import { FirmButtonRow } from '../components/app/firm';
 import { FirmRowSkeleton } from '../components/app/feedback';
+import { CLASS_YEARS } from '../lib/profileOptions';
 
 const MARKETS = ['Dallas', 'Houston', 'Austin', 'San Antonio', 'New Orleans', 'Atlanta', 'Nashville', 'Birmingham', 'Miami', 'Charlotte', 'New York'];
-const CLASS_YEARS = [
-  { value: '1L', label: '1L (Class of 2029)' },
-  { value: '2L', label: '2L (Class of 2028)' },
-  { value: '3L', label: '3L (Class of 2027)' },
-  { value: 'transfer', label: 'Transferring' },
-  { value: 'incoming', label: 'Starting law school in 2027' },
-];
 const NON_BIGLAW = FIRM_TYPES.filter((t) => t.value !== 'biglaw');
 
 const FAQ = [

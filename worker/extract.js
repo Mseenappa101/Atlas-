@@ -1,6 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { anthropicKey } from './config.js';
 import { truncateAroundHits, relevantLinks } from './text.js';
+import { isEmail, onPage } from './recruiting-email.js';
 
 export const MODEL = 'claude-haiku-4-5';
 const PRICE_IN = 1 / 1e6;   // $/token, list
@@ -37,7 +38,8 @@ Firm fields (describe the employer, from this page only; use unknown/null/[] whe
 - hires_1l: yes if the page describes a 1L summer program or 1L hiring; no only if it explicitly says it does not hire 1Ls; otherwise unknown.
 - firm_type: litigation-boutique (small firm focused on litigation/trials), specialty-boutique (small firm focused on one non-litigation area such as IP, employment, tax, trusts or venture), plaintiff (represents plaintiffs: personal injury, class actions, mass torts), mid-size (roughly 50–300 lawyers, several practice areas), regional (full-service firm rooted in one state or region), biglaw (large national or international firm), government, public-interest, or null if unclear.
 - practice_areas: up to 4 main practice areas named on the page.
-- size: attorney headcount or size description if stated (e.g. "250 attorneys"), else null.`;
+- size: attorney headcount or size description if stated (e.g. "250 attorneys"), else null.
+- application_email: the email address the page tells students to send applications or recruiting questions to (e.g. recruiting@firm.com), copied exactly; null if the page gives none. Not a general info or marketing address.`;
 
 const nullable = (schema) => ({ anyOf: [schema, { type: 'null' }] });
 
@@ -69,12 +71,13 @@ export const OUTPUT_SCHEMA = {
     firm: {
       type: 'object',
       additionalProperties: false,
-      required: ['hires_1l', 'firm_type', 'practice_areas', 'size'],
+      required: ['hires_1l', 'firm_type', 'practice_areas', 'size', 'application_email'],
       properties: {
         hires_1l: { type: 'string', enum: ['yes', 'no', 'unknown'] },
         firm_type: nullable({ type: 'string', enum: ['litigation-boutique', 'specialty-boutique', 'plaintiff', 'mid-size', 'regional', 'biglaw', 'government', 'public-interest'] }),
         practice_areas: { type: 'array', items: { type: 'string' } },
         size: nullable({ type: 'string' }),
+        application_email: nullable({ type: 'string' }),
       },
     },
   },
@@ -163,6 +166,8 @@ export function sanitize(out, pageUrl, pageText = '') {
     firm_type: FIRM_TYPES.has(f.firm_type) ? f.firm_type : null,
     practice_areas: (f.practice_areas || []).map((p) => String(p).trim()).filter(Boolean).slice(0, 4),
     size: f.size?.trim() || null,
+    // Kept only if it is a real address that appears on the page.
+    application_email: isEmail(f.application_email?.trim()) && onPage(f.application_email.trim(), pageText) ? f.application_email.trim().toLowerCase() : null,
   };
   return { listings, firm };
 }

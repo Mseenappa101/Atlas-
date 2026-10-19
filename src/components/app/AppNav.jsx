@@ -66,6 +66,9 @@ function AccountMenu() {
           <Link to="/documents" className={item} onClick={() => setOpen(false)}>
             My documents
           </Link>
+          <Link to="/account" className={item} onClick={() => setOpen(false)}>
+            Account and email
+          </Link>
           <Link to="/pro" className={item} onClick={() => setOpen(false)}>
             Plan and billing
           </Link>

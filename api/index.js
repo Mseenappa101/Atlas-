@@ -4,6 +4,10 @@ import { HttpError, cors, readJson, sendJson, sendError } from './http.js';
 import { userFromToken } from './db.js';
 import { getUsage, parseResume, buildResume, saveResume, createLetter, storeResumeFile, resumeFileUrl } from './routes.js';
 import { checkout, syncCheckout, portal, webhook } from './billing.js';
+import {
+  listConnections, startConnect, connectCallback, disconnect, uploadApplicationFile, deleteApplicationFile, applicationFileUrl, documentPdf, sendApplication,
+} from './applications.js';
+import { getNewsletter, setNewsletter, startNewsletterSync } from './newsletter.js';
 
 const ROUTES = {
   'GET /api/me/usage': getUsage,
@@ -16,6 +20,16 @@ const ROUTES = {
   'POST /api/billing/checkout': checkout,
   'POST /api/billing/sync': syncCheckout,
   'POST /api/billing/portal': portal,
+  'GET /api/email/connections': listConnections,
+  'POST /api/email/connect': startConnect,
+  'POST /api/email/disconnect': disconnect,
+  'POST /api/files': uploadApplicationFile,
+  'POST /api/files/delete': deleteApplicationFile,
+  'POST /api/files/url': applicationFileUrl,
+  'POST /api/documents/pdf': documentPdf,
+  'POST /api/applications/send': sendApplication,
+  'GET /api/me/newsletter': getNewsletter,
+  'PUT /api/me/newsletter': setNewsletter,
 };
 const PATHS = new Set(Object.keys(ROUTES).map((k) => k.split(' ')[1]));
 
@@ -37,6 +51,12 @@ async function handle(req, res, ctx) {
     const chunks = [];
     for await (const c of req) chunks.push(c);
     return sendJson(res, 200, await webhook(Buffer.concat(chunks), req.headers['stripe-signature']));
+  }
+  // Google / Microsoft send the student back here after they approve; the signed state identifies them.
+  const connect = req.method === 'GET' && /^\/api\/connect\/(gmail|outlook)\/callback$/.exec(path);
+  if (connect) {
+    res.writeHead(302, { Location: await connectCallback(new URL(req.url, 'http://x'), connect[1]), 'Cache-Control': 'no-store' });
+    return res.end();
   }
   const handler = ROUTES[`${req.method} ${path}`];
   if (!handler) {
@@ -69,6 +89,7 @@ const server = createServer(async (req, res) => {
 server.requestTimeout = 180_000;
 
 server.listen(config.port, () => log(`firmward api listening on :${config.port} (origins: ${config.allowedOrigins.join(', ')})`));
+startNewsletterSync();
 
 let stopping = false;
 function shutdown(signal) {

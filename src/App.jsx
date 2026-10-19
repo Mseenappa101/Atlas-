@@ -16,6 +16,9 @@ import Explore from './pages/Explore';
 import FirmPage from './pages/FirmPage';
 import Pro from './pages/Pro';
 import MyList from './pages/MyList';
+import Apply from './pages/Apply';
+import Account from './pages/Account';
+import { Privacy, Terms } from './pages/Legal';
 import { MarketPage, TypePage } from './pages/SeoList';
 
 // Pre-pivot features. Loaded only when their flag is on, so they stay out of the public bundle.
@@ -54,6 +57,10 @@ function AppRoutes() {
       <Route path="/firms/:slug" element={<FirmPage />} />
       <Route path="/pro" element={<Pro />} />
       <Route path="/my-list" element={<MyList />} />
+      <Route path="/apply/:slug" element={<Apply />} />
+      <Route path="/account" element={<Account />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
       <Route path="/markets/:slug" element={<MarketPage />} />
       <Route path="/types/:slug" element={<TypePage />} />
       <Route path="/directory" element={<Navigate to="/explore" replace />} />

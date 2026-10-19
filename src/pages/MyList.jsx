@@ -11,19 +11,8 @@ import useSession from '../hooks/useSession';
 import { supabase } from '../lib/supabase';
 import { loadSavedSearches } from '../lib/savedSearches';
 import { applyFilters, writeFilters } from '../components/explore/filters';
+import { STAGES, stageOf, stagePatch } from '../lib/stages';
 
-const STAGES = [
-  { value: 'saved', label: 'Saved' },
-  { value: 'researching', label: 'Researching' },
-  { value: 'applied', label: 'Applied' },
-  { value: 'interviewing', label: 'Interviewing' },
-  { value: 'offer', label: 'Offer' },
-  { value: 'not-pursuing', label: 'Not pursuing' },
-];
-const STAGE_LABEL = Object.fromEntries(STAGES.map((s) => [s.value, s.label]));
-// Old tracker values from before migration 004.
-const LEGACY = { Researching: 'researching', Applied: 'applied', 'Heard Back': 'interviewing', Callback: 'interviewing', Offer: 'offer', Rejected: 'not-pursuing' };
-const stageOf = (row) => LEGACY[row.status] ?? (STAGE_LABEL[row.status] ? row.status : 'saved');
 
 const DAY = 86_400_000;
 const today = () => {
@@ -42,6 +31,14 @@ function nextDate(firm) {
   if (starts.length) return { kind: 'opens', date: starts[0] };
   const past = firm.offices.map((o) => o.end).filter(Boolean).sort((a, b) => b - a);
   return past.length ? { kind: 'passed', date: past[0] } : null;
+}
+
+// A deadline the student set in the application workspace wins over the firm's published one.
+function ownDeadline(row) {
+  if (!row.deadline) return null;
+  const [y, m, d] = row.deadline.split('-').map(Number);
+  const date = new Date(y, m - 1, d);
+  return { kind: date >= today() ? 'deadline' : 'passed', date };
 }
 
 function Flag({ row }) {
@@ -142,7 +139,7 @@ function TableView({ rows, onStage, onNotes, onRemove }) {
             {rows.map((r) => (
               <tr key={r.id} className="align-middle">
                 <th scope="row" className="px-3 py-2 font-normal">
-                  <Link to={`/firms/${r.firm.slug}`} className="flex items-center gap-2.5 hover:underline">
+                  <Link to={`/apply/${r.firm.slug}`} className="flex items-center gap-2.5 hover:underline">
                     <MonogramTile name={r.firm.name} size="sm" />
                     <span className="whitespace-nowrap font-medium">{r.firm.name}</span>
                   </Link>
@@ -169,7 +166,7 @@ function TableView({ rows, onStage, onNotes, onRemove }) {
       <ul className="space-y-2 lg:hidden">
         {rows.map((r) => (
           <li key={r.id} className="rounded-app border border-line bg-card p-3">
-            <Link to={`/firms/${r.firm.slug}`} className="flex min-h-[44px] items-center gap-2.5">
+            <Link to={`/apply/${r.firm.slug}`} className="flex min-h-[44px] items-center gap-2.5">
               <MonogramTile name={r.firm.name} size="sm" />
               <span className="text-t16 font-semibold">{r.firm.name}</span>
             </Link>
@@ -224,7 +221,7 @@ function BoardView({ rows, onStage }) {
                   onDragStart={(e) => e.dataTransfer.setData('text/plain', r.id)}
                   className="cursor-grab rounded-app border border-line bg-card p-2.5 active:cursor-grabbing"
                 >
-                  <Link to={`/firms/${r.firm.slug}`} className="flex min-h-[44px] items-center truncate text-t14 font-semibold hover:underline md:min-h-0">{r.firm.name}</Link>
+                  <Link to={`/apply/${r.firm.slug}`} className="flex min-h-[44px] items-center truncate text-t14 font-semibold hover:underline md:min-h-0">{r.firm.name}</Link>
                   <div className="mt-1.5 flex flex-wrap gap-1">
                     <StatusPill status={r.firm.status} />
                     <Flag row={r} />
@@ -317,7 +314,7 @@ function MyListPage() {
       raw
         .map((r) => {
           const firm = byId.get(idMap?.get(r.firm_id) ?? r.firm_id);
-          return firm ? { ...r, firm, stage: stageOf(r), next: nextDate(firm) } : null;
+          return firm ? { ...r, firm, stage: stageOf(r), next: ownDeadline(r) ?? nextDate(firm) } : null;
         })
         .filter(Boolean)
         .sort((a, b) => {
@@ -339,11 +336,7 @@ function MyListPage() {
       .filter((a) => a.count > 0);
   }, [searches, firms]);
 
-  const onStage = (row, stage) => {
-    const patch = { status: stage };
-    if (stage === 'applied' && !row.applied_at) patch.applied_at = new Date().toISOString();
-    update(row.id, patch);
-  };
+  const onStage = (row, stage) => update(row.id, stagePatch(row, stage));
   const onNotes = (row, notes) => update(row.id, { notes });
   const onRemove = (row) => toggle(row.firm_id);
 

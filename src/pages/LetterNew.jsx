@@ -14,6 +14,12 @@ import { api } from '../lib/api';
 import { supabase } from '../lib/supabase';
 import { templateLetter } from '../lib/templateLetter';
 
+// Opened from an application workspace: go back there when the letter is done.
+const returnPath = (params) => {
+  const r = params.get('return');
+  return r && /^\/apply\/[\w-]+$/.test(r) ? r : null;
+};
+
 const titleFor = (firm, listing, kind) => `${firm.name} — ${listing?.title ?? 'Summer position'}${kind === 'template' ? ' (template)' : ''}`;
 
 function NewLetter() {
@@ -200,9 +206,16 @@ function NewLetter() {
                 </>
               )}
             </p>
-            <button type="button" className="text-brand hover:underline" onClick={() => { setDoc(null); setStatus('idle'); }}>
-              Write another version
-            </button>
+            <span className="flex flex-wrap items-center gap-4">
+              <button type="button" className="text-brand hover:underline" onClick={() => { setDoc(null); setStatus('idle'); }}>
+                Write another version
+              </button>
+              {returnPath(params) && !doc.unsaved && (
+                <ButtonLink to={`${returnPath(params)}?letter=${doc.id}`} size="sm">
+                  Use in my {firm.name} application
+                </ButtonLink>
+              )}
+            </span>
           </div>
           <LetterView document={doc} onChange={setDoc} />
           <CoachingNote>Sending this to {firm.name}? Have a coach read it with you first.</CoachingNote>
@@ -213,13 +226,15 @@ function NewLetter() {
 }
 
 export default function LetterNewPage() {
+  const [params] = useSearchParams();
+  const back = returnPath(params);
   return (
     <RequireProfile>
       <div className="app min-h-screen">
         <div className="mx-auto max-w-4xl px-4 pb-24 pt-4 md:px-6 md:pb-12">
-          <Link to="/explore" className="mb-4 inline-flex min-h-[44px] items-center gap-1.5 text-t14 text-fg-2 hover:text-fg">
+          <Link to={back ?? '/explore'} className="mb-4 inline-flex min-h-[44px] items-center gap-1.5 text-t14 text-fg-2 hover:text-fg">
             <ArrowLeft size={18} aria-hidden="true" />
-            Back to Explore
+            {back ? 'Back to your application' : 'Back to Explore'}
           </Link>
           <NewLetter />
         </div>

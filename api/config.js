@@ -26,6 +26,18 @@ export const config = {
   // Looked up by key so test and live mode don't need different price ids.
   proPriceLookupKey: 'atlas_pro_monthly',
   bucket: 'resume-uploads',
+
+  // Sending applications. OAuth redirect URIs are APP_URL + /api/connect/{gmail|outlook}/callback.
+  tokenKey: process.env.TOKEN_ENCRYPTION_KEY,
+  googleClientId: process.env.GOOGLE_CLIENT_ID,
+  googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  microsoftClientId: process.env.MICROSOFT_CLIENT_ID,
+  microsoftClientSecret: process.env.MICROSOFT_CLIENT_SECRET,
+  resendKey: process.env.RESEND_API_KEY,
+  sendFromAddress: process.env.SEND_FROM_ADDRESS || 'applications@firmward.org',
+  dailySendCap: num(process.env.DAILY_SEND_CAP, 25),
+  // Newsletter: every profile becomes a Resend contact, optionally added to this segment.
+  resendSegmentId: process.env.RESEND_SEGMENT_ID || null,
 };
 
 // User's choice of model; pricing per million tokens (output includes thinking).

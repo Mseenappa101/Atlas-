@@ -89,6 +89,8 @@ function firm(row, offices) {
     status: best?.status ?? windowStatus(null),
     applyUrl: best?.applyUrl ?? offices.find((o) => o.applyUrl)?.applyUrl ?? null,
     careersUrl: best?.careersUrl ?? offices.find((o) => o.careersUrl)?.careersUrl ?? null,
+    // Where emailed applications go, when the firm publishes an address.
+    recruitingEmail: row.recruiting_email || null,
     verifiedAt: verified.length ? new Date(Math.max(...verified)) : null,
     source: row.source ?? 'Firm careers page',
   };

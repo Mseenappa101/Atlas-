@@ -81,7 +81,7 @@ export async function closeAllForSource(sourceId) {
 async function updateFirms(source, rows, meta) {
   const db = getDb();
   const now = new Date().toISOString();
-  const firm = await q(db.from('firms').select('id, hires_1l, firm_type, practice_areas, size').eq('id', source.firm_id).maybeSingle());
+  const firm = await q(db.from('firms').select('id, hires_1l, firm_type, practice_areas, size, recruiting_email').eq('id', source.firm_id).maybeSingle());
   if (!firm) return;
 
   const oneL = rows.filter((r) => r.class_years.includes('1L'));
@@ -93,6 +93,7 @@ async function updateFirms(source, rows, meta) {
     if (!firm.firm_type && meta.firm_type) patch.firm_type = meta.firm_type;
     if (!firm.practice_areas?.length && meta.practice_areas.length) patch.practice_areas = meta.practice_areas;
     if (!firm.size && meta.size) patch.size = meta.size;
+    if (!firm.recruiting_email && meta.application_email) patch.recruiting_email = meta.application_email;
   }
   await q(db.from('firms').update(patch).eq('id', firm.id));
 
