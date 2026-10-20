@@ -46,6 +46,9 @@ export default function SignIn() {
             <Input label="Email" type="email" required autoComplete="email" value={form.email} onChange={set('email')} />
             <Input label="Password" type="password" required autoComplete="current-password" value={form.password} onChange={set('password')} />
           </div>
+          <p className="mt-2 text-right text-t14">
+            <Link to="/reset-password" className="text-brand hover:underline">Forgot password?</Link>
+          </p>
           <Button type="submit" disabled={status === 'saving'} className="mt-5 w-full">
             {status === 'saving' ? 'Signing in…' : 'Sign in'}
           </Button>

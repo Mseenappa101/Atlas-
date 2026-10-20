@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Calendar from './pages/Calendar';
 import Templates from './pages/Templates';
 import SignIn from './pages/SignIn';
+import ResetPassword from './pages/ResetPassword';
 import Resume from './pages/Resume';
 import LetterNew from './pages/LetterNew';
 import Documents from './pages/Documents';
@@ -68,6 +69,7 @@ function AppRoutes() {
       <Route path="/calendar" element={<Calendar />} />
       <Route path="/templates" element={<Templates />} />
       <Route path="/signin" element={<SignIn />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/resume" element={<Resume />} />
       <Route path="/letters/new" element={<LetterNew />} />
       <Route path="/documents" element={<Documents />} />
