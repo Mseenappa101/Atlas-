@@ -76,7 +76,7 @@ function Choose({ profile, pro, onResume, onStored }) {
           Fill in the resume form
         </h2>
         <p className="mb-4 mt-1 text-t14 text-fg-2">
-          Five short steps: contact, law school, college, jobs, interests. You get a clean one-page 1L resume
+          Five short steps: contact, law school, college, jobs, interests. You get a clean one-page law student resume
           {pro ? ', and AI can rewrite your job descriptions into strong bullets.' : ' in your own words.'}
         </p>
         <Button variant="secondary" onClick={() => setMode('build')}>
@@ -161,7 +161,7 @@ function ResumePage() {
               </span>
             </p>
           )}
-          <CoachingNote>Most 1L resumes get one look. Have a coach go through yours line by line before January.</CoachingNote>
+          <CoachingNote>Most law student resumes get one look. Have a coach go through yours line by line before January.</CoachingNote>
         </>
       )}
 

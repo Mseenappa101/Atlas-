@@ -12,6 +12,7 @@ import LetterNew from './pages/LetterNew';
 import Documents from './pages/Documents';
 import { SessionProvider } from './context/SessionContext';
 import { MyListProvider } from './context/MyListProvider';
+import { AccessProvider } from './context/AccessProvider';
 import AppNav from './components/app/AppNav';
 import Explore from './pages/Explore';
 import FirmPage from './pages/FirmPage';
@@ -19,7 +20,16 @@ import Pro from './pages/Pro';
 import MyList from './pages/MyList';
 import Apply from './pages/Apply';
 import Account from './pages/Account';
-import { Privacy, Terms } from './pages/Legal';
+import { Disclaimer, Privacy, Terms } from './pages/Legal';
+import Join from './pages/Join';
+import Sprint from './pages/Sprint';
+import Membership from './pages/Membership';
+import Placement from './pages/Placement';
+import Workshop from './pages/Workshop';
+import Families from './pages/Families';
+import About from './pages/About';
+import { ThanksCall, ThanksSignup, ThanksSprint } from './pages/Thanks';
+import FoundingBanner from './components/FoundingBanner';
 import { MarketPage, TypePage } from './pages/SeoList';
 
 // Pre-pivot features. Loaded only when their flag is on, so they stay out of the public bundle.
@@ -62,6 +72,17 @@ function AppRoutes() {
       <Route path="/account" element={<Account />} />
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/terms" element={<Terms />} />
+      <Route path="/disclaimer" element={<Disclaimer />} />
+      <Route path="/signup" element={<Join />} />
+      <Route path="/sprint" element={<Sprint />} />
+      <Route path="/membership" element={<Membership />} />
+      <Route path="/placement" element={<Placement />} />
+      <Route path="/workshop" element={<Workshop />} />
+      <Route path="/families" element={<Families />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/thanks/signup" element={<ThanksSignup />} />
+      <Route path="/thanks/sprint" element={<ThanksSprint />} />
+      <Route path="/thanks/call" element={<ThanksCall />} />
       <Route path="/markets/:slug" element={<MarketPage />} />
       <Route path="/types/:slug" element={<TypePage />} />
       <Route path="/directory" element={<Navigate to="/explore" replace />} />
@@ -74,7 +95,6 @@ function AppRoutes() {
       <Route path="/letters/new" element={<LetterNew />} />
       <Route path="/documents" element={<Documents />} />
       <Route path="/login" element={<Navigate to="/signin" replace />} />
-      <Route path="/signup" element={<Navigate to="/" replace />} />
 
       <Route path="/browse" element={<Navigate to="/explore" replace />} />
       <Route path="/browse/:state" element={<Navigate to="/explore" replace />} />
@@ -102,16 +122,19 @@ export default function App() {
   return (
     <BrowserRouter>
       <SessionProvider>
+      <AccessProvider>
       <MyListProvider>
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-2 focus:z-50 focus:rounded-app focus:bg-card focus:px-3 focus:py-2 focus:text-t14">
         Skip to content
       </a>
+      <FoundingBanner />
       <AppNav />
       <div id="main">
         <Suspense fallback={null}>{flags.accounts ? <AuthProvider>{routes}</AuthProvider> : routes}</Suspense>
       </div>
       <Footer />
       </MyListProvider>
+      </AccessProvider>
       </SessionProvider>
     </BrowserRouter>
   );

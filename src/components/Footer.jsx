@@ -1,64 +1,38 @@
 import { Link } from 'react-router-dom';
-import { site } from '../lib/site';
 
-const MARKETS = [
-  ['Dallas', 'dallas'],
-  ['Houston', 'houston'],
-  ['Austin', 'austin'],
-  ['New Orleans', 'new-orleans'],
-  ['Atlanta', 'atlanta'],
-  ['Nashville', 'nashville'],
+const COLUMNS = [
+  ['Firmward', [['Free firm map', '/explore'], ['Recruiting calendar', '/calendar'], ['Free workshop', '/workshop'], ['About', '/about']]],
+  ['Get help', [['20-Firm Sprint', '/sprint'], ['Membership', '/membership'], ['90-Day Placement', '/placement'], ['For families', '/families']]],
+  ['Markets', [['Dallas', '/markets/dallas'], ['Houston', '/markets/houston'], ['Austin', '/markets/austin'], ['New Orleans', '/markets/new-orleans'], ['Atlanta', '/markets/atlanta'], ['Nashville', '/markets/nashville']]],
+  ['Firm types', [['Litigation boutiques', '/types/litigation-boutique'], ['Plaintiff firms', '/types/plaintiff'], ['Mid-size firms', '/types/mid-size'], ['Regional firms', '/types/regional'], ['Government', '/types/government'], ['Public interest', '/types/public-interest']]],
 ];
-const TYPES = [
-  ['Litigation boutiques', 'litigation-boutique'],
-  ['Plaintiff firms', 'plaintiff'],
-  ['Mid-size firms', 'mid-size'],
-  ['Regional firms', 'regional'],
-  ['Government', 'government'],
-  ['Public interest', 'public-interest'],
-];
-
-function Col({ title, links }) {
-  return (
-    <div>
-      <h2 className="text-t12 font-semibold uppercase tracking-wide text-fg-2">{title}</h2>
-      <ul className="mt-2 space-y-1.5">
-        {links.map(([label, to]) => (
-          <li key={to}>
-            <Link to={to} className="text-t14 text-fg hover:underline">
-              {label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
 
 export default function Footer() {
   return (
     <footer className="app no-print border-t border-line bg-card pb-16 md:pb-0">
       <div className="mx-auto max-w-app px-4 py-10 md:px-6">
-        <div className="grid gap-8 sm:grid-cols-3">
-          <Col title="Firmward" links={[['Explore', '/explore'], ['Calendar', '/calendar'], ['Templates', '/templates'], ['My List', '/my-list'], ['Pro', '/pro']]} />
-          <Col title="Markets" links={MARKETS.map(([l, s]) => [l, `/markets/${s}`])} />
-          <Col title="Firm types" links={TYPES.map(([l, s]) => [l, `/types/${s}`])} />
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+          {COLUMNS.map(([title, links]) => (
+            <div key={title}>
+              <h2 className="text-t12 font-semibold uppercase tracking-wide text-fg-2">{title}</h2>
+              <ul className="mt-2 space-y-1.5">
+                {links.map(([label, to]) => (
+                  <li key={to}>
+                    <Link to={to} className="inline-flex min-h-[32px] items-center text-t14 text-fg hover:underline">
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
         <div className="mt-8 space-y-2 border-t border-line pt-6 text-t12 text-fg-2">
+          <p className="font-medium text-fg">Firmward provides career coaching and application support, not legal advice.</p>
+          <p>Not affiliated with or endorsed by any law school or law firm.</p>
           <p>
-            Want help with your recruiting plan?{' '}
-            {site.strategyCallUrl ? (
-              <a href={site.strategyCallUrl} className="font-medium text-brand hover:underline">
-                Book a free strategy call
-              </a>
-            ) : (
-              <span className="font-medium text-fg">Book a free strategy call</span>
-            )}
-            .
-          </p>
-          <p>Career information only, not legal advice. Not affiliated with or endorsed by any law school or law firm.</p>
-          <p>
-            <Link to="/privacy" className="hover:underline">Privacy</Link> · <Link to="/terms" className="hover:underline">Terms</Link>
+            <Link to="/terms" className="hover:underline">Terms</Link> · <Link to="/privacy" className="hover:underline">Privacy</Link> ·{' '}
+            <Link to="/disclaimer" className="hover:underline">Disclaimer</Link> · <Link to="/signin" className="hover:underline">Sign in</Link>
           </p>
         </div>
       </div>

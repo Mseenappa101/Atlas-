@@ -20,7 +20,7 @@ export default function Templates() {
       <div className="mx-auto max-w-app px-4 pb-24 pt-6 md:px-6 md:pb-12">
         <h1 className="text-t24 font-bold tracking-tight md:text-t32">Templates</h1>
         <p className="mt-1 max-w-2xl text-t16 text-fg-2">
-          Starting points for a 1L search. Replace everything in brackets and cut anything that doesn&rsquo;t sound like you. Downloads open in Word or
+          Starting points for a summer or post-grad search. Replace everything in brackets and cut anything that doesn&rsquo;t sound like you. Downloads open in Word or
           Google Docs.
         </p>
 

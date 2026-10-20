@@ -10,7 +10,7 @@ export function downloadIcs({ title, date, description = '', url = '' }) {
   const body = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Firmward//1L Directory//EN',
+    'PRODID:-//Firmward//Directory//EN',
     'BEGIN:VEVENT',
     `UID:${ymd(date)}-${Math.random().toString(36).slice(2)}@firmward.org`,
     `DTSTAMP:${stamp}`,

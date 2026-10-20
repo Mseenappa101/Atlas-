@@ -12,7 +12,7 @@ const FREE = [
   'My List: save firms and track every application',
   'Upload your resume or fill in the resume form',
   'Template cover letters filled in for each firm',
-  'The 1L recruiting calendar and templates library',
+  'The recruiting calendar and templates library',
   'One cover letter written for you, to try it',
 ];
 const PRO = [

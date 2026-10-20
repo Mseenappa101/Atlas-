@@ -1,324 +1,175 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
-import { ChevronDown } from 'lucide-react';
-import useSession from '../hooks/useSession';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
+import { SITE, foundingOpen, nextSprint } from '../../site.config';
+import usePageMeta from '../hooks/usePageMeta';
 import useCatalog from '../hooks/useCatalog';
-import { createAccount, saveProfileDetails } from '../lib/access';
-import { FIRM_TYPES, recommended } from '../lib/catalog';
-import { Button, FilterChip, Input, Select } from '../components/app/controls';
-import { FirmButtonRow } from '../components/app/firm';
-import { FirmRowSkeleton } from '../components/app/feedback';
-import { CLASS_YEARS } from '../lib/profileOptions';
+import UnlockForm from '../components/UnlockForm';
+import { Checks, Cta, DraftTag, Eyebrow, Faq, H1, Lead, Page, Section, TextLink } from '../components/marketing/kit';
+import { OFFERS } from '../content/offers';
+import { STAGES } from '../lib/roles';
+import { money } from '../lib/money';
+import { track } from '../lib/tracking';
 
-const MARKETS = ['Dallas', 'Houston', 'Austin', 'San Antonio', 'New Orleans', 'Atlanta', 'Nashville', 'Birmingham', 'Miami', 'Charlotte', 'New York'];
-const NON_BIGLAW = FIRM_TYPES.filter((t) => t.value !== 'biglaw');
+// Real quotes only. The section stays hidden while this is empty.
+const TESTIMONIALS = [];
 
 const FAQ = [
-  ['Is Firmward free?', 'Yes. The firm directory, the state map, My List tracking, the recruiting calendar, templates and template cover letters are free. Pro ($4.99 a month) adds AI that reads your resume, rewrites your bullets and writes a cover letter for each firm.'],
-  ['Where does the information come from?', 'From each firm’s own careers page, checked on a schedule. Every firm shows when it was last verified and links to the source, so you can confirm before you apply.'],
-  ['Which firms are included?', 'Litigation and specialty boutiques, plaintiff firms, mid-size and regional firms, government offices and public interest employers. BigLaw is included, but it isn’t the focus, and it always sorts last.'],
-  ['Does Firmward apply for me?', 'No. Every firm links to its own application. Firmward helps you find the right firms, prepare your materials and keep track of where you stand with each one.'],
-  ['Is this legal advice? Is Firmward affiliated with my school?', 'No to both. Firmward is career information, and it isn’t affiliated with or endorsed by any law school or law firm.'],
+  ['Who is Firmward for?', 'Law students at every stage and new grads: 1Ls looking for a first summer job, 2Ls without a summer offer, 3Ls and recent grads without a post-grad job, transfers, and anyone targeting boutiques, mid-size, plaintiff, government, public interest or regional firms instead of (or as well as) BigLaw.'],
+  ['How much time does it take?', 'The map is free and takes as long as you like. The Sprint is about 30–45 minutes a day for five days, plus a 45-minute call on Friday. Membership is a weekly live call and whatever outreach you send. In the Placement, Michael does the drafting; you spend 2–3 hours a week reviewing and sending, plus a 30-minute call.'],
+  ['Can I cancel?', 'Membership cancels anytime. The Sprint is a one-time purchase and isn’t refundable after Day 1. The Placement is a 90-day term billed monthly, then continues month to month until you accept an offer or cancel.'],
+  ['Isn’t this just ChatGPT?', 'An AI can write an email. It can’t tell you which 20 firms are hiring for your role this month, when their windows open, who to write to, or read your draft with someone who has done this search. Firmward is that database plus real feedback. The AI tool is a bonus, not the product.'],
+  ['Is this legal advice? Is Firmward affiliated with my school?', 'No to both. Firmward provides career coaching and application support, not legal advice. It isn’t affiliated with or endorsed by any law school or law firm.'],
 ];
 
-const STEPS = [
-  { title: 'Pick a state', body: 'See every firm we track there, sorted by type, with boutiques and mid-size firms first.', img: '/how/map.png' },
-  { title: 'Check the details', body: 'Who hires 1Ls, when applications open, each office’s link, and the open positions.', img: '/how/detail.png' },
-  { title: 'Track every application', body: 'Save firms and move each one from saved to applied to offer. It’s there on any device.', img: '/how/list.png' },
-];
-
-function Stats({ firms }) {
-  const markets = new Set(firms.flatMap((f) => f.cities)).size;
-  const hiring = firms.filter((f) => f.hires === 'yes').length;
-  const items = [
-    [firms.length, 'firms'],
-    [markets, 'markets'],
-    [hiring, 'confirmed hiring 1Ls'],
-  ];
-  return (
-    <p className="flex flex-wrap gap-x-5 gap-y-1 text-t14 text-fg-2">
-      {items.map(([n, label]) => (
-        <span key={label}>
-          <span className="data font-medium text-fg">{n || '…'}</span> {label}
-        </span>
-      ))}
-    </p>
-  );
-}
-
-// Step 1 creates the account (which signs the student in); step 2 collects optional details.
-// `onOnboarding` tells the page not to redirect away mid-way.
-function SignUp({ formRef, onOnboarding }) {
-  const [params] = useSearchParams();
+function StagePicker() {
+  const [stage, setStage] = useState(null);
   const navigate = useNavigate();
-  const { session } = useSession();
-  const [step, setStep] = useState(1);
-  const [account, setAccount] = useState({ email: '', password: '' });
-  const [details, setDetails] = useState({ name: '', school: '', classYear: '', markets: [], types: [] });
-  const [status, setStatus] = useState('idle');
-  const [message, setMessage] = useState('');
-  const next = params.get('next');
-  const dest = next?.startsWith('/') && !next.startsWith('//') ? next : '/explore';
-
-  async function submitAccount(e) {
-    e.preventDefault();
-    setStatus('saving');
-    onOnboarding(true);
-    try {
-      const { needsConfirmation } = await createAccount(account.email, account.password);
-      if (needsConfirmation) {
-        onOnboarding(false);
-        setStatus('confirm');
-        return;
-      }
-      setStep(2);
-      setStatus('idle');
-    } catch (err) {
-      onOnboarding(false);
-      setMessage(err.message);
-      setStatus('error');
-    }
-  }
-
-  async function submitDetails(e) {
-    e.preventDefault();
-    setStatus('saving');
-    try {
-      if (session) await saveProfileDetails(session.user.id, details);
-    } catch {
-      // Details are optional; carry on even if saving them failed.
-    }
-    navigate(dest, { replace: true });
-  }
-
-  const toggle = (k, v) => setDetails((d) => ({ ...d, [k]: d[k].includes(v) ? d[k].filter((x) => x !== v) : [...d[k], v] }));
-
-  if (step === 2) {
-    return (
-      <form ref={formRef} onSubmit={submitDetails} className="rounded-app border border-line bg-card p-5" aria-labelledby="step2-h">
-        <p className="data text-t12 text-fg-2">Step 2 of 2</p>
-        <h2 id="step2-h" className="mt-1 text-t20 font-semibold">
-          What are you looking for?
-        </h2>
-        <p className="mt-1 text-t14 text-fg-2">All optional. It puts the firms that fit you first.</p>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2">
-          <Input label="Your name" optional autoComplete="name" value={details.name} onChange={(e) => setDetails({ ...details, name: e.target.value })} />
-          <Input label="Law school" optional autoComplete="organization" value={details.school} onChange={(e) => setDetails({ ...details, school: e.target.value })} />
-          <Select
-            label="Class year"
-            optional
-            placeholder="Select"
-            options={CLASS_YEARS}
-            value={details.classYear}
-            onChange={(e) => setDetails({ ...details, classYear: e.target.value })}
-            className="sm:col-span-2"
-          />
-        </div>
-        <fieldset className="mt-4">
-          <legend className="mb-1.5 text-t14 font-medium">
-            Target markets <span className="font-normal text-fg-2">(optional)</span>
-          </legend>
-          <div className="flex flex-wrap gap-2">
-            {MARKETS.map((m) => (
-              <FilterChip key={m} selected={details.markets.includes(m)} onClick={() => toggle('markets', m)}>
-                {m}
-              </FilterChip>
-            ))}
-          </div>
-        </fieldset>
-        <fieldset className="mt-4">
-          <legend className="mb-1.5 text-t14 font-medium">
-            Firm types <span className="font-normal text-fg-2">(optional)</span>
-          </legend>
-          <div className="flex flex-wrap gap-2">
-            {FIRM_TYPES.map((t) => (
-              <FilterChip key={t.value} selected={details.types.includes(t.value)} onClick={() => toggle('types', t.value)}>
-                {t.label}
-              </FilterChip>
-            ))}
-          </div>
-        </fieldset>
-        <div className="mt-5 flex flex-wrap items-center gap-3">
-          <Button type="submit" disabled={status === 'saving'}>
-            {status === 'saving' ? 'Saving…' : 'Save and see firms'}
-          </Button>
-          <Button variant="ghost" onClick={() => navigate(dest, { replace: true })}>
-            Skip for now
-          </Button>
-        </div>
-      </form>
-    );
-  }
-
+  const s = STAGES.find((x) => x.value === stage);
+  const offer = s && OFFERS.find((o) => o.key === s.offer);
+  const mapHref = s ? `/explore?${s.roles.map((r) => `role=${r}`).join('&')}` : '/explore';
   return (
-    <form ref={formRef} onSubmit={submitAccount} className="rounded-app border border-line bg-card p-5" aria-labelledby="step1-h">
-      <h2 id="step1-h" className="text-t20 font-semibold">
-        Get free access
-      </h2>
-      <p className="mt-1 text-t14 text-fg-2">Your profile saves the firms you track, on any device.</p>
-      <div className="mt-4 space-y-3">
-        <Input id="signup-email" label="Email" type="email" required autoComplete="email" value={account.email} onChange={(e) => setAccount({ ...account, email: e.target.value })} />
-        <Input
-          label="Password"
-          type="password"
-          required
-          minLength={8}
-          autoComplete="new-password"
-          placeholder="At least 8 characters"
-          value={account.password}
-          onChange={(e) => setAccount({ ...account, password: e.target.value })}
-        />
+    <section aria-labelledby="stage-h" className="mt-10 rounded-app border border-line bg-card p-5 md:p-6">
+      <h2 id="stage-h" className="text-t20 font-semibold">Where are you?</h2>
+      <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4" role="group" aria-label="Your stage">
+        {STAGES.map((x) => (
+          <button
+            key={x.value}
+            type="button"
+            aria-pressed={stage === x.value}
+            onClick={() => {
+              setStage(x.value);
+              track('stage_selected', { stage: x.value });
+            }}
+            className={`min-h-[48px] rounded-app border px-3 text-t16 font-semibold transition-colors duration-150 ${stage === x.value ? 'border-brand bg-brand text-white' : 'border-line bg-card hover:border-fg-2'}`}
+          >
+            {x.label}
+          </button>
+        ))}
       </div>
-      <Button type="submit" className="mt-4 w-full" disabled={status === 'saving'}>
-        {status === 'saving' ? 'Creating your profile…' : 'Get free access'}
-      </Button>
-      {status === 'error' && (
-        <p role="alert" className="mt-2 text-t14 text-st-soon-text">
-          {message}
-        </p>
-      )}
-      {status === 'confirm' && (
-        <p role="status" className="mt-2 text-t14">
-          Check your email for a confirmation link. It opens your profile.
-        </p>
-      )}
-      <p className="mt-3 text-t12 text-fg-2">
-        Free. No spam. Already have a profile?{' '}
-        <Link to={`/signin${next ? `?next=${encodeURIComponent(next)}` : ''}`} className="text-brand hover:underline">
-          Sign in
-        </Link>
-      </p>
-    </form>
-  );
-}
-
-function MiniSearch({ firms, loading, onPick }) {
-  const [market, setMarket] = useState('Houston');
-  const [type, setType] = useState('');
-  const markets = useMemo(() => MARKETS.filter((m) => firms.some((f) => f.cities.includes(m))), [firms]);
-  const results = useMemo(() => {
-    // Only firms with a known, non-BigLaw type, so an unclassified big firm can't slip into the preview.
-    const pool = firms.filter((f) => f.type && f.type !== 'biglaw' && (!market || f.cities.includes(market)) && (!type || f.type === type));
-    // Lead with windows that are open or coming up, then firms confirmed to hire 1Ls, then everything else.
-    const rank = (f) => (['open', 'rolling', 'soon', 'upcoming'].includes(f.status.kind) ? 0 : f.hires === 'yes' ? 1 : 2);
-    return recommended(pool, null).sort((a, b) => rank(a) - rank(b)).slice(0, 5);
-  }, [firms, market, type]);
-
-  return (
-    <section aria-labelledby="try-h" className="self-start rounded-app border border-line bg-card">
-      <div className="border-b border-line p-4">
-        <h2 id="try-h" className="text-t14 font-semibold">
-          Try it
-        </h2>
-        <div className="mt-2 grid grid-cols-2 gap-2">
-          <Select aria-label="Market" options={markets.map((m) => ({ value: m, label: m }))} placeholder="Any market" value={market} onChange={(e) => setMarket(e.target.value)} />
-          <Select aria-label="Firm type" options={NON_BIGLAW} placeholder="Any type but BigLaw" value={type} onChange={(e) => setType(e.target.value)} />
+      {s && (
+        <div className="mt-4 rounded-app bg-canvas p-4" role="status">
+          <p className="text-t16">{s.note}</p>
+          <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
+            <button type="button" onClick={() => navigate(mapHref)} className="inline-flex min-h-[44px] items-center gap-1 text-t16 font-semibold text-brand hover:underline">
+              See firms hiring {s.value === '1L' ? 'for 1L summer' : s.value === '2L' ? 'for 2L summer' : 'new grads'} <ArrowRight size={16} aria-hidden="true" />
+            </button>
+            <Link to={offer.to} className="inline-flex min-h-[44px] items-center gap-1 text-t16 font-semibold text-fg hover:underline">
+              {offer.name} <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+          </div>
         </div>
-      </div>
-      {loading ? (
-        <FirmRowSkeleton rows={5} />
-      ) : results.length ? (
-        <div>
-          {results.map((f) => (
-            <FirmButtonRow key={f.id} firm={f} onClick={onPick} />
-          ))}
-        </div>
-      ) : (
-        <p className="p-4 text-t14 text-fg-2">No firms of that type in this market yet. Try another type.</p>
       )}
-      <div className="flex items-center justify-between gap-3 border-t border-line p-3">
-        <span className="text-t12 text-fg-2">Real firms from the directory</span>
-        <Button variant="secondary" size="sm" onClick={onPick}>
-          See all
-        </Button>
-      </div>
     </section>
   );
 }
 
-function Faq() {
+function MapPreview() {
+  const { firms, loading } = useCatalog();
+  const states = new Set(firms.flatMap((f) => f.states)).size;
   return (
-    <div className="divide-y divide-line rounded-app border border-line bg-card">
-      {FAQ.map(([q, a]) => (
-        <details key={q} className="group">
-          <summary className="flex min-h-[52px] cursor-pointer list-none items-center justify-between gap-4 px-4 text-t16 font-medium [&::-webkit-details-marker]:hidden">
-            {q}
-            <ChevronDown size={18} aria-hidden="true" className="shrink-0 text-fg-2 transition-transform duration-150 group-open:rotate-180" />
-          </summary>
-          <p className="px-4 pb-4 text-t14 text-fg-2">{a}</p>
-        </details>
+    <Link to="/explore" className="group mt-8 block overflow-hidden rounded-app border border-line bg-card">
+      <img src="/how/map.png" alt="The Firmward map: firms by state" width="1280" height="744" className="w-full transition-opacity duration-150 group-hover:opacity-90" />
+      <div className="flex flex-wrap items-center justify-between gap-2 border-t border-line px-4 py-3 text-t14">
+        <span className="text-fg-2">
+          <span className="data font-medium text-fg">{loading ? '…' : firms.length}</span> firms in <span className="data font-medium text-fg">{loading ? '…' : states}</span> states, checked against their careers pages
+        </span>
+        <span className="inline-flex items-center gap-1 font-semibold text-brand">Open the map <ArrowRight size={16} aria-hidden="true" /></span>
+      </div>
+    </Link>
+  );
+}
+
+function OfferCards() {
+  return (
+    <ol className="grid gap-4 md:grid-cols-3">
+      {OFFERS.map((o, i) => (
+        <li key={o.key} className="flex flex-col rounded-app border border-line bg-card p-5">
+          <p className="data text-t12 text-fg-2">Step {i + 1}</p>
+          <h3 className="mt-1 text-t20 font-bold">{o.name}</h3>
+          <p className="mt-1 text-t14 font-semibold text-brand">{o.price}</p>
+          <p className="mt-3 text-t16">{o.promise}</p>
+          <div className="mt-4 flex-1">
+            <Checks items={o.bullets} />
+          </div>
+          <div className="mt-5">
+            <TextLink to={o.to}>{o.cta}</TextLink>
+          </div>
+        </li>
       ))}
-    </div>
+    </ol>
   );
 }
 
 export default function Home() {
-  const { session, loading: sessionLoading } = useSession();
-  const { firms, loading } = useCatalog();
-  const formRef = useRef(null);
-  const [onboarding, setOnboarding] = useState(false);
-
-  useEffect(() => {
-    document.title = 'Firmward — Firms that hire 1Ls, beyond BigLaw';
-  }, []);
-
-  const toForm = () => {
-    formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    document.getElementById('signup-email')?.focus({ preventScroll: true });
-  };
-
-  // Signed-in students start on the map, except while finishing sign-up.
-  if (!sessionLoading && session && !onboarding) return <Navigate to="/explore" replace />;
+  usePageMeta({
+    title: 'Firmward — Find the firms that are hiring. Then land one.',
+    description: 'Summer and post-grad jobs at boutiques, mid-size, plaintiff, government and regional firms, for law students and new grads. Free firm map, plus coaching to land the job.',
+  });
+  const sprint = nextSprint();
 
   return (
-    <div className="app">
-      <main>
-        <section className="mx-auto grid max-w-app gap-10 px-4 pb-16 pt-10 md:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)] lg:gap-14 lg:pt-16">
-          <div className="min-w-0">
-            <h1 className="max-w-xl text-t32 font-bold leading-tight tracking-tight">Find the firms that hire 1Ls, beyond BigLaw.</h1>
-            <p className="mt-3 max-w-xl text-t16 text-fg-2">
-              Boutique, plaintiff, mid-size, regional and public interest employers, with who&rsquo;s hiring, when windows open and where to apply.
-            </p>
-            <div className="mt-4">
-              <Stats firms={firms} />
-            </div>
-            <div className="mt-8 max-w-md">
-              <SignUp formRef={formRef} onOnboarding={setOnboarding} />
-            </div>
-          </div>
-          <MiniSearch firms={firms} loading={loading} onPick={toForm} />
-        </section>
+    <Page>
+      <header className="max-w-3xl">
+        <Eyebrow>For law students and new grads</Eyebrow>
+        <H1>Find the firms that are hiring. Then land one.</H1>
+        <Lead>
+          Summer and post-grad jobs at boutiques, mid-size, plaintiff, government and regional firms. For 1Ls, 2Ls, 3Ls and recent grads who aren’t being handed BigLaw.
+        </Lead>
+        <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+          <Cta to="/explore">Explore the free map</Cta>
+          <TextLink to="/sprint">Join the next Sprint{sprint ? ` (starts ${new Date(`${sprint.start}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })})` : ''}</TextLink>
+        </div>
+      </header>
 
-        <section aria-labelledby="how-h" className="border-t border-line bg-card">
-          <div className="mx-auto max-w-app px-4 py-14 md:px-6">
-            <h2 id="how-h" className="text-t24 font-bold tracking-tight">
-              How it works
-            </h2>
-            <ol className="mt-6 grid gap-8 md:grid-cols-3">
-              {STEPS.map((s, i) => (
-                <li key={s.title}>
-                  <img src={s.img} alt="" loading="lazy" width="800" height="500" className="aspect-[8/5] w-full rounded-app border border-line bg-canvas object-cover object-top" />
-                  <h3 className="mt-3 text-t16 font-semibold">
-                    <span className="data mr-2 text-fg-2">{i + 1}</span>
-                    {s.title}
-                  </h3>
-                  <p className="mt-1 text-t14 text-fg-2">{s.body}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
+      <StagePicker />
+      <MapPreview />
 
-        <section aria-labelledby="faq-h" className="mx-auto max-w-3xl px-4 py-14 md:px-6">
-          <h2 id="faq-h" className="text-t24 font-bold tracking-tight">
-            Questions
-          </h2>
-          <div className="mt-5">
-            <Faq />
-          </div>
-          <p className="mt-10 text-t14 text-fg-2">Built by a 3L who transferred from Brooklyn Law and spent a summer at a Dallas litigation boutique.</p>
-        </section>
-      </main>
-    </div>
+      <Section id="how" title="How Firmward works" intro="Start free with the map. When you want help turning it into interviews, there are three ways to go, from do-it-yourself to done-for-you.">
+        <OfferCards />
+      </Section>
+
+      <Section id="story" title={<>Why Firmward exists<DraftTag /></>}>
+        <div className="max-w-2xl space-y-4 text-t16 leading-relaxed">
+          <p>
+            I’m {SITE.founder}, a 3L. I started law school at Brooklyn Law and transferred to Columbia Law, which meant running a lot of my search without the usual on-campus pipeline. Nobody handed me BigLaw.
+          </p>
+          <p>
+            What worked was simple and tedious: finding the boutiques and mid-size firms that were actually hiring, working out who to write to, and sending a lot of careful, specific emails. That’s how I got a written post-grad offer at a Dallas litigation boutique.
+          </p>
+          <p>
+            Most of that time went into finding information that should have been in one place: which firms hire students and new grads, when, and how to apply. Firmward puts it in one place. The Sprint, Membership and Placement help you act on it, whether you’re a 1L after a first summer or a 3L without an offer yet.
+          </p>
+          <TextLink to="/about">More about Firmward</TextLink>
+        </div>
+      </Section>
+
+      {TESTIMONIALS.length > 0 && (
+        <Section id="students" title="From students">
+          <ul className="grid gap-4 md:grid-cols-3">
+            {TESTIMONIALS.map((t) => (
+              <li key={t.name} className="rounded-app border border-line bg-card p-5">
+                <blockquote className="text-t16">“{t.quote}”</blockquote>
+                <p className="mt-3 text-t14 text-fg-2">{t.name}, {t.detail}</p>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
+
+      <Section id="faq" title="Questions">
+        <Faq items={FAQ} />
+      </Section>
+
+      <Section id="calendar">
+        <UnlockForm
+          title="Get the Law Student Recruiting Calendar + full firm data"
+          blurb={`When 1L summer, 2L summer and post-grad hiring happens, month by month, and full access to who each firm hires for and how to apply. Free.${foundingOpen() ? ` Founding Membership is ${money(SITE.PRICES.membershipMonthly)}/month for life until Dec 21.` : ''}`}
+          cta="Send me the calendar"
+          source="/"
+          onDone={() => setTimeout(() => (window.location.href = '/thanks/signup'), 600)}
+        />
+      </Section>
+    </Page>
   );
 }

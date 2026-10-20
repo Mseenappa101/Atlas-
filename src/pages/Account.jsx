@@ -194,7 +194,7 @@ function Newsletter() {
         />
         <span>
           <span className="block font-medium">Recruiting newsletter</span>
-          <span className="block text-fg-2">Deadlines that are coming up, newly opened 1L programs and application advice. About twice a month.</span>
+          <span className="block text-fg-2">Deadlines that are coming up, newly opened summer and post-grad roles, and application advice. About twice a month.</span>
         </span>
       </label>
       <p role="status" className="mt-1 text-t14 text-fg-2">{status}</p>

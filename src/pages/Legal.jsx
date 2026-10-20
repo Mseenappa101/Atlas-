@@ -2,7 +2,9 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { site } from '../lib/site';
 
-const UPDATED = 'October 19, 2026';
+const UPDATED = 'October 20, 2026';
+// Flip to true once Michael (and ideally a lawyer) has reviewed these pages; it removes the draft banner.
+const REVIEWED = false;
 
 function Contact() {
   return site.contactEmail ? (
@@ -19,6 +21,9 @@ function Page({ title, children }) {
   return (
     <div className="app min-h-screen">
       <article className="mx-auto max-w-2xl px-4 pb-24 pt-8 text-t16 leading-relaxed md:px-6 [&_h2]:mb-2 [&_h2]:mt-8 [&_h2]:text-t20 [&_h2]:font-semibold [&_li]:mt-1.5 [&_p]:mt-3 [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:pl-6">
+        {!REVIEWED && (
+          <p className="mb-4 rounded-app border-2 border-dashed border-st-soon-text bg-st-soon-bg px-3 py-2 text-t14 font-semibold text-st-soon-text">DRAFT FOR REVIEW. Not final.</p>
+        )}
         <h1 className="text-t32 font-bold tracking-tight">{title}</h1>
         <p className="text-t14 text-fg-2">Last updated {UPDATED}</p>
         {children}
@@ -40,7 +45,9 @@ export function Privacy() {
         <li><strong>Your application materials:</strong> resumes you upload or build, cover letters, transcripts, writing samples and other files you add.</li>
         <li><strong>Your application activity:</strong> firms you save, stages, notes, deadlines, checklists, and the emails you send to firms through Firmward (recipient, subject, message and attachment names).</li>
         <li><strong>Billing:</strong> if you subscribe to Pro, our payment processor, Stripe, handles your card. We receive your subscription status, not your card number.</li>
-        <li><strong>Basic technical data:</strong> server logs with request times and errors, used to keep the service running.</li>
+        <li><strong>Forms you fill in:</strong> your email, and if you give them, your name, class year, the role you’re looking for, and your answers on the Placement application. We also record which page and campaign link (UTM tags) brought you, so we know which channels work.</li>
+        <li><strong>Basic technical data:</strong> server logs with request times and errors, and a one-way hash of your IP address used only to stop spam and abuse.</li>
+        <li><strong>Analytics:</strong> we use Plausible, which counts visits and clicks without cookies and without tracking you across sites.</li>
       </ul>
 
       <h2>How we use it</h2>
@@ -48,7 +55,8 @@ export function Privacy() {
         <li>To run your account, save your progress and show your list on any device you sign in on.</li>
         <li>To prepare and send the applications you ask us to send.</li>
         <li>To write AI drafts you request (Pro or your free sample letter). Your resume and the firm&rsquo;s details are sent to our AI provider, Anthropic, only to produce that draft.</li>
-        <li>To email you about Firmward, including our recruiting newsletter. You can unsubscribe from the newsletter at any time from your account page or any newsletter email.</li>
+        <li>To email you about Firmward, including the recruiting calendar, workshop reminders and our newsletter. You can unsubscribe at any time from any email or your account page.</li>
+        <li>To run coaching you sign up for: the Sprint, Membership and the Placement, including reviewing the materials you share with us.</li>
       </ul>
       <p>We do not sell your personal information, and we do not share it with law firms except what you choose to send them.</p>
 
@@ -71,7 +79,7 @@ export function Privacy() {
 
       <h2>Who processes data for us</h2>
       <p>
-        Supabase (database, sign-in and file storage), Vercel and Railway (hosting), Resend (email delivery and our newsletter), Stripe (payments), Anthropic (AI drafts), and Google or Microsoft if you connect your email. Each handles data only to provide its service to us.
+        Supabase (database, sign-in and file storage), Vercel and Railway (hosting), Resend (email delivery and our email list), Stripe (payments), Skool (the Sprint and Membership community), our scheduling tool (strategy calls), Zoom (workshops), Plausible (analytics), Anthropic (AI drafts), and Google or Microsoft if you connect your email. Each handles data only to provide its service to us.
       </p>
 
       <h2>Keeping and deleting your data</h2>
@@ -102,12 +110,12 @@ export function Terms() {
 
       <h2>What Firmward is</h2>
       <p>
-        Firmward is a directory of law firms and legal employers that hire law students, with tools to track and send applications. Firm information is gathered from public sources and may be incomplete or out of date. Always confirm deadlines and requirements with the employer. Firmward is career information, not legal advice, and is not affiliated with any law school or law firm.
+        Firmward is a directory of law firms and legal employers that hire law students and new grads, with tools to track and send applications, and paid coaching (the Sprint, Membership and the Placement). Firm information is gathered from public sources and may be incomplete or out of date. Always confirm deadlines and requirements with the employer. Firmward is not affiliated with any law school or law firm.
       </p>
 
       <h2>Your account</h2>
       <p>
-        You need to give accurate information and keep your password private. You&rsquo;re responsible for activity on your account. You must be a current or incoming law student, or otherwise using Firmward for your own job search.
+        You need to give accurate information and keep your password private. You&rsquo;re responsible for activity on your account. Firmward is for law students, new grads and their families, using it for the student&rsquo;s own job search.
       </p>
 
       <h2>Sending applications</h2>
@@ -123,9 +131,18 @@ export function Terms() {
         Your resume, letters and files stay yours. You let us store and process them to provide the service, including sending them where you direct. AI drafts are suggestions; review them before you send anything.
       </p>
 
-      <h2>Pro</h2>
+      <h2>Coaching and paid plans</h2>
       <p>
-        Pro costs $4.99 a month, billed by Stripe until you cancel. You can cancel at any time from Plan and billing. Pro stays on until the end of the period you paid for. Fees already paid aren&rsquo;t refunded except where the law requires.
+        Firmward provides career coaching and application support only. It is not legal advice, and no attorney-client relationship is formed. We don&rsquo;t guarantee any job outcome: interviews, offers and hiring decisions are made by employers.
+      </p>
+      <ul>
+        <li><strong>20-Firm Sprint:</strong> a one-time payment for a 5-day cohort. It isn&rsquo;t refundable once Day 1 of your cohort has started. Before then, contact us and we&rsquo;ll refund or move you to a later cohort.</li>
+        <li><strong>Membership:</strong> billed monthly or yearly through Skool until you cancel. You can cancel anytime; access continues to the end of the period you paid for.</li>
+        <li><strong>90-Day Placement:</strong> a 90-day term billed monthly, which then continues month to month until you cancel or accept an offer. The activity guarantee (at least 75 firms contacted in 90 days, or work continues at no charge until they are) is the only guarantee; there is no guarantee of a job.</li>
+        <li><strong>Pro:</strong> $4.99 a month for the AI tools on firmward.org, billed by Stripe until you cancel from Plan and billing.</li>
+      </ul>
+      <p>
+        You send every application and email yourself, from your own account or as yourself through Firmward. You&rsquo;re responsible for checking that what you send is accurate. Fees already paid aren&rsquo;t refunded except as stated above or where the law requires.
       </p>
 
       <h2>Acceptable use</h2>
@@ -145,6 +162,19 @@ export function Terms() {
       <p className="text-t14 text-fg-2">
         See also our <Link to="/privacy" className="text-brand hover:underline">Privacy Policy</Link>.
       </p>
+    </Page>
+  );
+}
+
+export function Disclaimer() {
+  return (
+    <Page title="Disclaimer">
+      <p><strong>Not legal advice.</strong> Firmward provides career coaching and application support, not legal advice. Nothing on this site or in our coaching creates an attorney-client relationship.</p>
+      <p><strong>No guaranteed outcomes.</strong> We help you find employers and prepare and send strong applications. Employers decide who to interview and hire. We don&rsquo;t guarantee interviews, offers, salaries or any other result. The Placement&rsquo;s activity guarantee is about the number of firms contacted, not about jobs.</p>
+      <p><strong>You send everything.</strong> Students send all applications and outreach themselves, from their own email or as themselves through Firmward. Review everything before you send it.</p>
+      <p><strong>Firm information.</strong> Hiring roles, windows, contacts and postings come from public sources such as firms&rsquo; careers pages, checked on a schedule. They can be incomplete or out of date. Confirm details with the employer before relying on them.</p>
+      <p><strong>No affiliation.</strong> Firmward isn&rsquo;t affiliated with, endorsed by or sponsored by any law school, law firm or employer listed. Names are used only to identify employers. Michael&rsquo;s schools and employer are mentioned as facts about his background, not as endorsements.</p>
+      <p>Questions: <Contact />.</p>
     </Page>
   );
 }
