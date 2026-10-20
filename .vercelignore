@@ -2,5 +2,7 @@
 # and a top-level api/ folder would otherwise be treated as Vercel Functions.
 api/
 worker/
-scripts/
+scripts/*
+# The build runs this one (per-page titles, sitemap, robots.txt).
+!scripts/prerender-meta.mjs
 supabase/
