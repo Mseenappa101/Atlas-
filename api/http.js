@@ -28,7 +28,7 @@ export function cors(req, res) {
   if (origin && config.allowedOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
+    res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type, X-Unlock-Token');
     res.setHeader('Access-Control-Max-Age', '600');
   }
   res.setHeader('Vary', 'Origin');

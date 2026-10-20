@@ -1,48 +1,13 @@
 import { config } from './config.js';
 import { getDb, q } from './db.js';
+import { setUnsubscribed, upsertContact } from './resend.js';
 
 // Everyone on the email list (waitlist_subscribers: every profile, plus older sign-ups) becomes a
 // Resend contact, so newsletters go out as Resend broadcasts. Unsubscribe links in broadcasts are
 // handled by Resend; the account page toggle below updates both sides.
 
-const RESEND = 'https://api.resend.com';
-const headers = () => ({ Authorization: `Bearer ${config.resendKey}`, 'Content-Type': 'application/json' });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const log = (...a) => console.log(new Date().toISOString().slice(11, 19), 'newsletter:', ...a);
-
-function names(full) {
-  const parts = String(full ?? '').trim().split(/\s+/).filter(Boolean);
-  return { first_name: parts[0] ?? undefined, last_name: parts.length > 1 ? parts.slice(1).join(' ') : undefined };
-}
-
-// Resend addresses a contact by id or by email.
-const contactUrl = (email) => `${RESEND}/contacts/${encodeURIComponent(email)}`;
-
-async function updateExisting(row) {
-  const res = await fetch(contactUrl(row.email), { method: 'PATCH', headers: headers(), body: JSON.stringify({ unsubscribed: row.unsubscribed }) });
-  const json = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(`${res.status} ${json.message ?? ''}`.trim());
-  return json.id ?? 'existing';
-}
-
-async function pushOne(row) {
-  const res = await fetch(`${RESEND}/contacts`, {
-    method: 'POST',
-    headers: headers(),
-    body: JSON.stringify({
-      email: row.email,
-      ...names(row.full_name),
-      unsubscribed: row.unsubscribed,
-      ...(config.resendSegmentId ? { segments: [{ id: config.resendSegmentId }] } : {}),
-    }),
-  });
-  const json = await res.json().catch(() => ({}));
-  if (res.ok) return json.id;
-  // Already a contact (added by hand, or a retry): link to it instead.
-  if (res.status === 409 || /exist/i.test(json.message ?? '')) return updateExisting(row);
-  if (res.status === 422) return 'invalid'; // not a deliverable address; don't retry forever
-  throw new Error(`${res.status} ${json.message ?? ''}`.trim());
-}
 
 export async function syncNewsletterOnce(limit = 50) {
   const rows = await q(getDb().from('waitlist_subscribers').select('id, email, full_name, unsubscribed')
@@ -50,7 +15,7 @@ export async function syncNewsletterOnce(limit = 50) {
   let done = 0;
   for (const row of rows) {
     try {
-      const id = await pushOne(row);
+      const id = await upsertContact({ email: row.email, name: row.full_name, unsubscribed: row.unsubscribed });
       await q(getDb().from('waitlist_subscribers').update({ resend_contact_id: id, synced_at: new Date().toISOString() }).eq('id', row.id));
       done++;
     } catch (e) {
@@ -100,7 +65,7 @@ export async function setNewsletter(user, body) {
   let synced = Boolean(row.resend_contact_id && row.resend_contact_id !== 'invalid');
   if (synced && config.resendKey) {
     try {
-      await updateExisting({ email: user.email, unsubscribed: !subscribed });
+      await setUnsubscribed(user.email, !subscribed);
     } catch (e) {
       log(`subscription change failed, will retry: ${e.message}`);
       synced = false;

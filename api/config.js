@@ -36,8 +36,14 @@ export const config = {
   resendKey: process.env.RESEND_API_KEY,
   sendFromAddress: process.env.SEND_FROM_ADDRESS || 'applications@firmward.org',
   dailySendCap: num(process.env.DAILY_SEND_CAP, 25),
-  // Newsletter: every profile becomes a Resend contact, optionally added to this segment.
-  resendSegmentId: process.env.RESEND_SEGMENT_ID || null,
+  // Email list: every signup becomes a Resend contact in this segment ("Firmward List"); created if unset.
+  resendSegmentId: process.env.RESEND_AUDIENCE_ID || process.env.RESEND_SEGMENT_ID || null,
+  resendSegmentName: 'Firmward List',
+
+  // Marketing forms (/api/subscribe, /api/workshop, /api/placement-apply).
+  emailFrom: process.env.EMAIL_FROM_ADDRESS || 'Michael at Firmward <michael@firmward.org>',
+  michaelEmail: process.env.MICHAEL_EMAIL || null, // receives Placement applications; also the reply-to
+  workshopZoomUrl: process.env.WORKSHOP_ZOOM_URL || null,
 };
 
 // User's choice of model; pricing per million tokens (output includes thinking).

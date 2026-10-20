@@ -8,6 +8,15 @@ import {
   listConnections, startConnect, connectCallback, disconnect, uploadApplicationFile, deleteApplicationFile, applicationFileUrl, documentPdf, sendApplication,
 } from './applications.js';
 import { getNewsletter, setNewsletter, startNewsletterSync } from './newsletter.js';
+import { subscribe, workshop, placementApply } from './leads.js';
+import { privateCatalog } from './catalog.js';
+
+// Signed-out forms: (body, req) => response. Small bodies only.
+const PUBLIC = {
+  'POST /api/subscribe': subscribe,
+  'POST /api/workshop': workshop,
+  'POST /api/placement-apply': placementApply,
+};
 
 const ROUTES = {
   'GET /api/me/usage': getUsage,
@@ -31,7 +40,7 @@ const ROUTES = {
   'GET /api/me/newsletter': getNewsletter,
   'PUT /api/me/newsletter': setNewsletter,
 };
-const PATHS = new Set(Object.keys(ROUTES).map((k) => k.split(' ')[1]));
+const PATHS = new Set([...Object.keys(ROUTES), ...Object.keys(PUBLIC), 'GET /api/catalog/private'].map((k) => k.split(' ')[1]));
 
 const log = (...a) => console.log(new Date().toISOString().slice(11, 19), ...a);
 
@@ -57,6 +66,14 @@ async function handle(req, res, ctx) {
   if (connect) {
     res.writeHead(302, { Location: await connectCallback(new URL(req.url, 'http://x'), connect[1]), 'Cache-Control': 'no-store' });
     return res.end();
+  }
+  const open = PUBLIC[`${req.method} ${path}`];
+  if (open) return sendJson(res, 200, await open(await readJson(req, 16 * 1024), req));
+  // Gated firm data: an unlock token from /api/subscribe, or a signed-in student.
+  if (req.method === 'GET' && path === '/api/catalog/private') {
+    const user = req.headers.authorization ? await authenticate(req).catch(() => null) : null;
+    res.setHeader('Cache-Control', 'private, max-age=300');
+    return sendJson(res, 200, await privateCatalog(req, user));
   }
   const handler = ROUTES[`${req.method} ${path}`];
   if (!handler) {
