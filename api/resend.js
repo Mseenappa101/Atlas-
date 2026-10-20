@@ -82,3 +82,9 @@ export async function setUnsubscribed(email, unsubscribed) {
   const r = await call('PATCH', `/contacts/${encodeURIComponent(email)}`, { unsubscribed });
   if (!r.ok) throw new Error(`resend unsubscribe ${r.status}: ${r.json.message ?? ''}`);
 }
+
+/** Starts any Resend Automation listening for `event` (e.g. the welcome sequence) for this contact. */
+export async function sendEvent(event, email, payload = {}) {
+  const r = await call('POST', '/events/send', { event, email, payload });
+  if (!r.ok && r.status !== 404) log(`event ${event} ${r.status}: ${r.json.message ?? ''}`);
+}

@@ -3,7 +3,7 @@ import { config } from './config.js';
 import { HttpError, bad } from './http.js';
 import { getDb, q } from './db.js';
 import { CLASS_YEARS, ROLES, clientIp, email, guard, ipHash, isBot, longText, oneOf, text, unlockToken, utm } from './forms.js';
-import { resendReady, sendEmail, upsertContact } from './resend.js';
+import { resendReady, sendEmail, sendEvent, upsertContact } from './resend.js';
 import { placementConfirmEmail, placementToMichael, welcomeEmail, workshopEmail, workshopIcs } from './emails.js';
 
 // Public (signed-out) forms: map unlock / homepage capture, workshop registration, Placement application.
@@ -79,6 +79,8 @@ export async function subscribe(body, req) {
   const row = common(body, req, 'subscribe');
   await logSignup('subscribe', row);
   await addToList(row, { subscribe: true });
+  // Starts the welcome sequence Automation in Resend (day 2 and day 4 emails), if one is set up.
+  if (resendReady()) sendEvent('firmward.subscribed', row.email, { class_year: row.class_year, role_sought: row.role_sought, source: row.source_page }).catch(() => {});
   const token = unlockToken(row.email);
   const sent = await trySend(`welcome to ${mask(row.email)}`, {
     to: row.email,
