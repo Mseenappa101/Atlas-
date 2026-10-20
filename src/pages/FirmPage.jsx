@@ -1,12 +1,12 @@
 import { useEffect, useMemo } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import RequireProfile from '../components/RequireProfile';
 import FirmDetail from '../components/explore/FirmDetail';
 import { EmptyState } from '../components/app/feedback';
 import useCatalog from '../hooks/useCatalog';
 import useListings from '../hooks/useListings';
 import useMyList from '../hooks/useMyList';
+import useSession from '../hooks/useSession';
 import { recommended } from '../lib/catalog';
 
 function Page() {
@@ -14,6 +14,7 @@ function Page() {
   const { firms, idMap, loading } = useCatalog();
   const { listings } = useListings();
   const { ids, toggle } = useMyList();
+  const { session } = useSession();
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from ?? '/explore';
@@ -51,7 +52,7 @@ function Page() {
           listings={firmListings}
           similar={similar}
           saved={ids.has(firm.id)}
-          onToggleSave={(f) => toggle(f.id)}
+          onToggleSave={(f) => (session ? toggle(f.id) : navigate(`/signup?next=${encodeURIComponent(location.pathname)}`))}
           onOpenFirm={(f) => navigate(`/firms/${f.slug}`, { state: { from } })}
           headingLevel="h1"
         />
@@ -62,10 +63,8 @@ function Page() {
 
 export default function FirmPage() {
   return (
-    <RequireProfile>
-      <div className="app min-h-screen">
-        <Page />
-      </div>
-    </RequireProfile>
+    <div className="app min-h-screen">
+      <Page />
+    </div>
   );
 }

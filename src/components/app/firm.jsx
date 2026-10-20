@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { Bookmark } from 'lucide-react';
+import { Bookmark, Lock } from 'lucide-react';
 import { monogram, officesLabel } from '../../lib/format';
 
 const TILE = { sm: 'h-8 w-8 text-t12', md: 'h-10 w-10 text-t14', lg: 'h-14 w-14 text-t20' };
@@ -22,6 +22,7 @@ const PILL = {
   upcoming: 'bg-st-unknown-bg text-st-unknown',
   closed: 'bg-st-closed-bg text-st-closed-text',
   unknown: 'bg-st-unknown-bg text-st-unknown',
+  locked: 'border border-line bg-card text-fg-2',
 };
 const DOT = {
   open: 'bg-st-open',
@@ -36,7 +37,7 @@ const DOT = {
 export function StatusPill({ status }) {
   return (
     <span className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-pill px-2.5 py-0.5 text-t12 font-medium ${PILL[status.kind]}`}>
-      <span aria-hidden="true" className={`h-1.5 w-1.5 rounded-pill ${DOT[status.kind]}`} />
+      {status.kind === 'locked' ? <Lock size={11} aria-hidden="true" /> : <span aria-hidden="true" className={`h-1.5 w-1.5 rounded-pill ${DOT[status.kind]}`} />}
       {status.label}
     </span>
   );

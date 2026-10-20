@@ -1,7 +1,6 @@
 import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { BookmarkPlus, Map as MapIcon, Search, SlidersHorizontal } from 'lucide-react';
-import RequireProfile from '../components/RequireProfile';
 import { Button, FilterChip, Input, Segmented, Select } from '../components/app/controls';
 import { FirmCard, FirmList } from '../components/app/firm';
 import { BottomSheet, Drawer, FilterMenu } from '../components/app/overlays';
@@ -10,8 +9,12 @@ import FirmDetail from '../components/explore/FirmDetail';
 import SaveSearch from '../components/explore/SaveSearch';
 import Positions from '../components/explore/Positions';
 import {
-  EMPTY, SIZE_BUCKETS, applyFilters, chipLabelFor, chips, isFiltered, mostRestrictive, readFilters, removeChip, writeFilters,
+  EMPTY, SIZE_BUCKETS, applyFilters, chipLabelFor, chips, gatedInUse, isFiltered, mostRestrictive, readFilters, removeChip, writeFilters,
 } from '../components/explore/filters';
+import UnlockForm from '../components/UnlockForm';
+import MapCtaBar from '../components/MapCtaBar';
+import useAccess from '../hooks/useAccess';
+import { ROLES, ROLE_LABEL } from '../lib/roles';
 import useCatalog from '../hooks/useCatalog';
 import useListings from '../hooks/useListings';
 import useMyList from '../hooks/useMyList';
@@ -43,23 +46,25 @@ function collectionsFor(profile) {
   return [
     { title: 'Open now', filters: { status: ['open', 'rolling'] } },
     markets.length
-      ? { title: 'Hiring 1Ls in your markets', filters: { city: markets, hires: 'yes', nobiglaw: '1' } }
-      : { title: 'Houston firms hiring 1Ls', filters: { city: ['Houston'], hires: 'yes', nobiglaw: '1' } },
+      ? { title: 'Hiring in your markets', filters: { city: markets, nobiglaw: '1' } }
+      : { title: 'Houston firms', filters: { city: ['Houston'], nobiglaw: '1' } },
     types.length ? { title: 'Your firm types', filters: { type: types } } : null,
     { title: 'Texas litigation boutiques', filters: { state: 'TX', type: ['litigation-boutique'] } },
+    { title: 'Hiring for 2L summer', filters: { role: ['2l-summer'], nobiglaw: '1' } },
     { title: 'Opening soon', filters: { status: ['soon'] } },
     { title: 'Plaintiff and public interest', filters: { type: ['plaintiff', 'public-interest'] } },
-    { title: 'Mid-size firms hiring 1Ls', filters: { type: ['mid-size'], hires: 'yes' } },
+    { title: 'Mid-size firms hiring for 1L summer', filters: { type: ['mid-size'], role: ['1l-summer'] } },
   ].filter(Boolean);
 }
 
-function Collections({ firms, profile, onOpen }) {
+function Collections({ firms, profile, onOpen, unlocked }) {
   const rows = useMemo(
     () =>
       collectionsFor(profile)
+        .filter((c) => unlocked || !gatedInUse({ ...EMPTY, ...c.filters }))
         .map((c) => ({ ...c, firms: recommended(applyFilters(firms, { ...EMPTY, ...c.filters }), profile) }))
         .filter((c) => c.firms.length >= 2),
-    [firms, profile]
+    [firms, profile, unlocked]
   );
   if (!rows.length) return null;
   return (
@@ -85,7 +90,7 @@ function Collections({ firms, profile, onOpen }) {
 
 // ─── MAP HOME ────────────────────────────────────────────────────────────────
 
-function MapHome({ firms, onPickState, onSearch, onPositions, profile, onCollection }) {
+function MapHome({ firms, onPickState, onSearch, onPositions, onRole, profile, onCollection, unlocked }) {
   const counts = useMemo(() => countsByState(firms), [firms]);
   const breakdown = useMemo(() => {
     const out = {};
@@ -101,9 +106,17 @@ function MapHome({ firms, onPickState, onSearch, onPositions, profile, onCollect
         <div>
           <h1 className="text-t24 font-bold tracking-tight md:text-t32">Where do you want to work?</h1>
           <p className="mt-1 text-t16 text-fg-2">Pick a state to see its firms, sorted by type. Boutiques and mid-size firms come first.</p>
-          <button type="button" onClick={onPositions} className="mt-1 inline-flex min-h-[44px] items-center text-t14 font-medium text-brand hover:underline md:min-h-0">
-            Or browse open positions
-          </button>
+          <div className="mt-3 flex flex-wrap items-center gap-2" role="group" aria-label="Hiring for">
+            <span className="text-t14 text-fg-2">Hiring for:</span>
+            {ROLES.map((r) => (
+              <FilterChip key={r.value} onClick={() => onRole(r.value)}>
+                {r.label}
+              </FilterChip>
+            ))}
+            <button type="button" onClick={onPositions} className="inline-flex min-h-[44px] items-center px-1 text-t14 font-medium text-brand hover:underline md:min-h-0">
+              Open positions
+            </button>
+          </div>
         </div>
         <form
           className="w-full md:w-80"
@@ -116,6 +129,12 @@ function MapHome({ firms, onPickState, onSearch, onPositions, profile, onCollect
           <Input icon={Search} aria-label="Search all firms" placeholder="Or search all firms by name, city, practice" value={q} onChange={(e) => setQ(e.target.value)} />
         </form>
       </div>
+
+      {!unlocked && (
+        <div className="mt-5">
+          <UnlockForm source="/explore" />
+        </div>
+      )}
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
         <div className="rounded-app border border-line bg-card p-3 md:p-5">
@@ -142,7 +161,7 @@ function MapHome({ firms, onPickState, onSearch, onPositions, profile, onCollect
         </nav>
       </div>
 
-      <Collections firms={firms} profile={profile} onOpen={onCollection} />
+      <Collections firms={firms} profile={profile} onOpen={onCollection} unlocked={unlocked} />
     </div>
   );
 }
@@ -157,17 +176,14 @@ function useFilterOptions(firms, filters) {
     const cities = countBy(scope('city'), (f) => (filters.state ? f.offices.filter((o) => o.state === filters.state).map((o) => o.city) : f.cities));
     const types = countBy(scope('type'), (f) => f.type);
     const statuses = countBy(scope('status'), (f) => (f.status.kind === 'upcoming' ? 'soon' : f.status.kind));
-    const hires = countBy(scope('hires'), (f) => f.hires);
+    const roles = countBy(scope('role'), (f) => f.hiresFor);
     const practices = [...countBy(scope('practice'), (f) => f.practice)].sort((a, b) => b[1] - a[1]).slice(0, 24);
     return {
       state: Object.keys(STATE_NAMES).filter((s) => states.get(s)).map((s) => ({ value: s, label: STATE_NAMES[s], count: states.get(s) })),
       city: [...cities].sort((a, b) => b[1] - a[1]).slice(0, 40).map(([c, n]) => ({ value: c, label: c, count: n })),
       type: FIRM_TYPES.map((t) => ({ value: t.value, label: t.label, count: types.get(t.value) ?? 0 })),
       status: STATUS_FILTERS.map((s) => ({ ...s, count: statuses.get(s.value) ?? 0 })),
-      hires: [
-        { value: 'yes', label: 'Yes', count: hires.get('yes') ?? 0 },
-        { value: 'unknown', label: 'Not published', count: hires.get('unknown') ?? 0 },
-      ],
+      role: ROLES.map((r) => ({ value: r.value, label: r.label, count: roles.get(r.value) ?? 0 })),
       practice: practices.map(([p, n]) => ({ value: p, label: p, count: n })),
     };
   }, [firms, filters]);
@@ -181,7 +197,7 @@ function PrimaryFilters({ options, filters, set }) {
       <FilterMenu label="State" options={options.state} value={filters.state ? [filters.state] : []} onChange={single((v) => set({ state: v, city: [] }))} />
       <FilterMenu label="Market" options={options.city} value={filters.city} onChange={(v) => set({ city: v })} />
       <FilterMenu label="Firm type" options={options.type} value={filters.type} onChange={(v) => set({ type: v })} />
-      <FilterMenu label="Hires 1Ls" options={options.hires} value={filters.hires ? [filters.hires] : []} onChange={single((v) => set({ hires: v }))} />
+      <FilterMenu label="Hires for" options={options.role} value={filters.role} onChange={(v) => set({ role: v })} />
       <FilterMenu label="Window status" options={options.status} value={filters.status} onChange={(v) => set({ status: v })} />
     </>
   );
@@ -240,6 +256,7 @@ function ExplorePage() {
   const { listings } = useListings();
   const { ids: savedIds, toggle } = useMyList();
   const { session, profile } = useSession();
+  const { canSeeDetails } = useAccess();
   const [params, setParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -333,7 +350,11 @@ function ExplorePage() {
     document.title = filters.state ? `${STATE_NAMES[filters.state]} firms — Firmward` : 'Explore — Firmward';
   }, [filters.state]);
 
-  const toggleSave = (f) => toggle(f.id);
+  // Saving needs a profile; visitors get sent to sign up and come back here.
+  const toggleSave = (f) => {
+    if (!session) return navigate(`/signup?next=${encodeURIComponent(location.pathname + location.search)}`);
+    toggle(f.id);
+  };
 
   if (error) {
     return (
@@ -390,7 +411,9 @@ function ExplorePage() {
         onPickState={(s) => set({ state: s })}
         onSearch={(q) => set({ q })}
         onPositions={() => showTab('positions')}
+        onRole={(r) => set({ role: [r] })}
         onCollection={openCollection}
+        unlocked={canSeeDetails}
       />
     );
   }
@@ -472,6 +495,23 @@ function ExplorePage() {
           </div>
 
           <div className="lg:h-[calc(100vh-56px-var(--filterbar,132px))] lg:overflow-y-auto">
+            {!loading && !canSeeDetails && gatedInUse(filters) && (
+              <div className="border-b border-line p-4">
+                <UnlockForm
+                  title={filters.role.length ? `See which firms hire for ${filters.role.map((r) => ROLE_LABEL[r]).join(' or ')}` : 'Unlock to use this filter'}
+                  blurb="Showing every firm for now. Enter your email to filter by who’s hiring, see application windows and how to apply."
+                  source="/explore"
+                />
+              </div>
+            )}
+            {!loading && canSeeDetails && filters.role.some((r) => r === 'post-grad' || r === 'entry-lateral') && results.length < 15 && (
+              <p className="border-b border-line bg-canvas px-4 py-3 text-t14 text-fg-2">
+                Post-grad and entry-level hiring data is new: {results.length} firm{results.length === 1 ? '' : 's'} confirmed so far, with more added as we check each firm.{' '}
+                <button type="button" className="font-medium text-brand hover:underline" onClick={() => set({ role: [] })}>
+                  Show all firms
+                </button>
+              </p>
+            )}
             {loading && <FirmRowSkeleton rows={8} />}
             {!loading && results.length === 0 && (
               <div className="p-4">
@@ -557,11 +597,10 @@ function ExplorePage() {
 
 export default function Explore() {
   return (
-    <RequireProfile>
-      <div className="app min-h-screen">
-        <ExplorePage />
-      </div>
-    </RequireProfile>
+    <div className="app min-h-screen pb-16">
+      <ExplorePage />
+      <MapCtaBar />
+    </div>
   );
 }
 

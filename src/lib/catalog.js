@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+import { normalizeListing } from './listings';
 import { windowStatus } from './status';
 
 // ─── FIRM TYPES ──────────────────────────────────────────────────────────────
@@ -41,9 +42,14 @@ function parseDate(v) {
   return new Date(y, m - 1, d);
 }
 
-const STATUS_RANK = { open: 0, soon: 1, rolling: 2, upcoming: 3, closed: 4, unknown: 5 };
+const STATUS_RANK = { open: 0, soon: 1, rolling: 2, upcoming: 3, closed: 4, unknown: 5, locked: 6 };
 
+// Shown instead of a window status until the visitor unlocks the full data.
+export const LOCKED_STATUS = { kind: 'locked', label: 'Window locked', sortKey: Number.MAX_SAFE_INTEGER };
+
+// `row` has only the public columns when the visitor hasn't unlocked (no window_kind).
 function office(row) {
+  const locked = !('window_kind' in row);
   const start = parseDate(row.app_window_start);
   const end = parseDate(row.app_window_end);
   const kind = row.window_kind ?? (start || end ? 'dated' : 'unknown');
@@ -56,13 +62,15 @@ function office(row) {
     start,
     end,
     kind,
-    hires: row.hires_1l ?? 'unknown',
+    hires: locked ? 'locked' : row.hires_1l ?? 'unknown',
+    hiresFor: row.hires_for ?? [],
     verifiedAt: row.last_verified_at ? new Date(row.last_verified_at) : null,
-    status: windowStatus({ start, end, kind }),
+    status: locked ? LOCKED_STATUS : windowStatus({ start, end, kind }),
   };
 }
 
 function firm(row, offices) {
+  const locked = !('hires_for' in row);
   const best = [...offices].sort(
     (a, b) => STATUS_RANK[a.status.kind] - STATUS_RANK[b.status.kind] || a.status.sortKey - b.status.sortKey
   )[0];
@@ -77,7 +85,9 @@ function firm(row, offices) {
     group: t?.group ?? 'Not yet classified',
     practice: (row.practice_areas ?? []).map((p) => p.charAt(0).toUpperCase() + p.slice(1)),
     size: row.size || null,
-    hires: row.hires_1l ?? 'unknown',
+    locked,
+    hires: locked ? 'locked' : row.hires_1l ?? 'unknown',
+    hiresFor: row.hires_for ?? [],
     website: row.website || null,
     notes: row.notes || null,
     fellowship: row.has_fellowship ? row.fellowship_name || 'Diversity fellowship' : null,
@@ -86,19 +96,21 @@ function firm(row, offices) {
     offices,
     states: [...new Set(offices.map((o) => o.state))],
     cities: [...new Set(offices.map((o) => o.city))],
-    status: best?.status ?? windowStatus(null),
+    status: locked ? LOCKED_STATUS : best?.status ?? windowStatus(null),
+    recruitingEmail: row.recruiting_email || null,
     applyUrl: best?.applyUrl ?? offices.find((o) => o.applyUrl)?.applyUrl ?? null,
     careersUrl: best?.careersUrl ?? offices.find((o) => o.careersUrl)?.careersUrl ?? null,
-    // Where emailed applications go, when the firm publishes an address.
-    recruitingEmail: row.recruiting_email || null,
     verifiedAt: verified.length ? new Date(Math.max(...verified)) : null,
     source: row.source ?? 'Firm careers page',
   };
 }
 
 // ─── LOADING ─────────────────────────────────────────────────────────────────
-// After migration 004: firms + offices tables. Before it: firm rows are per office,
-// so group them by name, picking the same canonical row the migration will keep.
+// Everyone can read the public columns. Hiring details come from the API for visitors who unlocked
+// with their email (token) or are signed in (accessToken), and are merged in by id.
+
+export const PUBLIC_FIRM = 'id,name,slug,state,city,size,practice_areas,firm_type,last_verified_at,source';
+export const PUBLIC_OFFICE = 'id,firm_id,city,state,last_verified_at';
 
 async function selectAll(table, columns) {
   const rows = [];
@@ -110,52 +122,36 @@ async function selectAll(table, columns) {
   }
 }
 
-function canonicalFirst(a, b) {
-  const score = (r) => [r.hires_1l === 'yes' ? 0 : 1, r.app_window_start || r.app_window_end ? 0 : 1, r.firm_type ? 0 : 1];
-  const [sa, sb] = [score(a), score(b)];
-  for (let i = 0; i < 3; i++) if (sa[i] !== sb[i]) return sa[i] - sb[i];
-  return String(a.created_at).localeCompare(String(b.created_at)) || String(a.id).localeCompare(String(b.id));
-}
-
-// Old boutique rows split the way migration 004 splits them.
-function legacyType(row) {
-  if (row.firm_type !== 'boutique') return row.firm_type;
-  return /(litigation|trial|disputes|appellate)/i.test((row.practice_areas ?? []).join(' ')) ? 'litigation-boutique' : 'specialty-boutique';
-}
-
-export async function fetchCatalog() {
-  let officeRows;
-  try {
-    officeRows = await selectAll('offices', '*');
-  } catch {
-    officeRows = null; // migration 004 not applied yet
-  }
-
-  if (officeRows) {
-    const firms = await selectAll('firms', '*');
-    const byFirm = new Map();
-    for (const o of officeRows) (byFirm.get(o.firm_id) ?? byFirm.set(o.firm_id, []).get(o.firm_id)).push(office(o));
-    return { firms: firms.map((f) => firm(f, byFirm.get(f.id) ?? [])), idMap: null };
-  }
-
-  const rows = await selectAll('firms', '*');
-  const groups = new Map();
-  for (const r of rows) (groups.get(r.name.toLowerCase()) ?? groups.set(r.name.toLowerCase(), []).get(r.name.toLowerCase())).push(r);
-  const idMap = new Map();
-  const firms = [...groups.values()].map((g) => {
-    const sorted = [...g].sort(canonicalFirst);
-    const head = sorted[0];
-    g.forEach((r) => idMap.set(r.id, head.id));
-    const merged = {
-      ...head,
-      firm_type: legacyType(sorted.find((r) => r.firm_type) ?? head),
-      hires_1l: g.some((r) => r.hires_1l === 'yes') ? 'yes' : head.hires_1l,
-      practice_areas: [...new Set(g.flatMap((r) => r.practice_areas ?? []))],
-      size: head.size ?? g.find((r) => r.size)?.size,
-    };
-    return firm(merged, g.map(office));
+async function fetchPrivate({ token, accessToken }) {
+  const res = await fetch('/api/catalog/private', {
+    headers: { ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}), ...(token ? { 'X-Unlock-Token': token } : {}) },
   });
-  return { firms, idMap };
+  if (res.status === 401) return null; // token no longer valid: stay on the public view
+  if (!res.ok) throw new Error('Couldn’t load the full firm data.');
+  return res.json();
+}
+
+export async function fetchCatalog({ token = null, accessToken = null } = {}) {
+  const [firmRows, officeRows, detail] = await Promise.all([
+    selectAll('firms', PUBLIC_FIRM),
+    selectAll('offices', PUBLIC_OFFICE),
+    token || accessToken ? fetchPrivate({ token, accessToken }) : null,
+  ]);
+  const merge = (rows, extra) => {
+    if (!extra) return rows;
+    const byId = new Map(extra.map((r) => [r.id, r]));
+    return rows.map((r) => ({ ...r, ...byId.get(r.id) }));
+  };
+  const firms = merge(firmRows, detail?.firms);
+  const offices = merge(officeRows, detail?.offices);
+  const byFirm = new Map();
+  for (const o of offices) (byFirm.get(o.firm_id) ?? byFirm.set(o.firm_id, []).get(o.firm_id)).push(office(o));
+  return {
+    firms: firms.map((f) => firm(f, byFirm.get(f.id) ?? [])),
+    listings: (detail?.listings ?? []).map(normalizeListing),
+    unlocked: Boolean(detail),
+    idMap: null,
+  };
 }
 
 // ─── ORDERING ────────────────────────────────────────────────────────────────
@@ -164,7 +160,7 @@ export async function fetchCatalog() {
 export function recommended(firms, profile) {
   const markets = new Set((profile?.target_market ?? '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean));
   const score = (f) =>
-    (f.status.kind === 'unknown' ? 4 : 0) +
+    (f.status.kind === 'unknown' || f.status.kind === 'locked' ? 4 : 0) +
     (f.type === 'biglaw' ? 2 : 0) +
     (markets.size && !f.cities.some((c) => markets.has(c.toLowerCase())) ? 1 : 0);
   return [...firms].sort(

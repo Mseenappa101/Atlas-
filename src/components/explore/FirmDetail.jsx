@@ -7,6 +7,8 @@ import { downloadIcs } from '../../lib/ics';
 import { site } from '../../lib/site';
 import { postingTypeLabel } from '../../lib/listings';
 import { portalUrl } from '../../lib/application';
+import { ROLE_LABEL } from '../../lib/roles';
+import UnlockForm from '../UnlockForm';
 
 const NP = <span className="text-fg-2">Not published</span>;
 const fmt = (d, year = false) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', ...(year ? { year: 'numeric' } : {}) });
@@ -50,7 +52,8 @@ function Section({ title, children }) {
 export default function FirmDetail({ firm, listings = [], similar = [], saved, onToggleSave, onOpenFirm, headingLevel = 'h2' }) {
   const Heading = headingLevel;
   const offices = firm.offices;
-  const withProgram = offices.filter((o) => o.hires === 'yes').map((o) => o.city);
+  const withProgram = offices.filter((o) => o.hires === 'yes' || o.hiresFor.length).map((o) => o.city);
+  const hiresFor = firm.hiresFor.map((r) => ROLE_LABEL[r] ?? r);
   // Only future dates get a calendar row.
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -93,22 +96,38 @@ export default function FirmDetail({ firm, listings = [], similar = [], saved, o
           </ButtonLink>
         )}
       </div>
-      {firm.recruitingEmail && (
-        <p className="mt-2 text-t14 text-fg-2">
-          Takes applications by email. Send yours from your application page.
-        </p>
-      )}
 
-      <Section title="1L summer at a glance">
+
+      {firm.locked ? (
+        <>
+          <Section title="At a glance">
+            <dl className="grid grid-cols-2 gap-2 lg:grid-cols-3">
+              <Stat label="Firm type">{firm.typeLabel ?? NP}</Stat>
+              <Stat label="Size">{firm.size ?? NP}</Stat>
+              <Stat label="Offices">{officesLabel(offices, 4) || NP}</Stat>
+            </dl>
+          </Section>
+          <div className="mt-6">
+            <UnlockForm
+              title={`See how to apply to ${firm.name}`}
+              blurb="Who they hire for (1L summer, 2L summer, post-grad), application windows, how to apply, the recruiting contact and open positions. Free with your email."
+              source={`/firms/${firm.slug}`}
+            />
+          </div>
+        </>
+      ) : (
+      <Section title="Hiring at a glance">
         <dl className="grid grid-cols-2 gap-2 lg:grid-cols-3">
-          <Stat label="Hires 1Ls">{firm.hires === 'yes' ? 'Yes' : firm.hires === 'no' ? 'No' : NP}</Stat>
+          <Stat label="Hires for">{hiresFor.length ? hiresFor.join(', ') : NP}</Stat>
           <Stat label="Application window">{(windowOffice && windowText(windowOffice)) || NP}</Stat>
           <Stat label="Accepting applications">{accepting(firm.status) ?? NP}</Stat>
           <Stat label="Split summers">{firm.splitSummers == null ? NP : firm.splitSummers ? 'Allowed' : 'Not allowed'}</Stat>
           <Stat label="Program length">{firm.programWeeks ? `${firm.programWeeks} weeks` : NP}</Stat>
           <Stat label="Offices with a program">{withProgram.length ? withProgram.join(', ') : NP}</Stat>
         </dl>
+        {firm.recruitingEmail && <p className="mt-2 text-t14 text-fg-2">Recruiting contact: <a href={`mailto:${firm.recruitingEmail}`} className="text-brand hover:underline">{firm.recruitingEmail}</a></p>}
       </Section>
+      )}
 
       {deadline && (
         <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-app border border-line bg-card px-3 py-2">
@@ -122,7 +141,7 @@ export default function FirmDetail({ firm, listings = [], similar = [], saved, o
             icon={CalendarPlus}
             onClick={() =>
               downloadIcs({
-                title: `${firm.name}: 1L application ${deadline === deadlineOffice.end ? 'deadline' : 'opens'}`,
+                title: `${firm.name}: application ${deadline === deadlineOffice.end ? 'deadline' : 'opens'}`,
                 date: deadline,
                 url: firm.applyUrl ?? firm.careersUrl ?? '',
                 description: 'From Firmward. Check the firm’s page for the current deadline.',
@@ -198,7 +217,7 @@ export default function FirmDetail({ firm, listings = [], similar = [], saved, o
 
       {(notes || firm.fellowship) && (
         <Section title="Notes">
-          {firm.fellowship && <p className="text-t14">1L fellowship: {firm.fellowship}.</p>}
+          {firm.fellowship && <p className="text-t14">Fellowship: {firm.fellowship}.</p>}
           {notes && <p className="text-t14 text-fg-2">{notes}</p>}
         </Section>
       )}

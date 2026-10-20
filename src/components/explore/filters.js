@@ -1,8 +1,9 @@
 import { FIRM_TYPES, STATE_NAMES } from '../../lib/catalog';
 import { STATUS_FILTERS } from '../../lib/status';
+import { ROLE_LABEL } from '../../lib/roles';
 
 // Every filter lives in the URL so views are shareable and the back button works.
-const MULTI = ['type', 'city', 'status', 'size', 'practice'];
+const MULTI = ['type', 'city', 'status', 'size', 'practice', 'role'];
 const SINGLE = ['state', 'q', 'hires', 'verified', 'split', 'nobiglaw'];
 
 export function readFilters(p) {
@@ -45,6 +46,11 @@ export function sizeBucket(firm) {
 
 const DAY = 86_400_000;
 
+// Filters on fields only unlocked visitors can see. For locked firms they match everything, and the
+// page asks the visitor to unlock instead of showing an empty list.
+export const GATED = ['role', 'status', 'hires', 'split'];
+export const gatedInUse = (f) => GATED.some((k) => (Array.isArray(f[k]) ? f[k].length : f[k]));
+
 // Each test is separate so the empty state can tell which filter rules out the most firms.
 const TESTS = {
   state: (f, v) => f.states.includes(v),
@@ -54,12 +60,13 @@ const TESTS = {
     return f.name.toLowerCase().includes(q) || f.cities.some((c) => c.toLowerCase().includes(q)) || f.practice.some((p) => p.toLowerCase().includes(q));
   },
   type: (f, v) => v.includes(f.type),
-  hires: (f, v) => f.hires === v,
-  status: (f, v) => v.includes(f.status.kind === 'upcoming' ? 'soon' : f.status.kind),
+  hires: (f, v) => f.locked || f.hires === v,
+  role: (f, v) => f.locked || v.some((r) => f.hiresFor.includes(r)),
+  status: (f, v) => f.locked || v.includes(f.status.kind === 'upcoming' ? 'soon' : f.status.kind),
   size: (f, v) => v.includes(sizeBucket(f)),
   practice: (f, v) => f.practice.some((p) => v.includes(p)),
   verified: (f, v) => f.verifiedAt && Date.now() - f.verifiedAt.getTime() <= Number(v) * DAY,
-  split: (f) => f.splitSummers === true,
+  split: (f) => f.locked || f.splitSummers === true,
   nobiglaw: (f) => f.type !== 'biglaw',
 };
 
@@ -84,7 +91,7 @@ export function mostRestrictive(firms, f) {
 const TYPE_LABEL = Object.fromEntries(FIRM_TYPES.map((t) => [t.value, t.label]));
 const STATUS_LABEL = Object.fromEntries(STATUS_FILTERS.map((s) => [s.value, s.label]));
 const SIZE_LABEL = Object.fromEntries(SIZE_BUCKETS.map((s) => [s.value, s.label]));
-const HIRES_LABEL = { yes: 'Hires 1Ls', unknown: 'Hiring not published', no: 'Doesn’t hire 1Ls' };
+const HIRES_LABEL = { yes: 'Hires for 1L summer', unknown: 'Hiring not published', no: 'Doesn’t hire 1Ls' };
 
 // Applied filters as removable chips: [{ key, value, label }].
 export function chips(f) {
@@ -94,6 +101,7 @@ export function chips(f) {
   if (f.q) out.push({ key: 'q', label: `“${f.q}”` });
   for (const v of f.type) out.push({ key: 'type', value: v, label: TYPE_LABEL[v] ?? v });
   if (f.hires) out.push({ key: 'hires', label: HIRES_LABEL[f.hires] });
+  for (const v of f.role) out.push({ key: 'role', value: v, label: `Hires for: ${ROLE_LABEL[v] ?? v}` });
   for (const v of f.status) out.push({ key: 'status', value: v, label: STATUS_LABEL[v] ?? v });
   for (const v of f.size) out.push({ key: 'size', value: v, label: SIZE_LABEL[v] ?? v });
   for (const v of f.practice) out.push({ key: 'practice', value: v, label: v });

@@ -1,5 +1,3 @@
-import { supabase } from './supabase';
-
 export const POSTING_TYPES = [
   { value: 'summer-associate', label: 'Summer associate' },
   { value: 'law-clerk', label: 'Law clerk' },
@@ -10,16 +8,6 @@ export const POSTING_TYPES = [
 ];
 
 const TYPE_LABELS = Object.fromEntries(POSTING_TYPES.map((t) => [t.value, t.label]));
-
-export async function fetchOpenListings() {
-  const { data, error } = await supabase
-    .from('listings')
-    .select('id,firm_id,title,employer_name,class_years,posting_type,city,state,window_start,deadline,apply_url,summary')
-    .eq('status', 'open')
-    .order('employer_name');
-  if (error) throw new Error(error.message);
-  return data.map(normalizeListing);
-}
 
 function parseDate(v) {
   if (!v) return null;
@@ -34,6 +22,7 @@ export function normalizeListing(row) {
     title: row.title,
     employer: row.employer_name,
     years: row.class_years ?? [],
+    roles: row.roles ?? [],
     // Pages that just say "summer program" don't name a class year.
     yearsLabel: row.class_years?.length ? row.class_years.join(' · ') : 'Law students',
     type: row.posting_type,

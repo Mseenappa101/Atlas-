@@ -33,14 +33,20 @@ const NOUN = {
 };
 
 // Plain facts from the data, no claims we can't back up.
+// Locked visitors don't have hiring data, so the sentence only appears when there's a number to show.
+function summaryHiring(firms) {
+  const n = firms.filter((f) => f.hiresFor?.length || f.hires === 'yes').length;
+  return n ? `${n} confirmed to hire law students.` : '';
+}
+
 function summary(firms) {
   const groups = FIRM_TYPES.map((t) => [t.value, firms.filter((f) => f.type === t.value).length])
     .filter(([, n]) => n)
     .map(([type, n]) => `${n} ${NOUN[type][n === 1 ? 0 : 1]}`);
-  const hiring = firms.filter((f) => f.hires === 'yes').length;
+  const hiring = firms.filter((f) => f.hiresFor?.length || f.hires === 'yes').length;
   return [
     groups.length ? `By type: ${listOf(groups)}.` : null,
-    hiring ? `${hiring} ${hiring === 1 ? 'is' : 'are'} confirmed to hire 1Ls.` : null,
+    hiring ? `${hiring} ${hiring === 1 ? 'is' : 'are'} confirmed to hire law students.` : null,
   ]
     .filter(Boolean)
     .join(' ');
@@ -58,26 +64,26 @@ function Page({ kind }) {
       const office = here.flatMap((f) => f.offices).find((o) => slugify(o.city) === slug);
       const place = office ? `${office.city}, ${STATE_NAMES[office.state] ?? office.state}` : slug.replace(/-/g, ' ');
       return {
-        heading: `Law firms hiring 1Ls in ${office?.city ?? place}`,
+        heading: `Law firms hiring law students and new grads in ${office?.city ?? place}`,
         firmsHere: here,
         intro: here.length
           ? `Firmward tracks ${here.length} firm${here.length === 1 ? '' : 's'} with an office in ${place}. ${summary(here)}`
           : `Firmward doesn’t have firms in ${place} yet.`,
-        description: `${here.length} law firms in ${place} for 1L summer jobs: boutiques, mid-size and regional firms first, with hiring status, application windows and direct links.`,
+        description: `${here.length} law firms in ${place} hiring for summer and post-grad jobs: boutiques, mid-size and regional firms first, with hiring status, application windows and direct links.`,
       };
     }
     const type = FIRM_TYPES.find((t) => t.value === slug);
     const here = firms.filter((f) => f.type === slug);
     const states = new Set(here.flatMap((f) => f.states)).size;
     return {
-      heading: type ? `${type.label} firms that hire 1Ls` : 'Firms',
+      heading: type ? `${type.label} firms hiring law students and new grads` : 'Firms',
       firmsHere: here,
       intro: !type
         ? ''
         : here.length
-          ? `Firmward tracks ${here.length} ${NOUN[slug][here.length === 1 ? 0 : 1]} across ${states} state${states === 1 ? '' : 's'}. ${here.filter((f) => f.hires === 'yes').length} confirmed to hire 1Ls.`
+          ? `Firmward tracks ${here.length} ${NOUN[slug][here.length === 1 ? 0 : 1]} across ${states} state${states === 1 ? '' : 's'}. ${summaryHiring(here)}`
           : `Firmward doesn’t have ${NOUN[slug][1]} yet. We’re adding employers regularly.`,
-      description: type ? `${type.label} law firms for 1L summer jobs, with hiring status, application windows and direct application links.` : '',
+      description: type ? `${type.label} law firms hiring for summer and post-grad jobs, with hiring status, application windows and direct application links.` : '',
     };
   }, [firms, kind, slug]);
 

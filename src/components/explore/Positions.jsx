@@ -6,6 +6,8 @@ import { FilterMenu } from '../app/overlays';
 import { MonogramTile } from '../app/firm';
 import { EmptyState, FirmRowSkeleton } from '../app/feedback';
 import useListings from '../../hooks/useListings';
+import useAccess from '../../hooks/useAccess';
+import UnlockForm from '../UnlockForm';
 import { POSTING_TYPES } from '../../lib/listings';
 import { STATE_NAMES } from '../../lib/catalog';
 
@@ -16,6 +18,7 @@ const fmt = (d) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric
 // Filter state lives in the URL (p-prefixed keys) next to Explore's own.
 export default function Positions({ params, setParams, firmById, onOpenFirm }) {
   const { listings, loading, error } = useListings();
+  const { canSeeDetails } = useAccess();
   const f = {
     years: params.getAll('pyear'),
     types: params.getAll('ptype'),
@@ -54,6 +57,14 @@ export default function Positions({ params, setParams, firmById, onOpenFirm }) {
     for (const l of listings) if (l.state) c.set(l.state, (c.get(l.state) ?? 0) + 1);
     return [...c].sort().map(([s, n]) => ({ value: s, label: STATE_NAMES[s] ?? s, count: n }));
   }, [listings]);
+
+  if (!canSeeDetails) {
+    return (
+      <div className="p-4 md:p-6">
+        <UnlockForm title="See every open position" blurb="Summer associate, law clerk and fellowship postings from firm careers pages, with deadlines and apply links. Free with your email." source="/explore?tab=positions" />
+      </div>
+    );
+  }
 
   return (
     <div>

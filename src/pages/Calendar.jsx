@@ -8,6 +8,8 @@ import useMyList from '../hooks/useMyList';
 import useSession from '../hooks/useSession';
 import useMediaQuery from '../hooks/useMediaQuery';
 import { downloadIcs } from '../lib/ics';
+import useAccess from '../hooks/useAccess';
+import UnlockForm from '../components/UnlockForm';
 
 // Categorical hues in fixed order (validated: CVD-separated; light ones always carry a text label).
 const PATH_COLOR = {
@@ -208,7 +210,7 @@ function MonthList({ events }) {
                         size="sm"
                         icon={CalendarPlus}
                         className="no-print"
-                        onClick={() => downloadIcs({ title: `${r.event.firm.name}: 1L application deadline`, date: r.date, url: r.event.firm.applyUrl ?? r.event.firm.careersUrl ?? '' })}
+                        onClick={() => downloadIcs({ title: `${r.event.firm.name}: application deadline`, date: r.date, url: r.event.firm.applyUrl ?? r.event.firm.careersUrl ?? '' })}
                       >
                         <span className="sr-only md:not-sr-only">Add to calendar</span>
                       </Button>
@@ -232,6 +234,7 @@ export default function Calendar() {
   const { firms } = useCatalog();
   const { ids } = useMyList();
   const { session, profile } = useSession();
+  const { canSeeDetails } = useAccess();
   const wide = useMediaQuery('(min-width: 768px)');
   const today = startOfToday();
   const [view, setView] = useState(null);
@@ -240,7 +243,7 @@ export default function Calendar() {
   const shownView = view ?? (wide ? 'month' : 'list');
 
   useEffect(() => {
-    document.title = '1L recruiting calendar — Firmward';
+    document.title = 'Law student recruiting calendar — Firmward';
   }, []);
 
   const markets = useMemo(() => (profile?.target_market ?? '').split(',').map((s) => s.trim()).filter(Boolean), [profile]);
@@ -261,7 +264,7 @@ export default function Calendar() {
       <div className="mx-auto max-w-app px-4 pb-24 pt-6 md:px-6 md:pb-12">
         <header className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 className="text-t24 font-bold tracking-tight md:text-t32">1L recruiting calendar</h1>
+            <h1 className="text-t24 font-bold tracking-tight md:text-t32">Law student recruiting calendar</h1>
             <p className="mt-1 max-w-2xl text-t16 text-fg-2">
               October 2026 to June 2027. Phases are typical windows from past cycles; firm dates come from each firm&rsquo;s page. Always confirm on the
               employer&rsquo;s site.
@@ -295,6 +298,11 @@ export default function Calendar() {
             />
           )}
         </div>
+        {!canSeeDetails && (
+          <div className="no-print mt-5">
+            <UnlockForm title="Add every firm’s dates to this calendar" blurb="The phases below are open to everyone. Enter your email to see each firm’s application window on the calendar, plus a copy by email." source="/calendar" />
+          </div>
+        )}
         {scope === 'markets' && !markets.length && (
           <p className="mt-2 text-t14 text-fg-2">Add target markets to your profile to use this filter.</p>
         )}
