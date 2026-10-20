@@ -18,14 +18,18 @@ export function getClient() {
 }
 
 // Stable system prompt. At ~600 tokens it is below Haiku 4.5's 4096-token cache minimum, so no cache_control.
-const SYSTEM = `You extract law-student job opportunities from a law firm or legal employer's careers page for FIRMWARD, a directory for 1L/2L/3L law students.
+const SYSTEM = `You extract job opportunities for law students and new law graduates from a law firm or legal employer's careers page for FIRMWARD, a directory for 1Ls, 2Ls, 3Ls and recent graduates.
 
-Return listings only for roles open to CURRENT law students: summer associate programs, 1L/2L diversity or summer programs, law clerk positions for students, legal internships/externships, and student fellowships. Exclude lateral attorney, associate, partner, staff, paralegal and non-legal roles, and post-graduate positions that require a completed J.D. (judicial clerkships for graduates are excluded unless the page says students apply now as 3Ls).
+Return listings for:
+- Roles open to CURRENT law students: summer associate programs, 1L/2L diversity or summer programs, law clerk positions for students, legal internships/externships, and student fellowships.
+- Entry-level attorney roles for NEW GRADUATES: first-year or junior associate, staff attorney, honors program and post-graduate fellowship positions open to 3Ls, recent graduates, or attorneys with 0–2 years of experience.
+Exclude roles that require 3 or more years of experience, partner and counsel roles, paralegal and non-attorney staff roles, and non-legal roles. Judicial clerkships for graduates are excluded unless the page says students apply now as 3Ls.
 
 Rules:
 - Use only facts present on the page. Never invent dates, deadlines, locations or links. If a value is not stated, use null.
 - class_years: which of 1L, 2L, 3L the role is open to, based on the page ("first-year" = 1L, "second-year" = 2L, "third-year" = 3L, "rising 2L" = currently a 1L applying for the summer after 1L, so 1L). If the page says "law students" without a year, use [].
-- posting_type: summer-associate, law-clerk, intern, fellowship, extern, or other.
+- posting_type: summer-associate, law-clerk, intern, fellowship, extern, associate (an entry-level attorney job), or other.
+- roles: what the listing is for, any of: 1l-summer (summer job for current 1Ls), 2l-summer (summer job for current 2Ls), post-grad (attorney or fellowship job starting after graduation, for 3Ls and new graduates), entry-lateral (attorney job for 0–2 years of experience). [] if the page doesn't make it clear.
 - window_start: date applications open (YYYY-MM-DD). deadline: application deadline (YYYY-MM-DD). If only a month and year are given, use null rather than guessing a day. If no year is stated, use null.
 - apply_url: an absolute URL taken from the page's links that applies to or describes this specific role. Resolve relative links against the page URL. Prefer the listed links; null if none fits.
 - city/state: the office for the role if stated; state as a 2-letter US code.
@@ -39,9 +43,25 @@ Firm fields (describe the employer, from this page only; use unknown/null/[] whe
 - firm_type: litigation-boutique (small firm focused on litigation/trials), specialty-boutique (small firm focused on one non-litigation area such as IP, employment, tax, trusts or venture), plaintiff (represents plaintiffs: personal injury, class actions, mass torts), mid-size (roughly 50–300 lawyers, several practice areas), regional (full-service firm rooted in one state or region), biglaw (large national or international firm), government, public-interest, or null if unclear.
 - practice_areas: up to 4 main practice areas named on the page.
 - size: attorney headcount or size description if stated (e.g. "250 attorneys"), else null.
+- hires_for: roles the page says this employer hires for, even with nothing open now (same values as listing roles), e.g. a page describing a 2L summer program and hiring of new graduates gives ["2l-summer","post-grad"]. [] if not stated.
 - application_email: the email address the page tells students to send applications or recruiting questions to (e.g. recruiting@firm.com), copied exactly; null if the page gives none. Not a general info or marketing address.`;
 
 const nullable = (schema) => ({ anyOf: [schema, { type: 'null' }] });
+
+// "Hires for" roles (firms.hires_for, offices.hires_for, listings.roles).
+export const ROLE_VALUES = ['1l-summer', '2l-summer', 'post-grad', 'entry-lateral'];
+const SUMMER_TYPES = new Set(['summer-associate', 'law-clerk', 'intern', 'extern', 'fellowship']);
+
+/** The model's roles, or (if it gave none) what the class years and type imply. */
+function listingRoles(l, years, type) {
+  const given = [...new Set((l.roles || []).filter((r) => ROLE_VALUES.includes(r)))];
+  if (given.length) return given.sort();
+  const out = [];
+  if (years.includes('1L')) out.push('1l-summer');
+  if (years.includes('2L') && SUMMER_TYPES.has(type)) out.push('2l-summer');
+  if (type === 'associate') out.push('post-grad');
+  return out;
+}
 
 export const OUTPUT_SCHEMA = {
   type: 'object',
@@ -53,11 +73,12 @@ export const OUTPUT_SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['title', 'class_years', 'posting_type', 'city', 'state', 'window_start', 'deadline', 'apply_url', 'summary', 'rolling'],
+        required: ['title', 'class_years', 'roles', 'posting_type', 'city', 'state', 'window_start', 'deadline', 'apply_url', 'summary', 'rolling'],
         properties: {
           title: { type: 'string' },
           class_years: { type: 'array', items: { type: 'string', enum: ['1L', '2L', '3L'] } },
-          posting_type: { type: 'string', enum: ['summer-associate', 'law-clerk', 'intern', 'fellowship', 'extern', 'other'] },
+          roles: { type: 'array', items: { type: 'string', enum: ROLE_VALUES } },
+          posting_type: { type: 'string', enum: ['summer-associate', 'law-clerk', 'intern', 'fellowship', 'extern', 'associate', 'other'] },
           city: nullable({ type: 'string' }),
           state: nullable({ type: 'string' }),
           window_start: nullable({ type: 'string', format: 'date' }),
@@ -71,9 +92,10 @@ export const OUTPUT_SCHEMA = {
     firm: {
       type: 'object',
       additionalProperties: false,
-      required: ['hires_1l', 'firm_type', 'practice_areas', 'size', 'application_email'],
+      required: ['hires_1l', 'hires_for', 'firm_type', 'practice_areas', 'size', 'application_email'],
       properties: {
         hires_1l: { type: 'string', enum: ['yes', 'no', 'unknown'] },
+        hires_for: { type: 'array', items: { type: 'string', enum: ROLE_VALUES } },
         firm_type: nullable({ type: 'string', enum: ['litigation-boutique', 'specialty-boutique', 'plaintiff', 'mid-size', 'regional', 'biglaw', 'government', 'public-interest'] }),
         practice_areas: { type: 'array', items: { type: 'string' } },
         size: nullable({ type: 'string' }),
@@ -132,7 +154,7 @@ export function parseMessage(message, pageUrl, pageText = '') {
 }
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
-const TYPES = new Set(['summer-associate', 'law-clerk', 'intern', 'fellowship', 'extern', 'other']);
+const TYPES = new Set(['summer-associate', 'law-clerk', 'intern', 'fellowship', 'extern', 'associate', 'other']);
 const FIRM_TYPES = new Set(['litigation-boutique', 'specialty-boutique', 'plaintiff', 'mid-size', 'regional', 'biglaw', 'government', 'public-interest']);
 
 function absUrl(u, base) {
@@ -147,10 +169,14 @@ function absUrl(u, base) {
 const EXPLICIT_NO_1L = /\b(not|no|unable to)\b[^.]{0,60}\b(1Ls?|first[- ]year)\b|\b(1Ls?|first[- ]year)\b[^.]{0,60}\b(not eligible|ineligible|not (be )?considered|do(es)? not)\b/i;
 
 export function sanitize(out, pageUrl, pageText = '') {
-  const listings = (out.listings || []).filter((l) => l?.title?.trim()).map((l) => ({
+  const listings = (out.listings || []).filter((l) => l?.title?.trim()).map((l) => {
+    const years = [...new Set((l.class_years || []).filter((y) => ['1L', '2L', '3L'].includes(y)))].sort();
+    const type = TYPES.has(l.posting_type) ? l.posting_type : 'other';
+    return {
     title: l.title.trim().slice(0, 200),
-    class_years: [...new Set((l.class_years || []).filter((y) => ['1L', '2L', '3L'].includes(y)))].sort(),
-    posting_type: TYPES.has(l.posting_type) ? l.posting_type : 'other',
+    class_years: years,
+    roles: listingRoles(l, years, type),
+    posting_type: type,
     city: l.city?.trim() || null,
     state: /^[A-Za-z]{2}$/.test(l.state || '') ? l.state.toUpperCase() : null,
     window_start: DATE_RE.test(l.window_start || '') ? l.window_start : null,
@@ -158,13 +184,15 @@ export function sanitize(out, pageUrl, pageText = '') {
     apply_url: absUrl(l.apply_url, pageUrl),
     summary: (l.summary || '').trim().slice(0, 200) || null,
     rolling: l.rolling === true,
-  }));
+    };
+  });
   const f = out.firm || {};
   const firm = {
     hires_1l: f.hires_1l === 'no' && !EXPLICIT_NO_1L.test(pageText) ? 'unknown'
       : ['yes', 'no', 'unknown'].includes(f.hires_1l) ? f.hires_1l : 'unknown',
     firm_type: FIRM_TYPES.has(f.firm_type) ? f.firm_type : null,
     practice_areas: (f.practice_areas || []).map((p) => String(p).trim()).filter(Boolean).slice(0, 4),
+    hires_for: [...new Set((f.hires_for || []).filter((r) => ROLE_VALUES.includes(r)))].sort(),
     size: f.size?.trim() || null,
     // Kept only if it is a real address that appears on the page.
     application_email: isEmail(f.application_email?.trim()) && onPage(f.application_email.trim(), pageText) ? f.application_email.trim().toLowerCase() : null,

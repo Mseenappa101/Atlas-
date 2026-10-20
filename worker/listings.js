@@ -41,6 +41,7 @@ export async function applyExtraction(source, extraction) {
       title: l.title,
       employer_name: l.employer_name || source.employer_name,
       class_years: l.class_years,
+      roles: l.roles ?? [],
       posting_type: l.posting_type,
       // Pages often omit the office; fall back to the office the source belongs to.
       city: l.city || (l.state ? null : source.city),
@@ -81,7 +82,7 @@ export async function closeAllForSource(sourceId) {
 async function updateFirms(source, rows, meta) {
   const db = getDb();
   const now = new Date().toISOString();
-  const firm = await q(db.from('firms').select('id, hires_1l, firm_type, practice_areas, size, recruiting_email').eq('id', source.firm_id).maybeSingle());
+  const firm = await q(db.from('firms').select('id, hires_1l, hires_for, firm_type, practice_areas, size, recruiting_email').eq('id', source.firm_id).maybeSingle());
   if (!firm) return;
 
   const oneL = rows.filter((r) => r.class_years.includes('1L'));
@@ -95,6 +96,11 @@ async function updateFirms(source, rows, meta) {
     if (!firm.size && meta.size) patch.size = meta.size;
     if (!firm.recruiting_email && meta.application_email) patch.recruiting_email = meta.application_email;
   }
+  // Hires for only ever grows from evidence: open listings' roles, what the page says, a confirmed 1L program.
+  const roles = new Set([...(firm.hires_for ?? []), ...rows.flatMap((r) => r.roles ?? []), ...(meta?.hires_for ?? [])]);
+  if (patch.hires_1l === 'yes' || firm.hires_1l === 'yes') roles.add('1l-summer');
+  const nextRoles = [...roles].sort();
+  if (nextRoles.join() !== (firm.hires_for ?? []).join()) patch.hires_for = nextRoles;
   await q(db.from('firms').update(patch).eq('id', firm.id));
 
   // Per office: the earliest 1L listing sets its window and link.
@@ -106,10 +112,22 @@ async function updateFirms(source, rows, meta) {
     const cur = byOffice.get(id);
     if (!cur || key < (cur.deadline || cur.window_start || '9999')) byOffice.set(id, r);
   }
-  const touched = new Set([source.office_id, ...byOffice.keys()].filter(Boolean));
+  const rolesByOffice = new Map();
+  for (const r of rows) {
+    if (!r.office_id || !r.roles?.length) continue;
+    const set = rolesByOffice.get(r.office_id) ?? new Set();
+    r.roles.forEach((x) => set.add(x));
+    rolesByOffice.set(r.office_id, set);
+  }
+  const touched = new Set([source.office_id, ...byOffice.keys(), ...rolesByOffice.keys()].filter(Boolean));
+  const current = touched.size ? await q(db.from('offices').select('id, hires_for').in('id', [...touched])) : [];
+  const currentRoles = new Map(current.map((o) => [o.id, o.hires_for ?? []]));
   for (const id of touched) {
     const r = byOffice.get(id);
     const office = { last_verified_at: now };
+    const roles = new Set([...(currentRoles.get(id) ?? []), ...(rolesByOffice.get(id) ?? []), ...(id === source.office_id ? meta?.hires_for ?? [] : [])]);
+    if (r) roles.add('1l-summer');
+    office.hires_for = [...roles].sort();
     if (r) {
       office.hires_1l = 'yes';
       if (r.window_start || r.deadline) {

@@ -12,6 +12,7 @@ import { POSTING_TYPES } from '../../lib/listings';
 import { STATE_NAMES } from '../../lib/catalog';
 
 const YEARS = ['1L', '2L', '3L'];
+const POST_GRAD = ['post-grad', 'entry-lateral'];
 const fmt = (d) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
 // Open postings the scraper found, filterable by class year, type, state and text.
@@ -43,7 +44,7 @@ export default function Positions({ params, setParams, firmById, onOpenFirm }) {
       .filter(
         (l) =>
           // Postings that don't name a class year could be open to anyone, so they stay in.
-          (!f.years.length || !l.years.length || f.years.some((y) => l.years.includes(y))) &&
+          (!f.years.length || (!l.years.length && !l.roles.some((r) => POST_GRAD.includes(r))) || f.years.some((y) => l.years.includes(y)) || (f.years.includes('grad') && l.roles.some((r) => POST_GRAD.includes(r)))) &&
           (!f.types.length || f.types.includes(l.type)) &&
           (!f.state || l.state === f.state) &&
           (!q || l.title.toLowerCase().includes(q) || l.employer.toLowerCase().includes(q))
@@ -77,6 +78,9 @@ export default function Positions({ params, setParams, firmById, onOpenFirm }) {
             {y}
           </FilterChip>
         ))}
+        <FilterChip selected={f.years.includes('grad')} onClick={() => toggle('years', 'grad')}>
+          Post-grad
+        </FilterChip>
         <FilterMenu label="Position type" options={POSTING_TYPES.filter((t) => t.value !== 'other')} value={f.types} onChange={(v) => set({ types: v })} />
         <FilterMenu label="State" options={stateOptions} value={f.state ? [f.state] : []} onChange={(v) => set({ state: v[v.length - 1] ?? '' })} />
       </div>

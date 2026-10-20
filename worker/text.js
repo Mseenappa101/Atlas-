@@ -83,6 +83,9 @@ export const STUDENT_RE = new RegExp(`\\b(?:${[
   '[123]Ls?', 'first[- ]year', 'second[- ]year', 'summer associates?', 'summer (law )?(clerk|program)s?',
   'law clerks?', 'law clerkships?', 'law students?', 'interns?', 'internships?', 'externs?', 'externships?',
   'fellows?(hips?)?', 'judicial', 'on[- ]campus interview(s|ing)?',
+  // New-grad hiring (post-grad associate, staff attorney, 0–2 years).
+  'new (law )?grad(uate)?s?', 'recent (law )?grad(uate)?s?', 'graduating (law )?students?', 'entry[- ]level',
+  'junior associates?', 'first[- ]year associates?', 'staff attorneys?', 'class of 20\\d\\d',
 ].join('|')})\\b`, 'i');
 const OCI_RE = /\bOCI\b/; // case-sensitive: "oci" alone is too ambiguous
 
@@ -117,7 +120,7 @@ export function truncateAroundHits(text, max = 12000, window = 1200) {
 
 /** Links worth showing the model: careers/apply/student pages, PDFs, ATS hosts. */
 export function relevantLinks(links, limit = 40) {
-  const re = /apply|career|recruit|student|summer|clerk|intern|extern|fellow|1l|2l|oci|job|position|opening|greenhouse|lever\.co|workday|icims|taleo|\.pdf/i;
+  const re = /apply|career|recruit|student|summer|clerk|intern|extern|fellow|1l|2l|oci|graduate|entry|associate|attorney-opening|job|position|opening|greenhouse|lever\.co|workday|icims|taleo|\.pdf/i;
   return links.filter((l) => re.test(l.url) || re.test(l.text)).slice(0, limit);
 }
 

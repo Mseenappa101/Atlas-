@@ -4,6 +4,7 @@ export const POSTING_TYPES = [
   { value: 'fellowship', label: 'Fellowship' },
   { value: 'intern', label: 'Internship' },
   { value: 'extern', label: 'Externship' },
+  { value: 'associate', label: 'Associate (new grad)' },
   { value: 'other', label: 'Other' },
 ];
 

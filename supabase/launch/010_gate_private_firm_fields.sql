@@ -1,4 +1,4 @@
--- 008: gate the hiring details. APPLY ONLY TOGETHER WITH THE offer-ladder FRONTEND.
+-- 010: gate the hiring details. APPLY ONLY TOGETHER WITH THE offer-ladder FRONTEND.
 -- The current production site reads every column as an anonymous visitor; after this it can't.
 -- To launch: move this file into supabase/migrations/ and run `node scripts/migrate.mjs`
 -- right after the offer-ladder branch is live.
