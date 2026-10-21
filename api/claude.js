@@ -24,6 +24,36 @@ export async function assertUnderDailyCap(userId) {
 const aiFailed = () => new HttpError(502, 'ai_failed', "We couldn't generate that just now. Please try again in a minute.");
 
 /**
+ * One free-text call (cover letters, firm briefs, outreach). Returns the concatenated text blocks.
+ * Logged to generation_log like generateJson. Prompts live server-side so the API key never ships to the browser.
+ */
+export async function generateText({ userId, kind, system, content, useWebSearch = false, maxTokens = 8000 }) {
+  let usage = null;
+  let ok = false;
+  try {
+    const body = { model: MODEL, max_tokens: maxTokens, system, messages: [{ role: 'user', content }] };
+    if (useWebSearch) body.tools = [{ type: 'web_search_20250305', name: 'web_search' }];
+    const res = await getClient().messages.create(body);
+    usage = res.usage;
+    const text = res.content.filter((b) => b.type === 'text').map((b) => b.text).join('\n').trim();
+    if (!text) throw aiFailed();
+    ok = true;
+    return { text, usage: { input_tokens: usage.input_tokens, output_tokens: usage.output_tokens } };
+  } catch (err) {
+    if (err instanceof HttpError) throw err;
+    console.error(`claude ${kind} failed:`, err instanceof Anthropic.APIError ? `${err.status} ${err.message}` : err.message);
+    throw aiFailed();
+  } finally {
+    const inTok = usage?.input_tokens ?? null;
+    const outTok = usage?.output_tokens ?? null;
+    await logGeneration({
+      user_id: userId, kind, ok, input_tokens: inTok, output_tokens: outTok,
+      cost_usd: usage ? costUsd(inTok, outTok) : null,
+    }).catch((e) => console.error('generation_log insert failed:', e.message));
+  }
+}
+
+/**
  * One structured-output call. Sonnet 5 runs adaptive thinking by default; effort steers depth.
  * Every attempt is logged to generation_log (ok=false on any failure). Returns the parsed JSON.
  */

@@ -10,6 +10,7 @@ import {
 import { getNewsletter, setNewsletter, startNewsletterSync } from './newsletter.js';
 import { subscribe, workshop, placementApply } from './leads.js';
 import { privateCatalog } from './catalog.js';
+import { generateDocument } from './ai.js';
 
 // Signed-out forms: (body, req) => response. Small bodies only.
 const PUBLIC = {
@@ -26,6 +27,7 @@ const ROUTES = {
   'POST /api/resume/build': buildResume,
   'PUT /api/resume': saveResume,
   'POST /api/letters': createLetter,
+  'POST /api/ai/document': generateDocument,
   'POST /api/billing/checkout': checkout,
   'POST /api/billing/sync': syncCheckout,
   'POST /api/billing/portal': portal,
