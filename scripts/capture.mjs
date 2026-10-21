@@ -30,7 +30,19 @@ if (process.env.SCROLL_SEL) {
   await page.waitForTimeout(500);
   await page.evaluate((sel) => document.querySelector(sel)?.scrollIntoView({ block: 'center', behavior: 'instant' }), process.env.SCROLL_SEL);
 }
-await page.waitForTimeout(Number(ms));
+// Optional: smoothly scroll through a selector over the recording (set SCROLL_THROUGH) for pinned sections.
+if (process.env.SCROLL_THROUGH) {
+  await page.waitForTimeout(400);
+  await page.evaluate((sel) => document.querySelector(sel)?.scrollIntoView({ block: 'start', behavior: 'instant' }), process.env.SCROLL_THROUGH);
+  const dist = await page.evaluate((sel) => document.querySelector(sel)?.getBoundingClientRect().height || 1200, process.env.SCROLL_THROUGH);
+  const steps = 48;
+  for (let i = 0; i < steps; i += 1) {
+    await page.mouse.wheel(0, dist / steps);
+    await page.waitForTimeout(Number(ms) / steps);
+  }
+} else {
+  await page.waitForTimeout(Number(ms));
+}
 await ctx.close();
 await browser.close();
 

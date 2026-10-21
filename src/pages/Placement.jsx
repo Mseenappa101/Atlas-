@@ -4,6 +4,7 @@ import { SITE, foundingOpen, isPlaceholder } from '../../site.config';
 import usePageMeta from '../hooks/usePageMeta';
 import { Button } from '../components/app/controls';
 import { Checks, Cta, Eyebrow, Faq, H1, Lead, Page, ResponsiveTable, Section } from '../components/marketing/kit';
+import ScrollPhases from '../components/motion/ScrollPhases';
 import { api } from '../lib/api';
 import { money } from '../lib/money';
 import { getUtm, track } from '../lib/tracking';
@@ -177,7 +178,7 @@ export default function Placement() {
       </div>
 
       <Section id="phases" title="How the 90 days run">
-        <ResponsiveTable caption="The three phases" head={['Phase', 'When', 'What happens']} rows={PHASES} />
+        <ScrollPhases phases={PHASES} />
         <p className="mt-3 text-t16">Plus a 30-minute 1:1 call every week, the whole way through.</p>
       </Section>
 
