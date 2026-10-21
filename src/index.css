@@ -2,20 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Metric-adjusted fallbacks so the web-font swap shifts layout less (CLS). Sized to approximate the
-   web fonts so the fallback occupies near-identical space until the real font loads. */
+/* Metric-adjusted fallbacks so the web-font swap shifts layout ~none (CLS). Values computed exactly from
+   the real font metrics with @capsizecss/metrics (Hanken Grotesk→Arial, JetBrains Mono→Courier New). */
 @font-face {
   font-family: 'Hanken Fallback';
   src: local('Arial');
-  size-adjust: 106%;
-  ascent-override: 92%;
-  descent-override: 24%;
+  size-adjust: 100.94%;
+  ascent-override: 99.07%;
+  descent-override: 30.02%;
   line-gap-override: 0%;
 }
 @font-face {
   font-family: 'Mono Fallback';
-  src: local('Menlo'), local('Consolas'), local('Courier New');
-  size-adjust: 92%;
+  src: local('Courier New');
+  size-adjust: 99.98%;
+  ascent-override: 102.02%;
+  descent-override: 30.00%;
+  line-gap-override: 0%;
 }
 
 :root {
