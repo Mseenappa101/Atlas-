@@ -1,6 +1,12 @@
 import { useId } from 'react';
+import { motion } from 'motion/react';
 import { Bookmark, Lock } from 'lucide-react';
 import { monogram, officesLabel } from '../../lib/format';
+
+// Rows fade up with a short, capped stagger (so long lists still finish fast). Remount the list (via a
+// key on the parent) to replay it on filter change. Reduced motion disables the transform via MotionConfig.
+const ROW_IN = { initial: { opacity: 0, y: 8 }, animate: { opacity: 1, y: 0 } };
+const rowTransition = (i) => ({ duration: 0.22, ease: [0.22, 1, 0.36, 1], delay: Math.min(i, 10) * 0.025 });
 
 const TILE = { sm: 'h-8 w-8 text-t12', md: 'h-10 w-10 text-t14', lg: 'h-14 w-14 text-t20' };
 
@@ -146,16 +152,17 @@ export function FirmList({ firms, selectedId, onSelect, onOpen, savedIds, onTogg
       onKeyDown={onKeyDown}
       className="outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand"
     >
-      {firms.map((f) => (
-        <FirmRow
-          key={f.id}
-          id={optionId(f)}
-          firm={f}
-          selected={f.id === selectedId}
-          saved={savedIds?.has(f.id)}
-          onSelect={onSelect}
-          onToggleSave={onToggleSave}
-        />
+      {firms.map((f, i) => (
+        <motion.div key={f.id} initial={ROW_IN.initial} animate={ROW_IN.animate} transition={rowTransition(i)}>
+          <FirmRow
+            id={optionId(f)}
+            firm={f}
+            selected={f.id === selectedId}
+            saved={savedIds?.has(f.id)}
+            onSelect={onSelect}
+            onToggleSave={onToggleSave}
+          />
+        </motion.div>
       ))}
     </div>
   );

@@ -6,6 +6,8 @@ import { FirmCard, FirmList } from '../components/app/firm';
 import { BottomSheet, Drawer, FilterMenu } from '../components/app/overlays';
 import { EmptyState, FirmRowSkeleton } from '../components/app/feedback';
 import FirmDetail from '../components/explore/FirmDetail';
+import StatePostcardHeader from '../components/postcard/StatePostcardHeader';
+import { Drawer as Vaul } from 'vaul';
 import SaveSearch from '../components/explore/SaveSearch';
 import Positions from '../components/explore/Positions';
 import {
@@ -264,6 +266,7 @@ function ExplorePage() {
   const [more, setMore] = useState(false);
   const [sheet, setSheet] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [firmDrawer, setFirmDrawer] = useState(false);
   const barRef = useRef(null);
   const wide = useMediaQuery('(min-width: 1024px)');
 
@@ -300,6 +303,8 @@ function ExplorePage() {
     if (!selected) return [];
     return recommended(firms.filter((f) => f.id !== selected.id && f.group === selected.group && f.states.some((s) => selected.states.includes(s))), null).slice(0, 4);
   }, [firms, selected]);
+  // Total firms in the selected state (for the postcard stamp — not the filtered count).
+  const stateCount = useMemo(() => (filters.state ? firms.filter((f) => f.states.includes(filters.state)).length : 0), [firms, filters.state]);
 
   const setFilters = (f) => {
     const next = writeFilters(params, f);
@@ -315,12 +320,12 @@ function ExplorePage() {
     setParams(next, { replace: true });
   };
 
-  // Desktop: select in place. Mobile (list-only): open the firm page, remembering scroll.
+  // Desktop: select in place (side panel). Mobile: open a Vaul bottom drawer with the firm detail.
   const select = (f) => {
-    if (!wide) return open(f);
     const next = new URLSearchParams(params);
     next.set('firm', f.slug);
     setParams(next, { replace: true });
+    if (!wide) setFirmDrawer(true);
   };
   const open = (f) => {
     try {
@@ -505,6 +510,7 @@ function ExplorePage() {
           </div>
 
           <div className="lg:h-[calc(100vh-56px-var(--filterbar,132px))] lg:overflow-y-auto">
+            {filters.state && !loading && <StatePostcardHeader code={filters.state} firmCount={stateCount} />}
             {!loading && !canSeeDetails && gatedInUse(filters) && (
               <div className="border-b border-line p-4">
                 <UnlockForm
@@ -551,6 +557,7 @@ function ExplorePage() {
                     </h2>
                   )}
                   <FirmList
+                    key={`${filters.state}|${(filters.role || []).join()}|${(filters.type || []).join()}|${(filters.status || []).join()}|${(filters.size || []).join()}|${(filters.city || []).join()}|${filters.nobiglaw}|${sort}`}
                     firms={g.firms}
                     selectedId={wide ? selected?.id : null}
                     onSelect={select}
@@ -601,6 +608,39 @@ function ExplorePage() {
       </BottomSheet>
 
       {saving && <SaveSearch filters={filters} sort={sort} onClose={() => setSaving(false)} />}
+
+      {/* Mobile firm detail: Vaul bottom drawer */}
+      <Vaul.Root
+        open={firmDrawer && !wide}
+        onOpenChange={(o) => {
+          setFirmDrawer(o);
+          if (!o) {
+            const next = new URLSearchParams(params);
+            next.delete('firm');
+            setParams(next, { replace: true });
+          }
+        }}
+      >
+        <Vaul.Portal>
+          <Vaul.Overlay className="fixed inset-0 z-40 bg-black/30" />
+          <Vaul.Content className="fixed inset-x-0 bottom-0 z-50 flex max-h-[88vh] flex-col rounded-t-[16px] border-t border-line bg-canvas outline-none lg:hidden">
+            <div className="mx-auto mt-3 h-1.5 w-10 shrink-0 rounded-pill bg-line" aria-hidden="true" />
+            <Vaul.Title className="sr-only">{selected ? selected.name : 'Firm detail'}</Vaul.Title>
+            <div className="overflow-y-auto px-4 pb-10 pt-2">
+              {selected && (
+                <FirmDetail
+                  firm={selected}
+                  listings={firmListings}
+                  similar={similar}
+                  saved={savedIds.has(selected.id)}
+                  onToggleSave={toggleSave}
+                  onOpenFirm={select}
+                />
+              )}
+            </div>
+          </Vaul.Content>
+        </Vaul.Portal>
+      </Vaul.Root>
     </div>
   );
 }
