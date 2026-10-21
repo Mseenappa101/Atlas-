@@ -1,4 +1,4 @@
-import { SITE, foundingOpen, nextSprint } from '../../site.config';
+import { SITE, nextSprint } from '../../site.config';
 import usePageMeta from '../hooks/usePageMeta';
 import { Checks, Cta, Eyebrow, H1, Lead, Page } from '../components/marketing/kit';
 import { money } from '../lib/money';
@@ -24,28 +24,6 @@ export function ThanksSignup() {
         <div className="mt-4">
           <Cta to="/sprint">See the Sprint</Cta>
         </div>
-      </div>
-    </Page>
-  );
-}
-
-// Fallback confirmation. The Stripe Payment Link's success URL points at the course
-// (/sprint/course?session_id={CHECKOUT_SESSION_ID}), which unlocks access and confirms payment there.
-export function ThanksSprint() {
-  usePageMeta({ title: 'You’re in the Sprint', noindex: true });
-  return (
-    <Page narrow>
-      <Eyebrow>Payment received</Eyebrow>
-      <H1>You’re in the Sprint.</H1>
-      <Lead>Your lessons are on the site. Start with Monday — the Friday live-call link is in the course and your confirmation email.</Lead>
-      <div className="mt-6">
-        <Cta to="/sprint/course">Go to the Sprint course</Cta>
-      </div>
-      <div className="mt-8 rounded-app border border-line bg-card p-5 text-t16">
-        <p className="font-semibold">Your {money(P.sprint)} counts toward Membership.</p>
-        <p className="mt-1 text-fg-2">
-          Join Membership within {SITE.FOUNDING.sprintCreditHours} hours and your Sprint payment is credited.{foundingOpen() ? ` Founding members lock ${money(P.membershipMonthly)}/month for life until Dec 21.` : ''}
-        </p>
       </div>
     </Page>
   );

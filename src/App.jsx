@@ -29,7 +29,7 @@ import Placement from './pages/Placement';
 import Workshop from './pages/Workshop';
 import Families from './pages/Families';
 import About from './pages/About';
-import { ThanksCall, ThanksSignup, ThanksSprint } from './pages/Thanks';
+import { ThanksCall, ThanksSignup } from './pages/Thanks';
 import FoundingBanner from './components/FoundingBanner';
 import { MarketPage, TypePage } from './pages/SeoList';
 
@@ -83,7 +83,8 @@ function AppRoutes() {
       <Route path="/families" element={<Families />} />
       <Route path="/about" element={<About />} />
       <Route path="/thanks/signup" element={<ThanksSignup />} />
-      <Route path="/thanks/sprint" element={<ThanksSprint />} />
+      {/* Retired: Vercel 301s this to /sprint/course; this is the dev/client-side fallback. */}
+      <Route path="/thanks/sprint" element={<Navigate to="/sprint/course" replace />} />
       <Route path="/thanks/call" element={<ThanksCall />} />
       <Route path="/markets/:slug" element={<MarketPage />} />
       <Route path="/types/:slug" element={<TypePage />} />

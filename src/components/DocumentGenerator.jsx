@@ -1,22 +1,27 @@
 import { useState, useEffect } from 'react';
-import {
-  generateCoverLetter,
-  generateColdOutreach,
-  generateFollowUp,
-  generateThankYou,
-  generateInterviewPrep,
-} from '../lib/ai';
+import { api, ApiError } from '../lib/api';
 import { saveDocument, getDocumentsForFirm, deleteDocument } from '../lib/db';
 import { useAuth } from '../context/AuthContext';
 import UpgradePrompt from './UpgradePrompt';
 
 const TABS = [
-  { key: 'cover_letter', label: 'Cover Letter', gen: generateCoverLetter },
-  { key: 'cold_outreach', label: 'Cold Outreach', gen: generateColdOutreach },
-  { key: 'follow_up', label: 'Follow-Up', gen: generateFollowUp },
-  { key: 'thank_you', label: 'Thank You', gen: generateThankYou },
-  { key: 'interview_prep', label: 'Interview Prep', gen: generateInterviewPrep },
+  { key: 'cover_letter', label: 'Cover Letter' },
+  { key: 'cold_outreach', label: 'Cold Outreach' },
+  { key: 'follow_up', label: 'Follow-Up' },
+  { key: 'thank_you', label: 'Thank You' },
+  { key: 'interview_prep', label: 'Interview Prep' },
 ];
+
+// AI generation runs on the server (api/ai.js). The kind matches the tab key. Returns { content, error }.
+async function generateDoc(kind, userProfile, firm) {
+  try {
+    const { content } = await api('/ai/document', { method: 'POST', body: { kind, profile: userProfile, firm } });
+    return { content: content || null, error: null };
+  } catch (error) {
+    const message = error instanceof ApiError ? error.message : (error?.message || 'Request failed');
+    return { content: null, error: message };
+  }
+}
 
 export default function DocumentGenerator({ userProfile, firm, userFirmId, isPro }) {
   const { user } = useAuth();
@@ -42,7 +47,7 @@ export default function DocumentGenerator({ userProfile, firm, userFirmId, isPro
     setGenerating(true);
     setContent('');
     setSaved(false);
-    const { content: text, error } = await currentTab.gen(userProfile, firm);
+    const { content: text, error } = await generateDoc(currentTab.key, userProfile, firm);
     if (error) {
       setContent('Unable to generate document. Please try again.');
     } else {

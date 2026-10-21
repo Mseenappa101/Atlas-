@@ -13,7 +13,6 @@ export const SITE = {
   // ─── LINKS ────────────────────────────────────────────────────────────────
   STRIPE_SPRINT_LINK: 'PLACEHOLDER_STRIPE_SPRINT_PAYMENT_LINK', // Stripe Payment Link for the $37 Sprint
   SKOOL_MEMBERSHIP_URL: 'PLACEHOLDER_SKOOL_URL',
-  SKOOL_SPRINT_URL: 'PLACEHOLDER_SKOOL_SPRINT_AREA_URL',
   SCHEDULER_URL: 'PLACEHOLDER_CAL_COM_OR_CALENDLY_URL', // strategy calls for the Placement
   RECRUITING_CALENDAR_URL: '/calendar', // what the welcome email links to
 
