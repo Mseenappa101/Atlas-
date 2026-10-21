@@ -1,12 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
-import { useInView, useReducedMotion } from 'motion/react';
+import { useEffect, useState } from 'react';
+import useInViewOnce from '../../lib/useInViewOnce';
 
-// Counts from 0 to `value` once, the first time it scrolls into view. Reduced motion → final value
-// immediately. rAF with an ease-out; only updates text, no layout churn.
+// Counts from 0 to `value` once, the first time it scrolls into view (IntersectionObserver, no Framer
+// Motion). Reduced motion → final value immediately. rAF with an ease-out; text-only updates.
 export default function CountUp({ value = 0, duration = 1100, className }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.6 });
-  const reduced = useReducedMotion();
+  const [ref, inView] = useInViewOnce({ amount: 0.6 });
+  const reduced = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const [n, setN] = useState(0);
 
   useEffect(() => {

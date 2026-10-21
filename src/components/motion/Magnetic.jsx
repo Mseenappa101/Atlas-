@@ -1,39 +1,42 @@
 import { useRef } from 'react';
-import { m, useMotionValue, useSpring, useReducedMotion } from 'motion/react';
-import { SPRING_SOFT } from '../../lib/motion';
 
-// Wraps an interactive element. On desktop (fine pointer) it drifts up to `max` px toward the cursor on
-// a spring; on tap (any device) it presses in slightly. Reduced motion / coarse pointer → no drift.
+// Magnetic hover (desktop, fine pointer): the element drifts up to `max` px toward the cursor, smoothed by
+// a CSS transition. Tactile press (any device): scales in slightly on pointer-down. No Framer Motion —
+// direct transform writes keep it off the critical-path bundle. Reduced motion / coarse pointer → no drift.
 export default function Magnetic({ children, max = 6, className = '' }) {
-  const reduced = useReducedMotion();
   const ref = useRef(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const sx = useSpring(x, SPRING_SOFT);
-  const sy = useSpring(y, SPRING_SOFT);
-
+  const press = useRef(false);
+  const pos = useRef({ x: 0, y: 0 });
   const fine = typeof window !== 'undefined' && window.matchMedia?.('(pointer: fine)').matches;
+  const reduced = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
+  const apply = () => {
+    if (ref.current) ref.current.style.transform = `translate(${pos.current.x}px, ${pos.current.y}px) scale(${press.current ? 0.97 : 1})`;
+  };
   function onMove(e) {
-    if (reduced || !fine || !ref.current) return;
+    if (!fine || reduced || !ref.current) return;
     const r = ref.current.getBoundingClientRect();
-    const dx = e.clientX - (r.left + r.width / 2);
-    const dy = e.clientY - (r.top + r.height / 2);
-    x.set(Math.max(-max, Math.min(max, dx * 0.35)));
-    y.set(Math.max(-max, Math.min(max, dy * 0.35)));
+    pos.current = {
+      x: Math.max(-max, Math.min(max, (e.clientX - (r.left + r.width / 2)) * 0.35)),
+      y: Math.max(-max, Math.min(max, (e.clientY - (r.top + r.height / 2)) * 0.35)),
+    };
+    apply();
   }
-  const reset = () => { x.set(0); y.set(0); };
+  const reset = () => { pos.current = { x: 0, y: 0 }; press.current = false; apply(); };
+  const down = () => { press.current = true; apply(); };
+  const up = () => { press.current = false; apply(); };
 
   return (
-    <m.span
+    <span
       ref={ref}
       onMouseMove={onMove}
       onMouseLeave={reset}
-      whileTap={{ scale: 0.97 }}
-      style={{ x: sx, y: sy, display: 'inline-flex' }}
+      onPointerDown={down}
+      onPointerUp={up}
       className={className}
+      style={{ display: 'inline-flex', transition: 'transform 150ms cubic-bezier(0.2,0,0,1)', willChange: 'transform' }}
     >
       {children}
-    </m.span>
+    </span>
   );
 }

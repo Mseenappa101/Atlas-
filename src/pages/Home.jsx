@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { m } from 'motion/react';
 import { SITE, foundingOpen, nextSprint } from '../../site.config';
 import usePageMeta from '../hooks/usePageMeta';
 import useCatalog from '../hooks/useCatalog';
@@ -10,9 +9,10 @@ import ScrambleHeadline from '../components/motion/ScrambleHeadline';
 import Magnetic from '../components/motion/Magnetic';
 import CountUp from '../components/motion/CountUp';
 import Marquee from '../components/motion/Marquee';
-import OfferLadder from '../components/offers/OfferLadder';
-import { fadeUp, staggerContainer, STAGGER } from '../lib/motion';
 import { Checks, Cta, DraftTag, Eyebrow, Faq, H1, Lead, Page, Section, TextLink } from '../components/marketing/kit';
+
+// Lazy so Framer Motion (ticket tilt) loads only when the ladder renders, not in the initial chunk.
+const OfferLadder = lazy(() => import('../components/offers/OfferLadder'));
 import { OFFERS } from '../content/offers';
 import { STAGES } from '../lib/roles';
 import { money } from '../lib/money';
@@ -127,26 +127,26 @@ export default function Home() {
 
   return (
     <Page>
-      <m.header className="max-w-3xl" initial="hidden" animate="show" variants={staggerContainer(STAGGER.base, 0.08)}>
-        <m.div variants={fadeUp}><Eyebrow>For law students and new grads</Eyebrow></m.div>
+      <header className="max-w-3xl">
+        <div className="r-up"><Eyebrow>For law students and new grads</Eyebrow></div>
         <ScrambleHeadline text="Find the firms that are hiring. Then land one." className="mt-2 text-[34px] font-bold leading-[1.1] tracking-tight md:text-[48px]" />
-        <m.div variants={fadeUp}>
+        <div className="r-up" style={{ animationDelay: '120ms' }}>
           <Lead>
             Summer and post-grad jobs at boutiques, mid-size, plaintiff, government and regional firms. For 1Ls, 2Ls, 3Ls and recent grads who aren’t being handed BigLaw.
           </Lead>
-        </m.div>
-        <m.div variants={fadeUp} className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+        </div>
+        <div className="r-up mt-6 flex flex-wrap items-center gap-x-6 gap-y-2" style={{ animationDelay: '200ms' }}>
           <Magnetic><Cta to="/explore">Explore the free map</Cta></Magnetic>
           <TextLink to="/sprint">Join the next Sprint{sprint ? ` (starts ${new Date(`${sprint.start}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })})` : ''}</TextLink>
-        </m.div>
-      </m.header>
+        </div>
+      </header>
 
       <StagePicker />
       <MapPreview />
       <ProofStrip />
 
       <Section id="how" title="How Firmward works" intro="Start free with the map. When you want help turning it into interviews, there are three ways to go, from do-it-yourself to done-for-you.">
-        <OfferLadder />
+        <Suspense fallback={<div className="min-h-[360px]" />}><OfferLadder /></Suspense>
       </Section>
 
       <Section id="story" title={<>Why Firmward exists<DraftTag /></>}>

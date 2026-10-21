@@ -1,5 +1,4 @@
 import { useLayoutEffect, useRef } from 'react';
-import { useReducedMotion } from 'motion/react';
 
 // Headline resolves from a left-to-right character scramble into place (~600ms), once per session.
 // Uses text content + rAF (no filter blur), so it stays within the transform/opacity motion budget and
@@ -11,7 +10,7 @@ const SPREAD = 0.55; // fraction of the run over which the lock-in staggers acro
 
 export default function ScrambleHeadline({ text, as: Tag = 'h1', className }) {
   const ref = useRef(null);
-  const reduced = useReducedMotion();
+  const reduced = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
   useLayoutEffect(() => {
     const el = ref.current;

@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { m, AnimatePresence, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'motion/react';
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'motion/react';
 import { EASE_OUT } from '../../lib/motion';
 
 // Scroll-pinned phases (STEP 6). Desktop: the left column (phase nav + a progress rail that fills on
@@ -9,7 +9,7 @@ function Stacked({ phases, animate }) {
   return (
     <ol className="space-y-4">
       {phases.map(([name, when, what], i) => (
-        <m.li
+        <motion.li
           key={name}
           initial={animate ? { opacity: 0, y: 16 } : false}
           whileInView={animate ? { opacity: 1, y: 0 } : undefined}
@@ -20,7 +20,7 @@ function Stacked({ phases, animate }) {
           <p className="data text-t12 uppercase tracking-wide text-brand">{when}</p>
           <h3 className="mt-1 text-t20 font-bold">{name}</h3>
           <p className="mt-2 text-t16 text-fg-2">{what}</p>
-        </m.li>
+        </motion.li>
       ))}
     </ol>
   );
@@ -49,7 +49,7 @@ export default function ScrollPhases({ phases }) {
           <div className="grid w-full grid-cols-[minmax(0,0.9fr)_minmax(0,1.3fr)] gap-12">
             <div className="flex gap-5">
               <div className="relative w-1 shrink-0 overflow-hidden rounded-full bg-line">
-                <m.div className="absolute inset-x-0 top-0 rounded-full bg-brand" style={{ height: fillH }} />
+                <motion.div className="absolute inset-x-0 top-0 rounded-full bg-brand" style={{ height: fillH }} />
               </div>
               <ol className="space-y-7">
                 {phases.map(([name, when], i) => (
@@ -63,7 +63,7 @@ export default function ScrollPhases({ phases }) {
 
             <div className="relative min-h-[180px]">
               <AnimatePresence mode="wait">
-                <m.div
+                <motion.div
                   key={active}
                   initial={{ opacity: 0, x: 24 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -73,7 +73,7 @@ export default function ScrollPhases({ phases }) {
                   <p className="data text-t12 uppercase tracking-[0.1em] text-brand">{`Phase ${active + 1} · ${phases[active][1]}`}</p>
                   <h3 className="mt-2 text-t32 font-bold tracking-tight">{phases[active][0]}</h3>
                   <p className="mt-4 max-w-md text-t20 leading-relaxed text-fg-2">{phases[active][2]}</p>
-                </m.div>
+                </motion.div>
               </AnimatePresence>
             </div>
           </div>

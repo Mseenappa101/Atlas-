@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { m, useReducedMotion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { EASE_OUT, STAGGER } from '../../lib/motion';
 
 // The state postcard reveal. One component, driven entirely by per-state data (src/data/states/<code>.js).
@@ -31,7 +31,7 @@ function perfDots(w, h, step = 10, r = 2.6) {
 function StampSvg({ x, y, w, h, title, detail, c, done, speed = 1 }) {
   const dots = useMemo(() => perfDots(w, h, 10, 2.4), [w, h]);
   return (
-    <m.g
+    <motion.g
       initial={{ opacity: 0, scale: 1.3, rotate: -14 }}
       animate={{ opacity: 1, scale: 1, rotate: -5 }}
       transition={done ? { duration: 0 } : { delay: T.stamp * speed, type: 'spring', stiffness: 420, damping: 15 }}
@@ -46,7 +46,7 @@ function StampSvg({ x, y, w, h, title, detail, c, done, speed = 1 }) {
         <text x={w / 2} y={h - 21} textAnchor="middle" fontSize="11" fontWeight="700" letterSpacing="0.06em" fill={c.ink}>{title}</text>
         <text x={w / 2} y={h - 9} textAnchor="middle" fontSize="8.5" fontWeight="600" letterSpacing="0.06em" fill={c.ink} opacity="0.8">{detail}</text>
       </g>
-    </m.g>
+    </motion.g>
   );
 }
 
@@ -87,23 +87,23 @@ export default function StatePostcard({ data, firmCount = 0, label = 'firms', on
     <div className={`relative overflow-hidden rounded-app border border-line shadow-pop ${className}`} style={{ background: c.paper }}>
       <svg viewBox={`0 0 ${vw} ${vh}`} className="block w-full" role="img" aria-label={`${data.name}: ${belowTen ? 'coming soon' : `${firmCount} ${label}`}`}>
         {/* state fill */}
-        <m.path d={data.outline} fill={c.fill} stroke="none" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={tr({ delay: T.fill, duration: 0.3, ease: EASE_OUT })} />
+        <motion.path d={data.outline} fill={c.fill} stroke="none" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={tr({ delay: T.fill, duration: 0.3, ease: EASE_OUT })} />
 
         {/* landmark motif rises on the fill, under the outline + pins; clipped to the state outline */}
         <clipPath id={clipId}><path d={data.outline} /></clipPath>
         <g clipPath={`url(#${clipId})`}>
           <g transform={`translate(${lx}, ${ly}) scale(${lScale})`}>
-            <m.g initial={{ opacity: 0, y: 16 }} animate={{ opacity: 0.52, y: 0 }} transition={tr({ delay: T.landmark, duration: 0.4, ease: EASE_OUT })}>
+            <motion.g initial={{ opacity: 0, y: 16 }} animate={{ opacity: 0.52, y: 0 }} transition={tr({ delay: T.landmark, duration: 0.4, ease: EASE_OUT })}>
               {artPaths.map((d, i) => (
                 <path key={i} d={d} fill="none" stroke={c.ink} strokeWidth={1.8} strokeLinejoin="round" strokeLinecap="round" />
               ))}
               {accent && <path d={accent.d} fill={c[accent.color] ?? c.star} stroke="none" />}
-            </m.g>
+            </motion.g>
           </g>
         </g>
 
         {/* state outline draws itself */}
-        <m.path d={data.outline} fill="none" stroke={c.ink} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={tr({ delay: T.outline, duration: 0.55, ease: EASE_OUT })} />
+        <motion.path d={data.outline} fill="none" stroke={c.ink} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={tr({ delay: T.outline, duration: 0.55, ease: EASE_OUT })} />
 
         {/* city pins drop with a small bounce; labels carry a paper halo for legibility */}
         {data.cities.filter((ct) => ct.pin).map((ct, i) => {
@@ -112,7 +112,7 @@ export default function StatePostcard({ data, firmCount = 0, label = 'firms', on
           const dy = lb.dy ?? 4;
           const anchor = lb.anchor ?? 'start';
           return (
-            <m.g key={ct.name} initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} transition={spring(T.pins + i * STAGGER.base)}>
+            <motion.g key={ct.name} initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} transition={spring(T.pins + i * STAGGER.base)}>
               <circle cx={ct.pin[0]} cy={ct.pin[1] + 1} r={5.5} fill={c.ink} opacity={0.14} />
               <circle cx={ct.pin[0]} cy={ct.pin[1]} r={4.5} fill={c.accent} stroke={c.paper} strokeWidth={1.5} />
               {ct.capital && <path d={starPath(ct.pin[0], ct.pin[1] - 0.2, 2.4)} fill={c.paper} />}
@@ -130,13 +130,13 @@ export default function StatePostcard({ data, firmCount = 0, label = 'firms', on
               >
                 {ct.name}
               </text>
-            </m.g>
+            </motion.g>
           );
         })}
 
         {/* ambient lone star twinkle */}
         {data.ambient === 'star' && (
-          <m.path
+          <motion.path
             d={starPath(26, 28, 10)}
             fill={c.star}
             initial={{ opacity: 0, scale: 0.6 }}
@@ -148,7 +148,7 @@ export default function StatePostcard({ data, firmCount = 0, label = 'firms', on
 
         {/* generic ambient: a soft pulsing mark for non-star states */}
         {data.ambient === 'glow' && (
-          <m.circle
+          <motion.circle
             cx={26}
             cy={28}
             r={6}

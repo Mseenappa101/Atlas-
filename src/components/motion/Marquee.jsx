@@ -1,9 +1,7 @@
-import { useReducedMotion } from 'motion/react';
-
 // Slow, seamless, infinite horizontal marquee (transform only). Pauses on hover. Under reduced motion it
 // renders a static wrapped list instead of scrolling. `pxPerSecond` sets the pace.
 export default function Marquee({ items, pxPerSecond = 32, className = '' }) {
-  const reduced = useReducedMotion();
+  const reduced = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   if (!items?.length) return null;
 
   if (reduced) {

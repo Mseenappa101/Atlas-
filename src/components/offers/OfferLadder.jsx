@@ -1,4 +1,4 @@
-import { m } from 'motion/react';
+import { motion } from 'motion/react';
 import { OFFERS } from '../../content/offers';
 import TicketCard from './TicketCard';
 
@@ -21,7 +21,7 @@ export default function OfferLadder() {
       </ul>
 
       {/* Desktop: fan spreads into a row */}
-      <m.ul
+      <motion.ul
         data-ladder
         className="hidden gap-5 md:grid md:grid-cols-3"
         style={{ perspective: 1200 }}
@@ -30,11 +30,11 @@ export default function OfferLadder() {
         viewport={{ once: true, amount: 0.3 }}
       >
         {OFFERS.map((o, i) => (
-          <m.li key={o.key} variants={fan(i)} className="h-full">
+          <motion.li key={o.key} variants={fan(i)} className="h-full">
             <TicketCard offer={o} />
-          </m.li>
+          </motion.li>
         ))}
-      </m.ul>
+      </motion.ul>
     </>
   );
 }

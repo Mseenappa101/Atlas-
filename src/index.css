@@ -100,6 +100,23 @@
 .perf::before { left: -8px; }
 .perf::after { right: -8px; }
 
+/* CSS-only animations for always-on motion (no Framer Motion on the critical path). */
+@keyframes reveal-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes row-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes route-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* Section/hero reveal: starts hidden, animates in when the JS adds .is-in (IntersectionObserver) or on mount (.r-up). */
+.reveal { opacity: 0; }
+.reveal.is-in { animation: reveal-up var(--dur-base) var(--ease-out) forwards; }
+.r-up { opacity: 0; animation: reveal-up var(--dur-base) var(--ease-out) forwards; }
+.firm-row-in { animation: row-in 0.22s var(--ease-out) both; }
+.route-fade { animation: route-in var(--dur-base) ease; }
+
+/* No JS / reduced motion: never leave content stuck invisible. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal.is-in, .r-up { opacity: 1; animation: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     transition-duration: 0ms !important;

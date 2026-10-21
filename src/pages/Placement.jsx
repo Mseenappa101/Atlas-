@@ -1,10 +1,11 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useId, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SITE, foundingOpen, isPlaceholder } from '../../site.config';
 import usePageMeta from '../hooks/usePageMeta';
 import { Button } from '../components/app/controls';
 import { Checks, Cta, Eyebrow, Faq, H1, Lead, Page, ResponsiveTable, Section } from '../components/marketing/kit';
-import ScrollPhases from '../components/motion/ScrollPhases';
+// Lazy so Framer Motion (scroll-pinned phases) loads only when Placement renders, not in the initial chunk.
+const ScrollPhases = lazy(() => import('../components/motion/ScrollPhases'));
 import { toast } from 'sonner';
 import { api } from '../lib/api';
 import { money } from '../lib/money';
@@ -181,7 +182,7 @@ export default function Placement() {
       </div>
 
       <Section id="phases" title="How the 90 days run" reveal={false}>
-        <ScrollPhases phases={PHASES} />
+        <Suspense fallback={<div className="min-h-[200px]" />}><ScrollPhases phases={PHASES} /></Suspense>
         <p className="mt-3 text-t16">Plus a 30-minute 1:1 call every week, the whole way through.</p>
       </Section>
 
