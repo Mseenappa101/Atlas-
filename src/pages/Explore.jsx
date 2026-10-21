@@ -12,6 +12,7 @@ import {
   EMPTY, SIZE_BUCKETS, applyFilters, chipLabelFor, chips, gatedInUse, isFiltered, mostRestrictive, readFilters, removeChip, writeFilters,
 } from '../components/explore/filters';
 import UnlockForm from '../components/UnlockForm';
+import { toast } from 'sonner';
 import MapCtaBar from '../components/MapCtaBar';
 import useAccess from '../hooks/useAccess';
 import { ROLES, ROLE_LABEL } from '../lib/roles';
@@ -265,6 +266,15 @@ function ExplorePage() {
   const [saving, setSaving] = useState(false);
   const barRef = useRef(null);
   const wide = useMediaQuery('(min-width: 1024px)');
+
+  // Toast when the gated data unlocks (email unlock or sign-in).
+  const wasUnlocked = useRef(canSeeDetails);
+  useEffect(() => {
+    if (canSeeDetails && !wasUnlocked.current) {
+      toast.success('Full data unlocked.', { description: 'Hiring details, windows and how to apply are now visible.' });
+    }
+    wasUnlocked.current = canSeeDetails;
+  }, [canSeeDetails]);
 
   const filters = readFilters(params);
   const sort = params.get('sort') ?? 'recommended';

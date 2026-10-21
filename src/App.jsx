@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { MotionConfig } from 'motion/react';
+import { Toaster } from 'sonner';
 import { flags } from './lib/flags';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -137,6 +138,7 @@ export default function App() {
       </a>
       <FoundingBanner />
       <AppNav />
+      <Toaster position="bottom-right" toastOptions={{ className: 'font-app', style: { borderRadius: '6px' } }} />
       <div id="main">
         <Suspense fallback={null}>{flags.accounts ? <AuthProvider>{routes}</AuthProvider> : routes}</Suspense>
       </div>
