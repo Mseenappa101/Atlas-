@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { MotionConfig } from 'motion/react';
 import { flags } from './lib/flags';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -125,6 +126,7 @@ export default function App() {
   const routes = <AppRoutes />;
   return (
     <BrowserRouter>
+      <MotionConfig reducedMotion="user">
       <SessionProvider>
       <AccessProvider>
       <MyListProvider>
@@ -140,6 +142,7 @@ export default function App() {
       </MyListProvider>
       </AccessProvider>
       </SessionProvider>
+      </MotionConfig>
     </BrowserRouter>
   );
 }
