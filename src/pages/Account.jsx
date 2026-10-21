@@ -91,7 +91,7 @@ function Plan() {
         )}
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
-        {plan === 'free' && <ButtonLink to="/pro">See Pro, $4.99/month</ButtonLink>}
+        {plan === 'free' && <ButtonLink to="/membership">See Membership</ButtonLink>}
         {plan === 'pro' && (
           <Button
             variant="secondary"

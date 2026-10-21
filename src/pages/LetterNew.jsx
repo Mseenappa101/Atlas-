@@ -172,10 +172,10 @@ function NewLetter() {
             ) : (
               <>
                 <p className="mt-1 flex-1 text-t14 text-fg-2">
-                  You&rsquo;ve used your free AI letter. Pro writes one for every firm you apply to, and rewrites your resume bullets. $4.99 a month, cancel anytime.
+                  You&rsquo;ve used your free AI letter. Membership writes one for every firm you apply to and rewrites your resume bullets, plus weekly live critique on what you send.
                 </p>
                 <div className="mt-4">
-                  <ButtonLink to="/pro">See Pro</ButtonLink>
+                  <ButtonLink to="/membership">See Membership</ButtonLink>
                 </div>
               </>
             )}
@@ -183,7 +183,7 @@ function NewLetter() {
               <p role="alert" className="mt-3 text-t14 text-st-soon-text">
                 {error?.code === 'limit_reached' ? (
                   <>
-                    {error.message} <Link to="/pro" className="text-brand hover:underline">See Pro</Link>.
+                    {error.message} <Link to="/membership" className="text-brand hover:underline">See Membership</Link>.
                   </>
                 ) : (
                   error?.message

@@ -66,7 +66,7 @@ function Choose({ profile, pro, onResume, onStored }) {
         <UploadResume pro={pro} onDone={onResume} onStored={onStored} />
         {!pro && (
           <p className="mt-3 text-t12 text-fg-2">
-            With <Link to="/pro" className="text-brand hover:underline">Pro</Link>, we read your file into an editable resume.
+            <Link to="/membership" className="text-brand hover:underline">Membership</Link> reads your file into an editable resume.
           </p>
         )}
       </section>
@@ -157,7 +157,7 @@ function ResumePage() {
             <p className="no-print mt-4 flex items-center gap-2 text-t14 text-fg-2">
               <Sparkles size={16} aria-hidden="true" className="text-brand" />
               <span>
-                <Link to="/pro" className="text-brand hover:underline">Pro</Link> rewrites your job descriptions into strong bullets and writes a cover letter for every firm.
+                <Link to="/membership" className="text-brand hover:underline">Membership</Link> rewrites your job descriptions into strong bullets and writes a cover letter for every firm.
               </span>
             </p>
           )}
