@@ -10,6 +10,7 @@ import ScrambleHeadline from '../components/motion/ScrambleHeadline';
 import Magnetic from '../components/motion/Magnetic';
 import CountUp from '../components/motion/CountUp';
 import Marquee from '../components/motion/Marquee';
+import OfferLadder from '../components/offers/OfferLadder';
 import { fadeUp, staggerContainer, STAGGER } from '../lib/motion';
 import { Checks, Cta, DraftTag, Eyebrow, Faq, H1, Lead, Page, Section, TextLink } from '../components/marketing/kit';
 import { OFFERS } from '../content/offers';
@@ -117,27 +118,6 @@ function MapPreview() {
   );
 }
 
-function OfferCards() {
-  return (
-    <ol className="grid gap-4 md:grid-cols-3">
-      {OFFERS.map((o, i) => (
-        <li key={o.key} className="flex flex-col rounded-app border border-line bg-card p-5">
-          <p className="data text-t12 text-fg-2">Step {i + 1}</p>
-          <h3 className="mt-1 text-t20 font-bold">{o.name}</h3>
-          <p className="mt-1 text-t14 font-semibold text-brand">{o.price}</p>
-          <p className="mt-3 text-t16">{o.promise}</p>
-          <div className="mt-4 flex-1">
-            <Checks items={o.bullets} />
-          </div>
-          <div className="mt-5">
-            <TextLink to={o.to}>{o.cta}</TextLink>
-          </div>
-        </li>
-      ))}
-    </ol>
-  );
-}
-
 export default function Home() {
   usePageMeta({
     title: 'Firmward — Find the firms that are hiring. Then land one.',
@@ -166,7 +146,7 @@ export default function Home() {
       <ProofStrip />
 
       <Section id="how" title="How Firmward works" intro="Start free with the map. When you want help turning it into interviews, there are three ways to go, from do-it-yourself to done-for-you.">
-        <OfferCards />
+        <OfferLadder />
       </Section>
 
       <Section id="story" title={<>Why Firmward exists<DraftTag /></>}>

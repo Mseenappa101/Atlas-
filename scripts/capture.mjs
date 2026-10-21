@@ -25,6 +25,11 @@ const ctx = await browser.newContext({
 });
 const page = await ctx.newPage();
 await page.goto(url, { waitUntil: 'load' });
+// Optional: scroll a selector into view to trigger whileInView animations (set SCROLL_SEL).
+if (process.env.SCROLL_SEL) {
+  await page.waitForTimeout(500);
+  await page.evaluate((sel) => document.querySelector(sel)?.scrollIntoView({ block: 'center', behavior: 'instant' }), process.env.SCROLL_SEL);
+}
 await page.waitForTimeout(Number(ms));
 await ctx.close();
 await browser.close();

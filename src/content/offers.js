@@ -8,6 +8,8 @@ export const OFFERS = [
   {
     key: 'sprint',
     name: '20-Firm Sprint',
+    badge: money(P.sprint),
+    step: 'Step 1',
     price: `${money(P.sprint)} one-time`,
     promise: 'In 5 days you’ll have a target list, a fixed resume, and 20 outreach emails sent to firms that are actually hiring for your role.',
     bullets: [
@@ -22,6 +24,8 @@ export const OFFERS = [
   {
     key: 'membership',
     name: 'Firmward Membership',
+    badge: `${money(P.membershipMonthly)}/mo`,
+    step: 'Step 2',
     price: `${money(P.membershipMonthly)}/month or ${money(P.membershipAnnual)}/year`,
     promise: 'Keep sending, every week, with someone reading your drafts.',
     bullets: [
@@ -36,6 +40,8 @@ export const OFFERS = [
   {
     key: 'placement',
     name: 'The 90-Day Placement',
+    badge: money(P.placementTerm),
+    step: 'Step 3',
     price: `${money(P.placementTerm)} per 90-day term, billed ${money(P.placementMonthly)}/month`,
     promise: 'A done-for-you search for your summer or post-grad job: Michael runs it with you until you accept an offer.',
     bullets: [
