@@ -14,7 +14,7 @@ export const config = {
   dailyCap: num(process.env.DAILY_GENERATION_CAP, 30),
   supabaseUrl: process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL,
   serviceKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
-  anthropicKey: process.env.ANTHROPIC_API_KEY || process.env.VITE_ANTHROPIC_API_KEY,
+  anthropicKey: process.env.ANTHROPIC_API_KEY,
   bodyLimit: 8 * 1024 * 1024,
   fileLimit: 5 * 1024 * 1024,
   // Free accounts get one AI cover letter as a sample; Pro (and coaching plans) get a monthly cap.
