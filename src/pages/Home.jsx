@@ -85,7 +85,7 @@ function ProofStrip() {
     <section aria-label="Coverage" className="mt-12 border-y border-line py-7">
       <div className="flex flex-wrap items-start justify-center gap-x-12 gap-y-5 text-center">
         {stats.map((s) => (
-          <div key={s.label}>
+          <div key={s.label} className="min-w-[84px]">
             <div className="data text-[28px] font-bold leading-none text-fg md:text-t32">
               {loading ? '—' : <CountUp value={s.value} />}
             </div>
@@ -146,7 +146,7 @@ export default function Home() {
       <ProofStrip />
 
       <Section id="how" title="How Firmward works" intro="Start free with the map. When you want help turning it into interviews, there are three ways to go, from do-it-yourself to done-for-you.">
-        <Suspense fallback={<div className="min-h-[360px]" />}><OfferLadder /></Suspense>
+        <Suspense fallback={<div className="min-h-[480px]" />}><OfferLadder /></Suspense>
       </Section>
 
       <Section id="story" title={<>Why Firmward exists<DraftTag /></>}>

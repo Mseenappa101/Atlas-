@@ -182,7 +182,8 @@ export default function Placement() {
       </div>
 
       <Section id="phases" title="How the 90 days run" reveal={false}>
-        <Suspense fallback={<div className="min-h-[200px]" />}><ScrollPhases phases={PHASES} /></Suspense>
+        {/* Reserve the scroll-pinned height (phases × 85vh on desktop) so the lazy load doesn't shift layout. */}
+        <Suspense fallback={<div className="min-h-[440px] md:min-h-[255vh]" />}><ScrollPhases phases={PHASES} /></Suspense>
         <p className="mt-3 text-t16">Plus a 30-minute 1:1 call every week, the whole way through.</p>
       </Section>
 

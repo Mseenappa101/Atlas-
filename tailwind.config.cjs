@@ -21,10 +21,10 @@ module.exports = {
     fontFamily: {
       // Hanken Grotesk is the default for everything; JetBrains Mono for dates and counts;
       // Newsreader only inside document previews (resumes, letters).
-      sans: ['"Hanken Grotesk"', 'system-ui', 'sans-serif'],
-      app: ['"Hanken Grotesk"', 'system-ui', 'sans-serif'],
-      data: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
-      mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+      sans: ['"Hanken Grotesk"', '"Hanken Fallback"', 'system-ui', 'sans-serif'],
+      app: ['"Hanken Grotesk"', '"Hanken Fallback"', 'system-ui', 'sans-serif'],
+      data: ['"JetBrains Mono"', '"Mono Fallback"', 'ui-monospace', 'monospace'],
+      mono: ['"JetBrains Mono"', '"Mono Fallback"', 'ui-monospace', 'monospace'],
       doc: ['Newsreader', 'Georgia', 'serif'],
     },
     fontSize: {

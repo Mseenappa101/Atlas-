@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Metric-adjusted fallbacks so the web-font swap shifts layout less (CLS). Sized to approximate the
+   web fonts so the fallback occupies near-identical space until the real font loads. */
+@font-face {
+  font-family: 'Hanken Fallback';
+  src: local('Arial');
+  size-adjust: 106%;
+  ascent-override: 92%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Mono Fallback';
+  src: local('Menlo'), local('Consolas'), local('Courier New');
+  size-adjust: 92%;
+}
+
 :root {
   color-scheme: light;
 
