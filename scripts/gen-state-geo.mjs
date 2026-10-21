@@ -31,6 +31,30 @@ const CITIES = {
     { name: 'Austin', lat: 30.2672, lng: -97.7431 },
     { name: 'San Antonio', lat: 29.4241, lng: -98.4936 },
   ],
+  LA: [
+    { name: 'New Orleans', lat: 29.9511, lng: -90.0715 },
+    { name: 'Baton Rouge', lat: 30.4515, lng: -91.1871 },
+    { name: 'Lafayette', lat: 30.2241, lng: -92.0198 },
+    { name: 'Shreveport', lat: 32.5252, lng: -93.7502 },
+  ],
+  NY: [
+    { name: 'New York', lat: 40.7128, lng: -74.0060 },
+    { name: 'Buffalo', lat: 42.8864, lng: -78.8784 },
+    { name: 'Albany', lat: 42.6526, lng: -73.7562 },
+    { name: 'Rochester', lat: 43.1566, lng: -77.6088 },
+  ],
+  GA: [
+    { name: 'Atlanta', lat: 33.7490, lng: -84.3880 },
+    { name: 'Savannah', lat: 32.0809, lng: -81.0912 },
+    { name: 'Augusta', lat: 33.4735, lng: -82.0105 },
+    { name: 'Macon', lat: 32.8407, lng: -83.6324 },
+  ],
+  FL: [
+    { name: 'Miami', lat: 25.7617, lng: -80.1918 },
+    { name: 'Orlando', lat: 28.5383, lng: -81.3792 },
+    { name: 'Tampa', lat: 27.9506, lng: -82.4572 },
+    { name: 'Jacksonville', lat: 30.3322, lng: -81.6557 },
+  ],
 };
 
 const W = 400;

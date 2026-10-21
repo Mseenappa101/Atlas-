@@ -5,7 +5,7 @@ import { EASE_OUT } from '../../lib/motion';
 
 // DEV-only harness to self-review state postcards in isolation (not routed in production).
 // ?bare=1 hides the controls + app chrome for clean GIF capture; ?state=TX picks the state; ?slow=N slows.
-const STATES = { TX: 24, CA: 23, NY: 30, GA: 12, FL: 29, DC: 17 };
+const STATES = { TX: 24, LA: 11, NY: 30, GA: 12, FL: 29 };
 const params = () => new URLSearchParams(window.location.search);
 
 export default function DevPostcard() {

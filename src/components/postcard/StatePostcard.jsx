@@ -75,9 +75,13 @@ export default function StatePostcard({ data, firmCount = 0, label = 'firms', on
 
   // Landmark local box → centred motif sitting on the fill, under the outline/pins.
   const [lbw, lbh] = L.box;
-  const lScale = (vw * 0.4) / lbw;
-  const lx = data.centroid[0] - (lbw * lScale) / 2;
-  const ly = data.centroid[1] - lbh * lScale * 0.62;
+  const lScale = (vw * (L.scale ?? 0.4)) / lbw;
+  const lx = data.centroid[0] - (lbw * lScale) / 2 + (L.dx ?? 0);
+  const ly = data.centroid[1] - lbh * lScale * (L.anchorY ?? 0.62) + (L.dy ?? 0);
+  // Generic art schema (art/accent), backward-compatible with TX's dome/finialStar.
+  const artPaths = L.art ?? L.dome ?? [];
+  const accent = L.accent ?? (L.finialStar ? { d: L.finialStar, color: 'star' } : null);
+  const clipId = `pc-clip-${data.code}`;
 
   return (
     <div className={`relative overflow-hidden rounded-app border border-line shadow-pop ${className}`} style={{ background: c.paper }}>
@@ -85,14 +89,17 @@ export default function StatePostcard({ data, firmCount = 0, label = 'firms', on
         {/* state fill */}
         <motion.path d={data.outline} fill={c.fill} stroke="none" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={tr({ delay: T.fill, duration: 0.3, ease: EASE_OUT })} />
 
-        {/* landmark motif rises on the fill, under the outline + pins */}
-        <g transform={`translate(${lx}, ${ly}) scale(${lScale})`}>
-          <motion.g initial={{ opacity: 0, y: 16 }} animate={{ opacity: 0.5, y: 0 }} transition={tr({ delay: T.landmark, duration: 0.4, ease: EASE_OUT })}>
-            {L.dome.map((d, i) => (
-              <path key={i} d={d} fill="none" stroke={c.ink} strokeWidth={1.8} strokeLinejoin="round" strokeLinecap="round" />
-            ))}
-            {L.finialStar && <path d={L.finialStar} fill={c.star} stroke="none" />}
-          </motion.g>
+        {/* landmark motif rises on the fill, under the outline + pins; clipped to the state outline */}
+        <clipPath id={clipId}><path d={data.outline} /></clipPath>
+        <g clipPath={`url(#${clipId})`}>
+          <g transform={`translate(${lx}, ${ly}) scale(${lScale})`}>
+            <motion.g initial={{ opacity: 0, y: 16 }} animate={{ opacity: 0.52, y: 0 }} transition={tr({ delay: T.landmark, duration: 0.4, ease: EASE_OUT })}>
+              {artPaths.map((d, i) => (
+                <path key={i} d={d} fill="none" stroke={c.ink} strokeWidth={1.8} strokeLinejoin="round" strokeLinecap="round" />
+              ))}
+              {accent && <path d={accent.d} fill={c[accent.color] ?? c.star} stroke="none" />}
+            </motion.g>
+          </g>
         </g>
 
         {/* state outline draws itself */}
@@ -135,6 +142,20 @@ export default function StatePostcard({ data, firmCount = 0, label = 'firms', on
             initial={{ opacity: 0, scale: 0.6 }}
             animate={reduced ? { opacity: 0.9, scale: 1 } : { opacity: [0.9, 0.45, 0.9], scale: [1, 1.12, 1] }}
             transition={reduced ? { duration: 0 } : { delay: T.total * speed, duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+            style={{ transformOrigin: '26px 28px' }}
+          />
+        )}
+
+        {/* generic ambient: a soft pulsing mark for non-star states */}
+        {data.ambient === 'glow' && (
+          <motion.circle
+            cx={26}
+            cy={28}
+            r={6}
+            fill={c.star}
+            initial={{ opacity: 0, scale: 0.6 }}
+            animate={reduced ? { opacity: 0.7, scale: 1 } : { opacity: [0.7, 0.3, 0.7], scale: [1, 1.15, 1] }}
+            transition={reduced ? { duration: 0 } : { delay: T.total * speed, duration: 3.4, repeat: Infinity, ease: 'easeInOut' }}
             style={{ transformOrigin: '26px 28px' }}
           />
         )}
