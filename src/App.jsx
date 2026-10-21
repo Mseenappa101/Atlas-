@@ -43,6 +43,7 @@ const Settings = lazy(() => import('./pages/Settings'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const ProtectedRoute = lazy(() => import('./components/ProtectedRoute'));
 const ComponentsGallery = import.meta.env.DEV ? lazy(() => import('./pages/dev/Components')) : null;
+const DevPostcard = import.meta.env.DEV ? lazy(() => import('./pages/dev/Postcard')) : null;
 
 function NotFound() {
   const { pathname } = useLocation();
@@ -117,6 +118,7 @@ function AppRoutes() {
       <Route path="/pricing" element={<Navigate to="/" replace />} />
 
       {import.meta.env.DEV && <Route path="/dev/components" element={<ComponentsGallery />} />}
+      {import.meta.env.DEV && <Route path="/dev/postcard" element={<DevPostcard />} />}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
