@@ -2,6 +2,7 @@ import { SITE, nextSprint } from '../../site.config';
 import usePageMeta from '../hooks/usePageMeta';
 import Countdown from '../components/Countdown';
 import { Checks, Cta, Eyebrow, Faq, H1, Lead, Page, ResponsiveTable, Section, TextLink } from '../components/marketing/kit';
+import LadderCrossSell from '../components/offers/LadderCrossSell';
 import { money } from '../lib/money';
 
 const P = SITE.PRICES;
@@ -96,6 +97,8 @@ export default function Sprint() {
       <Section id="faq" title="Questions">
         <Faq items={FAQ} />
       </Section>
+
+      <LadderCrossSell />
 
       <div className="mt-12 rounded-app border border-brand bg-brand-tint p-5">
         <p className="text-t20 font-semibold">Ready to send 20?</p>

@@ -2,6 +2,7 @@ import { SITE, foundingOpen } from '../../site.config';
 import usePageMeta from '../hooks/usePageMeta';
 import Countdown from '../components/Countdown';
 import { Checks, Cta, Eyebrow, Faq, H1, Lead, Page, ResponsiveTable, Section } from '../components/marketing/kit';
+import LadderCrossSell from '../components/offers/LadderCrossSell';
 import { money } from '../lib/money';
 
 const P = SITE.PRICES;
@@ -61,6 +62,8 @@ export default function Membership() {
       <Section id="faq" title="Questions">
         <Faq items={FAQ} />
       </Section>
+
+      <LadderCrossSell />
     </Page>
   );
 }

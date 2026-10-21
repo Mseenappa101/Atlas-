@@ -4,6 +4,7 @@ import { SITE, foundingOpen, isPlaceholder } from '../../site.config';
 import usePageMeta from '../hooks/usePageMeta';
 import { Button } from '../components/app/controls';
 import { Checks, Cta, Eyebrow, Faq, H1, Lead, Page, ResponsiveTable, Section } from '../components/marketing/kit';
+import LadderCrossSell from '../components/offers/LadderCrossSell';
 // Lazy so Framer Motion (scroll-pinned phases) loads only when Placement renders, not in the initial chunk.
 const ScrollPhases = lazy(() => import('../components/motion/ScrollPhases'));
 import { toast } from 'sonner';
@@ -227,6 +228,8 @@ export default function Placement() {
       <Section id="faq" title="Questions">
         <Faq items={FAQ} />
       </Section>
+
+      <LadderCrossSell />
 
       <section id="book" ref={bookRef} aria-labelledby="book-h" className="mt-14 scroll-mt-20 md:mt-20">
         <h2 id="book-h" className="text-t24 font-bold tracking-tight md:text-t32">Book a strategy call</h2>
