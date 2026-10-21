@@ -1,7 +1,8 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { MotionConfig } from 'motion/react';
+import { MotionConfig, AnimatePresence, motion } from 'motion/react';
 import { Toaster } from 'sonner';
+import SmoothScroll from './components/motion/SmoothScroll';
 import { flags } from './lib/flags';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -65,8 +66,17 @@ function NotFound() {
 }
 
 function AppRoutes() {
+  const location = useLocation();
   return (
-    <Routes>
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+      >
+        <Routes location={location}>
       <Route path="/" element={<Home />} />
       <Route path="/explore" element={<Explore />} />
       <Route path="/firms/:slug" element={<FirmPage />} />
@@ -121,7 +131,9 @@ function AppRoutes() {
       {import.meta.env.DEV && <Route path="/dev/components" element={<ComponentsGallery />} />}
       {import.meta.env.DEV && <Route path="/dev/postcard" element={<DevPostcard />} />}
       <Route path="*" element={<NotFound />} />
-    </Routes>
+        </Routes>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 
@@ -130,6 +142,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <MotionConfig reducedMotion="user">
+      <SmoothScroll />
       <SessionProvider>
       <AccessProvider>
       <MyListProvider>

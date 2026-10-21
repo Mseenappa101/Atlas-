@@ -3,6 +3,7 @@ import { nextWorkshop } from '../../site.config';
 import usePageMeta from '../hooks/usePageMeta';
 import { Button } from '../components/app/controls';
 import { Checks, Eyebrow, H1, Lead, Page, Section } from '../components/marketing/kit';
+import { toast } from 'sonner';
 import { api } from '../lib/api';
 import { STAGES } from '../lib/roles';
 import { getUtm, track } from '../lib/tracking';
@@ -30,8 +31,10 @@ export default function Workshop() {
         body: { name: f.name, email: f.email, class_year: stage?.value ?? null, role_sought: stage?.roles[0] ?? null, source_page: '/workshop', referrer: document.referrer || null, utm: getUtm(), company: f.company },
       });
       track('workshop_register', { stage: f.stage || 'unknown' });
+      toast.success('You’re registered.', { description: 'Check your email for the Zoom link and calendar invite.' });
       setStatus({ kind: 'done', message: out.email_sent === false ? 'You’re registered. The confirmation email is delayed; we’ll send the Zoom link before it starts.' : 'You’re registered. Check your email for the Zoom link and calendar invite.' });
     } catch (err) {
+      toast.error('That didn’t go through.', { description: err.message });
       setStatus({ kind: 'error', message: err.message });
     }
   }

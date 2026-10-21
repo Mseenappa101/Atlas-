@@ -5,6 +5,7 @@ import usePageMeta from '../hooks/usePageMeta';
 import { Button } from '../components/app/controls';
 import { Checks, Cta, Eyebrow, Faq, H1, Lead, Page, ResponsiveTable, Section } from '../components/marketing/kit';
 import ScrollPhases from '../components/motion/ScrollPhases';
+import { toast } from 'sonner';
 import { api } from '../lib/api';
 import { money } from '../lib/money';
 import { getUtm, track } from '../lib/tracking';
@@ -55,9 +56,11 @@ function ApplyForm({ onDone }) {
     try {
       await api('/placement-apply', { method: 'POST', body: { ...f, source_page: '/placement', referrer: document.referrer || null, utm: getUtm() } });
       track('placement_form_submit', { class_year: f.class_year, role: f.role_sought });
+      toast.success('Thanks — your answers are in.', { description: 'Pick a time for your strategy call next.' });
       setStatus({ kind: 'done', message: '' });
       onDone(f);
     } catch (err) {
+      toast.error('That didn’t go through.', { description: err.message });
       setStatus({ kind: 'error', message: err.message });
     }
   }
@@ -177,7 +180,7 @@ export default function Placement() {
         <Cta to="#book">Book a strategy call</Cta>
       </div>
 
-      <Section id="phases" title="How the 90 days run">
+      <Section id="phases" title="How the 90 days run" reveal={false}>
         <ScrollPhases phases={PHASES} />
         <p className="mt-3 text-t16">Plus a 30-minute 1:1 call every week, the whole way through.</p>
       </Section>

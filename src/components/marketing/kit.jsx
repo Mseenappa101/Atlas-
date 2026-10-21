@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
+import { motion } from 'motion/react';
 import { ArrowRight, Check } from 'lucide-react';
 import { isPlaceholder } from '../../../site.config';
 import { track, withUtm } from '../../lib/tracking';
+import { EASE_OUT } from '../../lib/motion';
 
 // Building blocks for the marketing pages, in the app's design system.
 
@@ -25,13 +27,19 @@ export function Lead({ children }) {
   return <p className="mt-4 max-w-2xl text-t16 leading-relaxed text-fg-2 md:text-t20">{children}</p>;
 }
 
-export function Section({ title, intro, children, id, className = '' }) {
+// Sections fade up 12px once at 20% visibility. `reveal={false}` for sections that contain a
+// position:sticky child (an ancestor transform would break the sticky).
+export function Section({ title, intro, children, id, className = '', reveal = true }) {
+  const Comp = reveal ? motion.section : 'section';
+  const anim = reveal
+    ? { initial: { opacity: 0, y: 12 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.2 }, transition: { duration: 0.3, ease: EASE_OUT } }
+    : {};
   return (
-    <section id={id} aria-labelledby={id ? `${id}-h` : undefined} className={`mt-14 md:mt-20 ${className}`}>
+    <Comp id={id} aria-labelledby={id ? `${id}-h` : undefined} className={`mt-14 md:mt-20 ${className}`} {...anim}>
       {title && <h2 id={id ? `${id}-h` : undefined} className="text-t24 font-bold tracking-tight md:text-t32">{title}</h2>}
       {intro && <p className="mt-2 max-w-2xl text-t16 text-fg-2">{intro}</p>}
       <div className={title ? 'mt-6' : ''}>{children}</div>
-    </section>
+    </Comp>
   );
 }
 
