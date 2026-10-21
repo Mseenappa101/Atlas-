@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Lock } from 'lucide-react';
-import { SITE, isPlaceholder } from '../../site.config';
+import { SITE, foundingOpen, isPlaceholder } from '../../site.config';
 import { SPRINT_COURSE } from '../content/course';
 import { money } from '../lib/money';
 import { api, ApiError } from '../lib/api';
+import { track } from '../lib/tracking';
 import usePageMeta from '../hooks/usePageMeta';
 import { Page, Eyebrow, H1, Lead, Section, Checks, Cta } from '../components/marketing/kit';
 
@@ -22,6 +23,7 @@ export default function SprintCourse() {
   const [email, setEmail] = useState(null);
   const [videos, setVideos] = useState({}); // lesson key -> url
   const [error, setError] = useState('');
+  const [justPurchased, setJustPurchased] = useState(false); // arrived straight from Stripe checkout
 
   useEffect(() => {
     let cancelled = false;
@@ -41,6 +43,7 @@ export default function SprintCourse() {
           // Just back from Stripe: exchange the paid session for an access token, then drop it from the URL.
           const { token } = await api('/sprint/unlock', { method: 'POST', body: { session_id: sessionId } });
           localStorage.setItem(TOKEN_KEY, token);
+          if (!cancelled) { setJustPurchased(true); track('sprint_purchase'); }
           setParams({}, { replace: true });
           await lessonsFor(token);
           return;
@@ -80,7 +83,7 @@ export default function SprintCourse() {
         <p role="status" className="mt-8 rounded-app border border-line bg-card px-4 py-3 text-t16">{error}</p>
       )}
       {status === 'locked' && <LockedState />}
-      {status === 'unlocked' && <UnlockedState email={email} videos={videos} />}
+      {status === 'unlocked' && <UnlockedState email={email} videos={videos} justPurchased={justPurchased} />}
     </Page>
   );
 }
@@ -137,9 +140,18 @@ function LockedState() {
   );
 }
 
-function UnlockedState({ email, videos }) {
+function UnlockedState({ email, videos, justPurchased }) {
   return (
     <>
+      {justPurchased && (
+        <div className="mt-8 rounded-app border border-brand bg-brand-tint p-5">
+          <p className="text-t20 font-semibold">Payment received — you’re in.</p>
+          <p className="mt-1 text-t16">
+            Start with Monday below. Your {money(P.sprint)} counts toward Membership if you join within {SITE.FOUNDING.sprintCreditHours} hours
+            {foundingOpen() ? `, and founding members lock ${money(P.membershipMonthly)}/month for life until Dec 21` : ''}.
+          </p>
+        </div>
+      )}
       <p role="status" className="mt-6 inline-flex items-center gap-2 rounded-pill border border-brand bg-brand-tint px-3 py-1 text-t14 font-medium text-brand">
         Access unlocked{email ? ` · ${email}` : ''}
       </p>
