@@ -8,6 +8,8 @@ import useCatalog from '../hooks/useCatalog';
 import UnlockForm from '../components/UnlockForm';
 import ScrambleHeadline from '../components/motion/ScrambleHeadline';
 import Magnetic from '../components/motion/Magnetic';
+import CountUp from '../components/motion/CountUp';
+import Marquee from '../components/motion/Marquee';
 import { fadeUp, staggerContainer, STAGGER } from '../lib/motion';
 import { Checks, Cta, DraftTag, Eyebrow, Faq, H1, Lead, Page, Section, TextLink } from '../components/marketing/kit';
 import { OFFERS } from '../content/offers';
@@ -62,6 +64,37 @@ function StagePicker() {
               {offer.name} <ArrowRight size={16} aria-hidden="true" />
             </Link>
           </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+function ProofStrip() {
+  const { firms, loading } = useCatalog();
+  const states = new Set(firms.flatMap((f) => f.states)).size;
+  const metros = new Set(firms.flatMap((f) => f.cities)).size;
+  const cities = [...new Set(firms.flatMap((f) => f.cities))].filter(Boolean).sort((a, b) => a.localeCompare(b));
+  const stats = [
+    { value: firms.length, label: 'firms tracked' },
+    { value: states, label: 'states' },
+    { value: metros, label: 'metros' },
+  ];
+  return (
+    <section aria-label="Coverage" className="mt-12 border-y border-line py-7">
+      <div className="flex flex-wrap items-start justify-center gap-x-12 gap-y-5 text-center">
+        {stats.map((s) => (
+          <div key={s.label}>
+            <div className="data text-[28px] font-bold leading-none text-fg md:text-t32">
+              {loading ? '—' : <CountUp value={s.value} />}
+            </div>
+            <div className="mt-1.5 text-t12 uppercase tracking-[0.1em] text-fg-2">{s.label}</div>
+          </div>
+        ))}
+      </div>
+      {!loading && cities.length > 0 && (
+        <div className="mt-6">
+          <Marquee items={cities} />
         </div>
       )}
     </section>
@@ -130,6 +163,7 @@ export default function Home() {
 
       <StagePicker />
       <MapPreview />
+      <ProofStrip />
 
       <Section id="how" title="How Firmward works" intro="Start free with the map. When you want help turning it into interviews, there are three ways to go, from do-it-yourself to done-for-you.">
         <OfferCards />
