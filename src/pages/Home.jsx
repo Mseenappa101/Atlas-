@@ -93,11 +93,10 @@ function ProofStrip() {
           </div>
         ))}
       </div>
-      {!loading && cities.length > 0 && (
-        <div className="mt-6">
-          <Marquee items={cities} />
-        </div>
-      )}
+      {/* Reserve the row height so the marquee appearing after data loads doesn't shift content. */}
+      <div className="mt-6 min-h-[20px]">
+        {!loading && cities.length > 0 && <Marquee items={cities} />}
+      </div>
     </section>
   );
 }
