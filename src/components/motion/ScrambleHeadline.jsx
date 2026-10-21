@@ -20,9 +20,16 @@ export default function ScrambleHeadline({ text, as: Tag = 'h1', className }) {
     if (reduced || played) { el.textContent = text; return undefined; }
     try { sessionStorage.setItem(SESSION_KEY, '1'); } catch { /* ignore */ }
 
+    // Lock the real rendered height so random-width scramble chars can't re-wrap and shift content below
+    // (this was the main CLS source). Cleared when the real text is restored (same height → no shift).
+    const lockedHeight = el.offsetHeight;
+    el.style.height = `${lockedHeight}px`;
+    el.style.overflow = 'hidden';
+
     const chars = [...text];
     const start = performance.now();
     let raf = 0;
+    const finish = () => { el.textContent = text; el.style.height = ''; el.style.overflow = ''; };
     const tick = (now) => {
       const t = Math.min(1, (now - start) / DURATION);
       el.textContent = chars.map((ch, i) => {
@@ -32,7 +39,7 @@ export default function ScrambleHeadline({ text, as: Tag = 'h1', className }) {
         return p >= 1 ? ch : GLYPHS[(Math.random() * GLYPHS.length) | 0];
       }).join('');
       if (t < 1) raf = requestAnimationFrame(tick);
-      else el.textContent = text;
+      else finish();
     };
     el.textContent = chars.map((ch) => (ch.trim() === '' ? ch : GLYPHS[(Math.random() * GLYPHS.length) | 0])).join('');
     raf = requestAnimationFrame(tick);
