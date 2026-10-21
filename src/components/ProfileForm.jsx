@@ -9,19 +9,19 @@ const labelStyle = {
   fontSize: 9,
   textTransform: 'uppercase',
   letterSpacing: '0.08em',
-  color: '#b0a898',
+  color: '#5B6470',
   marginBottom: 6,
 };
 
 const inputStyle = {
   width: '100%',
   padding: '10px 14px',
-  background: '#faf7f2',
-  border: '1px solid #c8bfae',
+  background: '#FFFFFF',
+  border: '1px solid #E3E6E8',
   borderRadius: 2,
   fontFamily: "'EB Garamond', Georgia, serif",
   fontSize: 16,
-  color: '#1a1710',
+  color: '#14181F',
   outline: 'none',
   boxSizing: 'border-box',
 };
@@ -144,7 +144,7 @@ export default function ProfileForm({ step, initialData = {}, onSave, onSkip }) 
                     gap: 6,
                     fontFamily: "'EB Garamond', Georgia, serif",
                     fontSize: 14,
-                    color: '#4a4639',
+                    color: '#5B6470',
                     cursor: 'pointer',
                   }}
                 >
@@ -152,7 +152,7 @@ export default function ProfileForm({ step, initialData = {}, onSave, onSkip }) 
                     type="checkbox"
                     checked={interests.includes(area)}
                     onChange={() => toggleInterest(area)}
-                    style={{ accentColor: '#8b6914' }}
+                    style={{ accentColor: '#1F5C45' }}
                   />
                   {area}
                 </label>
@@ -170,10 +170,10 @@ export default function ProfileForm({ step, initialData = {}, onSave, onSkip }) 
                     onClick={() => toggleState(s.abbr)}
                     style={{
                       padding: '4px 8px',
-                      border: active ? '1px solid #c4a55a' : '1px solid #c8bfae',
+                      border: active ? '1px solid #1F5C45' : '1px solid #E3E6E8',
                       borderRadius: 2,
-                      background: active ? '#f0e6c8' : 'transparent',
-                      color: active ? '#8b6914' : '#7a7260',
+                      background: active ? '#E7F0EC' : 'transparent',
+                      color: active ? '#1F5C45' : '#5B6470',
                       fontFamily: "'DM Mono', monospace",
                       fontSize: 10,
                       cursor: 'pointer',
@@ -232,14 +232,14 @@ export default function ProfileForm({ step, initialData = {}, onSave, onSkip }) 
               style={{
                 fontFamily: "'EB Garamond', Georgia, serif",
                 fontSize: 14,
-                color: '#4a4639',
+                color: '#5B6470',
               }}
             />
             {uploadStatus && (
               <p style={{
                 fontFamily: "'DM Mono', monospace",
                 fontSize: 10,
-                color: uploadStatus.includes('failed') ? '#8b1a1a' : '#8b6914',
+                color: uploadStatus.includes('failed') ? '#8A5A12' : '#1F5C45',
                 marginTop: 8,
               }}>
                 {uploadStatus}
@@ -255,7 +255,7 @@ export default function ProfileForm({ step, initialData = {}, onSave, onSkip }) 
               fontFamily: "'EB Garamond', Georgia, serif",
               fontSize: 14,
               fontStyle: 'italic',
-              color: '#7a7260',
+              color: '#5B6470',
               cursor: 'pointer',
               padding: 0,
               marginBottom: 20,
@@ -292,14 +292,14 @@ const headingStyle = {
   fontFamily: "'Cormorant Garamond', Georgia, serif",
   fontSize: 28,
   fontWeight: 600,
-  color: '#1a1710',
+  color: '#14181F',
   margin: '0 0 24px',
 };
 
 const btnStyle = {
   padding: '12px 24px',
-  backgroundColor: '#1a1710',
-  color: '#c4a55a',
+  backgroundColor: '#14181F',
+  color: '#1F5C45',
   border: 'none',
   borderRadius: 2,
   fontFamily: "'DM Mono', monospace",

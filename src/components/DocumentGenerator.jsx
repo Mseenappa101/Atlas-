@@ -78,7 +78,7 @@ export default function DocumentGenerator({ userProfile, firm, userFirmId, isPro
           display: 'flex',
           flexWrap: 'wrap',
           gap: 0,
-          borderBottom: '1px solid #e4ddd1',
+          borderBottom: '1px solid #E3E6E8',
           marginBottom: 16,
         }}
       >
@@ -89,13 +89,13 @@ export default function DocumentGenerator({ userProfile, firm, userFirmId, isPro
             style={{
               background: 'none',
               border: 'none',
-              borderBottom: activeTab === tab.key ? '2px solid #8b6914' : '2px solid transparent',
+              borderBottom: activeTab === tab.key ? '2px solid #1F5C45' : '2px solid transparent',
               padding: '8px 12px',
               fontFamily: "'DM Mono', monospace",
               fontSize: 9,
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
-              color: activeTab === tab.key ? '#8b6914' : '#b0a898',
+              color: activeTab === tab.key ? '#1F5C45' : '#5B6470',
               cursor: 'pointer',
             }}
           >
@@ -114,8 +114,8 @@ export default function DocumentGenerator({ userProfile, firm, userFirmId, isPro
             disabled={generating}
             style={{
               padding: '8px 20px',
-              backgroundColor: '#1a1710',
-              color: '#c4a55a',
+              backgroundColor: '#14181F',
+              color: '#1F5C45',
               border: 'none',
               borderRadius: 2,
               fontFamily: "'DM Mono', monospace",
@@ -137,7 +137,7 @@ export default function DocumentGenerator({ userProfile, firm, userFirmId, isPro
                 fontFamily: "'EB Garamond', Georgia, serif",
                 fontSize: 15,
                 fontStyle: 'italic',
-                color: '#7a7260',
+                color: '#5B6470',
               }}
             >
               Composing...
@@ -153,12 +153,12 @@ export default function DocumentGenerator({ userProfile, firm, userFirmId, isPro
                   width: '100%',
                   minHeight: 200,
                   padding: '1rem',
-                  background: '#faf7f2',
-                  border: '1px solid #c8bfae',
+                  background: '#FFFFFF',
+                  border: '1px solid #E3E6E8',
                   borderRadius: 2,
                   fontFamily: "'EB Garamond', Georgia, serif",
                   fontSize: 15,
-                  color: '#1a1710',
+                  color: '#14181F',
                   lineHeight: 1.6,
                   outline: 'none',
                   resize: 'vertical',
@@ -184,7 +184,7 @@ export default function DocumentGenerator({ userProfile, firm, userFirmId, isPro
               fontSize: 9,
               textTransform: 'uppercase',
               letterSpacing: '0.08em',
-              color: '#b0a898',
+              color: '#5B6470',
               marginBottom: 8,
             }}
           >
@@ -198,7 +198,7 @@ export default function DocumentGenerator({ userProfile, firm, userFirmId, isPro
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 padding: '6px 0',
-                borderBottom: '1px solid #e4ddd1',
+                borderBottom: '1px solid #E3E6E8',
               }}
             >
               <span
@@ -206,7 +206,7 @@ export default function DocumentGenerator({ userProfile, firm, userFirmId, isPro
                   fontFamily: "'DM Mono', monospace",
                   fontSize: 9,
                   textTransform: 'uppercase',
-                  color: '#7a7260',
+                  color: '#5B6470',
                 }}
               >
                 {doc.type.replace(/_/g, ' ')}
@@ -215,7 +215,7 @@ export default function DocumentGenerator({ userProfile, firm, userFirmId, isPro
                 style={{
                   fontFamily: "'DM Mono', monospace",
                   fontSize: 9,
-                  color: '#b0a898',
+                  color: '#5B6470',
                 }}
               >
                 {new Date(doc.created_at).toLocaleDateString()}
@@ -228,7 +228,7 @@ export default function DocumentGenerator({ userProfile, firm, userFirmId, isPro
                   fontFamily: "'DM Mono', monospace",
                   fontSize: 9,
                   textTransform: 'uppercase',
-                  color: '#8b6914',
+                  color: '#1F5C45',
                   cursor: 'pointer',
                   padding: 0,
                 }}
@@ -260,12 +260,12 @@ function SmallBtn({ onClick, children }) {
       style={{
         padding: '4px 10px',
         background: 'transparent',
-        border: '1px solid #c8bfae',
+        border: '1px solid #E3E6E8',
         borderRadius: 2,
         fontFamily: "'DM Mono', monospace",
         fontSize: 9,
         textTransform: 'uppercase',
-        color: '#7a7260',
+        color: '#5B6470',
         cursor: 'pointer',
       }}
     >

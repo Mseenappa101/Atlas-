@@ -19,8 +19,8 @@ export default function Dashboard() {
           style={{
             width: 32,
             height: 32,
-            border: '3px solid #c8bfae',
-            borderTopColor: '#8b6914',
+            border: '3px solid #E3E6E8',
+            borderTopColor: '#1F5C45',
             borderRadius: '50%',
             animation: 'spin 0.8s linear infinite',
           }}
@@ -37,7 +37,7 @@ export default function Dashboard() {
             fontFamily: "'EB Garamond', Georgia, serif",
             fontSize: 18,
             fontStyle: 'italic',
-            color: '#7a7260',
+            color: '#5B6470',
             marginBottom: 16,
           }}
         >
@@ -50,7 +50,7 @@ export default function Dashboard() {
             fontSize: 10,
             textTransform: 'uppercase',
             letterSpacing: '0.08em',
-            color: '#8b6914',
+            color: '#1F5C45',
             textDecoration: 'none',
           }}
         >
@@ -75,7 +75,7 @@ export default function Dashboard() {
           display: 'flex',
           gap: '3rem',
           padding: '1rem 2.5rem',
-          borderBottom: '1px solid #ddd6c8',
+          borderBottom: '1px solid #E3E6E8',
         }}
       >
         <Stat label="Firms Saved" value={userFirms.length} />
@@ -116,7 +116,7 @@ function Stat({ label, value }) {
           fontFamily: "'Cormorant Garamond', Georgia, serif",
           fontSize: 28,
           fontWeight: 600,
-          color: '#1a1710',
+          color: '#14181F',
           lineHeight: 1,
         }}
       >
@@ -128,7 +128,7 @@ function Stat({ label, value }) {
           fontSize: 9,
           textTransform: 'uppercase',
           letterSpacing: '0.08em',
-          color: '#b0a898',
+          color: '#5B6470',
           marginTop: 4,
         }}
       >

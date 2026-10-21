@@ -40,9 +40,9 @@ export default function KanbanBoard({ userFirms, onStatusChange, onCardClick }) 
                   style={{
                     minWidth: 220,
                     flexShrink: 0,
-                    background: snapshot.isDraggingOver ? '#ede8df' : '#faf7f2',
-                    borderRight: '1px solid #e4ddd1',
-                    borderTop: isOffer ? '2px solid #3a5e34' : 'none',
+                    background: snapshot.isDraggingOver ? '#E3E6E8' : '#FFFFFF',
+                    borderRight: '1px solid #E3E6E8',
+                    borderTop: isOffer ? '2px solid #1F5C45' : 'none',
                     padding: '0 0 2rem 0',
                     opacity: isRejected ? 0.5 : 1,
                     transition: 'background 0.15s',
@@ -55,7 +55,7 @@ export default function KanbanBoard({ userFirms, onStatusChange, onCardClick }) 
                         fontSize: 9,
                         textTransform: 'uppercase',
                         letterSpacing: '0.08em',
-                        color: isOffer ? '#3a5e34' : '#7a7260',
+                        color: isOffer ? '#1F5C45' : '#5B6470',
                       }}
                     >
                       {status}
@@ -65,7 +65,7 @@ export default function KanbanBoard({ userFirms, onStatusChange, onCardClick }) 
                         fontFamily: "'Cormorant Garamond', Georgia, serif",
                         fontSize: 14,
                         fontStyle: 'italic',
-                        color: '#b0a898',
+                        color: '#5B6470',
                       }}
                     >
                       {columns[status].length}

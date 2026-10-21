@@ -8,9 +8,9 @@ function daysRemaining(dateStr) {
 
 function deadlineColor(days) {
   if (days === null) return null;
-  if (days < 7) return '#8b1a1a';
-  if (days < 14) return '#8b6914';
-  return '#3a5e34';
+  if (days < 7) return '#8A5A12';
+  if (days < 14) return '#1F5C45';
+  return '#1F5C45';
 }
 
 export default function KanbanCard({ userFirm, index, onClick }) {
@@ -28,8 +28,8 @@ export default function KanbanCard({ userFirm, index, onClick }) {
           onClick={() => onClick(userFirm)}
           className="kanban-card"
           style={{
-            background: snapshot.isDragging ? '#f0e6c8' : '#f7f3ec',
-            border: '1px solid #ddd6c8',
+            background: snapshot.isDragging ? '#E7F0EC' : '#F6F7F5',
+            border: '1px solid #E3E6E8',
             margin: 8,
             padding: 12,
             cursor: 'pointer',
@@ -42,7 +42,7 @@ export default function KanbanCard({ userFirm, index, onClick }) {
               fontFamily: "'EB Garamond', Georgia, serif",
               fontSize: 14,
               fontWeight: 500,
-              color: '#1a1710',
+              color: '#14181F',
               lineHeight: 1.3,
             }}
           >
@@ -53,7 +53,7 @@ export default function KanbanCard({ userFirm, index, onClick }) {
               fontFamily: "'DM Mono', monospace",
               fontSize: 8,
               textTransform: 'uppercase',
-              color: '#b0a898',
+              color: '#5B6470',
               marginTop: 2,
               letterSpacing: '0.05em',
             }}

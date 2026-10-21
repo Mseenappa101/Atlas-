@@ -4,7 +4,7 @@ export default function UpgradePrompt() {
   return (
     <div
       style={{
-        borderLeft: '2px solid #c8bfae',
+        borderLeft: '2px solid #E3E6E8',
         paddingLeft: '1rem',
         margin: '16px 0',
       }}
@@ -14,7 +14,7 @@ export default function UpgradePrompt() {
           fontFamily: "'Cormorant Garamond', Georgia, serif",
           fontSize: 22,
           fontWeight: 600,
-          color: '#1a1710',
+          color: '#14181F',
           margin: '0 0 8px',
         }}
       >
@@ -24,7 +24,7 @@ export default function UpgradePrompt() {
         style={{
           fontFamily: "'EB Garamond', Georgia, serif",
           fontSize: 15,
-          color: '#4a4639',
+          color: '#5B6470',
           lineHeight: 1.6,
           margin: '0 0 16px',
         }}
@@ -37,8 +37,8 @@ export default function UpgradePrompt() {
         style={{
           display: 'inline-block',
           padding: '10px 24px',
-          backgroundColor: '#1a1710',
-          color: '#c4a55a',
+          backgroundColor: '#14181F',
+          color: '#1F5C45',
           fontFamily: "'DM Mono', monospace",
           fontSize: 10,
           textTransform: 'uppercase',

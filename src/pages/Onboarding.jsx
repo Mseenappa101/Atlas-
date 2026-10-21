@@ -19,8 +19,8 @@ const spinner = (
       style={{
         width: 32,
         height: 32,
-        border: '3px solid #c8bfae',
-        borderTopColor: '#8b6914',
+        border: '3px solid #E3E6E8',
+        borderTopColor: '#1F5C45',
         borderRadius: '50%',
         animation: 'spin 0.8s linear infinite',
         margin: '0 auto',
@@ -102,18 +102,18 @@ export default function Onboarding() {
             fontSize: 9,
             textTransform: 'uppercase',
             letterSpacing: '0.08em',
-            color: '#b0a898',
+            color: '#5B6470',
             marginBottom: 8,
           }}
         >
           Step {step} of 5
         </div>
-        <div style={{ height: 2, backgroundColor: '#e4ddd1', borderRadius: 1 }}>
+        <div style={{ height: 2, backgroundColor: '#E3E6E8', borderRadius: 1 }}>
           <div
             style={{
               height: 2,
               width: `${(step / 5) * 100}%`,
-              backgroundColor: '#c4a55a',
+              backgroundColor: '#1F5C45',
               borderRadius: 1,
               transition: 'width 0.3s ease',
             }}
@@ -132,7 +132,7 @@ export default function Onboarding() {
               fontFamily: "'DM Mono', monospace",
               fontSize: 10,
               textTransform: 'uppercase',
-              color: '#7a7260',
+              color: '#5B6470',
               cursor: 'pointer',
               padding: 0,
             }}
@@ -152,7 +152,7 @@ export default function Onboarding() {
               fontFamily: "'EB Garamond', Georgia, serif",
               fontSize: 14,
               fontStyle: 'italic',
-              color: '#7a7260',
+              color: '#5B6470',
               cursor: 'pointer',
               padding: 0,
             }}

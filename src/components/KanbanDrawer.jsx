@@ -41,8 +41,8 @@ export default function KanbanDrawer({ userFirm, onClose, onStatusChange, onNote
       style={{
         width: 300,
         flexShrink: 0,
-        borderLeft: '1px solid #ddd6c8',
-        background: '#faf7f2',
+        borderLeft: '1px solid #E3E6E8',
+        background: '#FFFFFF',
         padding: '1.25rem',
         position: 'relative',
         overflowY: 'auto',
@@ -59,7 +59,7 @@ export default function KanbanDrawer({ userFirm, onClose, onStatusChange, onNote
           border: 'none',
           fontFamily: "'DM Mono', monospace",
           fontSize: 14,
-          color: '#b0a898',
+          color: '#5B6470',
           cursor: 'pointer',
         }}
       >
@@ -71,7 +71,7 @@ export default function KanbanDrawer({ userFirm, onClose, onStatusChange, onNote
           fontFamily: "'Cormorant Garamond', Georgia, serif",
           fontSize: 22,
           fontWeight: 600,
-          color: '#1a1710',
+          color: '#14181F',
           marginBottom: 4,
           paddingRight: 24,
         }}
@@ -84,7 +84,7 @@ export default function KanbanDrawer({ userFirm, onClose, onStatusChange, onNote
           fontFamily: "'EB Garamond', Georgia, serif",
           fontSize: 14,
           fontStyle: 'italic',
-          color: '#7a7260',
+          color: '#5B6470',
           marginBottom: 16,
         }}
       >
@@ -100,7 +100,7 @@ export default function KanbanDrawer({ userFirm, onClose, onStatusChange, onNote
             fontSize: 9,
             textTransform: 'uppercase',
             letterSpacing: '0.08em',
-            color: '#b0a898',
+            color: '#5B6470',
             marginBottom: 6,
           }}
         >
@@ -112,11 +112,11 @@ export default function KanbanDrawer({ userFirm, onClose, onStatusChange, onNote
           style={{
             width: '100%',
             padding: '8px 10px',
-            border: '1px solid #c8bfae',
+            border: '1px solid #E3E6E8',
             borderRadius: 2,
             fontFamily: "'EB Garamond', Georgia, serif",
             fontSize: 14,
-            color: '#1a1710',
+            color: '#14181F',
             backgroundColor: '#fff',
             outline: 'none',
             boxSizing: 'border-box',
@@ -137,7 +137,7 @@ export default function KanbanDrawer({ userFirm, onClose, onStatusChange, onNote
             fontSize: 9,
             textTransform: 'uppercase',
             letterSpacing: '0.08em',
-            color: '#b0a898',
+            color: '#5B6470',
             marginBottom: 6,
           }}
         >
@@ -151,11 +151,11 @@ export default function KanbanDrawer({ userFirm, onClose, onStatusChange, onNote
             width: '100%',
             minHeight: 100,
             padding: '8px 10px',
-            border: '1px solid #c8bfae',
+            border: '1px solid #E3E6E8',
             borderRadius: 2,
             fontFamily: "'EB Garamond', Georgia, serif",
             fontSize: 14,
-            color: '#1a1710',
+            color: '#14181F',
             backgroundColor: '#fff',
             outline: 'none',
             resize: 'vertical',
@@ -173,7 +173,7 @@ export default function KanbanDrawer({ userFirm, onClose, onStatusChange, onNote
           fontSize: 9,
           textTransform: 'uppercase',
           letterSpacing: '0.05em',
-          color: '#8b6914',
+          color: '#1F5C45',
           textDecoration: 'none',
           marginBottom: 12,
         }}
@@ -197,13 +197,13 @@ export default function KanbanDrawer({ userFirm, onClose, onStatusChange, onNote
             width: '100%',
             padding: '8px 12px',
             background: 'transparent',
-            border: '1px solid #8b1a1a',
+            border: '1px solid #8A5A12',
             borderRadius: 2,
             fontFamily: "'DM Mono', monospace",
             fontSize: 9,
             textTransform: 'uppercase',
             letterSpacing: '0.05em',
-            color: '#8b1a1a',
+            color: '#8A5A12',
             cursor: 'pointer',
           }}
         >

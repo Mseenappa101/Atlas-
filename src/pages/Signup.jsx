@@ -5,8 +5,8 @@ import { useAuth } from '../context/AuthContext';
 const card = {
   maxWidth: 420,
   margin: '4rem auto',
-  background: '#faf7f2',
-  border: '1px solid #c8bfae',
+  background: '#FFFFFF',
+  border: '1px solid #E3E6E8',
   borderRadius: 2,
   padding: '2.5rem',
 };
@@ -17,18 +17,18 @@ const labelStyle = {
   fontSize: 9,
   textTransform: 'uppercase',
   letterSpacing: '0.08em',
-  color: '#b0a898',
+  color: '#5B6470',
   marginBottom: 6,
 };
 
 const inputStyle = {
   width: '100%',
   padding: '10px 12px',
-  border: '1px solid #c8bfae',
+  border: '1px solid #E3E6E8',
   borderRadius: 2,
   fontFamily: "'EB Garamond', Georgia, serif",
   fontSize: 15,
-  color: '#1a1710',
+  color: '#14181F',
   backgroundColor: '#fff',
   outline: 'none',
   boxSizing: 'border-box',
@@ -71,7 +71,7 @@ export default function Signup() {
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontSize: 28,
             fontWeight: 700,
-            color: '#c4a55a',
+            color: '#1F5C45',
             textDecoration: 'none',
             letterSpacing: '0.12em',
           }}
@@ -82,7 +82,7 @@ export default function Signup() {
           style={{
             width: 40,
             height: 1,
-            backgroundColor: '#c4a55a',
+            backgroundColor: '#1F5C45',
             margin: '12px auto 0',
           }}
         />
@@ -93,7 +93,7 @@ export default function Signup() {
           fontFamily: "'Cormorant Garamond', Georgia, serif",
           fontSize: 24,
           fontWeight: 600,
-          color: '#1a1710',
+          color: '#14181F',
           textAlign: 'center',
           margin: '0 0 24px',
         }}
@@ -143,8 +143,8 @@ export default function Signup() {
           style={{
             width: '100%',
             padding: 12,
-            backgroundColor: '#1a1710',
-            color: '#c4a55a',
+            backgroundColor: '#14181F',
+            color: '#1F5C45',
             border: 'none',
             borderRadius: 2,
             fontFamily: "'DM Mono', monospace",
@@ -164,7 +164,7 @@ export default function Signup() {
               fontFamily: "'EB Garamond', Georgia, serif",
               fontSize: 14,
               fontStyle: 'italic',
-              color: '#8b1a1a',
+              color: '#8A5A12',
               textAlign: 'center',
               marginTop: 12,
             }}
@@ -178,13 +178,13 @@ export default function Signup() {
         style={{
           fontFamily: "'EB Garamond', Georgia, serif",
           fontSize: 14,
-          color: '#7a7260',
+          color: '#5B6470',
           textAlign: 'center',
           marginTop: 20,
         }}
       >
         Already have an account?{' '}
-        <Link to="/login" style={{ color: '#8b6914', textDecoration: 'none' }}>
+        <Link to="/login" style={{ color: '#1F5C45', textDecoration: 'none' }}>
           Sign in
         </Link>
       </p>
