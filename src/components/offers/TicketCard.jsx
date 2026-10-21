@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight } from 'lucide-react';
-import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } from 'motion/react';
+import { m, useMotionValue, useSpring, useTransform, useReducedMotion } from 'motion/react';
 import { SPRING_SOFT } from '../../lib/motion';
 
 // A small perforated postage stamp carrying the price — ties the ladder to the state postcards.
@@ -41,7 +41,7 @@ export default function TicketCard({ offer }) {
   const reset = () => { px.set(0.5); py.set(0.5); };
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       onMouseMove={onMove}
       onMouseLeave={reset}
@@ -73,6 +73,6 @@ export default function TicketCard({ offer }) {
           {offer.cta} <ArrowRight size={16} aria-hidden="true" />
         </Link>
       </div>
-    </motion.div>
+    </m.div>
   );
 }

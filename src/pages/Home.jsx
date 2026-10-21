@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 import { SITE, foundingOpen, nextSprint } from '../../site.config';
 import usePageMeta from '../hooks/usePageMeta';
 import useCatalog from '../hooks/useCatalog';
@@ -127,19 +127,19 @@ export default function Home() {
 
   return (
     <Page>
-      <motion.header className="max-w-3xl" initial="hidden" animate="show" variants={staggerContainer(STAGGER.base, 0.08)}>
-        <motion.div variants={fadeUp}><Eyebrow>For law students and new grads</Eyebrow></motion.div>
+      <m.header className="max-w-3xl" initial="hidden" animate="show" variants={staggerContainer(STAGGER.base, 0.08)}>
+        <m.div variants={fadeUp}><Eyebrow>For law students and new grads</Eyebrow></m.div>
         <ScrambleHeadline text="Find the firms that are hiring. Then land one." className="mt-2 text-[34px] font-bold leading-[1.1] tracking-tight md:text-[48px]" />
-        <motion.div variants={fadeUp}>
+        <m.div variants={fadeUp}>
           <Lead>
             Summer and post-grad jobs at boutiques, mid-size, plaintiff, government and regional firms. For 1Ls, 2Ls, 3Ls and recent grads who aren’t being handed BigLaw.
           </Lead>
-        </motion.div>
-        <motion.div variants={fadeUp} className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+        </m.div>
+        <m.div variants={fadeUp} className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
           <Magnetic><Cta to="/explore">Explore the free map</Cta></Magnetic>
           <TextLink to="/sprint">Join the next Sprint{sprint ? ` (starts ${new Date(`${sprint.start}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })})` : ''}</TextLink>
-        </motion.div>
-      </motion.header>
+        </m.div>
+      </m.header>
 
       <StagePicker />
       <MapPreview />

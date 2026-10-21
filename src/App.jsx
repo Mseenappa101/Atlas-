@@ -1,6 +1,10 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { MotionConfig, AnimatePresence, motion } from 'motion/react';
+import { MotionConfig, AnimatePresence, LazyMotion, m } from 'motion/react';
+
+// Load Framer Motion's feature bundle after first paint (keeps it out of the initial chunk). Until it
+// resolves, m.* elements render statically — fine, content shows immediately (better for CLS/LCP).
+const motionFeatures = () => import('motion/react').then((mod) => mod.domAnimation);
 import { Toaster } from 'sonner';
 import SmoothScroll from './components/motion/SmoothScroll';
 import { flags } from './lib/flags';
@@ -69,7 +73,7 @@ function AppRoutes() {
   const location = useLocation();
   return (
     <AnimatePresence mode="wait" initial={false}>
-      <motion.div
+      <m.div
         key={location.pathname}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -132,7 +136,7 @@ function AppRoutes() {
       {import.meta.env.DEV && <Route path="/dev/postcard" element={<DevPostcard />} />}
       <Route path="*" element={<NotFound />} />
         </Routes>
-      </motion.div>
+      </m.div>
     </AnimatePresence>
   );
 }
@@ -142,6 +146,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <MotionConfig reducedMotion="user">
+      <LazyMotion features={motionFeatures}>
       <SmoothScroll />
       <SessionProvider>
       <AccessProvider>
@@ -159,6 +164,7 @@ export default function App() {
       </MyListProvider>
       </AccessProvider>
       </SessionProvider>
+      </LazyMotion>
       </MotionConfig>
     </BrowserRouter>
   );

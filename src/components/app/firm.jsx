@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 import { Bookmark, Lock } from 'lucide-react';
 import { monogram, officesLabel } from '../../lib/format';
 
@@ -153,7 +153,7 @@ export function FirmList({ firms, selectedId, onSelect, onOpen, savedIds, onTogg
       className="outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand"
     >
       {firms.map((f, i) => (
-        <motion.div key={f.id} initial={ROW_IN.initial} animate={ROW_IN.animate} transition={rowTransition(i)}>
+        <m.div key={f.id} initial={ROW_IN.initial} animate={ROW_IN.animate} transition={rowTransition(i)}>
           <FirmRow
             id={optionId(f)}
             firm={f}
@@ -162,7 +162,7 @@ export function FirmList({ firms, selectedId, onSelect, onOpen, savedIds, onTogg
             onSelect={onSelect}
             onToggleSave={onToggleSave}
           />
-        </motion.div>
+        </m.div>
       ))}
     </div>
   );

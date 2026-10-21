@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useMotionValue, useSpring, useReducedMotion } from 'motion/react';
+import { m, useMotionValue, useSpring, useReducedMotion } from 'motion/react';
 import { SPRING_SOFT } from '../../lib/motion';
 
 // Wraps an interactive element. On desktop (fine pointer) it drifts up to `max` px toward the cursor on
@@ -25,7 +25,7 @@ export default function Magnetic({ children, max = 6, className = '' }) {
   const reset = () => { x.set(0); y.set(0); };
 
   return (
-    <motion.span
+    <m.span
       ref={ref}
       onMouseMove={onMove}
       onMouseLeave={reset}
@@ -34,6 +34,6 @@ export default function Magnetic({ children, max = 6, className = '' }) {
       className={className}
     >
       {children}
-    </motion.span>
+    </m.span>
   );
 }

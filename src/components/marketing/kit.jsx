@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 import { ArrowRight, Check } from 'lucide-react';
 import { isPlaceholder } from '../../../site.config';
 import { track, withUtm } from '../../lib/tracking';
@@ -30,7 +30,7 @@ export function Lead({ children }) {
 // Sections fade up 12px once at 20% visibility. `reveal={false}` for sections that contain a
 // position:sticky child (an ancestor transform would break the sticky).
 export function Section({ title, intro, children, id, className = '', reveal = true }) {
-  const Comp = reveal ? motion.section : 'section';
+  const Comp = reveal ? m.section : 'section';
   const anim = reveal
     ? { initial: { opacity: 0, y: 12 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.2 }, transition: { duration: 0.3, ease: EASE_OUT } }
     : {};
