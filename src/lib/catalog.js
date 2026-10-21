@@ -109,6 +109,9 @@ function firm(row, offices) {
 // Everyone can read the public columns. Hiring details come from the API for visitors who unlocked
 // with their email (token) or are signed in (accessToken), and are merged in by id.
 
+// firms.length (e.g. the home "firms tracked" stat) is the live, de-duplicated DB count — currently ~377.
+// Don't confuse it with scripts/output/firms.json, which is RAW scraper output (~584 records, ~194 of
+// them duplicates of the same firm from different sources/offices). The DB is the curated source of truth.
 export const PUBLIC_FIRM = 'id,name,slug,state,city,size,practice_areas,firm_type,last_verified_at,source';
 export const PUBLIC_OFFICE = 'id,firm_id,city,state,last_verified_at';
 
