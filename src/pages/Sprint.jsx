@@ -1,7 +1,7 @@
 import { SITE, nextSprint } from '../../site.config';
 import usePageMeta from '../hooks/usePageMeta';
 import Countdown from '../components/Countdown';
-import { Checks, Cta, Eyebrow, Faq, H1, Lead, Page, ResponsiveTable, Section } from '../components/marketing/kit';
+import { Checks, Cta, Eyebrow, Faq, H1, Lead, Page, ResponsiveTable, Section, TextLink } from '../components/marketing/kit';
 import { money } from '../lib/money';
 
 const P = SITE.PRICES;
@@ -18,7 +18,7 @@ const DAYS = [
 
 const FAQ = [
   ['Does it work for post-grad, not just summer?', 'Yes. You filter the list to the role you’re targeting: 1L summer, 2L summer, post-grad associate or an entry-level move. The email and the list change; the method doesn’t.'],
-  ['How much time does it take?', 'About 30–45 minutes a day, Monday to Thursday, plus the 45-minute live call on Friday. The lessons are short recorded videos in Skool you can watch on your phone.'],
+  ['How much time does it take?', 'About 30–45 minutes a day, Monday to Thursday, plus the 45-minute live call on Friday. The lessons are short recorded videos you watch here on the site, on your phone or laptop.'],
   ['What if I can’t make the Friday call?', 'Send your drafts ahead and watch the recording. Your drafts still get reviewed.'],
   ['Can I get a refund?', 'The Sprint isn’t refundable once Day 1 has started. Before then, email and we’ll sort it out.'],
   ['What happens after?', `If you join Membership within ${SITE.FOUNDING.sprintCreditHours} hours, your ${money(P.sprint)} is credited toward it. Membership keeps you sending every month with live critique.`],
@@ -63,7 +63,8 @@ export default function Sprint() {
 
       <Section id="days" title="The five days">
         <ResponsiveTable caption="The Sprint, day by day" head={['Day', 'Focus', 'What you do']} rows={DAYS} />
-        <p className="mt-3 text-t14 text-fg-2">Daily lessons are short recorded videos in Skool. It runs in cohorts, so you’re sending alongside other students.</p>
+        <p className="mt-3 text-t14 text-fg-2">Daily lessons are short recorded videos you watch on-site in the course. It runs in cohorts, so you’re sending alongside other students.</p>
+        <div className="mt-4"><TextLink to="/sprint/course">Preview the course</TextLink></div>
       </Section>
 
       <Section id="friday" title="What you’ll have by Friday">

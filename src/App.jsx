@@ -23,6 +23,7 @@ import Account from './pages/Account';
 import { Disclaimer, Privacy, Terms } from './pages/Legal';
 import Join from './pages/Join';
 import Sprint from './pages/Sprint';
+import SprintCourse from './pages/SprintCourse';
 import Membership from './pages/Membership';
 import Placement from './pages/Placement';
 import Workshop from './pages/Workshop';
@@ -75,6 +76,7 @@ function AppRoutes() {
       <Route path="/disclaimer" element={<Disclaimer />} />
       <Route path="/signup" element={<Join />} />
       <Route path="/sprint" element={<Sprint />} />
+      <Route path="/sprint/course" element={<SprintCourse />} />
       <Route path="/membership" element={<Membership />} />
       <Route path="/placement" element={<Placement />} />
       <Route path="/workshop" element={<Workshop />} />

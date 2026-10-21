@@ -11,12 +11,16 @@ import { getNewsletter, setNewsletter, startNewsletterSync } from './newsletter.
 import { subscribe, workshop, placementApply } from './leads.js';
 import { privateCatalog } from './catalog.js';
 import { generateDocument } from './ai.js';
+import { unlockSprint, sprintLessons } from './sprint.js';
 
 // Signed-out forms: (body, req) => response. Small bodies only.
 const PUBLIC = {
   'POST /api/subscribe': subscribe,
   'POST /api/workshop': workshop,
   'POST /api/placement-apply': placementApply,
+  // Sprint course: the paid Stripe session is the credential, so these need no signed-in user.
+  'POST /api/sprint/unlock': unlockSprint,
+  'POST /api/sprint/lessons': sprintLessons,
 };
 
 const ROUTES = {

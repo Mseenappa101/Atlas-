@@ -9,7 +9,7 @@ function keys() {
     throw new HttpError(503, 'email_connect_unavailable', 'Connecting an inbox isn’t set up yet. You can still send from Firmward.');
   }
   const derive = (info) => Buffer.from(hkdfSync('sha256', config.tokenKey, 'firmward', info, 32));
-  return { enc: derive('token-encryption'), mac: derive('oauth-state') };
+  return { enc: derive('token-encryption'), mac: derive('oauth-state'), access: derive('course-access') };
 }
 
 const b64u = (buf) => Buffer.from(buf).toString('base64url');
@@ -46,6 +46,30 @@ export function verifyState(state) {
   try {
     const payload = JSON.parse(Buffer.from(body, 'base64url').toString('utf8'));
     return Date.now() - payload.t < STATE_TTL ? payload : null;
+  } catch {
+    return null;
+  }
+}
+
+// Course access: a signed (not encrypted) token the browser keeps in localStorage. It proves a paid
+// Stripe session without needing an account. Long-lived because a Sprint buyer keeps access.
+const ACCESS_TTL = 180 * 24 * 3600_000; // ~6 months
+
+export function signAccess(payload) {
+  const body = b64u(JSON.stringify({ ...payload, t: Date.now(), n: b64u(randomBytes(8)) }));
+  return `${body}.${b64u(createHmac('sha256', keys().access).update(body).digest())}`;
+}
+
+/** Returns the payload, or null if the token was tampered with or is older than ACCESS_TTL. */
+export function verifyAccess(token) {
+  const [body, sig] = String(token ?? '').split('.');
+  if (!body || !sig) return null;
+  const expected = createHmac('sha256', keys().access).update(body).digest();
+  const given = Buffer.from(sig, 'base64url');
+  if (given.length !== expected.length || !timingSafeEqual(given, expected)) return null;
+  try {
+    const payload = JSON.parse(Buffer.from(body, 'base64url').toString('utf8'));
+    return Date.now() - payload.t < ACCESS_TTL ? payload : null;
   } catch {
     return null;
   }

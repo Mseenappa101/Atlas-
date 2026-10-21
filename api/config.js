@@ -27,6 +27,19 @@ export const config = {
   proPriceLookupKey: 'atlas_pro_monthly',
   bucket: 'resume-uploads',
 
+  // On-site Sprint course (/sprint/course). Access is proved by a paid Stripe Checkout Session, not an
+  // account. Video URLs are gated: served only after /api/sprint/unlock verifies the session, so they
+  // never ship in the public bundle. Fill these in the environment (unlisted Vimeo/YouTube embed URLs).
+  // sprintPriceId is optional — set it to restrict unlock to the Sprint product rather than any paid session.
+  sprintPriceId: process.env.STRIPE_SPRINT_PRICE_ID || null,
+  sprintCourseVideos: {
+    'build-list': process.env.SPRINT_VIDEO_BUILD_LIST || 'PLACEHOLDER_SPRINT_VIDEO_BUILD_LIST',
+    'fix-resume': process.env.SPRINT_VIDEO_FIX_RESUME || 'PLACEHOLDER_SPRINT_VIDEO_FIX_RESUME',
+    'write-email': process.env.SPRINT_VIDEO_WRITE_EMAIL || 'PLACEHOLDER_SPRINT_VIDEO_WRITE_EMAIL',
+    'send-day': process.env.SPRINT_VIDEO_SEND_DAY || 'PLACEHOLDER_SPRINT_VIDEO_SEND_DAY',
+    'live-call': process.env.SPRINT_VIDEO_LIVE_CALL || 'PLACEHOLDER_SPRINT_VIDEO_LIVE_CALL',
+  },
+
   // Sending applications. OAuth redirect URIs are APP_URL + /api/connect/{gmail|outlook}/callback.
   tokenKey: process.env.TOKEN_ENCRYPTION_KEY,
   googleClientId: process.env.GOOGLE_CLIENT_ID,
