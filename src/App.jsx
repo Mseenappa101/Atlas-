@@ -109,7 +109,8 @@ function AppRoutes() {
         </>
       )}
       {flags.tracker && <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />}
-      <Route path="/pricing" element={<Navigate to="/pro" replace />} />
+      {/* /pro is unlisted (kept for existing subscribers); the pricing URL points at the ladder, not Pro. */}
+      <Route path="/pricing" element={<Navigate to="/" replace />} />
 
       {import.meta.env.DEV && <Route path="/dev/components" element={<ComponentsGallery />} />}
       <Route path="*" element={<NotFound />} />

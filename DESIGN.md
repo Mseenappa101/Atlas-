@@ -1,127 +1,121 @@
-# FIRMWARD — Design Spec (Fall 2026 redesign)
+# FIRMWARD — Design Spec
 
-Status: draft for approval. Nothing in `src/` has been changed yet.
+Status: **documents the live system** as implemented in `src/index.css` and `tailwind.config.cjs`.
 
----
-
-## 1. Audit of the current UI
-
-| Current file | What it is today | Maps to |
-|---|---|---|
-| `pages/Home.jsx` | SaaS hero, stats band, "How it works", framer-motion reveals | **Landing + gate** (rewrite) |
-| `pages/Browse.jsx` + `components/StateGrid.jsx` | 50-state tile grid ("Coming soon") | Removed; replaced by **Directory** market filter. `/browse` redirects to `/directory` |
-| `pages/BrowseState.jsx` + `components/FirmCard.jsx` + `components/FirmFilters.jsx` | Per-state card list with filters | **Directory** table + filter bar (rewrite; filter logic reused) |
-| `pages/FirmDetail.jsx` (533 lines) | Full page: AI brief, tracker, document generator | **Firm detail panel** (rewrite). AI brief, tracker, doc generator move behind flags. `/firm/:id` opens the panel over the directory |
-| `components/LoadingSkeleton.jsx` | Shimmer cards | Replaced by hairline placeholder rows |
-| `components/NavBar.jsx` | Dark bar: Browse · Pricing · Sign In | **Global nav** (rewrite) |
-| — | No footer component (inline in Home) | **Footer** (new) |
-| — | — | **Calendar** `/calendar` (new) |
-| — | — | **Templates** `/templates` (new) |
-| `pages/Login.jsx`, `Signup.jsx`, `Onboarding.jsx`, `Settings.jsx`, `context/AuthContext.jsx` | Supabase auth flow + profile | Flag `accounts` (off) |
-| `pages/Dashboard.jsx`, `KanbanBoard/Card/Drawer.jsx`, `hooks/useUserFirms.js` | Application tracker | Flag `tracker` (off) |
-| `components/DocumentGenerator.jsx`, `ProfileForm.jsx`, `lib/ai.js` | AI cover letters, briefs | Flag `aiDocs` (off) |
-| `pages/Pricing.jsx` (stub), `components/UpgradePrompt.jsx`, `lib/stripe.js` (stub) | Paid tier | Flag `paid` (off) |
-| `components/DeadlineBar.jsx`, `ToastProvider.jsx`, `hooks/useFirms.js`, `useAuth.js` | Empty stubs | Leave alone |
-| `App.css` | Leftover Vite template CSS, unused | Delete |
-| `assets/hero.png`, `react.svg`, `vite.svg` | Template assets | Unused; leave |
-
-Flags live in one file, `src/lib/flags.js`, all `false`. Flagged routes and nav links don't render. Flagged modules are imported lazily, so their code isn't in the bundle when the flag is off.
+> This supersedes the Fall 2026 "printed directory" draft (paper `#F7F4EC` + crimson `#7A1F2B` +
+> Newsreader serif), which was never implemented. The shipped site is a **green app** on a near-white
+> canvas. A later brief proposed navy/gold; that was declined — green stays. If you change the palette,
+> change it in `src/index.css` (the CSS variables) and update this file in the same commit.
 
 ---
 
-## 2. Design tokens
+## 1. Design tokens
 
-### CSS variables (`src/index.css`)
+### Color (`src/index.css` `:root` → `tailwind.config.cjs`)
 
-```css
-:root {
-  /* color */
-  --paper:          #F7F4EC;
-  --surface:        #FBF9F4;
-  --ink:            #1A1A1A;
-  --muted:          #5C5A55;
-  --rule:           #D9D4C7;
-  --accent:         #7A1F2B;
-  --accent-hover:   #5E1620;
-  --status-yes:     #2F5D3A;
-  --status-unknown: #8A6A1F;
-  --status-no:      #5C5A55;
+| CSS variable | Value | Tailwind token | Use |
+|---|---|---|---|
+| `--app-bg` | `#F6F7F5` | `canvas` | Page background |
+| `--app-surface` | `#FFFFFF` | `card` | Cards, sheets, inputs |
+| `--app-text` | `#14181F` | `fg` | Body + headings (~16:1 on canvas) |
+| `--app-text-2` | `#5B6470` | `fg-2` | Secondary text (~5.6:1, AA) |
+| `--app-border` | `#E3E6E8` | `line` | Hairline dividers, borders |
+| `--app-brand` | `#1F5C45` | `brand` | Links, primary buttons, active state (~7.8:1 white-on-brand) |
+| `--app-brand-hover` | `#174A37` | `brand-hover` | Hover for brand fills |
+| `--app-brand-tint` | `#E7F0EC` | `brand-tint` | Selected rows, badges, `::selection` |
 
-  /* type */
-  --font-serif: 'Newsreader', Georgia, serif;
-  --font-sans:  'IBM Plex Sans', system-ui, sans-serif;
-  --font-mono:  'IBM Plex Mono', ui-monospace, monospace;
-  --text-xs: 13px;  --text-sm: 15px;  --text-base: 17px;
-  --text-lg: 21px;  --text-xl: 28px;  --text-2xl: 40px;
-  --leading: 1.55;
-  --tracking-caps: 0.06em;
+**Status colors** carry a base shade (dots/borders), a `-text` shade tuned to meet AA on the tint, and a
+`-bg` tint. Status marks always pair color with a **word** — never color alone.
 
-  /* space */
-  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px;
-  --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
-  --content-max: 1120px;
+| Status | base | `-text` | `-bg` | Token prefix |
+|---|---|---|---|---|
+| Open | `#1F7A4D` | `#1A6B43` | `#E9F3EE` | `st-open*` |
+| Soon | `#B7791F` | `#8A5A12` | `#FBF1E2` | `st-soon*` |
+| Closed | `#8A9099` | `#646B73` | `#EFF1F3` | `st-closed*` |
+| Unknown | `#5B6470` | — | `#EFF1F3` | `st-unknown*` |
 
-  /* shape + motion */
-  --radius: 2px;            /* 0–3px only */
-  --hairline: 1px solid var(--rule);
-  --ease: cubic-bezier(.2,0,0,1);
-  --dur: 140ms;
-}
-```
+### Type
 
-Contrast checks (on `--paper` #F7F4EC):
-ink 15.8:1 · muted 6.3:1 · accent 9.3:1 · status-yes 7.0:1 · status-unknown 4.6:1 (passes AA) · status-no 6.3:1. White on accent: 10.2:1. `--rule` is 1.3:1, which is fine for decorative dividers but too low for input borders, so form fields use `--muted` borders (6.3:1, above the 3:1 non-text minimum).
+- **Hanken Grotesk** — everything (`font-sans`, `font-app`; both map to it).
+- **JetBrains Mono** — dates, counts, windows (`font-data`, `font-mono`); `.data` sets `tabular-nums`.
+- **Newsreader** — document previews only (resumes, letters, templates), via `.doc-sheet` and `font-doc`.
 
-### Tailwind theme (`tailwind.config.cjs`)
+Scale (size / line-height), tokens `t12`–`t32`: 12/16 · 14/20 · 16/24 · 20/28 · 24/30 · 32/38. Use only
+these steps.
 
-Colors are mapped to the variables (`paper`, `surface`, `ink`, `muted`, `rule`, `accent`, `status-*`). `fontFamily` becomes serif/sans/mono as above. `fontSize` uses only the six scale steps. `borderRadius` is limited to `none`, `DEFAULT` (2px) and `sm` (3px), and `full` is removed. `boxShadow` is limited to `none` and `drawer`. `spacing` stays at Tailwind defaults, which already match the 4/8/12/16/24/32/48/64 scale. The final sweep greps for anything off-scale.
+### Shape, elevation, space, motion
 
-### Fonts
-
-Google Fonts: Newsreader (opsz, 400/600, plus 400 italic), IBM Plex Sans (400/500) and IBM Plex Mono (400/500). These replace EB Garamond, Cormorant and DM Mono. Mono text uses `font-variant-numeric: tabular-nums`.
+- **Radius:** `none`, `DEFAULT`/`app` = 6px, `pill` = 999px (badges/avatars only).
+- **Shadow:** `none`, and `pop` (`0 8px 28px …`) — the single elevation, for sheets/popovers.
+- **Max width:** `max-app` = 1280px. Outer gutters `px-4` (mobile) / `px-6` (desktop).
+- **Motion:** default 150ms `cubic-bezier(.2,0,0,1)`. `prefers-reduced-motion` zeroes all
+  transition/animation durations (base layer in `index.css`).
+- **Focus:** `2px solid var(--app-brand)` with 2px offset on every focusable element (`:focus-visible`).
 
 ---
 
-## 3. Short spec
+## 2. Layout & components
 
-**Voice of the page.** It should read like a printed directory: a masthead, a thin rule, then the data. Use serif type for names and headings, sans for UI, and mono for anything countable (counts, dates, windows). Labels use small caps (`font-variant-caps: all-small-caps; letter-spacing: var(--tracking-caps)`), and the accent appears only on links, the primary button and active filters.
+**Voice.** Calm, credible career tool for law students and new grads — not a guru funnel. Left-aligned
+content, hairline rules over cards/shadows, the green accent reserved for links, the primary button and
+active filters.
 
-**Layout.** Content is left-aligned, with a max width of 1120px and outer gutters of 24px (mobile) or 48px (desktop). Sections are divided by hairline rules, never by cards or shadows.
+**Shell** (`src/App.jsx`): `FoundingBanner` → `AppNav` → routed page → `Footer`, wrapped in
+`SessionProvider` / `AccessProvider` / `MyListProvider`. A "Skip to content" link targets `#main`.
 
-**Primitives.** Each one is built once and reused everywhere.
-- `Rule`: a 1px divider. One variant has a centered section label ("01 — Dallas").
-- `SmallCaps`: label text.
-- `StatusMark`: a 9px square plus a word ("■ Yes"). It always carries text and never relies on color alone.
-- `Tag`: a rectangular filter toggle with a 2px radius and a 1px rule border. When active it has an accent border and accent text, with an `aria-pressed` attribute.
-- `TextLink`: accent color, underline on hover. External links get "↗" and `rel="noopener"`.
-- `Button`: a primary variant (accent fill, white text) and a secondary variant (rule border, ink text). No pill shapes. Minimum height is 44px on mobile.
-- `Field`/`Select`: 1px `--muted` border, `--surface` fill and a sans-serif label in small caps above.
-- `Sheet`: a right-side panel on desktop (480px) and full-screen on mobile. This is the only element with a shadow. It traps focus and closes on Esc.
+**Primitives.**
+- `components/app/controls` — `Button` (primary = brand fill/white text; secondary = `line` border/`fg`
+  text; min 44px tall on mobile), fields, etc. Reuse these; don't hand-roll buttons.
+- `AppNav` / `Footer` — global chrome.
+- `components/explore/FirmDetail` — the live firm panel (opened from Explore and `/firms/:slug`).
+- Status marks: 9px square + word, built from the `st-*` tokens.
+- `Sheet`-style panels use the `pop` shadow and trap focus / close on Esc.
 
-**Interaction.** Focus is a `2px solid var(--accent)` outline with a 2px offset on every focusable element. Motion is limited to opacity and translate at 120–160ms, and `prefers-reduced-motion` turns it off entirely. framer-motion is removed from the public pages.
+**States.** Loading = hairline placeholder rows (no shimmer). Empty = a sentence + "Clear filters".
+Error = names what failed ("Couldn't load the firm list. Check your connection and reload.").
 
-**States.**
-- Loading: five rows of 1px rules at 44px intervals, with no animation.
-- Empty: "No firms match these filters." plus a "Clear filters" link.
-- Error: "Couldn't load the firm list. Check your connection and reload the page." It names what failed.
-
-**Mobile (375px).** There is no horizontal scroll. Each table row becomes a stacked entry, and filters move into a "Filter" button that opens a bottom sheet. On the landing page the form comes first.
-
-**Print.** The calendar and templates have a print stylesheet that hides the nav, footer and filters and prints ink on white.
+**Print.** `.no-print` hides nav/footer/filters; `data-print='doc'` isolates a `[data-printable]` sheet
+and prints ink on white. Used by the calendar, templates and document previews.
 
 ---
 
-## 4. Data-model gaps (UI needs these)
+## 3. Feature flags (`src/lib/flags.js`) — all off
 
-The brief needs fields the current `firms` table doesn't have:
+Pre-pivot features, lazy-loaded so their code stays out of the public bundle while off:
 
-| UI needs | Today | Proposal |
-|---|---|---|
-| Hires 1Ls: Yes / Unknown / No | `has_1l_program boolean default false`, so "false" mixes "no" with "we don't know" | Add `hires_1l text check (in 'yes','unknown','no') default 'unknown'`. Backfill true→yes, false→unknown |
-| Firm type (boutique / mid-size / plaintiff / regional / government) | Not stored | Add `firm_type text` |
-| Practice focus | `practice_areas text[]` | Show the first two entries, or "—" |
-| Size | `size text` (131 of 584 filled) | Use as-is, or "—" |
-| Last verified + source | `last_scraped_at` only | Add `last_verified_at date`, `source text` |
-| Email signups | No table | Add a `signups` table (name, email, school, class_year, target_market, target_firm_type, created_at) with an insert-only RLS policy for anon users |
+| Flag | Covers |
+|---|---|
+| `accounts` | Login, signup, onboarding, settings, profile form |
+| `tracker` | Application kanban (Dashboard, `Kanban*`) |
+| `aiDocs` | AI briefs + document generation (server-side via `api/ai.js`) |
+| `paid` | The legacy `$20` pricing / upgrade prompts |
 
-Data coverage today (`scripts/output/firms.json`): 584 firms. 75 are marked 1L = yes, 11 have window dates, and 45 have apply links. Austin has 4 firms. Most Dallas and Houston entries are large regional firms rather than boutiques. The design will hold up with sparse data, but the table will show mostly "Unknown" and "—" until the data is filled in.
+The self-serve **Pro** tier (`/pro`, `$4.99/mo`, Stripe via `api/billing.js`) is a *separate* product that
+is **not** flag-gated by the above; it sits beneath the coaching ladder (Sprint / Membership / Placement).
+
+**Legacy styling debt:** the old brown/gold inline palette (`#1a1710`/`#c4a55a` …) survives only in
+flag-gated or orphaned files (`pages/FirmDetail.jsx` and its `DocumentGenerator`/`LoadingSkeleton`,
+the `Kanban*` components, `ProfileForm`, legacy `Login`/`Signup`). None render on the live site. They
+should be converted to the tokens above (or deleted, for the orphaned `pages/FirmDetail.jsx`) before any
+flag is turned back on.
+
+---
+
+## 4. Data model (as migrated)
+
+Relevant Supabase migrations (`supabase/migrations/`):
+
+- **007 — signups + "Hires for".** `signups` table (one row per marketing-form submission: `kind` ∈
+  subscribe/workshop/placement, email, name, class_year, role_sought, UTM, `details jsonb`, `ip_hash`),
+  RLS on (API-only read/write). Adds `hires_for text[]` to `firms` and `offices`, and `roles text[]` to
+  `listings`. Values: `1l-summer`, `2l-summer`, `post-grad`, `entry-lateral`; empty array = unknown.
+  `hires_1l` (`yes`/`unknown`/`no`) is kept; `hires_for` is the broader field the map filters on.
+- **009 — entry-level postings.** Adds `associate` to the allowed `listings.posting_type` values (new-grad
+  / 0–2yr roles).
+- **010 — gated private fields (applied; live).** `anon` can read only public firm columns
+  (`id, name, slug, state, city, size, practice_areas, firm_type, last_verified_at, source`) and minimal
+  office columns; `listings` are fully gated. Everything else comes from `GET /api/catalog/private` for
+  unlocked or signed-in visitors. Signed-in students keep full read access.
+
+So the data layer for the map's "Hires for" field, stage filter and gated fields already exists; the
+remaining work is frontend + the `/api/catalog/private` surface.
