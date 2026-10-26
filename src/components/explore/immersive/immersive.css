@@ -1,0 +1,75 @@
+/* Immersive /explore overlays — a themed case-file drawer over the 3D docket. Judiciary tokens. */
+.imm-drawer {
+  position: absolute; top: 0; right: 0; height: 100%; width: min(94vw, 420px); z-index: 20;
+  background: #f4f1ea; color: #241a12; border-left: 3px solid #b4904e;
+  display: flex; flex-direction: column; box-shadow: -18px 0 50px rgba(8,12,22,0.4);
+  animation: imm-slide-x 300ms cubic-bezier(0.22,1,0.36,1);
+}
+@keyframes imm-slide-x { from { transform: translateX(22px); opacity: 0; } }
+.imm-drawer__bar { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1rem; border-bottom: 1px solid rgba(180,144,78,0.35); background: #0b1120; }
+.imm-drawer__back { font-family: 'EB Garamond', Georgia, serif; font-variant: small-caps; letter-spacing: 0.06em; font-size: 0.95rem; color: #0b1120; background: #57d29a; border: 0; padding: 0.4rem 0.85rem; border-radius: 2px; cursor: pointer; }
+.imm-drawer__back:hover { background: #83e0b0; }
+.imm-drawer__title { font-family: 'Cinzel', Georgia, serif; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.03em; color: #f4f1ea; }
+.imm-drawer__count { margin-left: auto; font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.8rem; color: #8fe8bb; }
+.imm-drawer__x { display: inline-flex; height: 32px; width: 32px; align-items: center; justify-content: center; color: rgba(244,241,234,0.7); background: none; border: 0; cursor: pointer; margin-left: auto; }
+.imm-drawer__x:hover { color: #f4f1ea; }
+.imm-drawer__body { flex: 1; overflow-y: auto; padding: 1rem; }
+@media (max-width: 640px) {
+  .imm-drawer { top: auto; bottom: 0; right: 0; left: 0; width: 100%; height: 72%; border-left: 0; border-top: 3px solid #b4904e; box-shadow: 0 -18px 50px rgba(8,12,22,0.4); animation: imm-slide-y 300ms cubic-bezier(0.22,1,0.36,1); }
+}
+@keyframes imm-slide-y { from { transform: translateY(22px); opacity: 0; } }
+
+/* ── Case list ── */
+.cl { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+.cl__item { position: relative; animation: imm-card 320ms cubic-bezier(0.22,1,0.36,1) backwards; animation-delay: calc(var(--i, 0) * 28ms); }
+@keyframes imm-card { from { opacity: 0; transform: translateY(10px); } }
+.cl__card { display: grid; gap: 0.2rem; width: 100%; text-align: left; background: #fbf8f1; border: 0; border-top: 2px solid #b4904e; padding: 0.7rem 0.85rem; cursor: pointer; transition: background 160ms ease, transform 160ms ease; }
+.cl__card:hover { background: #f0ebdf; transform: translateX(-2px); }
+.cl__card:focus-visible { outline: 2px solid #1f5c45; outline-offset: 1px; }
+.cl__ex { color: #8c6f3c; font-family: 'EB Garamond', Georgia, serif; font-size: 0.72rem; letter-spacing: 0.1em; }
+.cl__name { font-family: 'Cinzel', Georgia, serif; text-transform: uppercase; font-size: 0.92rem; letter-spacing: 0.01em; color: #241a12; line-height: 1.1; }
+.cl__meta { font-family: 'EB Garamond', Georgia, serif; font-size: 0.92rem; color: #6a5b49; }
+.cl__row { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.15rem; }
+.cl__roles { font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.78rem; color: #1f5c45; }
+.cl__save { position: absolute; top: 0.6rem; right: 0.6rem; background: none; border: 0; color: #b4904e; font-size: 1.1rem; cursor: pointer; line-height: 1; }
+.cl__empty { font-family: 'EB Garamond', Georgia, serif; font-style: italic; color: #6a5b49; padding: 1rem 0; }
+
+/* ── Case file ── */
+.cf { font-family: 'Hanken Grotesk', system-ui, sans-serif; }
+.cf__head { position: relative; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(180,144,78,0.3); }
+.cf__docket { color: #8c6f3c; font-family: 'EB Garamond', Georgia, serif; font-size: 0.78rem; letter-spacing: 0.12em; }
+.cf__name { font-family: 'Cinzel', Georgia, serif; text-transform: uppercase; font-size: clamp(1.2rem, 2.4vw, 1.6rem); letter-spacing: 0.01em; line-height: 1.05; margin: 0.1rem 0; }
+.cf__sub { font-family: 'EB Garamond', Georgia, serif; font-size: 1rem; color: #6a5b49; }
+.cf__status { margin-top: 0.4rem; }
+.cf__stamp { position: absolute; top: -0.2rem; right: -0.3rem; width: 7rem; color: #1f5c45; opacity: 0.9; transform: rotate(-12deg); animation: cf-stamp 520ms cubic-bezier(0.18,1.5,0.5,1); transform-origin: 70% 40%; }
+@keyframes cf-stamp { 0% { opacity: 0; transform: scale(1.7) rotate(-26deg); } 60% { opacity: 0.9; } 100% { opacity: 0.9; transform: scale(1) rotate(-12deg); } }
+@media (prefers-reduced-motion: reduce) { .cf__stamp { animation: none; } }
+.cf__actions { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.8rem 0; }
+.cf__btn { font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.85rem; font-weight: 500; color: #241a12; background: #ece6d8; border: 1px solid rgba(180,144,78,0.4); padding: 0.45rem 0.8rem; border-radius: 2px; cursor: pointer; text-decoration: none; min-height: 40px; display: inline-flex; align-items: center; }
+.cf__btn:hover { background: #e3dccb; }
+.cf__btn--primary { background: #1f5c45; color: #fff; border-color: #1f5c45; }
+.cf__btn--primary:hover { background: #174a37; }
+.cf__tabs { display: flex; gap: 0.3rem; margin: 0.6rem 0 0.9rem; border-bottom: 1px solid rgba(180,144,78,0.3); }
+.cf__tab { position: relative; background: none; border: 0; padding: 0.4rem 0.3rem 0.6rem; cursor: pointer; display: flex; flex-direction: column; gap: 0.05rem; font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.85rem; color: #6a5b49; }
+.cf__tab.is-on { color: #241a12; box-shadow: inset 0 -2px 0 #b4904e; }
+.cf__tab-ex { color: #8c6f3c; font-family: 'EB Garamond', Georgia, serif; font-size: 0.66rem; letter-spacing: 0.1em; }
+.cf__stats { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.cf-stat { background: #fbf8f1; border-top: 2px solid rgba(180,144,78,0.5); padding: 0.5rem 0.6rem; }
+.cf-stat--wide { grid-column: 1 / -1; }
+.cf-stat dt { font-size: 0.72rem; color: #8c6f3c; font-family: 'EB Garamond', Georgia, serif; letter-spacing: 0.04em; }
+.cf-stat dd { font-size: 0.9rem; color: #241a12; margin: 0.1rem 0 0; }
+.cf-stat a, .cf__careers a, .cf__office-right a, .cf__listing-links a { color: #1f5c45; text-decoration: underline; text-underline-offset: 2px; }
+.cf-np { color: #9a8c78; font-style: italic; }
+.cf__deadline { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; background: #fbf8f1; border-top: 2px solid #b4904e; padding: 0.5rem 0.7rem; margin-bottom: 0.6rem; font-family: 'EB Garamond', Georgia, serif; }
+.cf__offices, .cf__listings { list-style: none; margin: 0; padding: 0; }
+.cf__offices li, .cf__listings li { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(180,144,78,0.2); }
+.cf__office-city, .cf__listing-title { font-size: 0.9rem; font-weight: 500; }
+.cf__office-right, .cf__listing-links { display: flex; align-items: center; gap: 0.7rem; font-size: 0.85rem; }
+.cf__listing-main { display: flex; flex-direction: column; }
+.cf__listing-meta { font-size: 0.78rem; color: #6a5b49; }
+.cf__careers, .cf__report { display: inline-block; margin-top: 0.8rem; font-size: 0.85rem; }
+.cf__report { color: #8c6f3c; text-decoration: underline; }
+.cf__empty { padding: 0.8rem 0; }
+.cf__sealed .cf__stats { margin-bottom: 0.9rem; }
+.cf__seal { background: #0b1120; padding: 1rem; border-top: 3px solid #b4904e; }
+.cf__seal-ex { color: #b4904e; font-family: 'EB Garamond', Georgia, serif; font-size: 0.78rem; letter-spacing: 0.12em; }

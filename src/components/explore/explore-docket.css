@@ -32,6 +32,12 @@
 .explore-docket__cta:hover { background: #83e0b0; }
 .explore-docket__skel { height: 70vh; background: #0b1120; }
 
+/* stage holds the map backdrop + the themed drawer */
+.explore-stage { position: relative; }
+.explore-docket__chips { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; padding: 0.5rem clamp(1rem, 4vw, 3rem); border-bottom: 1px solid rgba(180,144,78,0.22); }
+.explore-docket__clear { font-family: 'EB Garamond', Georgia, serif; font-variant: small-caps; letter-spacing: 0.05em; font-size: 0.9rem; color: rgba(244,241,234,0.7); background: none; border: 0; cursor: pointer; }
+.explore-docket__clear:hover { color: #f4f1ea; }
+
 /* Sealed case file (the unlock) */
 .explore-seal {
   position: relative; max-width: 42rem; margin: 0 auto; padding: clamp(1.5rem, 3vw, 2.5rem);

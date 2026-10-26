@@ -214,14 +214,20 @@ function Lamp() {
 }
 
 /* ── Public component ── */
-export default function PhaseMap({ height = '72vh', counts = null, onOpenDocket = null }) {
+export default function PhaseMap({ height = '72vh', counts = null, onOpenDocket = null, goTo = undefined, onState = null, onCityPick = null }) {
   const [states, setStates] = useState(null);
-  const [focus, setFocus] = useState(null);
+  const [internalFocus, setInternalFocus] = useState(null);
   const [city, setCity] = useState(null);
   const [hoverCity, setHoverCity] = useState(null);
   const [images, setImages] = useState({});
   const labelRefs = useRef([]);
   const openDocket = (abbr) => { if (onOpenDocket) onOpenDocket(abbr); else window.location.href = '/explore'; };
+
+  // When `goTo` is provided, Explore controls the focused state via URL (deep links, search → fly-to);
+  // focus is derived from the prop so there's no effect-driven state sync. Otherwise (Edition showcase)
+  // the map owns its own focus.
+  const controlled = goTo !== undefined;
+  const focus = controlled ? (goTo?.abbr ?? null) : internalFocus;
 
   // City pillar positions for the focused state — shared by the pillars and the label overlay.
   const pillars = useMemo(() => {
@@ -237,15 +243,15 @@ export default function PhaseMap({ height = '72vh', counts = null, onOpenDocket 
   // Per-state ring image URLs (populated once the imagery pipeline has emitted them).
   useEffect(() => { fetch('/art/states/index.json').then((r) => r.ok ? r.json() : {}).then(setImages).catch(() => {}); }, []);
 
-  const pick = (abbr) => { setCity(null); setHoverCity(null); setFocus(abbr); };
-  const back = () => { if (city) setCity(null); else { setFocus(null); setHoverCity(null); } };
+  const pick = (abbr) => { setCity(null); setHoverCity(null); if (controlled) onState?.(abbr); else setInternalFocus(abbr); };
+  const back = () => { if (city) { setCity(null); return; } setHoverCity(null); if (controlled) onState?.(null); else setInternalFocus(null); };
   // Dev-only hook so automated capture can drive the real animations deterministically.
   useEffect(() => {
     if (!import.meta.env.DEV) return;
     window.__pm = {
       pick,
-      openCity: (abbr, i = 0) => { setFocus(abbr); const d = STATE_CITIES[abbr]; if (d) setCity(d.cities[i] ?? d.cities[0]); },
-      back: () => { setCity(null); setFocus(null); },
+      openCity: (abbr, i = 0) => { if (controlled) { pick(abbr); } else { setInternalFocus(abbr); const d = STATE_CITIES[abbr]; if (d) setCity(d.cities[i] ?? d.cities[0]); } },
+      back,
     };
   });
   const center = useMemo(() => {
@@ -262,7 +268,7 @@ export default function PhaseMap({ height = '72vh', counts = null, onOpenDocket 
         <directionalLight position={[8, 16, 6]} intensity={1.1} color="#dfe6f2" />
         <Lamp />
         {states && <States states={states} focus={focus} onPick={pick} counts={counts} />}
-        {states && <Cities pillars={pillars} onCity={setCity} onHover={setHoverCity} hoverCity={hoverCity} />}
+        {states && <Cities pillars={pillars} onCity={onCityPick ? (c) => onCityPick({ name: c.name, abbr: focus }) : setCity} onHover={setHoverCity} hoverCity={hoverCity} />}
         {states && <ImageRing focus={focus} images={focus ? images[focus] : null} center={center} dim={Boolean(hoverCity)} />}
         {states && pillars.length > 0 && <CityLabels pillars={pillars} labelRefs={labelRefs} hoverCity={hoverCity} />}
         {states && <CameraRig focus={focus} states={states} />}
