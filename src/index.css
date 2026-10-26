@@ -106,6 +106,14 @@
   ::selection {
     background: var(--app-brand-tint);
   }
+  /* Judiciary: page titles are carved Cinzel inscription capitals site-wide. Scoped to h1 so the
+     monumental display face reads on every page's masthead; UI sub-headings keep the grotesk.
+     Opt out on a specific heading with `font-app`/`font-data`. */
+  h1:not(.font-app):not(.font-sans):not(.font-data):not(.font-mono):not(.font-doc):not(.data) {
+    font-family: 'Cinzel', 'Hanken Fallback', Georgia, serif;
+    letter-spacing: 0.01em;
+    font-weight: 600;
+  }
 }
 
 @layer components {

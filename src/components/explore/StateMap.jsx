@@ -10,7 +10,7 @@ const BINS = [
   { min: 5, color: '#5E9C7E', label: '5–9' },
   { min: 1, color: '#8FBFA5', label: '1–4' },
 ];
-const EMPTY = '#ECEEEC';
+const EMPTY = '#E6E0D2'; // limestone (unlit jurisdiction) — warm to match the marble ground
 const fill = (n) => (n ? BINS.find((b) => n >= b.min).color : EMPTY);
 
 const path = geoPath(); // the us-atlas "albers" file is pre-projected to a 975×610 frame
