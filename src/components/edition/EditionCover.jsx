@@ -25,9 +25,10 @@ export default function EditionCover({ chapters }) {
       {/* colour painting ground → etched line-art on push; starfield blooms behind */}
       <img
         className="ed-cover__plate ed-cover__plate--color"
-        src="/art/the-map/color-1600.webp"
-        srcSet="/art/the-map/color-1024.webp 1024w, /art/the-map/color-1600.webp 1600w"
-        sizes="100vw" alt="" aria-hidden="true" width={1600} height={2133} fetchPriority="high"
+        src="/art/the-map/color-1024.webp"
+        srcSet="/art/the-map/color-640.webp 640w, /art/the-map/color-1024.webp 1024w, /art/the-map/color-1600.webp 1600w"
+        /* the hero is a heavily-darkened full-bleed ground — a smaller source on phones is invisible and much faster (LCP) */
+        sizes="(max-width: 900px) 65vw, 100vw" alt="" aria-hidden="true" width={1024} height={1365} fetchPriority="high"
       />
       <img
         className="ed-cover__plate ed-cover__plate--line"
