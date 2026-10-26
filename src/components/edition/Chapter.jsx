@@ -1,20 +1,24 @@
 import ArtPlate from './ArtPlate';
 
 /**
- * One chapter: giant grotesk headline on the night ground, then the figure +
- * an editorial serif tagline (oversized swash initial) and body/CTA. Paper-tone
- * chapters lay the body on a cream panel bitten in with torn-paper edges; the
- * CTA/price reuse the real routes and prices from site.config via chapters.js.
+ * One section of the record: a portico-framed opening (brass register rule, the
+ * § mark and docket number, then a carved Cinzel title), the figure + an EB
+ * Garamond tagline with a dropped initial, and body/CTA. Paper-tone sections lay
+ * the body on a marble panel bitten in with torn-document edges; the CTA/price
+ * reuse the real routes and prices from site.config via chapters.js.
  *
- * `children` lets a chapter graft in a live app component (the state map, the
- * postcard) beneath the standard body.
+ * `children` lets a section graft in a live app component (the map, a postcard).
  */
 export default function Chapter({ chapter, eager = false, children }) {
   const paper = chapter.tone === 'paper';
   return (
     <section id={chapter.id} className="ed-chapter" aria-labelledby={`${chapter.id}-h`}>
       <header className="ed-chapter__head ed-reveal">
-        <div className="ed-chapter__num ed-roman">{chapter.kicker}</div>
+        <div className="ed-chapter__meta">
+          <span className="ed-chapter__sec ed-roman">{chapter.kicker}</span>
+          <span className="ed-chapter__rule" aria-hidden="true" />
+          <span className="ed-chapter__docket">{chapter.docket}</span>
+        </div>
         <h2 id={`${chapter.id}-h`} className="ed-display">{chapter.title}</h2>
       </header>
 

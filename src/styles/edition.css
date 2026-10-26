@@ -1,55 +1,53 @@
 /* ============================================================================
-   The Firmward Edition — editorial redesign (feat/editorial-redesign)
+   The Firmward Edition — judiciary / legal-scholar direction (feat/editorial-redesign)
    Scoped entirely under `.edition`; imported only by the lazy Edition route,
    so none of this touches the main site bundle or its CLS budget.
 
-   Patterns recreate the *techniques* of a classical magazine "editions" page:
-   construction-line intro, push-through to a night starfield, a sticky
-   Roman-numeral chapter index, giant grotesk headlines over editorial serif
-   taglines with swash initials, line-art→colour plate reveals, and torn-paper
-   transitions into cream "paper" sections. No third-party artwork/brand/fonts.
+   Architecture-as-layout: symmetrical, axial, monumental; portico-framed section
+   openings; legal-document motifs (§ section marks, case captions, docket numbers,
+   footnotes, small caps, EXHIBIT tabs, an ink ADMITTED/HIRED stamp). Palette of
+   marble / walnut / brass / deep navy, with Firmward green as a banker's-lamp glow.
+   Carved Cinzel inscription capitals for display, EB Garamond for reading, a clean
+   grotesk for UI. Public-domain artwork only; free fonts only.
    ============================================================================ */
 
 /* ── Fonts (self-hosted variable woff2; fetched only when this route renders) ── */
 @font-face {
-  font-family: 'Space Grotesk';
-  font-style: normal;
-  font-weight: 300 700;
-  font-display: swap;
-  src: url('/fonts/space-grotesk.woff2') format('woff2-variations');
+  font-family: 'Cinzel';            /* carved inscription capitals — display */
+  font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url('/fonts/cinzel.woff2') format('woff2-variations');
 }
 @font-face {
-  font-family: 'Cormorant';
-  font-style: normal;
-  font-weight: 300 700;
-  font-display: swap;
-  src: url('/fonts/cormorant.woff2') format('woff2-variations');
+  font-family: 'EB Garamond';       /* reading serif — taglines, prose, captions */
+  font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url('/fonts/eb-garamond.woff2') format('woff2-variations');
 }
 @font-face {
-  font-family: 'Cormorant';
-  font-style: italic;
-  font-weight: 300 700;
-  font-display: swap;
-  src: url('/fonts/cormorant-italic.woff2') format('woff2-variations');
+  font-family: 'EB Garamond';
+  font-style: italic; font-weight: 400 700; font-display: swap;
+  src: url('/fonts/eb-garamond-italic.woff2') format('woff2-variations');
 }
 
-/* ── Palette ── */
+/* ── Palette: marble / walnut / brass / deep navy; green = banker's-lamp glow ── */
 .edition {
-  --ed-night: #0B0D10;        /* near-black ground */
-  --ed-night-2: #070809;      /* deeper vignette */
-  --ed-ink: #1A1613;          /* ink on paper */
-  --ed-ink-2: #5A5147;        /* muted ink */
-  --ed-paper: #F3ECDD;        /* cream paper */
-  --ed-paper-2: #E9DFC9;      /* deeper paper tone */
-  --ed-cream: #EDE4D1;
-  --ed-gold: #C9A66B;         /* golden-ratio construction lines, swash initials */
-  --ed-gold-soft: #9C8352;
-  --ed-green: #1F5C45;        /* brand accent (on paper) */
-  --ed-green-bright: #6FD39E; /* accessible accent on night (AA large) */
-  --ed-star: rgba(255, 253, 246, 0.9);
+  --ed-night: #111A2B;        /* deep-navy courtroom/library ground */
+  --ed-night-2: #0B1120;      /* deeper navy vignette */
+  --ed-ink: #241A12;          /* walnut ink on marble */
+  --ed-ink-2: #6B5A47;        /* muted walnut */
+  --ed-paper: #F4F1EA;        /* marble / limestone document */
+  --ed-paper-2: #E7E0D1;      /* limestone shadow */
+  --ed-cream: #ECE6D8;        /* vellum */
+  --ed-gold: #B4904E;         /* brass */
+  --ed-gold-soft: #8C6F3C;    /* dim brass */
+  --ed-green: #1F5C45;        /* Firmward brand (on marble) */
+  --ed-green-bright: #57D29A; /* banker's-lamp glow on navy (AA large) */
+  --ed-lamp: rgba(87, 210, 154, 0.5); /* lamp bloom */
+  --ed-navy-line: rgba(180, 144, 78, 0.4); /* brass rule on navy */
+  --ed-star: rgba(226, 232, 245, 0.85);
 
-  --ed-sans: 'Space Grotesk', 'Hanken Grotesk', system-ui, sans-serif;
-  --ed-serif: 'Cormorant', 'Newsreader', Georgia, serif;
+  --ed-display: 'Cinzel', 'Hanken Fallback', Georgia, serif;
+  --ed-serif: 'EB Garamond', 'Newsreader', Georgia, serif;
+  --ed-sans: 'Hanken Grotesk', system-ui, sans-serif;
 
   color: var(--ed-paper);
   background: var(--ed-night);
@@ -62,20 +60,20 @@
 .edition-root { background: var(--ed-night); }
 
 /* ── Typographic primitives ── */
-.ed-kicker {
-  font-family: var(--ed-sans);
+.ed-kicker { /* legal docket mark: "§ I" / "No. 24-1138" — small caps, brass */
+  font-family: var(--ed-serif);
   font-weight: 500;
-  font-size: clamp(0.82rem, 1.4vw, 0.9rem);
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
+  font-size: clamp(0.92rem, 1.5vw, 1.1rem);
+  font-variant: small-caps; letter-spacing: 0.14em;
   color: var(--ed-gold);
 }
-.ed-display {
-  font-family: var(--ed-sans);
-  font-weight: 500;
-  line-height: 0.86;
-  letter-spacing: -0.035em;
-  font-size: clamp(2.9rem, 13vw, 11rem);
+.ed-display { /* carved Cinzel inscription capitals — monumental, axial */
+  font-family: var(--ed-display);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  font-size: clamp(2.2rem, 8.6vw, 7.5rem);
   text-wrap: balance;
   overflow-wrap: break-word; /* never push the chapter column wider than the viewport */
 }
@@ -83,29 +81,30 @@
   font-family: var(--ed-serif);
   font-style: italic;
   font-weight: 400;
-  line-height: 1.2;
-  font-size: clamp(1.6rem, 3.8vw, 2.9rem);
-  max-width: 22ch;
+  line-height: 1.26;
+  font-size: clamp(1.5rem, 3.4vw, 2.6rem);
+  max-width: 24ch;
 }
-/* oversized swash initial on the tagline */
+/* oversized dropped initial on the tagline (illuminated-manuscript / brief style) */
 .ed-tagline .ed-swash {
   font-family: var(--ed-serif);
   font-style: italic;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--ed-gold);
   font-size: 3.1em;
-  line-height: 0.62;
+  line-height: 0.66;
   float: left;
-  padding: 0.06em 0.12em 0 0;
+  padding: 0.05em 0.12em 0 0;
 }
 .ed-body {
-  font-family: var(--ed-sans);
+  font-family: var(--ed-serif);
   font-weight: 400;
-  font-size: clamp(1rem, 1.4vw, 1.125rem);
-  line-height: 1.65;
-  max-width: 62ch;
+  font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+  line-height: 1.6;
+  max-width: 60ch;
 }
 .ed-roman { font-feature-settings: 'tnum' 1; }
+.ed-smallcaps { font-variant: small-caps; letter-spacing: 0.06em; }
 
 /* ── Minimal dark takeover nav ── */
 .ed-nav {
@@ -115,7 +114,7 @@
   color: var(--ed-paper);
   transition: background 400ms ease, padding 300ms ease;
 }
-.ed-nav.is-scrolled { background: linear-gradient(var(--ed-night-2), rgba(7, 8, 9, 0)); /* taste-skill-ignore: nav scrim */ padding-top: 0.8rem; padding-bottom: 0.8rem; }
+.ed-nav.is-scrolled { background: linear-gradient(var(--ed-night-2), rgba(8, 12, 22, 0)); /* taste-skill-ignore: nav scrim */ padding-top: 0.8rem; padding-bottom: 0.8rem; }
 .ed-nav__mark {
   font-family: var(--ed-serif); font-weight: 600; font-size: 1.3rem; letter-spacing: 0.01em;
   color: var(--ed-paper); text-decoration: none;
@@ -166,7 +165,7 @@
   position: absolute; inset: 0; pointer-events: none;
   opacity: calc(1 - var(--push, 0) * 0.7);
   background:
-    radial-gradient(120% 90% at 38% 44%, rgba(7, 8, 9, 0.82) 0%, rgba(7, 8, 9, 0.5) 38%, rgba(7, 8, 9, 0.72) 100%); /* taste-skill-ignore: scrim over the cover painting */
+    radial-gradient(120% 90% at 38% 44%, rgba(8, 12, 22, 0.85) 0%, rgba(8, 12, 22, 0.52) 38%, rgba(8, 12, 22, 0.74) 100%); /* taste-skill-ignore: scrim over the cover painting */
 }
 .ed-cover__stage {
   position: absolute; inset: 0; display: grid; place-items: center; z-index: 2;
@@ -185,34 +184,47 @@
 @keyframes ed-draw { to { stroke-dashoffset: 0; } }
 
 .ed-cover__panel {
-  position: relative; z-index: 2; width: min(90vw, 460px);
-  padding: clamp(1.75rem, 3vw, 2.6rem);
-  background: rgba(7, 8, 11, 0.74);   /* opaque enough that the title reads over the painting */
+  position: relative; z-index: 2; width: min(92vw, 480px);
+  padding: clamp(1.9rem, 3vw, 2.8rem);
+  background: rgba(11, 17, 32, 0.82);   /* opaque enough that the title reads over the painting */
   color: var(--ed-paper);
-  text-align: left;
+  text-align: center;                   /* axial, symmetrical — monument caption */
+  border-top: 2px solid var(--ed-gold); border-bottom: 1px solid var(--ed-navy-line); /* taste-skill-ignore: brass register rules frame the caption, a legal-document device */
   /* paints immediately (readable on the first frame); only the arrival is animated and settles by ~1s */
   animation: ed-fade-up 0.9s ease both; animation-delay: 0.15s;
 }
+.ed-cover__caption {
+  font-family: var(--ed-serif); font-style: italic; font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  color: rgba(244, 241, 234, 0.72); line-height: 1.4; margin-bottom: 0.9rem;
+}
+.ed-cover__caption span { font-style: normal; }
+.ed-cover__docket {
+  display: block; margin-top: 0.3rem; font-variant: small-caps; letter-spacing: 0.14em;
+  font-size: 0.82rem; color: var(--ed-gold);
+}
 .ed-cover__title {
-  font-family: var(--ed-serif); font-weight: 500; line-height: 1.0;
-  font-size: clamp(2.4rem, 5vw, 3.6rem); letter-spacing: 0.005em;
+  font-family: var(--ed-display); font-weight: 600; line-height: 1.02; text-transform: uppercase;
+  font-size: clamp(2rem, 4.4vw, 3.2rem); letter-spacing: 0.02em;
 }
-.ed-cover__title em { font-style: italic; color: var(--ed-gold); }
+.ed-cover__title em { font-style: normal; color: var(--ed-gold); }
 .ed-cover__desc {
-  font-family: var(--ed-sans); font-size: clamp(1.125rem, 1.5vw, 1.25rem); line-height: 1.5;
-  color: rgba(243, 236, 221, 0.88); margin-top: 0.9rem; max-width: 32ch;
+  font-family: var(--ed-serif); font-size: clamp(1.125rem, 1.5vw, 1.3rem); line-height: 1.5;
+  color: rgba(244, 241, 234, 0.9); margin: 0.9rem auto 0; max-width: 34ch;
 }
-.ed-cover__index { list-style: none; margin: 1.4rem 0 1.5rem; padding: 0; display: grid; gap: 0.4rem; }
-.ed-cover__index li { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
-.ed-cover__index-label { font-family: var(--ed-sans); font-size: 0.95rem; color: rgba(243, 236, 221, 0.9); }
-.ed-cover__index-num { font-family: var(--ed-serif); font-style: italic; color: var(--ed-gold); font-size: 0.95rem; }
-.ed-cover__cta { align-self: flex-start; }
+.ed-cover__index {
+  list-style: none; margin: 1.5rem 0; padding: 1.2rem 0 0; border-top: 1px solid var(--ed-navy-line); /* taste-skill-ignore: brass register rule, legal-document device */
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1.4rem; text-align: left;
+}
+.ed-cover__index li { display: flex; align-items: baseline; gap: 0.55rem; }
+.ed-cover__index-sec { font-family: var(--ed-serif); font-variant: small-caps; color: var(--ed-gold); font-size: 0.88rem; letter-spacing: 0.06em; white-space: nowrap; }
+.ed-cover__index-label { font-family: var(--ed-sans); font-size: 0.92rem; color: rgba(244, 241, 234, 0.9); }
+.ed-cover__cta { align-self: center; margin-top: 0.3rem; }
 
 .ed-cover__scroll {
   position: absolute; bottom: 2.2rem; left: 50%; transform: translateX(-50%); z-index: 3;
   opacity: calc(1 - var(--push, 0) * 6); /* fades the instant the push begins */
-  font-family: var(--ed-sans); font-size: 0.82rem; letter-spacing: 0.26em; text-transform: uppercase;
-  color: rgba(243, 236, 221, 0.62);
+  font-family: var(--ed-serif); font-style: italic; font-size: 1rem; letter-spacing: 0.04em;
+  color: rgba(244, 241, 234, 0.7);
 }
 .ed-cover__scroll::after {
   content: ''; display: block; width: 1px; height: 36px; margin: 0.7rem auto 0;
@@ -290,7 +302,7 @@
   font-size: 0.95rem; letter-spacing: 0.01em; white-space: nowrap;
 }
 .ed-index__dots {
-  flex: 1; align-self: center; border-bottom: 1px dotted rgba(201, 166, 107, 0.3); /* taste-skill-ignore: dotted leaders are the editorial index device from the reference */
+  flex: 1; align-self: center; border-bottom: 1px dotted rgba(180, 144, 78, 0.3); /* taste-skill-ignore: dotted leaders are the editorial index device from the reference */
   margin: 0 0.1rem; min-width: 1.5rem; /* taste-skill-ignore: leader row, not a divider rule */
 }
 .ed-index__item:hover { color: rgba(243, 236, 221, 0.75); }
@@ -299,13 +311,16 @@
 .ed-index__item[aria-current='true'] .ed-index__num { color: var(--ed-green-bright); }
 .ed-index__item[aria-current='true'] .ed-index__label { font-weight: 500; }
 
-/* ── Chapter ── */
+/* ── Section opening (portico-framed, axial) ── */
 .ed-chapter { position: relative; scroll-margin-top: 0; }
 .ed-chapter__head { padding: clamp(4rem, 12vh, 9rem) 0 clamp(2rem, 6vh, 4rem); }
-.ed-chapter__num {
-  font-family: var(--ed-serif); font-style: italic;
-  font-size: clamp(1rem, 2.2vw, 1.4rem); color: var(--ed-gold); letter-spacing: 0.05em;
+.ed-chapter__meta { display: flex; align-items: center; gap: 1rem; margin-bottom: clamp(0.75rem, 2vh, 1.4rem); }
+.ed-chapter__sec {
+  font-family: var(--ed-serif); font-variant: small-caps; letter-spacing: 0.1em;
+  font-size: clamp(1rem, 1.8vw, 1.3rem); color: var(--ed-gold);
 }
+.ed-chapter__rule { flex: 1; height: 1px; background: var(--ed-navy-line); /* taste-skill-ignore: brass register rule — legal-document section opening */ max-width: 16rem; }
+.ed-chapter__docket { font-family: var(--ed-serif); font-variant: small-caps; letter-spacing: 0.12em; font-size: 0.85rem; color: var(--ed-gold-soft); }
 
 /* art plate: line-art crossfades to colour as it scrolls through view, with a gentle scroll-linked
    parallax (the images are scaled up a touch so the translate never reveals an edge). */
@@ -321,9 +336,9 @@
   opacity: var(--reveal, 0);
   transform: scale(calc(1.14 - var(--reveal, 0) * 0.04)) translateY(calc(var(--par, 0) * 4.5%));
 }
-.ed-plate__frame { position: absolute; inset: 0; border: 1px solid rgba(201, 166, 107, 0.35); pointer-events: none; }
+.ed-plate__frame { position: absolute; inset: 0; border: 1px solid rgba(180, 144, 78, 0.35); pointer-events: none; }
 .ed-plate__frame::after {
-  content: ''; position: absolute; inset: 7px; border: 1px solid rgba(201, 166, 107, 0.18);
+  content: ''; position: absolute; inset: 7px; border: 1px solid rgba(180, 144, 78, 0.18);
 }
 
 /* ── Motion: giant-headline clip reveal + control press feedback ── */
