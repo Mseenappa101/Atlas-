@@ -7,6 +7,7 @@ import ChapterIndex from '../components/edition/ChapterIndex';
 import Chapter from '../components/edition/Chapter';
 import EditionPostcards from '../components/edition/EditionPostcards';
 import ExhibitCards from '../components/edition/ExhibitCards';
+import ImmersiveMap from '../components/edition/ImmersiveMap';
 import { useScrollReveals } from '../components/edition/hooks';
 
 /**
@@ -82,6 +83,7 @@ export default function Edition() {
             <div>
               {CHAPTERS.map((c, i) => (
                 <Chapter key={c.id} chapter={c} eager={i === 0}>
+                  {c.id === 'ch-map' && <ImmersiveMap />}
                   {c.id === 'ch-where' && <EditionPostcards />}
                 </Chapter>
               ))}

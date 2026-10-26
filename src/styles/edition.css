@@ -425,6 +425,60 @@
 .ed-coda__note { font-family: var(--ed-sans); font-size: 0.9rem; line-height: 1.6; color: var(--ed-gold-soft); max-width: 52ch; }
 .ed-coda .ed-cta { margin-top: 0.5rem; }
 
+/* ── Immersive jurisdiction map (CSS-3D "war-room docket table") ── */
+.ed-map3d-wrap { margin-top: clamp(2rem, 5vh, 3.5rem); }
+.ed-map3d-stage {
+  --mx: 50%; --my: 42%; --px: 0; --py: 0;
+  position: relative; width: 100%; aspect-ratio: 975 / 540;
+  perspective: 1400px; perspective-origin: 50% 24%;
+}
+.ed-map3d {
+  position: absolute; inset: 0; transform-style: preserve-3d;
+  transform: rotateX(49deg) rotateY(calc(var(--px) * 7deg)) rotateX(calc(var(--py) * -5deg));
+  transition: transform 300ms var(--ed-ease, cubic-bezier(0.22,1,0.36,1));
+  transform-origin: 50% 46%;
+}
+.ed-map3d__slab, .ed-map3d__top { position: absolute; inset: 0; width: 100%; height: auto; overflow: visible; }
+.ed-map3d__slab { transform: translateZ(-26px); filter: brightness(0.35) saturate(0.4); }
+.ed-map3d__slab path { fill: #0A0F1A; stroke: #0A0F1A; stroke-width: 3; }
+.ed-map3d__top path { stroke: rgba(180, 144, 78, 0.28); stroke-width: 0.8; vector-effect: non-scaling-stroke; }
+.ed-map3d__state { transition: filter 220ms ease; }
+.ed-map3d__state.is-lit { cursor: pointer; }
+.ed-map3d__state.is-lit:hover, .ed-map3d__state.is-hover, .ed-map3d__state.is-lit:focus-visible {
+  filter: brightness(1.5) drop-shadow(0 0 7px var(--ed-lamp));
+  stroke: var(--ed-green-bright); outline: none;
+}
+.ed-map3d__state.is-lit:focus-visible { stroke: var(--ed-green-bright); stroke-width: 2; }
+
+/* banker's-lamp pool of light tracking the cursor */
+.ed-map3d__lamp {
+  position: absolute; inset: 0; pointer-events: none; z-index: 3; mix-blend-mode: screen;
+  background: radial-gradient(22% 30% at var(--mx) var(--my), var(--ed-lamp) 0%, rgba(87, 210, 154, 0.12) 45%, transparent 72%); /* taste-skill-ignore: the banker's-lamp glow is this map's signature light */
+  opacity: 0.85;
+}
+/* brass table frame */
+.ed-map3d__frame { position: absolute; inset: -2% -1%; pointer-events: none; z-index: 4; border: 2px solid var(--ed-navy-line); /* taste-skill-ignore: brass frame edges the docket table */ }
+
+/* case file standing up off the tilted map over the hovered jurisdiction */
+.ed-map3d__file {
+  position: absolute; z-index: 5; width: max-content; max-width: 14rem;
+  transform: translate(-50%, -100%) rotateX(-49deg) translateZ(34px) translateY(-6px);
+  transform-origin: 50% 100%;
+  background: var(--ed-paper); color: var(--ed-ink);
+  border-top: 3px solid var(--ed-gold); padding: 0.55rem 0.8rem 0.6rem;
+  display: grid; gap: 0.1rem; text-align: left;
+  animation: ed-file-rise 220ms var(--ed-ease, cubic-bezier(0.22,1,0.36,1));
+}
+.ed-map3d__file-no { font-family: var(--ed-serif); font-variant: small-caps; letter-spacing: 0.1em; font-size: 0.72rem; color: var(--ed-gold-soft); }
+.ed-map3d__file-name { font-family: var(--ed-display); text-transform: uppercase; font-size: 0.92rem; letter-spacing: 0.01em; line-height: 1.05; }
+.ed-map3d__file-ct { font-family: var(--ed-sans); font-size: 0.8rem; color: var(--ed-green); }
+@keyframes ed-file-rise { from { opacity: 0; transform: translate(-50%, -100%) rotateX(-49deg) translateZ(34px) translateY(6px); } }
+
+.ed-map3d__cap { margin-top: clamp(1.25rem, 3vh, 2rem); font-family: var(--ed-serif); font-style: italic; font-size: 1.05rem; color: rgba(244, 241, 234, 0.72); text-align: center; }
+.ed-map3d__cap a { color: var(--ed-green-bright); text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 680px) { .ed-map3d-stage { aspect-ratio: 975 / 650; perspective: 1000px; } }
+
 /* ── Exhibits (the offer ladder, entered as Exhibits A–C) ── */
 .ed-exhibits { padding-bottom: clamp(2rem, 6vh, 4rem); }
 .ed-exhibits__grid {
@@ -520,6 +574,11 @@
   .ed-display { clip-path: none !important; }
   .ed-exhibit__stamp { transition: opacity 120ms linear; } /* appear on hover without the thump */
   .ed-exhibit:hover .ed-stamp, .ed-exhibit:focus-within .ed-stamp { transform: rotate(-12deg); }
+  /* 3D map: flatten the tilt/parallax, keep it fully usable; the case file lies flat */
+  .ed-map3d { transform: rotateX(20deg) !important; transition: none; }
+  .ed-map3d__slab { transform: translateZ(-14px); }
+  .ed-map3d__file { transform: translate(-50%, -100%) rotateX(-20deg) translateZ(18px); animation: none; }
+  @keyframes ed-file-rise { from { opacity: 1; } }
   .ed-plate__line { opacity: 0; }                        /* show the finished colour plate outright */
   .ed-plate__color { opacity: 1; transform: none; }
   .ed-stars::before, .ed-stars::after { animation: none; }
