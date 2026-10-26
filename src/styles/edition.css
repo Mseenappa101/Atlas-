@@ -304,22 +304,32 @@
   font-size: clamp(1rem, 2.2vw, 1.4rem); color: var(--ed-gold); letter-spacing: 0.05em;
 }
 
-/* art plate: line-art crossfades to colour as it scrolls through view */
+/* art plate: line-art crossfades to colour as it scrolls through view, with a gentle scroll-linked
+   parallax (the images are scaled up a touch so the translate never reveals an edge). */
 .ed-plate { position: relative; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 2px; }
-.ed-plate__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ed-plate__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; will-change: transform; }
 .ed-plate__line {
   mix-blend-mode: screen;
   opacity: calc(1 - var(--reveal, 0));
   filter: contrast(1.1);
+  transform: scale(1.14) translateY(calc(var(--par, 0) * -2.5%));
 }
 .ed-plate__color {
   opacity: var(--reveal, 0);
-  transform: scale(calc(1.06 - var(--reveal, 0) * 0.06));
+  transform: scale(calc(1.14 - var(--reveal, 0) * 0.04)) translateY(calc(var(--par, 0) * 4.5%));
 }
 .ed-plate__frame { position: absolute; inset: 0; border: 1px solid rgba(201, 166, 107, 0.35); pointer-events: none; }
 .ed-plate__frame::after {
   content: ''; position: absolute; inset: 7px; border: 1px solid rgba(201, 166, 107, 0.18);
 }
+
+/* ── Motion: giant-headline clip reveal + control press feedback ── */
+.ed-display { clip-path: inset(-12% 0 102% 0); transition: clip-path 1.05s var(--ed-ease, cubic-bezier(0.22,1,0.36,1)) 0.08s; }
+.ed-reveal.is-in .ed-display { clip-path: inset(-12% 0 -12% 0); }
+.ed-cta:active { transform: translateY(0) scale(0.97); }
+.ed-nav__cta { transition: background 200ms ease, transform 160ms var(--ed-ease, cubic-bezier(0.22,1,0.36,1)); }
+.ed-nav__cta:active { transform: scale(0.96); }
+.ed-index__item:active { transform: translateX(1px); }
 
 /* ── Paper (cream) content sections ── */
 .ed-paper-section {
@@ -448,6 +458,7 @@
   .ed-cover__panel, .ed-cover__scroll { opacity: 1; }
   .ed-pin { opacity: 1 !important; }
   .ed-reveal { opacity: 1; transform: none; transition: none; }
+  .ed-display { clip-path: none !important; }
   .ed-plate__line { opacity: 0; }                        /* show the finished colour plate outright */
   .ed-plate__color { opacity: 1; transform: none; }
   .ed-stars::before, .ed-stars::after { animation: none; }

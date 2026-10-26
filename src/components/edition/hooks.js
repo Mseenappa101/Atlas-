@@ -56,11 +56,14 @@ export function useViewProgress() {
       raf = 0;
       const r = el.getBoundingClientRect();
       const vh = window.innerHeight || 1;
-      // 0 when the plate top is at 85% of viewport, 1 when it reaches 35%.
+      // --reveal: 0 when the plate top is at 85% of viewport, 1 when it reaches 35% (crossfade).
       const start = vh * 0.85;
       const end = vh * 0.35;
       const p = (start - r.top) / (start - end);
       el.style.setProperty('--reveal', String(Math.max(0, Math.min(1, p))));
+      // --par: continuous -1..1 as the plate centre travels the viewport (parallax depth).
+      const center = r.top + r.height / 2;
+      el.style.setProperty('--par', String(Math.max(-1, Math.min(1, (vh / 2 - center) / vh))));
     };
     const onScroll = () => {
       if (active && !raf) raf = requestAnimationFrame(update);
