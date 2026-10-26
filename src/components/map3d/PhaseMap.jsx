@@ -13,7 +13,7 @@ const prefersReduce = () =>
   typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
 /* ── State slabs: lift/sink/fade toward targets driven by `focus` ── */
-function States({ states, focus, onPick }) {
+function States({ states, focus, onPick, counts }) {
   const group = useRef();
   const meshes = useRef([]);
   useFrame((_, dt) => {
@@ -33,7 +33,7 @@ function States({ states, focus, onPick }) {
   return (
     <group ref={group}>
       {states.map((s, i) => {
-        const firms = STATE_FIRMS[s.abbr] ?? 0;
+        const firms = counts?.[s.abbr] ?? STATE_FIRMS[s.abbr] ?? 0;
         const lit = firms > 0;
         const color = lit ? NAVY.clone().lerp(LIT, Math.min(1, firms / 26)) : NAVY;
         return (
@@ -179,11 +179,12 @@ function Lamp() {
 }
 
 /* ── Public component ── */
-export default function PhaseMap({ height = '72vh' }) {
+export default function PhaseMap({ height = '72vh', counts = null, onOpenDocket = null }) {
   const [states, setStates] = useState(null);
   const [focus, setFocus] = useState(null);
   const [city, setCity] = useState(null);
   const [images, setImages] = useState({});
+  const openDocket = (abbr) => { if (onOpenDocket) onOpenDocket(abbr); else window.location.href = '/explore'; };
 
   useEffect(() => { let live = true; buildStates().then((s) => live && setStates(s)); return () => { live = false; }; }, []);
   // Per-state ring image URLs (populated once the imagery pipeline has emitted them).
@@ -204,7 +205,7 @@ export default function PhaseMap({ height = '72vh' }) {
         <ambientLight intensity={0.5} />
         <directionalLight position={[8, 16, 6]} intensity={1.1} color="#dfe6f2" />
         <Lamp />
-        {states && <States states={states} focus={focus} onPick={pick} />}
+        {states && <States states={states} focus={focus} onPick={pick} counts={counts} />}
         {states && <Cities focus={focus} onCity={setCity} />}
         {states && <ImageRing focus={focus} images={focus ? images[focus] : null} center={center} />}
         {states && <CameraRig focus={focus} states={states} />}
@@ -218,7 +219,13 @@ export default function PhaseMap({ height = '72vh' }) {
             ← {city ? STATE_CITIES[focus]?.name : 'National docket'}
           </button>
         )}
-        {focus && !city && <p className="phasemap__state">{STATE_CITIES[focus]?.name} — select a city pillar to open its files.</p>}
+        {focus && !city && STATE_CITIES[focus] && <p className="phasemap__state">{STATE_CITIES[focus]?.name} — select a city pillar to open its files.</p>}
+        {focus && !city && !STATE_CITIES[focus] && (
+          <div className="phasemap__docket">
+            <p>{counts?.[focus] ?? 0} firms on the {focus} docket.</p>
+            <button type="button" onClick={() => openDocket(focus)}>Open the {focus} docket →</button>
+          </div>
+        )}
       </div>
 
       {city && (
@@ -234,7 +241,7 @@ export default function PhaseMap({ height = '72vh' }) {
                 <span className="phasemap__case-ex ed-smallcaps">Exhibit {String.fromCharCode(65 + i)}</span>
                 <p className="phasemap__case-practice">{c.practice}</p>
                 <p className="phasemap__case-hiring">Hiring: {c.hiring}</p>
-                <p className="phasemap__case-sealed">Firm name &amp; recruiting contact — <a href="/explore">sealed · unlock</a></p>
+                <p className="phasemap__case-sealed">Firm name &amp; recruiting contact — <button type="button" className="phasemap__seal" onClick={() => openDocket(focus)}>sealed · unlock</button></p>
               </article>
             ))}
           </div>

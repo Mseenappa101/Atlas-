@@ -22,6 +22,10 @@
 }
 .phasemap__back:hover { background: #83e0b0; transform: translateX(-2px); }
 .phasemap__back:focus-visible { outline: 2px solid #b4904e; outline-offset: 3px; }
+.phasemap__docket { position: absolute; bottom: 1.1rem; left: 50%; transform: translateX(-50%); pointer-events: auto; text-align: center; }
+.phasemap__docket p { font-family: 'EB Garamond', Georgia, serif; font-style: italic; color: rgba(244,241,234,0.8); margin: 0 0 0.5rem; }
+.phasemap__docket button { font-family: 'EB Garamond', Georgia, serif; font-variant: small-caps; letter-spacing: 0.06em; color: #0b1120; background: #57d29a; border: 0; padding: 0.5rem 1rem; border-radius: 2px; cursor: pointer; }
+.phasemap__seal { font: inherit; color: #1f5c45; background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
 
 /* Case files slide in from the right (or bottom on mobile) */
 .phasemap__files {

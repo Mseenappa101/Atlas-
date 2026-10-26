@@ -27,6 +27,8 @@ import { FIRM_TYPES, STATE_NAMES, byDeadline, byName, countsByState, groupByType
 import { STATUS_FILTERS } from '../lib/status';
 
 const StateMap = lazy(() => import('../components/explore/StateMap'));
+const PhaseMap = lazy(() => import('../components/map3d/PhaseMap'));
+import '../components/explore/explore-docket.css';
 
 const SORTS = [
   { value: 'recommended', label: 'Recommended' },
@@ -40,131 +42,45 @@ function countBy(firms, fn) {
   return m;
 }
 
-// ─── COLLECTIONS ─────────────────────────────────────────────────────────────
-// Each is a plain Explore filter, so "See all" is just that filter in the URL.
+// ─── MAP HOME (the immersive national docket) ────────────────────────────────
 
-function collectionsFor(profile) {
-  const markets = (profile?.target_market ?? '').split(',').map((s) => s.trim()).filter(Boolean);
-  const types = (profile?.target_firm_type ?? '').split(',').map((s) => s.trim()).filter(Boolean);
-  return [
-    { title: 'Open now', filters: { status: ['open', 'rolling'] } },
-    markets.length
-      ? { title: 'Hiring in your markets', filters: { city: markets, nobiglaw: '1' } }
-      : { title: 'Houston firms', filters: { city: ['Houston'], nobiglaw: '1' } },
-    types.length ? { title: 'Your firm types', filters: { type: types } } : null,
-    { title: 'Texas litigation boutiques', filters: { state: 'TX', type: ['litigation-boutique'] } },
-    { title: 'Hiring for 2L summer', filters: { role: ['2l-summer'], nobiglaw: '1' } },
-    { title: 'Opening soon', filters: { status: ['soon'] } },
-    { title: 'Plaintiff and public interest', filters: { type: ['plaintiff', 'public-interest'] } },
-    { title: 'Mid-size firms hiring for 1L summer', filters: { type: ['mid-size'], role: ['1l-summer'] } },
-  ].filter(Boolean);
-}
-
-function Collections({ firms, profile, onOpen, unlocked }) {
-  const rows = useMemo(
-    () =>
-      collectionsFor(profile)
-        .filter((c) => unlocked || !gatedInUse({ ...EMPTY, ...c.filters }))
-        .map((c) => ({ ...c, firms: recommended(applyFilters(firms, { ...EMPTY, ...c.filters }), profile) }))
-        .filter((c) => c.firms.length >= 2),
-    [firms, profile, unlocked]
-  );
-  if (!rows.length) return null;
-  return (
-    <section aria-label="Collections" className="mt-10 space-y-8">
-      {rows.map((c) => (
-        <div key={c.title}>
-          <div className="mb-3 flex items-baseline justify-between gap-3">
-            <h2 className="text-t20 font-semibold">{c.title}</h2>
-            <button type="button" onClick={() => onOpen(c, null)} className="inline-flex min-h-[44px] items-center text-t14 font-medium text-brand hover:underline md:min-h-0">
-              See all <span className="data">{c.firms.length}</span>
-            </button>
-          </div>
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
-            {c.firms.slice(0, 6).map((f) => (
-              <FirmCard key={f.id} firm={f} onOpen={(firm) => onOpen(c, firm)} />
-            ))}
-          </div>
-        </div>
-      ))}
-    </section>
-  );
-}
-
-// ─── MAP HOME ────────────────────────────────────────────────────────────────
-
-function MapHome({ firms, onPickState, onSearch, onPositions, onRole, profile, onCollection, unlocked }) {
+function MapHome({ firms, onPickState, onSearch, onPositions, onRole, unlocked }) {
   const counts = useMemo(() => countsByState(firms), [firms]);
-  const breakdown = useMemo(() => {
-    const out = {};
-    for (const f of firms) for (const s of f.states) ((out[s] ??= {})[f.group] = (out[s][f.group] ?? 0) + 1);
-    return Object.fromEntries(Object.entries(out).map(([s, g]) => [s, Object.entries(g).sort((a, b) => b[1] - a[1])]));
-  }, [firms]);
-  const ranked = Object.entries(counts).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
   const [q, setQ] = useState('');
 
   return (
-    <div className="mx-auto max-w-app px-4 pb-24 pt-6 md:px-6 md:pb-12">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-t24 font-bold tracking-tight md:text-t32">Where do you want to work?</h1>
-          <p className="mt-1 text-t16 text-fg-2">Pick a state to see its firms, sorted by type. Boutiques and mid-size firms come first.</p>
-          <div className="mt-3 flex flex-wrap items-center gap-2" role="group" aria-label="Hiring for">
-            <span className="text-t14 text-fg-2">Hiring for:</span>
-            {ROLES.map((r) => (
-              <FilterChip key={r.value} onClick={() => onRole(r.value)}>
-                {r.label}
-              </FilterChip>
-            ))}
-            <button type="button" onClick={onPositions} className="inline-flex min-h-[44px] items-center px-1 text-t14 font-medium text-brand hover:underline md:min-h-0">
-              Open positions
-            </button>
+    <div className="explore-docket">
+      {/* Docket strip: role tabs + case lookup + Sprint CTA */}
+      <div className="explore-docket__bar">
+        <p className="explore-docket__caption"><span className="ed-smallcaps">In re</span> <strong>The National Docket</strong></p>
+        <div className="explore-docket__tabs" role="group" aria-label="Hiring for">
+          {ROLES.map((r) => (
+            <button key={r.value} type="button" className="explore-docket__tab" onClick={() => onRole(r.value)}>{r.label}</button>
+          ))}
+          <button type="button" className="explore-docket__tab" onClick={onPositions}>Open positions</button>
+        </div>
+        <form className="explore-docket__search" role="search" onSubmit={(e) => { e.preventDefault(); if (q.trim()) onSearch(q.trim()); }}>
+          <input aria-label="Case lookup — search firms by name, city or practice" placeholder="Case lookup — firm, city, practice" value={q} onChange={(e) => setQ(e.target.value)} />
+        </form>
+        <a href="/sprint" className="explore-docket__cta">File 20 in the Sprint →</a>
+      </div>
+
+      {/* The immersive jurisdiction map IS the page */}
+      <Suspense fallback={<div className="explore-docket__skel" aria-hidden="true" />}>
+        <PhaseMap counts={counts} onOpenDocket={onPickState} height="min(74vh, 760px)" />
+      </Suspense>
+
+      {/* The unlock, entered as a sealed case file */}
+      {!unlocked && (
+        <div className="explore-seal__band">
+          <div className="explore-seal">
+            <p className="explore-seal__ex">Exhibit · Under seal</p>
+            <h2 className="explore-seal__h">The full record is sealed</h2>
+            <p className="explore-seal__p">Firm names, who each hires (1L, 2L, post-grad), application windows and recruiting contacts are held under seal. Enter your email to break the seal — free, one message.</p>
+            <UnlockForm source="/explore" />
           </div>
         </div>
-        <form
-          className="w-full md:w-80"
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (q.trim()) onSearch(q.trim());
-          }}
-          role="search"
-        >
-          <Input icon={Search} aria-label="Search all firms" placeholder="Or search all firms by name, city, practice" value={q} onChange={(e) => setQ(e.target.value)} />
-        </form>
-      </div>
-
-      {!unlocked && (
-        <div className="mt-5">
-          <UnlockForm source="/explore" />
-        </div>
       )}
-
-      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
-        <div className="rounded-app border border-line bg-card p-3 md:p-5">
-          <Suspense fallback={<div className="aspect-[975/610] w-full animate-pulse rounded-app bg-line" />}>
-            <StateMap counts={counts} breakdown={breakdown} onSelect={onPickState} />
-          </Suspense>
-        </div>
-        <nav aria-label="States" className="rounded-app border border-line bg-card">
-          <h2 className="border-b border-line px-4 py-3 text-t14 font-semibold">States with firms</h2>
-          <ul className="max-h-[520px] overflow-y-auto">
-            {ranked.map(([abbr, n]) => (
-              <li key={abbr}>
-                <button
-                  type="button"
-                  onClick={() => onPickState(abbr)}
-                  className="flex min-h-[44px] w-full items-center justify-between gap-3 border-b border-line px-4 text-left text-t14 hover:bg-canvas"
-                >
-                  <span>{STATE_NAMES[abbr] ?? abbr}</span>
-                  <span className="data text-t12 text-fg-2">{n}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
-
-      <Collections firms={firms} profile={profile} onOpen={onCollection} unlocked={unlocked} />
     </div>
   );
 }
@@ -258,7 +174,7 @@ function ExplorePage() {
   const { firms, idMap, loading, error } = useCatalog();
   const { listings } = useListings();
   const { ids: savedIds, toggle } = useMyList();
-  const { session, profile } = useSession();
+  const { session } = useSession();
   const { canSeeDetails } = useAccess();
   const [params, setParams] = useSearchParams();
   const navigate = useNavigate();
@@ -410,24 +326,13 @@ function ExplorePage() {
   }
 
   if (!filtered && !loading) {
-    const openCollection = (c, firm) => {
-      const next = writeFilters(new URLSearchParams(), { ...EMPTY, ...c.filters });
-      next.set('collection', c.title);
-      if (firm) {
-        if (!wide) return navigate(`/firms/${firm.slug}`, { state: { from: `/explore?${next}` } });
-        next.set('firm', firm.slug);
-      }
-      setParams(next);
-    };
     return (
       <MapHome
         firms={firms}
-        profile={profile}
         onPickState={(s) => set({ state: s })}
         onSearch={(q) => set({ q })}
         onPositions={() => showTab('positions')}
         onRole={(r) => set({ role: [r] })}
-        onCollection={openCollection}
         unlocked={canSeeDetails}
       />
     );
