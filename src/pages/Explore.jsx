@@ -44,18 +44,31 @@ function countBy(firms, fn) {
 
 // ─── MAP HOME (the immersive national docket) ────────────────────────────────
 
-function MapHome({ firms, onPickState, onSearch, onPositions, onRole, unlocked }) {
-  const counts = useMemo(() => countsByState(firms), [firms]);
+function MapHome({ firms, filters, set, onPickState, onSearch, onPositions, unlocked }) {
+  const activeRoles = useMemo(() => filters.role || [], [filters.role]);
+  // Role tabs re-filter the live map: counts (and the docket total) recompute by role, with no page swap.
+  const counts = useMemo(() => countsByState(applyFilters(firms, { ...EMPTY, role: activeRoles })), [firms, activeRoles]);
+  const total = useMemo(() => Object.values(counts).reduce((a, b) => a + b, 0), [counts]);
   const [q, setQ] = useState('');
+  const toggleRole = (r) => set({ role: activeRoles.includes(r) ? activeRoles.filter((x) => x !== r) : [...activeRoles, r] });
 
   return (
     <div className="explore-docket">
-      {/* Docket strip: role tabs + case lookup + Sprint CTA */}
+      {/* Docket strip: role tabs (live filter) + case lookup + Sprint CTA */}
       <div className="explore-docket__bar">
-        <p className="explore-docket__caption"><span className="ed-smallcaps">In re</span> <strong>The National Docket</strong></p>
+        <p className="explore-docket__caption">
+          <span className="ed-smallcaps">In re</span> <strong>The National Docket</strong>
+          <span className="explore-docket__count" aria-live="polite">{total} firms{activeRoles.length ? ' · filtered' : ''}</span>
+        </p>
         <div className="explore-docket__tabs" role="group" aria-label="Hiring for">
           {ROLES.map((r) => (
-            <button key={r.value} type="button" className="explore-docket__tab" onClick={() => onRole(r.value)}>{r.label}</button>
+            <button
+              key={r.value}
+              type="button"
+              className={`explore-docket__tab${activeRoles.includes(r.value) ? ' is-on' : ''}`}
+              aria-pressed={activeRoles.includes(r.value)}
+              onClick={() => toggleRole(r.value)}
+            >{r.label}</button>
           ))}
           <button type="button" className="explore-docket__tab" onClick={onPositions}>Open positions</button>
         </div>
@@ -65,7 +78,7 @@ function MapHome({ firms, onPickState, onSearch, onPositions, onRole, unlocked }
         <a href="/sprint" className="explore-docket__cta">File 20 in the Sprint →</a>
       </div>
 
-      {/* The immersive jurisdiction map IS the page */}
+      {/* The immersive jurisdiction map IS the page — re-lights live as the docket tabs filter */}
       <Suspense fallback={<div className="explore-docket__skel" aria-hidden="true" />}>
         <PhaseMap counts={counts} onOpenDocket={onPickState} height="min(74vh, 760px)" />
       </Suspense>
@@ -325,14 +338,19 @@ function ExplorePage() {
     );
   }
 
-  if (!filtered && !loading) {
+  // Map mode: the immersive docket stays up for map-level filters (role / status / hide-BigLaw) so the
+  // docket tabs re-light the 3D map live. Drilling into a state, market, type, practice, search or a
+  // specific firm hands off to the detailed record below.
+  const drill = filters.state || filters.q || filters.city?.length || filters.type?.length || filters.size?.length || filters.practice?.length || params.get('firm');
+  if (!drill && !loading) {
     return (
       <MapHome
         firms={firms}
+        filters={filters}
+        set={set}
         onPickState={(s) => set({ state: s })}
         onSearch={(q) => set({ q })}
         onPositions={() => showTab('positions')}
-        onRole={(r) => set({ role: [r] })}
         unlocked={canSeeDetails}
       />
     );

@@ -15,6 +15,8 @@
 }
 .explore-docket__tab:hover { background: rgba(87,210,154,0.16); color: #f4f1ea; }
 .explore-docket__tab:focus-visible { outline: 2px solid #57d29a; outline-offset: 2px; }
+.explore-docket__tab.is-on { background: #57d29a; border-color: #57d29a; color: #0b1120; font-weight: 600; }
+.explore-docket__count { margin-left: 0.6rem; font-family: 'Hanken Grotesk', system-ui, sans-serif; font-variant: normal; letter-spacing: 0; font-size: 0.82rem; color: #8fe8bb; }
 .explore-docket__search { flex: 1 1 220px; min-width: 200px; }
 .explore-docket__search input {
   width: 100%; min-height: 44px; background: rgba(8,12,22,0.6); color: #f4f1ea;

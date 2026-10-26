@@ -9,33 +9,41 @@ const NAV_POS = new THREE.Vector3(0, 19, 15);
 const NAV_LOOK = new THREE.Vector3(0, -1, -1.5);
 const NAVY = new THREE.Color('#1b273d');
 const LIT = new THREE.Color('#2f7d58');
+const BLACK = new THREE.Color('#000');
 const prefersReduce = () =>
   typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
-/* ── State slabs: lift/sink/fade toward targets driven by `focus` ── */
+/* ── State slabs: lift/sink/fade toward `focus`, and smoothly re-light when `counts` change
+   (docket tabs re-filter by role → each state's colour/emissive lerps to its new target). ── */
 function States({ states, focus, onPick, counts }) {
   const group = useRef();
   const meshes = useRef([]);
+  // target colour/emissive per state for the current counts (recomputed when the filter changes)
+  const targets = useMemo(() => states.map((s) => {
+    const firms = counts?.[s.abbr] ?? STATE_FIRMS[s.abbr] ?? 0;
+    const lit = firms > 0;
+    return { lit, firms, color: lit ? NAVY.clone().lerp(LIT, Math.min(1, firms / 26)) : NAVY.clone(), emi: lit ? Math.min(0.5, firms / 40) : 0 };
+  }), [states, counts]);
   useFrame((_, dt) => {
     const k = Math.min(1, dt * 4);
-    meshes.current.forEach((m) => {
+    const ck = Math.min(1, dt * 3);
+    meshes.current.forEach((m, i) => {
       if (!m) return;
+      const t = targets[i];
       const foc = focus === m.userData.abbr;
       const dim = focus && !foc;
-      const ty = foc ? 0.5 : dim ? -2.4 : 0;
-      const ts = foc ? 2.4 : 1;
-      const to = dim ? 0.12 : 1;
-      m.position.y += (ty - m.position.y) * k;
-      m.scale.y += (ts - m.scale.y) * k;
-      m.material.opacity += (to - m.material.opacity) * k;
+      m.position.y += ((foc ? 0.5 : dim ? -2.4 : 0) - m.position.y) * k;
+      m.scale.y += ((foc ? 2.4 : 1) - m.scale.y) * k;
+      m.material.opacity += ((dim ? 0.12 : 1) - m.material.opacity) * k;
+      m.material.color.lerp(t.color, ck);
+      m.material.emissive.lerp(t.lit ? LIT : BLACK, ck);
+      m.material.emissiveIntensity += (t.emi - m.material.emissiveIntensity) * ck;
     });
   });
   return (
     <group ref={group}>
       {states.map((s, i) => {
-        const firms = counts?.[s.abbr] ?? STATE_FIRMS[s.abbr] ?? 0;
-        const lit = firms > 0;
-        const color = lit ? NAVY.clone().lerp(LIT, Math.min(1, firms / 26)) : NAVY;
+        const lit = (counts?.[s.abbr] ?? STATE_FIRMS[s.abbr] ?? 0) > 0;
         return (
           <mesh
             key={s.abbr}
@@ -47,15 +55,7 @@ function States({ states, focus, onPick, counts }) {
             onPointerOver={lit ? (e) => { e.stopPropagation(); document.body.style.cursor = 'pointer'; } : undefined}
             onPointerOut={() => (document.body.style.cursor = '')}
           >
-            <meshStandardMaterial
-              color={color}
-              emissive={lit ? LIT : '#000'}
-              emissiveIntensity={lit ? Math.min(0.5, firms / 40) : 0}
-              roughness={0.72}
-              metalness={0.1}
-              transparent
-              opacity={1}
-            />
+            <meshStandardMaterial color={NAVY.clone()} emissive={BLACK.clone()} emissiveIntensity={0} roughness={0.72} metalness={0.1} transparent opacity={1} />
           </mesh>
         );
       })}
