@@ -64,20 +64,16 @@ function States({ states, focus, onPick, counts }) {
 }
 
 /* ── Glowing city pillars over the focused state, sized by firm count ── */
-function Cities({ focus, onCity }) {
-  const data = focus ? STATE_CITIES[focus] : null;
-  const pillars = useMemo(() => {
-    if (!data) return [];
-    return data.cities.map((c) => {
-      const p = projectCity(c.lon, c.lat);
-      return p ? { ...c, x: p[0], z: p[1], h: 0.8 + Math.min(3, c.firms / 3.5) } : null;
-    }).filter(Boolean);
-  }, [data]);
+function Cities({ pillars, onCity, onHover, hoverCity }) {
   const refs = useRef([]);
   useFrame((state) => {
-    refs.current.forEach((m) => { if (m) m.material.emissiveIntensity = 1.2 + Math.sin(state.clock.elapsedTime * 2 + m.position.x) * 0.3; });
+    refs.current.forEach((m, i) => {
+      if (!m) return;
+      const hot = pillars[i] && pillars[i].name === hoverCity;
+      m.material.emissiveIntensity = (hot ? 2.2 : 1.2) + Math.sin(state.clock.elapsedTime * 2 + m.position.x) * 0.3;
+    });
   });
-  if (!data) return null;
+  if (!pillars.length) return null;
   return (
     <group>
       {pillars.map((c, i) => (
@@ -85,8 +81,8 @@ function Cities({ focus, onCity }) {
           key={c.name}
           position={[c.x, 0, c.z]}
           onPointerDown={(e) => { e.stopPropagation(); onCity(c); }}
-          onPointerOver={(e) => { e.stopPropagation(); document.body.style.cursor = 'pointer'; }}
-          onPointerOut={() => (document.body.style.cursor = '')}
+          onPointerOver={(e) => { e.stopPropagation(); document.body.style.cursor = 'pointer'; onHover(c.name); }}
+          onPointerOut={() => { document.body.style.cursor = ''; onHover(null); }}
         >
           {/* wide invisible hit target so the thin pillar is easy to click/tap */}
           <mesh position={[0, 0.5 + c.h / 2, 0]}>
@@ -103,8 +99,47 @@ function Cities({ focus, onCity }) {
   );
 }
 
+/* ── City labels: a screen-space DOM overlay drawn above the canvas + image ring.
+   Each frame we project the pillar top to screen, declutter overlapping labels (stacking them
+   upward with a lengthening brass leader), and imperatively position the DOM refs — so names +
+   firm counts stay readable through the whole ring rotation. ── */
+const _v = new THREE.Vector3();
+function CityLabels({ pillars, labelRefs, hoverCity }) {
+  const { camera, size } = useThree();
+  useFrame(() => {
+    const placed = [];
+    // project each pillar top → screen
+    pillars.forEach((c, i) => {
+      const el = labelRefs.current[i];
+      if (!el) return;
+      _v.set(c.x, 0.5 + c.h + 0.25, c.z).project(camera);
+      const behind = _v.z > 1;
+      const ax = (_v.x * 0.5 + 0.5) * size.width;
+      const ay = (-_v.y * 0.5 + 0.5) * size.height;
+      placed.push({ el, ax, ay, name: c.name, behind, i });
+    });
+    // declutter: top-to-bottom, lift any label that would overlap the previous one
+    placed.sort((a, b) => a.ay - b.ay);
+    const GAP = 34; // min vertical separation between label boxes
+    let lastBottom = -1e4;
+    placed.forEach((p) => {
+      const el = p.el;
+      if (p.behind || p.ax < -40 || p.ax > size.width + 40) { el.style.opacity = '0'; return; }
+      let boxBottom = p.ay - 10; // 10px gap above the pillar top
+      if (boxBottom - GAP < lastBottom) boxBottom = lastBottom + GAP;
+      const lift = Math.max(0, p.ay - 10 - boxBottom); // how far the box sits above the anchor
+      lastBottom = boxBottom;
+      el.style.opacity = '1';
+      el.style.transform = `translate(${p.ax.toFixed(1)}px, ${p.ay.toFixed(1)}px)`;
+      el.style.setProperty('--lift', `${(lift + 10).toFixed(1)}px`);
+      el.classList.toggle('is-active', p.name === hoverCity);
+    });
+  });
+  return null;
+}
+
 /* ── Ring of state images surrounding the viewer in the focused state ── */
-function ImageRing({ focus, images, center }) {
+function ImageRing({ focus, images, center, dim }) {
   const group = useRef();
   const { pointer } = useThree();
   const textures = useMemo(() => {
@@ -117,8 +152,8 @@ function ImageRing({ focus, images, center }) {
   }, [images]);
   useFrame(() => {
     if (!group.current) return;
-    const target = focus ? 1 : 0;
-    group.current.userData.a = (group.current.userData.a ?? 0) + (target - (group.current.userData.a ?? 0)) * 0.06;
+    const target = focus ? (dim ? 0.32 : 1) : 0; // dim the ring when a city label is hovered, so it pops
+    group.current.userData.a = (group.current.userData.a ?? 0) + (target - (group.current.userData.a ?? 0)) * 0.1;
     const a = group.current.userData.a;
     group.current.visible = a > 0.02;
     group.current.children.forEach((pl, i) => {
@@ -183,15 +218,27 @@ export default function PhaseMap({ height = '72vh', counts = null, onOpenDocket 
   const [states, setStates] = useState(null);
   const [focus, setFocus] = useState(null);
   const [city, setCity] = useState(null);
+  const [hoverCity, setHoverCity] = useState(null);
   const [images, setImages] = useState({});
+  const labelRefs = useRef([]);
   const openDocket = (abbr) => { if (onOpenDocket) onOpenDocket(abbr); else window.location.href = '/explore'; };
+
+  // City pillar positions for the focused state — shared by the pillars and the label overlay.
+  const pillars = useMemo(() => {
+    const d = focus ? STATE_CITIES[focus] : null;
+    if (!d) return [];
+    return d.cities.map((c) => {
+      const p = projectCity(c.lon, c.lat);
+      return p ? { ...c, x: p[0], z: p[1], h: 0.8 + Math.min(3, c.firms / 3.5) } : null;
+    }).filter(Boolean);
+  }, [focus]);
 
   useEffect(() => { let live = true; buildStates().then((s) => live && setStates(s)); return () => { live = false; }; }, []);
   // Per-state ring image URLs (populated once the imagery pipeline has emitted them).
   useEffect(() => { fetch('/art/states/index.json').then((r) => r.ok ? r.json() : {}).then(setImages).catch(() => {}); }, []);
 
-  const pick = (abbr) => { setCity(null); setFocus(abbr); };
-  const back = () => { if (city) setCity(null); else setFocus(null); };
+  const pick = (abbr) => { setCity(null); setHoverCity(null); setFocus(abbr); };
+  const back = () => { if (city) setCity(null); else { setFocus(null); setHoverCity(null); } };
   // Dev-only hook so automated capture can drive the real animations deterministically.
   useEffect(() => {
     if (!import.meta.env.DEV) return;
@@ -215,10 +262,31 @@ export default function PhaseMap({ height = '72vh', counts = null, onOpenDocket 
         <directionalLight position={[8, 16, 6]} intensity={1.1} color="#dfe6f2" />
         <Lamp />
         {states && <States states={states} focus={focus} onPick={pick} counts={counts} />}
-        {states && <Cities focus={focus} onCity={setCity} />}
-        {states && <ImageRing focus={focus} images={focus ? images[focus] : null} center={center} />}
+        {states && <Cities pillars={pillars} onCity={setCity} onHover={setHoverCity} hoverCity={hoverCity} />}
+        {states && <ImageRing focus={focus} images={focus ? images[focus] : null} center={center} dim={Boolean(hoverCity)} />}
+        {states && pillars.length > 0 && <CityLabels pillars={pillars} labelRefs={labelRefs} hoverCity={hoverCity} />}
         {states && <CameraRig focus={focus} states={states} />}
       </Canvas>
+
+      {/* screen-space city label overlay — drawn above the canvas + image ring, always readable */}
+      <div className="phasemap__labels" aria-hidden="true">
+        {pillars.map((c, i) => (
+          <div
+            key={c.name}
+            ref={(el) => (labelRefs.current[i] = el)}
+            className="phasemap__label"
+            onMouseEnter={() => setHoverCity(c.name)}
+            onMouseLeave={() => setHoverCity(null)}
+            onClick={() => setCity(c)}
+          >
+            <span className="phasemap__label-leader" />
+            <span className="phasemap__label-box">
+              <span className="phasemap__label-name">{c.name}</span>
+              <span className="phasemap__label-ct">{c.firms} firms</span>
+            </span>
+          </div>
+        ))}
+      </div>
 
       {/* overlay: caption / back / case files */}
       <div className="phasemap__hud">

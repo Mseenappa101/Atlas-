@@ -7,6 +7,31 @@
 .phasemap canvas { display: block; }
 .phasemap-skel { width: 100%; background: #0b1120; border-top: 3px solid #b4904e; border-radius: 2px; }
 
+/* City label overlay — drawn above the canvas + image ring, always readable */
+.phasemap__labels { position: absolute; inset: 0; pointer-events: none; z-index: 5; }
+.phasemap__label { position: absolute; top: 0; left: 0; width: 0; height: 0; opacity: 0; --lift: 18px; }
+.phasemap__label-leader {
+  position: absolute; left: 0; bottom: 0; width: 1px; height: var(--lift);
+  background: linear-gradient(to top, rgba(180,144,78,0.9), rgba(180,144,78,0.3)); /* taste-skill-ignore: brass leader connecting label to its pillar */
+  transform: translateX(-0.5px);
+}
+.phasemap__label-leader::after { content: ''; position: absolute; top: -2px; left: -2px; width: 4px; height: 4px; border-radius: 50%; background: #b4904e; }
+.phasemap__label-box {
+  position: absolute; left: 0; bottom: var(--lift); transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 1px; white-space: nowrap;
+  padding: 0.22rem 0.6rem; background: rgba(8, 12, 22, 0.82); border-top: 2px solid #b4904e;
+  pointer-events: auto; cursor: pointer; transition: background 160ms ease, transform 160ms ease;
+}
+.phasemap__label-name { font-family: 'Cinzel', Georgia, serif; font-weight: 600; text-transform: uppercase; font-size: 0.74rem; letter-spacing: 0.04em; color: #f4f1ea; }
+.phasemap__label-ct { font-family: 'EB Garamond', Georgia, serif; font-variant: small-caps; letter-spacing: 0.08em; font-size: 0.72rem; color: #8fe8bb; }
+.phasemap__label.is-active .phasemap__label-box { background: #0b1120; transform: translateX(-50%) translateY(-2px); box-shadow: 0 0 0 1px #57d29a; }
+.phasemap__label.is-active .phasemap__label-name { color: #9df0c4; }
+@media (max-width: 640px) {
+  .phasemap__label-box { padding: 0.18rem 0.45rem; }
+  .phasemap__label-name { font-size: 0.66rem; }
+  .phasemap__label-ct { font-size: 0.64rem; }
+}
+
 .phasemap__hud { position: absolute; inset: 0; pointer-events: none; }
 .phasemap__hint, .phasemap__state {
   position: absolute; bottom: 1.1rem; left: 50%; transform: translateX(-50%);
