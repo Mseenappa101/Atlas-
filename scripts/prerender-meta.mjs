@@ -58,8 +58,8 @@ for (const page of PAGES) {
 // Edition fonts so they download in parallel with the lazy chunk instead of after it mounts.
 const homeHead = `    <link rel="canonical" href="${SITE.url}/" />
     <link rel="preload" as="image" href="/art/the-map/color-1024.webp" imagesrcset="/art/the-map/color-640.webp 640w, /art/the-map/color-1024.webp 1024w, /art/the-map/color-1600.webp 1600w" imagesizes="(max-width: 900px) 65vw, 100vw" fetchpriority="high" />
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/space-grotesk.woff2" crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/cormorant.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/cinzel.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/eb-garamond.woff2" crossorigin />
   </head>`;
 writeFileSync(join(DIST, 'index.html'), base.replace('</head>', homeHead));
 
