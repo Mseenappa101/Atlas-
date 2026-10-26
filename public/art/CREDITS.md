@@ -1,12 +1,12 @@
 # Art credits
 
-Every artwork below is in the **public domain**, verified via the Art Institute of Chicago open-access API (`is_public_domain: true`, released CC0). Images were edited for this site (resized to WebP and edge-detected into line-art). Regenerate with `node scripts/gen-art.mjs`.
+Every artwork below is in the **public domain**, verified via the Art Institute of Chicago open-access API (`is_public_domain: true`, released CC0). Images were edited for this site (resized to WebP and processed into XDoG line-art). Regenerate with `node scripts/gen-art.mjs`.
 
 ## I · the-map
-- **Portrait of an Artist or Scholar** — Mughal (17th century)
-- Watercolor, opaque watercolor, and gold on paper
-- The Art Institute of Chicago — Lucy Maud Buckingham Memorial Collection
-- Source: https://www.artic.edu/artworks/93521
+- **Portrait of a Man** — Corneille de Lyon (c. 1555)
+- Oil on panel
+- The Art Institute of Chicago — Gift of Everett D. Graff
+- Source: https://www.artic.edu/artworks/79774
 - License: Public Domain / CC0
 
 ## II · the-sprint
