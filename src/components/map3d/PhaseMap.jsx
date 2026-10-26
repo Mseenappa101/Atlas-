@@ -192,6 +192,15 @@ export default function PhaseMap({ height = '72vh', counts = null, onOpenDocket 
 
   const pick = (abbr) => { setCity(null); setFocus(abbr); };
   const back = () => { if (city) setCity(null); else setFocus(null); };
+  // Dev-only hook so automated capture can drive the real animations deterministically.
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
+    window.__pm = {
+      pick,
+      openCity: (abbr, i = 0) => { setFocus(abbr); const d = STATE_CITIES[abbr]; if (d) setCity(d.cities[i] ?? d.cities[0]); },
+      back: () => { setCity(null); setFocus(null); },
+    };
+  });
   const center = useMemo(() => {
     const s = states?.find((x) => x.abbr === focus);
     return s ? [s.cx, s.cz] : [0, 0];
