@@ -15,7 +15,7 @@ export default function InkStamp({ label = 'Admitted', sub = 'Firmward · Bar of
         <ellipse cx="110" cy="70" rx="96" ry="58" className="ed-stamp__ring" />
         <ellipse cx="110" cy="70" rx="86" ry="50" className="ed-stamp__ring ed-stamp__ring--thin" />
         <text className="ed-stamp__arc">
-          <textPath href={`#arc-${label}`} startOffset="50%">★ UNITED · OFFER · ENTERED ★</textPath>
+          <textPath href={`#arc-${label}`} startOffset="50%">· UNITED · OFFER · ENTERED ·</textPath>
         </text>
         <text x="110" y="82" className="ed-stamp__label" textAnchor="middle">{label}</text>
         <text className="ed-stamp__arc ed-stamp__arc--b">

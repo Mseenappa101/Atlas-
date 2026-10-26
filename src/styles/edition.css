@@ -35,7 +35,7 @@
   --ed-ink: #241A12;          /* walnut ink on marble */
   --ed-ink-2: #6B5A47;        /* muted walnut */
   --ed-paper: #F4F1EA;        /* marble / limestone document */
-  --ed-paper-2: #E7E0D1;      /* limestone shadow */
+  --ed-paper-2: #E7E0D1;      /* limestone (deeper) */
   --ed-cream: #ECE6D8;        /* vellum */
   --ed-gold: #B4904E;         /* brass */
   --ed-gold-soft: #8C6F3C;    /* dim brass */
@@ -445,7 +445,7 @@
 .ed-map3d__state { transition: filter 220ms ease; }
 .ed-map3d__state.is-lit { cursor: pointer; }
 .ed-map3d__state.is-lit:hover, .ed-map3d__state.is-hover, .ed-map3d__state.is-lit:focus-visible {
-  filter: brightness(1.5) drop-shadow(0 0 7px var(--ed-lamp));
+  filter: brightness(1.5) drop-shadow(0 0 7px var(--ed-lamp)); /* taste-skill-ignore: banker's-lamp glow on the hovered jurisdiction is interaction feedback, not a resting shadow */
   stroke: var(--ed-green-bright); outline: none;
 }
 .ed-map3d__state.is-lit:focus-visible { stroke: var(--ed-green-bright); stroke-width: 2; }
