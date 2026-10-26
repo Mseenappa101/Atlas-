@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import SmoothScroll from './components/motion/SmoothScroll';
 import { flags } from './lib/flags';
@@ -17,7 +17,6 @@ import { MyListProvider } from './context/MyListProvider';
 import { AccessProvider } from './context/AccessProvider';
 import AppNav from './components/app/AppNav';
 import Explore from './pages/Explore';
-import FirmPage from './pages/FirmPage';
 import Pro from './pages/Pro';
 import MyList from './pages/MyList';
 import Apply from './pages/Apply';
@@ -72,6 +71,11 @@ function NotFound() {
   );
 }
 
+function FirmRedirect() {
+  const { slug } = useParams();
+  return <Navigate to={`/explore?firm=${encodeURIComponent(slug)}`} replace />;
+}
+
 function AppRoutes() {
   const location = useLocation();
   return (
@@ -81,7 +85,8 @@ function AppRoutes() {
       <Route path="/" element={<EditionPage />} />
       <Route path="/classic" element={<Home />} />
       <Route path="/explore" element={<Explore />} />
-      <Route path="/firms/:slug" element={<FirmPage />} />
+      {/* Legacy firm page redirects into the immersive docket's in-scene case file. */}
+      <Route path="/firms/:slug" element={<FirmRedirect />} />
       <Route path="/pro" element={<Pro />} />
       <Route path="/my-list" element={<MyList />} />
       <Route path="/apply/:slug" element={<Apply />} />
