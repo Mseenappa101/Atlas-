@@ -1,0 +1,514 @@
+{
+  "plates": [
+    {
+      "slug": "the-map",
+      "file": "public/art-src/plates/the-map.jpg",
+      "subject": "Library of Congress Main Reading Room",
+      "title": "LOC Main Reading Room Highsmith",
+      "creator": "Carol M. Highsmith",
+      "license": "Public Domain",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:LOC_Main_Reading_Room_Highsmith.jpg",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/LOC_Main_Reading_Room_Highsmith.jpg/1920px-LOC_Main_Reading_Room_Highsmith.jpg"
+    },
+    {
+      "slug": "the-sprint",
+      "file": "public/art-src/plates/the-sprint.jpg",
+      "subject": "U.S. federal courthouse exterior (columned Beaux-Arts facade)",
+      "title": "East facade, James R. Browning U.S. Court of Appeals Building, San Francisco, California LCCN2010719383",
+      "creator": "Carol M. Highsmith",
+      "license": "Public Domain",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:East_fa%C3%A7ade,_James_R._Browning_U.S._Court_of_Appeals_Building,_San_Francisco,_California_LCCN2010719383.tif",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/East_fa%C3%A7ade%2C_James_R._Browning_U.S._Court_of_Appeals_Building%2C_San_Francisco%2C_California_LCCN2010719383.tif/lossy-page1-1920px-East_fa%C3%A7ade%2C_James_R._Browning_U.S._Court_of_Appeals_Building%2C_San_Francisco%2C_California_LCCN2010719383.tif.jpg"
+    },
+    {
+      "slug": "membership",
+      "file": "public/art-src/plates/membership.jpg",
+      "subject": "Grand library interior (George Peabody Library, Baltimore)",
+      "title": "George Peabody Library - 23977620954",
+      "creator": "Patrick Gillespie",
+      "license": "CC BY 2.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:George_Peabody_Library_-_23977620954.jpg",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/George_Peabody_Library_-_23977620954.jpg/1920px-George_Peabody_Library_-_23977620954.jpg"
+    },
+    {
+      "slug": "placement",
+      "file": "public/art-src/plates/placement.jpg",
+      "subject": "U.S. Supreme Court courtroom interior",
+      "title": "Courtroom of the Supreme Court with Associate Justice Ruth Bader Ginsburg's chair and the bench in front of her seat draped in black",
+      "creator": "Fred Schilling, Collection of the Supreme Court of the United States",
+      "license": "Public Domain",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Courtroom_of_the_Supreme_Court_with_Associate_Justice_Ruth_Bader_Ginsburg%E2%80%99s_chair_and_the_bench_in_front_of_her_seat_draped_in_black.jpg",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Courtroom_of_the_Supreme_Court_with_Associate_Justice_Ruth_Bader_Ginsburg%E2%80%99s_chair_and_the_bench_in_front_of_her_seat_draped_in_black.jpg"
+    },
+    {
+      "slug": "where-firms-hire",
+      "file": "public/art-src/plates/where-firms-hire.jpg",
+      "subject": "U.S. state capitol (Colorado State Capitol, Denver)",
+      "title": "The Colorado State Capitol in Denver, Colorado LCCN2015633084",
+      "creator": "Carol M. Highsmith",
+      "license": "Public Domain",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Colorado_State_Capitol_in_Denver,_Colorado._The_building_is_intentionally_reminiscent_of_the_United_States_Capitol_LCCN2015633084.tif",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e9/The_Colorado_State_Capitol_in_Denver%2C_Colorado._The_building_is_intentionally_reminiscent_of_the_United_States_Capitol_LCCN2015633084.tif/lossy-page1-1920px-The_Colorado_State_Capitol_in_Denver%2C_Colorado._The_building_is_intentionally_reminiscent_of_the_United_States_Capitol_LCCN2015633084.tif.jpg"
+    },
+    {
+      "slug": "about",
+      "file": "public/art-src/plates/about.jpg",
+      "subject": "Classical columns / pediment (U.S. Supreme Court building facade)",
+      "title": "U.S. Supreme Court building, Washington, D.C LCCN2011630083",
+      "creator": "Carol M. Highsmith",
+      "license": "Public Domain",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:U.S._Supreme_Court_building,_Washington,_D.C_LCCN2011630083.tif",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/U.S._Supreme_Court_building%2C_Washington%2C_D.C_LCCN2011630083.tif/lossy-page1-1920px-U.S._Supreme_Court_building%2C_Washington%2C_D.C_LCCN2011630083.tif.jpg"
+    }
+  ],
+  "states": {
+    "TX": [
+      {
+        "file": "public/art-src/states/TX/1.jpg",
+        "subject": "Texas State Capitol, Austin",
+        "title": "The Texas state capitol in Austin LCCN2014632686",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Texas_state_capitol_in_Austin_LCCN2014632686.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/The_Texas_state_capitol_in_Austin_LCCN2014632686.tif/lossy-page1-1920px-The_Texas_state_capitol_in_Austin_LCCN2014632686.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/TX/2.jpg",
+        "subject": "Supreme Court of Texas Building, Austin",
+        "title": "TexasSupremeCourtBuilding",
+        "creator": "WhisperToMe",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:TexasSupremeCourtBuilding.JPG",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/TexasSupremeCourtBuilding.JPG/1920px-TexasSupremeCourtBuilding.JPG"
+      },
+      {
+        "file": "public/art-src/states/TX/3.jpg",
+        "subject": "Federal Courthouse, Houston, Texas",
+        "title": "Federal Courthouse built in 1962, Houston, Texas LCCN2011630269",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Federal_Courthouse_built_in_1962,_Houston,_Texas_LCCN2011630269.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Federal_Courthouse_built_in_1962%2C_Houston%2C_Texas_LCCN2011630269.tif/lossy-page1-1920px-Federal_Courthouse_built_in_1962%2C_Houston%2C_Texas_LCCN2011630269.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/TX/4.jpg",
+        "subject": "Houston skyline, Texas",
+        "title": "Skyline of Houston, Texas LCCN2011633620",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Skyline_of_Houston,_Texas_LCCN2011633620.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Skyline_of_Houston%2C_Texas_LCCN2011633620.tif/lossy-page1-1920px-Skyline_of_Houston%2C_Texas_LCCN2011633620.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/TX/5.jpg",
+        "subject": "Dallas skyline at dusk, Texas",
+        "title": "Dusk view of the skyline, Dallas, Texas LCCN2011631144",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Dusk_view_of_the_skyline,_Dallas,_Texas_LCCN2011631144.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Dusk_view_of_the_skyline%2C_Dallas%2C_Texas_LCCN2011631144.tif/lossy-page1-1920px-Dusk_view_of_the_skyline%2C_Dallas%2C_Texas_LCCN2011631144.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/TX/6.jpg",
+        "subject": "Dallas skyline from Reunion Tower, Texas",
+        "title": "View of the Dallas, Texas, skyline, taken from Reunion Tower LCCN2014632132",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:View_of_the_Dallas,_Texas,_skyline,_taken_from_Reunion_Tower_LCCN2014632132.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/View_of_the_Dallas%2C_Texas%2C_skyline%2C_taken_from_Reunion_Tower_LCCN2014632132.tif/lossy-page1-1920px-View_of_the_Dallas%2C_Texas%2C_skyline%2C_taken_from_Reunion_Tower_LCCN2014632132.tif.jpg"
+      }
+    ],
+    "LA": [
+      {
+        "file": "public/art-src/states/LA/1.jpg",
+        "subject": "Louisiana State Capitol, Baton Rouge",
+        "title": "Louisiana Capitol Building during Landry Inauguration",
+        "creator": "Ktkvtsh",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Louisiana_Capitol_Building_during_Landry_Inauguration.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/69/Louisiana_Capitol_Building_during_Landry_Inauguration.jpg/1920px-Louisiana_Capitol_Building_during_Landry_Inauguration.jpg"
+      },
+      {
+        "file": "public/art-src/states/LA/2.jpg",
+        "subject": "Louisiana Supreme Court, New Orleans",
+        "title": "Louisiana Supreme Court - New Courts building on Royal Street, New Orleans Feb 2026",
+        "creator": "ajay_suresh",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Louisiana_Supreme_Court_-_New_Courts_building_on_Royal_Street,_New_Orleans_Feb_2026.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/Louisiana_Supreme_Court_-_New_Courts_building_on_Royal_Street%2C_New_Orleans_Feb_2026.jpg/1920px-Louisiana_Supreme_Court_-_New_Courts_building_on_Royal_Street%2C_New_Orleans_Feb_2026.jpg"
+      },
+      {
+        "file": "public/art-src/states/LA/3.jpg",
+        "subject": "John Minor Wisdom U.S. Court of Appeals Building, New Orleans",
+        "title": "John Minor Wisdom U.S. Court of Appeals Building, New Orleans, Louisiana LCCN2014630200",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:John_Minor_Wisdom_U.S._Court_of_Appeals_Building,_located_in_the_block_bounded_by_Lafayette,_Camp,_Magazine_and_Capdeville_Streets,_New_Orleans,_Louisiana_LCCN2014630200.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c4/John_Minor_Wisdom_U.S._Court_of_Appeals_Building%2C_located_in_the_block_bounded_by_Lafayette%2C_Camp%2C_Magazine_and_Capdeville_Streets%2C_New_Orleans%2C_Louisiana_LCCN2014630200.tif/lossy-page1-1920px-thumbnail.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/LA/4.jpg",
+        "subject": "French Quarter, New Orleans",
+        "title": "French Quarter Detail, New Orleans, Louisiana LCCN2010630042",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:French_Quarter_Detail,_New_Orleans,_Louisiana_LCCN2010630042.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/48/French_Quarter_Detail%2C_New_Orleans%2C_Louisiana_LCCN2010630042.tif/lossy-page1-1920px-French_Quarter_Detail%2C_New_Orleans%2C_Louisiana_LCCN2010630042.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/LA/5.jpg",
+        "subject": "New Orleans skyline, Louisiana",
+        "title": "Skyline, New Orleans, Louisiana LCCN2011630536",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Skyline,_New_Orleans,_Louisiana_LCCN2011630536.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/94/Skyline%2C_New_Orleans%2C_Louisiana_LCCN2011630536.tif/lossy-page1-1920px-Skyline%2C_New_Orleans%2C_Louisiana_LCCN2011630536.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/LA/6.jpg",
+        "subject": "New Orleans waterfront, Louisiana",
+        "title": "Waterfront, New Orleans, Louisiana LCCN2011633495",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Waterfront,_New_Orleans,_Louisiana_LCCN2011633495.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/Waterfront%2C_New_Orleans%2C_Louisiana_LCCN2011633495.tif/lossy-page1-1920px-Waterfront%2C_New_Orleans%2C_Louisiana_LCCN2011633495.tif.jpg"
+      }
+    ],
+    "NY": [
+      {
+        "file": "public/art-src/states/NY/1.jpg",
+        "subject": "New York State Capitol, Albany",
+        "title": "NYSCapitolPanorama",
+        "creator": "Matt H. Wade",
+        "license": "CC BY 3.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:NYSCapitolPanorama.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/NYSCapitolPanorama.jpg/1920px-NYSCapitolPanorama.jpg"
+      },
+      {
+        "file": "public/art-src/states/NY/2.jpg",
+        "subject": "New York Court of Appeals, Albany",
+        "title": "CourtofAppealsPano",
+        "creator": "UpstateNYer",
+        "license": "CC BY-SA 3.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:CourtofAppealsPano.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/CourtofAppealsPano.jpg/1920px-CourtofAppealsPano.jpg"
+      },
+      {
+        "file": "public/art-src/states/NY/3.jpg",
+        "subject": "Thurgood Marshall United States Courthouse, Manhattan",
+        "title": "Thurgood Marshall United States Courthouse 008",
+        "creator": "Kidfly182",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Thurgood_Marshall_United_States_Courthouse_008.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Thurgood_Marshall_United_States_Courthouse_008.jpg/1920px-Thurgood_Marshall_United_States_Courthouse_008.jpg"
+      },
+      {
+        "file": "public/art-src/states/NY/4.jpg",
+        "subject": "Manhattan skyline, New York",
+        "title": "View of Manhattan skyline, New York, New York LCCN2015645963",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:View_of_Manhattan_skyline,_New_York,_New_York_LCCN2015645963.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e7/View_of_Manhattan_skyline%2C_New_York%2C_New_York_LCCN2015645963.tif/lossy-page1-1920px-View_of_Manhattan_skyline%2C_New_York%2C_New_York_LCCN2015645963.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/NY/5.jpg",
+        "subject": "Manhattan skyline at dusk, New York",
+        "title": "Dusk view of Manhattan Skyline, New York, New York LCCN2011632074",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Dusk_view_of_Manhattan_Skyline,_New_York,_New_York_LCCN2011632074.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Dusk_view_of_Manhattan_Skyline%2C_New_York%2C_New_York_LCCN2011632074.tif/lossy-page1-1920px-Dusk_view_of_Manhattan_Skyline%2C_New_York%2C_New_York_LCCN2011632074.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/NY/6.jpg",
+        "subject": "Lower Manhattan skyline, New York",
+        "title": "Lower Manhattan skyline, including the World Trade Center, New York, New York LCCN2011633437",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Lower_Manhattan_skyline,_including_the_World_Trade_Center,_New_York,_New_York_LCCN2011633437.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Lower_Manhattan_skyline%2C_including_the_World_Trade_Center%2C_New_York%2C_New_York_LCCN2011633437.tif/lossy-page1-1920px-Lower_Manhattan_skyline%2C_including_the_World_Trade_Center%2C_New_York%2C_New_York_LCCN2011633437.tif.jpg"
+      }
+    ],
+    "GA": [
+      {
+        "file": "public/art-src/states/GA/1.jpg",
+        "subject": "Georgia State Capitol, Atlanta",
+        "title": "Georgia Capitol, Atlanta, Georgia LCCN2011631475",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Georgia_Capitol,_Atlanta,_Georgia_LCCN2011631475.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Georgia_Capitol%2C_Atlanta%2C_Georgia_LCCN2011631475.tif/lossy-page1-1920px-Georgia_Capitol%2C_Atlanta%2C_Georgia_LCCN2011631475.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/GA/2.jpg",
+        "subject": "Supreme Court of Georgia (Nathan Deal Judicial Center), Atlanta",
+        "title": "The Supreme Court of Georgia is located at the Nathan Deal Judicial Center in Atlanta",
+        "creator": "Harrison Keely",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Supreme_Court_of_Georgia_is_located_at_the_Nathan_Deal_Judicial_Center_in_Atlanta.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/The_Supreme_Court_of_Georgia_is_located_at_the_Nathan_Deal_Judicial_Center_in_Atlanta.jpg/1920px-The_Supreme_Court_of_Georgia_is_located_at_the_Nathan_Deal_Judicial_Center_in_Atlanta.jpg"
+      },
+      {
+        "file": "public/art-src/states/GA/3.jpg",
+        "subject": "U.S. Court House, Augusta, Georgia",
+        "title": "Exterior. U.S. Court House, Augusta, Georgia LCCN2014630055",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Exterior._U.S._Court_House,_Augusta,_Georgia_LCCN2014630055.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/Exterior._U.S._Court_House%2C_Augusta%2C_Georgia_LCCN2014630055.tif/lossy-page1-1920px-Exterior._U.S._Court_House%2C_Augusta%2C_Georgia_LCCN2014630055.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/GA/4.jpg",
+        "subject": "Atlanta skyline from Jackson Street Bridge (night)",
+        "title": "Jackson Street Bridge and Atlanta Night Skyline (Unsplash)",
+        "creator": "Joey Kyber",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Jackson_Street_Bridge_and_Atlanta_Night_Skyline_(Unsplash).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Jackson_Street_Bridge_and_Atlanta_Night_Skyline_%28Unsplash%29.jpg/1920px-Jackson_Street_Bridge_and_Atlanta_Night_Skyline_%28Unsplash%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/GA/5.jpg",
+        "subject": "Atlanta skyline from Mableton",
+        "title": "Atlanta Skyline from Mableton",
+        "creator": "brandon walker",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Atlanta_Skyline_from_Mableton.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Atlanta_Skyline_from_Mableton.jpg/1920px-Atlanta_Skyline_from_Mableton.jpg"
+      },
+      {
+        "file": "public/art-src/states/GA/6.jpg",
+        "subject": "Georgia State Capitol front, Atlanta",
+        "title": "The front of the Georgia State Capitol building in Atlanta",
+        "creator": "Harrison Keely",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:The_front_of_the_Georgia_State_Capitol_building_in_Atlanta.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/The_front_of_the_Georgia_State_Capitol_building_in_Atlanta.jpg/1920px-The_front_of_the_Georgia_State_Capitol_building_in_Atlanta.jpg"
+      }
+    ],
+    "FL": [
+      {
+        "file": "public/art-src/states/FL/1.jpg",
+        "subject": "Florida State Capitol, Tallahassee",
+        "title": "Florida's Historic Capitol and Florida State Capitol 2",
+        "creator": "Michael Rivera",
+        "license": "CC BY-SA 3.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Florida%E2%80%99s_Historic_Capitol_and_Florida_State_Capitol_2.JPG",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Florida%E2%80%99s_Historic_Capitol_and_Florida_State_Capitol_2.JPG/1920px-Florida%E2%80%99s_Historic_Capitol_and_Florida_State_Capitol_2.JPG"
+      },
+      {
+        "file": "public/art-src/states/FL/2.jpg",
+        "subject": "Florida Supreme Court, Tallahassee",
+        "title": "Florida-Supreme-Court-with-Bunting-2019",
+        "creator": "Bruin79",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Florida-Supreme-Court-with-Bunting-2019.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Florida-Supreme-Court-with-Bunting-2019.jpg/1920px-Florida-Supreme-Court-with-Bunting-2019.jpg"
+      },
+      {
+        "file": "public/art-src/states/FL/3.jpg",
+        "subject": "David W. Dyer Federal Building and U.S. Courthouse, Miami",
+        "title": "Courtyard, David W. Dyer Federal Building and U.S. Courthouse, Miami, Florida LCCN2010718998",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Courtyard,_David_W._Dyer_Federal_Building_and_U.S._Courthouse,_Miami,_Florida_LCCN2010718998.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f9/Courtyard%2C_David_W._Dyer_Federal_Building_and_U.S._Courthouse%2C_Miami%2C_Florida_LCCN2010718998.tif/lossy-page1-1920px-Courtyard%2C_David_W._Dyer_Federal_Building_and_U.S._Courthouse%2C_Miami%2C_Florida_LCCN2010718998.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/FL/4.jpg",
+        "subject": "Miami skyline from Biscayne Bay, Florida",
+        "title": "Miami skyline from Biscayne Bay, Florida LCCN2011634548",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Miami_skyline_from_Biscayne_Bay,_Florida_LCCN2011634548.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Miami_skyline_from_Biscayne_Bay%2C_Florida_LCCN2011634548.tif/lossy-page1-1920px-Miami_skyline_from_Biscayne_Bay%2C_Florida_LCCN2011634548.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/FL/5.jpg",
+        "subject": "Art Deco building, South Beach, Miami Beach, Florida",
+        "title": "Art deco building in South Beach neighborhood of Miami Beach, Florida LCCN2011636550",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Art_deco_building_in_South_Beach_neighborhood_of_Miami_Beach,_Florida_LCCN2011636550.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Art_deco_building_in_South_Beach_neighborhood_of_Miami_Beach%2C_Florida_LCCN2011636550.tif/lossy-page1-1920px-Art_deco_building_in_South_Beach_neighborhood_of_Miami_Beach%2C_Florida_LCCN2011636550.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/FL/6.jpg",
+        "subject": "Miami, Florida",
+        "title": "Miami, Florida LCCN2011630380",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Miami,_Florida_LCCN2011630380.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/12/Miami%2C_Florida_LCCN2011630380.tif/lossy-page1-1920px-Miami%2C_Florida_LCCN2011630380.tif.jpg"
+      }
+    ],
+    "CA": [
+      {
+        "file": "public/art-src/states/CA/1.jpg",
+        "subject": "California State Capitol, Sacramento",
+        "title": "California State Capitol (top), NW view up",
+        "creator": "Radomianin",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:California_State_Capitol_(top),_NW_view_up.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/California_State_Capitol_%28top%29%2C_NW_view_up.jpg/1920px-California_State_Capitol_%28top%29%2C_NW_view_up.jpg"
+      },
+      {
+        "file": "public/art-src/states/CA/2.jpg",
+        "subject": "Supreme Court of California, San Francisco",
+        "title": "Supreme Court of California - panoramio",
+        "creator": "Alen Istokovic",
+        "license": "CC BY 3.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Supreme_Court_of_California_-_panoramio.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/Supreme_Court_of_California_-_panoramio.jpg/1920px-Supreme_Court_of_California_-_panoramio.jpg"
+      },
+      {
+        "file": "public/art-src/states/CA/3.jpg",
+        "subject": "James R. Browning U.S. Court of Appeals Building, San Francisco",
+        "title": "Mission Street facade, James R. Browning U.S. Court of Appeals Building, San Francisco, California LCCN2010719387",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Mission_Street_fa%C3%A7ade,_James_R._Browning_U.S._Court_of_Appeals_Building,_San_Francisco,_California_LCCN2010719387.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Mission_Street_fa%C3%A7ade%2C_James_R._Browning_U.S._Court_of_Appeals_Building%2C_San_Francisco%2C_California_LCCN2010719387.tif/lossy-page1-1920px-Mission_Street_fa%C3%A7ade%2C_James_R._Browning_U.S._Court_of_Appeals_Building%2C_San_Francisco%2C_California_LCCN2010719387.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/CA/4.jpg",
+        "subject": "Los Angeles skyline, California",
+        "title": "Skyline view of Los Angeles, California LCCN2013631636",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Skyline_view_of_Los_Angeles,_California_LCCN2013631636.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/Skyline_view_of_Los_Angeles%2C_California_LCCN2013631636.tif/lossy-page1-1920px-Skyline_view_of_Los_Angeles%2C_California_LCCN2013631636.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/CA/5.jpg",
+        "subject": "San Francisco skyline at dusk, California",
+        "title": "Skyline at dusk, San Francisco, California LCCN2011631218",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Skyline_at_dusk,_San_Francisco,_California_LCCN2011631218.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/Skyline_at_dusk%2C_San_Francisco%2C_California_LCCN2011631218.tif/lossy-page1-1920px-Skyline_at_dusk%2C_San_Francisco%2C_California_LCCN2011631218.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/CA/6.jpg",
+        "subject": "Central Los Angeles skyline, California",
+        "title": "Skyline of Central Los Angeles, California LCCN2013631483",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Skyline_of_Central_Los_Angeles,_California_LCCN2013631483.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Skyline_of_Central_Los_Angeles%2C_California_LCCN2013631483.tif/lossy-page1-1920px-Skyline_of_Central_Los_Angeles%2C_California_LCCN2013631483.tif.jpg"
+      }
+    ],
+    "IL": [
+      {
+        "file": "public/art-src/states/IL/1.jpg",
+        "subject": "Illinois State Capitol, Springfield",
+        "title": "Illinois State Capitol, Springfield, IL",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Illinois_State_Capitol,_Springfield,_IL.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/Illinois_State_Capitol%2C_Springfield%2C_IL.jpg/1920px-Illinois_State_Capitol%2C_Springfield%2C_IL.jpg"
+      },
+      {
+        "file": "public/art-src/states/IL/2.jpg",
+        "subject": "Illinois Supreme Court Building, Springfield",
+        "title": "GFP-Illinois-Springfield-downtown Supreme Court Building",
+        "creator": "Yinan Chen",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:GFP-Illinois-Springfield-downtown_Supreme_Court_Building.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/85/GFP-Illinois-Springfield-downtown_Supreme_Court_Building.jpg/1920px-GFP-Illinois-Springfield-downtown_Supreme_Court_Building.jpg"
+      },
+      {
+        "file": "public/art-src/states/IL/3.jpg",
+        "subject": "Dirksen United States Courthouse, Chicago",
+        "title": "Dirksen United States Courthouse, Chicago Loop, Chicago, Illinois (11004248426)",
+        "creator": "Ken Lund",
+        "license": "CC BY-SA 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Dirksen_United_States_Courthouse,_Chicago_Loop,_Chicago,_Illinois_(11004248426).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/Dirksen_United_States_Courthouse%2C_Chicago_Loop%2C_Chicago%2C_Illinois_%2811004248426%29.jpg/1920px-Dirksen_United_States_Courthouse%2C_Chicago_Loop%2C_Chicago%2C_Illinois_%2811004248426%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/IL/4.jpg",
+        "subject": "Chicago skyline and lakefront, Illinois",
+        "title": "Skyline and lakefront, Chicago, Illinois LCCN2011631067",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Skyline_and_lakefront,_Chicago,_Illinois_LCCN2011631067.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e8/Skyline_and_lakefront%2C_Chicago%2C_Illinois_LCCN2011631067.tif/lossy-page1-1920px-Skyline_and_lakefront%2C_Chicago%2C_Illinois_LCCN2011631067.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/IL/5.jpg",
+        "subject": "Chicago skyline and train tracks, Illinois",
+        "title": "Skyline and train tracks, Chicago, Illinois LCCN2011631118",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Skyline_and_train_tracks,_Chicago,_Illinois_LCCN2011631118.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Skyline_and_train_tracks%2C_Chicago%2C_Illinois_LCCN2011631118.tif/lossy-page1-1920px-Skyline_and_train_tracks%2C_Chicago%2C_Illinois_LCCN2011631118.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/IL/6.jpg",
+        "subject": "Chicago aerial skyline, Illinois",
+        "title": "Aerial view of skyline, Chicago, Illinois LCCN2011632332",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_skyline,_Chicago,_Illinois_LCCN2011632332.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Aerial_view_of_skyline%2C_Chicago%2C_Illinois_LCCN2011632332.tif/lossy-page1-1920px-Aerial_view_of_skyline%2C_Chicago%2C_Illinois_LCCN2011632332.tif.jpg"
+      }
+    ],
+    "DC": [
+      {
+        "file": "public/art-src/states/DC/1.jpg",
+        "subject": "United States Capitol, Washington, D.C.",
+        "title": "U.S. Capitol building, Washington, D.C LCCN2011630770",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:U.S._Capitol_building,_Washington,_D.C_LCCN2011630770.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/U.S._Capitol_building%2C_Washington%2C_D.C_LCCN2011630770.tif/lossy-page1-1920px-U.S._Capitol_building%2C_Washington%2C_D.C_LCCN2011630770.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/DC/2.jpg",
+        "subject": "U.S. Supreme Court Building, Washington, D.C.",
+        "title": "Supreme Court Building, Washington, D.C LCCN2011632073",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Supreme_Court_Building,_Washington,_D.C_LCCN2011632073.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/Supreme_Court_Building%2C_Washington%2C_D.C_LCCN2011632073.tif/lossy-page1-1920px-Supreme_Court_Building%2C_Washington%2C_D.C_LCCN2011632073.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/DC/3.jpg",
+        "subject": "E. Barrett Prettyman U.S. Courthouse, Washington, D.C.",
+        "title": "Washington D.C. Federal Courthouse - E. Barrett Prettyman (54271895303)",
+        "creator": "Tony Webster",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Washington_D.C._Federal_Courthouse_-_E._Barrett_Prettyman_(54271895303).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Washington_D.C._Federal_Courthouse_-_E._Barrett_Prettyman_%2854271895303%29.jpg/1920px-Washington_D.C._Federal_Courthouse_-_E._Barrett_Prettyman_%2854271895303%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/DC/4.jpg",
+        "subject": "Lincoln Memorial, Washington, D.C.",
+        "title": "Lincoln Memorial, Washington, D.C LCCN2011630704",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Lincoln_Memorial,_Washington,_D.C_LCCN2011630704.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/Lincoln_Memorial%2C_Washington%2C_D.C_LCCN2011630704.tif/lossy-page1-1920px-Lincoln_Memorial%2C_Washington%2C_D.C_LCCN2011630704.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/DC/5.jpg",
+        "subject": "Aerial view, United States Capitol, Washington, D.C.",
+        "title": "Aerial view, United States Capitol building, Washington, D.C LCCN2010630477",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Aerial_view,_United_States_Capitol_building,_Washington,_D.C_LCCN2010630477.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/80/Aerial_view%2C_United_States_Capitol_building%2C_Washington%2C_D.C_LCCN2010630477.jpg/1920px-Aerial_view%2C_United_States_Capitol_building%2C_Washington%2C_D.C_LCCN2010630477.jpg"
+      },
+      {
+        "file": "public/art-src/states/DC/6.jpg",
+        "subject": "U.S. Supreme Court building facade, Washington, D.C.",
+        "title": "U.S. Supreme Court building, Washington, D.C LCCN2011630083",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:U.S._Supreme_Court_building,_Washington,_D.C_LCCN2011630083.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/U.S._Supreme_Court_building%2C_Washington%2C_D.C_LCCN2011630083.tif/lossy-page1-1920px-U.S._Supreme_Court_building%2C_Washington%2C_D.C_LCCN2011630083.tif.jpg"
+      }
+    ]
+  }
+}
