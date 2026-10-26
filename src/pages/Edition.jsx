@@ -40,7 +40,6 @@ export default function Edition() {
       return;
     }
 
-    const hint = wrap.querySelector('.ed-cover__scroll');
     let raf = 0;
     const update = () => {
       raf = 0;
@@ -48,9 +47,8 @@ export default function Edition() {
       const travel = wrap.offsetHeight - vh; // scroll distance over which the cover is pinned
       const scrolled = -wrap.getBoundingClientRect().top;
       const p = Math.max(0, Math.min(1, travel > 0 ? scrolled / travel : 0));
-      wrap.style.setProperty('--push', String(p));
-      root.style.setProperty('--pin', String(Math.max(0, (p - 0.75) * 4))); // appears as the push completes
-      if (hint) hint.style.opacity = String(Math.max(0, 1 - p * 5));
+      wrap.style.setProperty('--push', String(p));   // inherits to cover plates / stage / scroll hint
+      root.style.setProperty('--pin', String(Math.max(0, (p - 0.75) * 4))); // pinned label as the push completes
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);

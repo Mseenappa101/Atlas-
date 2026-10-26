@@ -73,18 +73,18 @@
 .ed-display {
   font-family: var(--ed-sans);
   font-weight: 500;
-  line-height: 0.92;
-  letter-spacing: -0.02em;
-  font-size: clamp(3rem, 12vw, 9.5rem);
+  line-height: 0.86;
+  letter-spacing: -0.035em;
+  font-size: clamp(3.4rem, 14vw, 11rem);
   text-wrap: balance;
 }
 .ed-tagline {
   font-family: var(--ed-serif);
   font-style: italic;
   font-weight: 400;
-  line-height: 1.24;
-  font-size: clamp(1.4rem, 3.4vw, 2.6rem);
-  max-width: 24ch;
+  line-height: 1.2;
+  font-size: clamp(1.6rem, 3.8vw, 2.9rem);
+  max-width: 22ch;
 }
 /* oversized swash initial on the tagline */
 .ed-tagline .ed-swash {
@@ -92,10 +92,10 @@
   font-style: italic;
   font-weight: 500;
   color: var(--ed-gold);
-  font-size: 2.6em;
-  line-height: 0.6;
+  font-size: 3.1em;
+  line-height: 0.62;
   float: left;
-  padding: 0.08em 0.1em 0 0;
+  padding: 0.06em 0.12em 0 0;
 }
 .ed-body {
   font-family: var(--ed-sans);
@@ -154,12 +154,16 @@
 .ed-cover__plate { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% 28%; }
 .ed-cover__plate--color { opacity: calc(1 - var(--push, 0) * 1.1); }
 .ed-cover__plate--line {
-  mix-blend-mode: screen; opacity: calc(var(--push, 0) * 1.4);
-  transform: scale(calc(1 + var(--push, 0) * 0.12)); transform-origin: 62% 40%;
+  mix-blend-mode: screen; opacity: calc(var(--push, 0) * 1.7);
+  filter: brightness(1.5) contrast(1.15);
+  transform: scale(calc(1 + var(--push, 0) * 0.14)); transform-origin: 62% 40%;
 }
-.ed-cover__space { position: absolute; inset: 0; opacity: calc(var(--push, 0) * 1.2); }
+.ed-cover__space { position: absolute; inset: 0; opacity: calc(var(--push, 0) * 1.3); }
+/* veil sits over the plates for panel contrast on the cover, then recedes during the push so the
+   etched figure and starfield read boldly (like the reference) rather than staying dimmed. */
 .ed-cover__veil {
   position: absolute; inset: 0; pointer-events: none;
+  opacity: calc(1 - var(--push, 0) * 0.7);
   background:
     radial-gradient(120% 90% at 38% 44%, rgba(7, 8, 9, 0.82) 0%, rgba(7, 8, 9, 0.5) 38%, rgba(7, 8, 9, 0.72) 100%);
 }
@@ -203,7 +207,7 @@
 
 .ed-cover__scroll {
   position: absolute; bottom: 2.2rem; left: 50%; transform: translateX(-50%); z-index: 3;
-  opacity: 0; animation: ed-fade-up 1s ease forwards; animation-delay: 2.4s;
+  opacity: calc(1 - var(--push, 0) * 6); /* fades the instant the push begins */
   font-family: var(--ed-sans); font-size: 0.72rem; letter-spacing: 0.26em; text-transform: uppercase;
   color: rgba(243, 236, 221, 0.6);
 }
