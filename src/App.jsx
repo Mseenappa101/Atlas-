@@ -45,6 +45,13 @@ const Dashboard = lazy(() => import('./pages/Dashboard'));
 const ProtectedRoute = lazy(() => import('./components/ProtectedRoute'));
 // Editorial redesign — heavy, self-contained (own CSS + fonts). Lazy so it never loads with the app shell.
 const Edition = lazy(() => import('./pages/Edition'));
+const EditionPage = () => (
+  <Suspense fallback={<div className="min-h-screen" style={{ background: '#0B0D10' }} />}>
+    <Edition />
+  </Suspense>
+);
+// Routes that take over the viewport with their own dark chrome — the light app nav/banner/footer are hidden.
+const TAKEOVER_ROUTES = new Set(['/', '/edition']);
 const ComponentsGallery = import.meta.env.DEV ? lazy(() => import('./pages/dev/Components')) : null;
 const DevPostcard = import.meta.env.DEV ? lazy(() => import('./pages/dev/Postcard')) : null;
 
@@ -71,7 +78,9 @@ function AppRoutes() {
   return (
     <div key={location.pathname} className="route-fade">
         <Routes location={location}>
-      <Route path="/" element={<Home />} />
+      {/* The Firmward Edition is the homepage; the previous Home lives at /classic until we decide. */}
+      <Route path="/" element={<EditionPage />} />
+      <Route path="/classic" element={<Home />} />
       <Route path="/explore" element={<Explore />} />
       <Route path="/firms/:slug" element={<FirmPage />} />
       <Route path="/pro" element={<Pro />} />
@@ -89,7 +98,7 @@ function AppRoutes() {
       <Route path="/workshop" element={<Workshop />} />
       <Route path="/families" element={<Families />} />
       <Route path="/about" element={<About />} />
-      <Route path="/edition" element={<Suspense fallback={<div className="min-h-screen" style={{ background: '#0B0D10' }} />}><Edition /></Suspense>} />
+      <Route path="/edition" element={<EditionPage />} />
       <Route path="/thanks/signup" element={<ThanksSignup />} />
       {/* Retired: Vercel 301s this to /sprint/course; this is the dev/client-side fallback. */}
       <Route path="/thanks/sprint" element={<Navigate to="/sprint/course" replace />} />
@@ -131,10 +140,12 @@ function AppRoutes() {
   );
 }
 
-export default function App() {
+function AppShell() {
+  const { pathname } = useLocation();
+  const takeover = TAKEOVER_ROUTES.has(pathname); // Edition supplies its own dark nav + footer
   const routes = <AppRoutes />;
   return (
-    <BrowserRouter>
+    <>
       <SmoothScroll />
       <SessionProvider>
       <AccessProvider>
@@ -142,16 +153,24 @@ export default function App() {
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-2 focus:z-50 focus:rounded-app focus:bg-card focus:px-3 focus:py-2 focus:text-t14">
         Skip to content
       </a>
-      <FoundingBanner />
-      <AppNav />
+      {!takeover && <FoundingBanner />}
+      {!takeover && <AppNav />}
       <Toaster position="bottom-right" toastOptions={{ className: 'font-app', style: { borderRadius: '6px' } }} />
       <div id="main">
         <Suspense fallback={null}>{flags.accounts ? <AuthProvider>{routes}</AuthProvider> : routes}</Suspense>
       </div>
-      <Footer />
+      {!takeover && <Footer />}
       </MyListProvider>
       </AccessProvider>
       </SessionProvider>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppShell />
     </BrowserRouter>
   );
 }
