@@ -43,6 +43,8 @@ const Onboarding = lazy(() => import('./pages/Onboarding'));
 const Settings = lazy(() => import('./pages/Settings'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const ProtectedRoute = lazy(() => import('./components/ProtectedRoute'));
+// Editorial redesign — heavy, self-contained (own CSS + fonts). Lazy so it never loads with the app shell.
+const Edition = lazy(() => import('./pages/Edition'));
 const ComponentsGallery = import.meta.env.DEV ? lazy(() => import('./pages/dev/Components')) : null;
 const DevPostcard = import.meta.env.DEV ? lazy(() => import('./pages/dev/Postcard')) : null;
 
@@ -87,6 +89,7 @@ function AppRoutes() {
       <Route path="/workshop" element={<Workshop />} />
       <Route path="/families" element={<Families />} />
       <Route path="/about" element={<About />} />
+      <Route path="/edition" element={<Suspense fallback={<div className="min-h-screen" style={{ background: '#0B0D10' }} />}><Edition /></Suspense>} />
       <Route path="/thanks/signup" element={<ThanksSignup />} />
       {/* Retired: Vercel 301s this to /sprint/course; this is the dev/client-side fallback. */}
       <Route path="/thanks/sprint" element={<Navigate to="/sprint/course" replace />} />

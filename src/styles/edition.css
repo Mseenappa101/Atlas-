@@ -1,0 +1,394 @@
+/* ============================================================================
+   The Firmward Edition — editorial redesign (feat/editorial-redesign)
+   Scoped entirely under `.edition`; imported only by the lazy Edition route,
+   so none of this touches the main site bundle or its CLS budget.
+
+   Patterns recreate the *techniques* of a classical magazine "editions" page:
+   construction-line intro, push-through to a night starfield, a sticky
+   Roman-numeral chapter index, giant grotesk headlines over editorial serif
+   taglines with swash initials, line-art→colour plate reveals, and torn-paper
+   transitions into cream "paper" sections. No third-party artwork/brand/fonts.
+   ============================================================================ */
+
+/* ── Fonts (self-hosted variable woff2; fetched only when this route renders) ── */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/space-grotesk.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'Cormorant';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/cormorant.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'Cormorant';
+  font-style: italic;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/cormorant-italic.woff2') format('woff2-variations');
+}
+
+/* ── Palette ── */
+.edition {
+  --ed-night: #0B0D10;        /* near-black ground */
+  --ed-night-2: #070809;      /* deeper vignette */
+  --ed-ink: #1A1613;          /* ink on paper */
+  --ed-ink-2: #5A5147;        /* muted ink */
+  --ed-paper: #F3ECDD;        /* cream paper */
+  --ed-paper-2: #E9DFC9;      /* paper shadow */
+  --ed-cream: #EDE4D1;
+  --ed-gold: #C9A66B;         /* golden-ratio construction lines, swash initials */
+  --ed-gold-soft: #9C8352;
+  --ed-green: #1F5C45;        /* brand accent (on paper) */
+  --ed-green-bright: #6FD39E; /* accessible accent on night (AA large) */
+  --ed-star: rgba(255, 253, 246, 0.9);
+
+  --ed-sans: 'Space Grotesk', 'Hanken Grotesk', system-ui, sans-serif;
+  --ed-serif: 'Cormorant', 'Newsreader', Georgia, serif;
+
+  color: var(--ed-paper);
+  background: var(--ed-night);
+  font-family: var(--ed-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+/* The Edition takes over the viewport ground; neutralise the app's light bg while mounted. */
+.edition-root { background: var(--ed-night); }
+
+/* ── Typographic primitives ── */
+.ed-kicker {
+  font-family: var(--ed-sans);
+  font-weight: 500;
+  font-size: clamp(0.66rem, 1.4vw, 0.8rem);
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--ed-gold);
+}
+.ed-display {
+  font-family: var(--ed-sans);
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  font-size: clamp(3rem, 12vw, 9.5rem);
+  text-wrap: balance;
+}
+.ed-tagline {
+  font-family: var(--ed-serif);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.24;
+  font-size: clamp(1.4rem, 3.4vw, 2.6rem);
+  max-width: 24ch;
+}
+/* oversized swash initial on the tagline */
+.ed-tagline .ed-swash {
+  font-family: var(--ed-serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--ed-gold);
+  font-size: 2.6em;
+  line-height: 0.6;
+  float: left;
+  padding: 0.08em 0.1em 0 0;
+}
+.ed-body {
+  font-family: var(--ed-sans);
+  font-weight: 400;
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  line-height: 1.65;
+  max-width: 62ch;
+}
+.ed-roman { font-feature-settings: 'tnum' 1; }
+
+/* ── Intro push-through: tall wrap pins the cover, then the construction frame
+      zooms toward the viewer and fades, revealing the starfield behind. ── */
+.ed-intro-wrap { position: relative; height: 220vh; }
+.ed-intro {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(120% 90% at 50% 40%, #12151a 0%, var(--ed-night) 55%, var(--ed-night-2) 100%);
+  overflow: hidden;
+}
+/* starfield revealed behind the zooming frame */
+.ed-intro__space { position: absolute; inset: 0; opacity: var(--push, 0); }
+.ed-intro__stage {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  transform: scale(calc(1 + var(--push, 0) * 7));
+  opacity: calc(1 - var(--push, 0) * 1.4);
+  transform-origin: 61.8% 50%; /* zoom toward the golden-ratio focus, not dead centre */
+  will-change: transform, opacity;
+}
+.ed-intro__svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ed-intro__svg path,
+.ed-intro__svg rect,
+.ed-intro__svg circle,
+.ed-intro__svg line {
+  stroke: var(--ed-gold);
+  fill: none;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: var(--len, 2000);
+  stroke-dashoffset: var(--len, 2000);
+  animation: ed-draw 2.4s var(--ed-ease, cubic-bezier(0.22, 1, 0.36, 1)) forwards;
+  animation-delay: calc(var(--i, 0) * 180ms);
+  opacity: 0.55;
+}
+@keyframes ed-draw { to { stroke-dashoffset: 0; } }
+
+.ed-intro__mark {
+  position: relative;
+  text-align: center;
+  z-index: 2;
+  opacity: 0;
+  animation: ed-fade-up 1.2s ease forwards;
+  animation-delay: 1.5s;
+}
+.ed-intro__mark .ed-wordmark {
+  font-family: var(--ed-serif);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 4.5vw, 3.2rem);
+  letter-spacing: 0.02em;
+}
+.ed-intro__mark .ed-wordmark em { font-style: italic; color: var(--ed-gold); }
+.ed-intro__scroll {
+  position: absolute;
+  bottom: 2.2rem; left: 50%; transform: translateX(-50%);
+  z-index: 2; opacity: 0;
+  animation: ed-fade-up 1s ease forwards; animation-delay: 2.6s;
+  font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ed-gold-soft);
+}
+.ed-intro__scroll::after {
+  content: ''; display: block; width: 1px; height: 38px; margin: 0.75rem auto 0;
+  background: linear-gradient(var(--ed-gold-soft), transparent);
+  animation: ed-pulse 2s ease-in-out infinite;
+}
+
+@keyframes ed-fade-up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes ed-pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+/* ── Night starfield (push-through target) ── */
+.ed-night {
+  position: relative;
+  background:
+    radial-gradient(130% 80% at 50% 0%, #10141b 0%, var(--ed-night) 50%, var(--ed-night-2) 100%);
+}
+.ed-stars {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+}
+.ed-stars::before, .ed-stars::after {
+  content: ''; position: absolute; inset: -20% 0;
+  /* two layered dotted "star" fields via radial-gradient tiles */
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, var(--ed-star) 50%, transparent 52%),
+    radial-gradient(1px 1px at 70% 60%, var(--ed-star) 50%, transparent 52%),
+    radial-gradient(1.4px 1.4px at 40% 80%, var(--ed-star) 50%, transparent 52%),
+    radial-gradient(1px 1px at 85% 15%, var(--ed-star) 50%, transparent 52%),
+    radial-gradient(1.2px 1.2px at 55% 45%, var(--ed-star) 50%, transparent 52%);
+  background-size: 260px 260px, 320px 320px, 400px 400px, 300px 300px, 360px 360px;
+  opacity: 0.5;
+  animation: ed-twinkle 6s ease-in-out infinite alternate;
+}
+.ed-stars::after { opacity: 0.28; background-size: 500px 500px, 620px 620px, 540px 540px, 700px 700px, 480px 480px; animation-duration: 9s; }
+@keyframes ed-twinkle { from { opacity: 0.25; } to { opacity: 0.6; } }
+
+/* ── Sticky chapter index (desktop rail) ── */
+.ed-index {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0 1.25rem;
+}
+.ed-index__title {
+  font-family: var(--ed-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ed-gold-soft);
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.02em;
+}
+.ed-index__item {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr auto;
+  align-items: baseline;
+  gap: 0.5rem;
+  width: 100%;
+  background: none;
+  border: 0;
+  padding: 0.45rem 0;
+  text-align: left;
+  color: rgba(243, 236, 221, 0.4);
+  cursor: pointer;
+  transition: color 240ms ease;
+  font-family: var(--ed-sans);
+}
+.ed-index__num {
+  font-size: 0.72rem; letter-spacing: 0.1em; color: var(--ed-gold-soft);
+  transition: color 240ms ease;
+}
+.ed-index__label {
+  font-size: 0.95rem; letter-spacing: 0.01em; white-space: nowrap;
+}
+.ed-index__dots {
+  flex: 1; align-self: center; border-bottom: 1px dotted rgba(201, 166, 107, 0.3);
+  margin: 0 0.1rem; height: 1px; min-width: 1.5rem;
+}
+.ed-index__item:hover { color: rgba(243, 236, 221, 0.75); }
+.ed-index__item:focus-visible { outline: 2px solid var(--ed-green-bright); outline-offset: 3px; border-radius: 3px; }
+.ed-index__item[aria-current='true'] { color: var(--ed-paper); }
+.ed-index__item[aria-current='true'] .ed-index__num { color: var(--ed-green-bright); }
+.ed-index__item[aria-current='true'] .ed-index__label { font-weight: 500; }
+
+/* ── Chapter ── */
+.ed-chapter { position: relative; scroll-margin-top: 0; }
+.ed-chapter__head { padding: clamp(4rem, 12vh, 9rem) 0 clamp(2rem, 6vh, 4rem); }
+.ed-chapter__num {
+  font-family: var(--ed-serif); font-style: italic;
+  font-size: clamp(1rem, 2.2vw, 1.4rem); color: var(--ed-gold); letter-spacing: 0.05em;
+}
+
+/* art plate: line-art crossfades to colour as it scrolls through view */
+.ed-plate { position: relative; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 2px; }
+.ed-plate__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ed-plate__line {
+  mix-blend-mode: screen;
+  opacity: calc(1 - var(--reveal, 0));
+  filter: contrast(1.1);
+}
+.ed-plate__color {
+  opacity: var(--reveal, 0);
+  transform: scale(calc(1.06 - var(--reveal, 0) * 0.06));
+}
+.ed-plate__frame { position: absolute; inset: 0; border: 1px solid rgba(201, 166, 107, 0.35); pointer-events: none; }
+.ed-plate__frame::after {
+  content: ''; position: absolute; inset: 7px; border: 1px solid rgba(201, 166, 107, 0.18);
+}
+
+/* ── Paper (cream) content sections ── */
+.ed-paper-section {
+  position: relative;
+  background: var(--ed-paper);
+  color: var(--ed-ink);
+}
+.ed-paper-section .ed-kicker { color: var(--ed-green); }
+.ed-paper-section .ed-body { color: var(--ed-ink); }
+.ed-paper-section .ed-tagline { color: var(--ed-ink); }
+.ed-paper-section .ed-tagline .ed-swash { color: var(--ed-green); }
+
+/* torn-paper top edge: a cream mask that bites into the dark section above */
+.ed-torn {
+  position: relative;
+  height: 48px;
+  margin-top: -1px;
+  background: var(--ed-paper);
+  -webkit-mask: var(--torn-mask); mask: var(--torn-mask);
+  --torn-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='48' preserveAspectRatio='none'%3E%3Cpath d='M0,48 L0,22 C60,10 120,30 200,20 C280,10 340,34 430,24 C520,14 580,32 680,22 C780,12 840,30 940,22 C1040,14 1120,32 1200,20 L1200,48 Z' fill='%23000'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+}
+/* torn edge going back INTO the dark (flip vertically) */
+.ed-torn--up { transform: scaleY(-1); margin-top: 0; margin-bottom: -1px; }
+
+/* ── Scroll-reveal primitive (IntersectionObserver toggles .is-in) ── */
+.ed-reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.9s var(--ed-ease, cubic-bezier(0.22,1,0.36,1)), transform 0.9s var(--ed-ease, cubic-bezier(0.22,1,0.36,1)); }
+.ed-reveal.is-in { opacity: 1; transform: none; }
+.ed-reveal[data-d='1'] { transition-delay: 0.08s; }
+.ed-reveal[data-d='2'] { transition-delay: 0.16s; }
+.ed-reveal[data-d='3'] { transition-delay: 0.24s; }
+
+/* ── Chapter body (figure + text) ── */
+.ed-chapter__body { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(1.75rem, 4vw, 3.5rem); align-items: center; }
+.ed-chapter__text { display: flex; flex-direction: column; gap: 1.25rem; }
+@media (max-width: 680px) { .ed-chapter__body { grid-template-columns: 1fr; } }
+
+.ed-price {
+  font-family: var(--ed-sans); font-weight: 500; font-size: 0.82rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ed-green-bright);
+}
+.ed-paper-section .ed-price { color: var(--ed-green); }
+
+.ed-cta {
+  align-self: flex-start;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--ed-sans); font-weight: 500; font-size: 0.95rem; letter-spacing: 0.01em;
+  padding: 0.72rem 1.4rem; border-radius: 2px;
+  background: var(--ed-green-bright); color: #06130d;
+  text-decoration: none;
+  transition: transform 220ms var(--ed-ease, cubic-bezier(0.22,1,0.36,1)), background 220ms ease;
+  will-change: transform;
+}
+.ed-cta::after { content: '→'; transition: transform 220ms var(--ed-ease, cubic-bezier(0.22,1,0.36,1)); }
+.ed-cta:hover { transform: translateY(-2px); background: #83e0b0; }
+.ed-cta:hover::after { transform: translateX(4px); }
+.ed-cta:focus-visible { outline: 2px solid var(--ed-gold); outline-offset: 3px; }
+.ed-paper-section .ed-cta { background: var(--ed-green); color: #fff; }
+.ed-paper-section .ed-cta:hover { background: #174a37; }
+
+.ed-panel { padding: clamp(2.5rem, 7vh, 5rem) 0; }
+.ed-paper-section.ed-panel { padding-left: clamp(1.25rem, 4vw, 3rem); padding-right: clamp(1.25rem, 4vw, 3rem); border-radius: 2px; }
+
+/* subtle paper grain + deckle shadow */
+.ed-paper-section::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(26, 22, 19, 0.06);
+  background-image: radial-gradient(rgba(90, 81, 71, 0.045) 1px, transparent 1px);
+  background-size: 4px 4px;
+}
+
+/* ── Layout rails ── */
+.ed-wrap { max-width: 1240px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 3rem); }
+.ed-grid-rail { display: grid; grid-template-columns: 220px 1fr; gap: clamp(1.5rem, 5vw, 4rem); align-items: start; }
+
+/* ── Mobile chapter bar ── */
+.ed-topbar {
+  position: sticky; top: 0; z-index: 30;
+  display: none;
+  background: rgba(11, 13, 16, 0.86);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(201, 166, 107, 0.18);
+}
+.ed-topbar__track { display: flex; gap: 0.25rem; overflow-x: auto; padding: 0.6rem 1rem; scrollbar-width: none; }
+.ed-topbar__track::-webkit-scrollbar { display: none; }
+.ed-topbar__item {
+  flex: 0 0 auto; background: none; border: 0; cursor: pointer;
+  font-family: var(--ed-sans); font-size: 0.8rem; letter-spacing: 0.02em;
+  color: rgba(243, 236, 221, 0.5); padding: 0.3rem 0.6rem; border-radius: 999px; white-space: nowrap;
+}
+.ed-topbar__item[aria-current='true'] { color: var(--ed-night); background: var(--ed-green-bright); font-weight: 600; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .ed-grid-rail { grid-template-columns: 1fr; gap: 1.5rem; }
+  .ed-index { display: none; }
+  .ed-topbar { display: block; }
+}
+
+/* ── Reduced motion: no draw-in, no push-through, no crossfade staging ── */
+@media (prefers-reduced-motion: reduce) {
+  .edition * { animation: none !important; }
+  .ed-intro-wrap { height: auto; }            /* no fake scroll distance */
+  /* keep the stage filling the cover (absolute inset:0); just drop the zoom. Note: `position: static`
+     here would break — will-change:transform makes the stage a containing block, collapsing the svg. */
+  .ed-intro__stage { transform: none; opacity: 1; will-change: auto; }
+  .ed-intro__space { display: none; }
+  .ed-intro__svg path, .ed-intro__svg rect, .ed-intro__svg circle, .ed-intro__svg line { stroke-dashoffset: 0; }
+  .ed-intro__mark, .ed-intro__scroll { opacity: 1; }
+  .ed-reveal { opacity: 1; transform: none; transition: none; }
+  .ed-plate__line { opacity: 0; }       /* show the finished colour plate outright */
+  .ed-plate__color { opacity: 1; transform: none; }
+  .ed-stars::before, .ed-stars::after { animation: none; }
+}
