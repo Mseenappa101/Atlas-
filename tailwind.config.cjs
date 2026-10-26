@@ -11,6 +11,8 @@ module.exports = {
       fg: { DEFAULT: 'var(--app-text)', 2: 'var(--app-text-2)' },
       line: 'var(--app-border)',
       brand: { DEFAULT: 'var(--app-brand)', hover: 'var(--app-brand-hover)', tint: 'var(--app-brand-tint)' },
+      navy: 'var(--app-navy)',
+      brass: { DEFAULT: 'var(--app-brass)', soft: 'var(--app-brass-soft)' },
       st: {
         open: 'var(--st-open)', 'open-text': 'var(--st-open-text)', 'open-bg': 'var(--st-open-bg)',
         soon: 'var(--st-soon)', 'soon-text': 'var(--st-soon-text)', 'soon-bg': 'var(--st-soon-bg)',
@@ -26,6 +28,9 @@ module.exports = {
       data: ['"JetBrains Mono"', '"Mono Fallback"', 'ui-monospace', 'monospace'],
       mono: ['"JetBrains Mono"', '"Mono Fallback"', 'ui-monospace', 'monospace'],
       doc: ['Newsreader', 'Georgia', 'serif'],
+      // Judiciary: carved display caps + reading serif (self-hosted in index.css).
+      display: ['Cinzel', '"Hanken Fallback"', 'Georgia', 'serif'],
+      serif: ['"EB Garamond"', 'Newsreader', 'Georgia', 'serif'],
     },
     fontSize: {
       // App scale: 12/14/16/20/24/32.

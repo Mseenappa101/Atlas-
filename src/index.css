@@ -25,6 +25,23 @@
   font-weight: 200 800;
   src: url('/fonts/newsreader.woff2') format('woff2-variations');
 }
+/* Judiciary type: Cinzel (carved inscription capitals) for display headings, EB Garamond for reading
+   serif. Self-hosted; used site-wide via the `display`/`serif` Tailwind families and page heroes. */
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal; font-display: swap; font-weight: 400 700;
+  src: url('/fonts/cinzel.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal; font-display: swap; font-weight: 400 700;
+  src: url('/fonts/eb-garamond.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: italic; font-display: swap; font-weight: 400 700;
+  src: url('/fonts/eb-garamond-italic.woff2') format('woff2-variations');
+}
 
 /* Metric-adjusted fallbacks so the web-font swap shifts layout ~none (CLS). Values computed exactly from
    the real font metrics with @capsizecss/metrics (Hanken Grotesk→Arial, JetBrains Mono→Courier New). */
@@ -48,14 +65,18 @@
 :root {
   color-scheme: light;
 
-  --app-bg: #F6F7F5;
-  --app-surface: #FFFFFF;
-  --app-text: #14181F;
-  --app-text-2: #5B6470;
-  --app-border: #E3E6E8;
-  --app-brand: #1F5C45;
+  /* Judiciary palette: marble/limestone surfaces, walnut ink, brass accents, deep navy; green brand kept. */
+  --app-bg: #F3EFE6;        /* warm marble/limestone ground */
+  --app-surface: #FBF8F1;   /* lighter marble card */
+  --app-text: #221A12;      /* walnut ink */
+  --app-text-2: #6A5B49;    /* muted walnut */
+  --app-border: #DED5C4;    /* limestone rule */
+  --app-brand: #1F5C45;     /* Firmward green (banker's lamp) */
   --app-brand-hover: #174A37;
-  --app-brand-tint: #E7F0EC;
+  --app-brand-tint: #E7EEE8;
+  --app-navy: #111A2B;      /* deep-navy sections */
+  --app-brass: #B4904E;     /* brass accent */
+  --app-brass-soft: #8C6F3C;
   /* Status: the base color marks dots and borders; the -text shade meets AA for labels. */
   --st-open: #1F7A4D;    --st-open-text: #1A6B43;   --st-open-bg: #E9F3EE;
   --st-soon: #B7791F;    --st-soon-text: #8A5A12;   --st-soon-bg: #FBF1E2;
