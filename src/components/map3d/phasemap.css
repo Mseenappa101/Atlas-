@@ -49,9 +49,9 @@
 .phasemap__back:focus-visible { outline: 2px solid #b4904e; outline-offset: 3px; }
 /* Attribution line for CC BY ring imagery (PD/CC0 need none). Small, bottom-right, unobtrusive. */
 .phasemap__credit {
-  position: absolute; bottom: 0.6rem; right: 0.8rem; pointer-events: auto; margin: 0;
+  position: absolute; bottom: 0.6rem; left: 0.8rem; pointer-events: auto; margin: 0;
   font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.68rem; letter-spacing: 0.01em;
-  color: rgba(244, 241, 234, 0.55); text-align: right; max-width: 60%;
+  color: rgba(244, 241, 234, 0.55); text-align: left; max-width: min(60%, 22rem);
 }
 .phasemap__credit a { color: rgba(143, 232, 187, 0.85); text-decoration: none; }
 .phasemap__credit a:hover { text-decoration: underline; }

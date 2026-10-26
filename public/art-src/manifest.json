@@ -509,6 +509,1433 @@
         "sourcePage": "https://commons.wikimedia.org/wiki/File:U.S._Supreme_Court_building,_Washington,_D.C_LCCN2011630083.tif",
         "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/U.S._Supreme_Court_building%2C_Washington%2C_D.C_LCCN2011630083.tif/lossy-page1-1920px-U.S._Supreme_Court_building%2C_Washington%2C_D.C_LCCN2011630083.tif.jpg"
       }
+    ],
+    "AL": [
+      {
+        "file": "public/art-src/states/AL/1.jpg",
+        "subject": "Alabama State Capitol, Montgomery",
+        "title": "State Capitol, Montgomery, Alabama LCCN2010637490",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:State_Capitol,_Montgomery,_Alabama_LCCN2010637490.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/State_Capitol%2C_Montgomery%2C_Alabama_LCCN2010637490.tif/lossy-page1-1920px-State_Capitol%2C_Montgomery%2C_Alabama_LCCN2010637490.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/AL/2.jpg",
+        "subject": "U.S. Post Office and Court House, Dothan, Alabama",
+        "title": "U.S. Post Office and Court House, Dothan, AL",
+        "creator": "Supervising Architect: Oscar Wenderoth",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:U.S._Post_Office_and_Court_House,_Dothan,_AL.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/U.S._Post_Office_and_Court_House%2C_Dothan%2C_AL.jpg/1920px-U.S._Post_Office_and_Court_House%2C_Dothan%2C_AL.jpg"
+      },
+      {
+        "file": "public/art-src/states/AL/3.jpg",
+        "subject": "Birmingham, Alabama skyline",
+        "title": "Skyline of Birmingham, Alabama LCCN2010636886",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Skyline_of_Birmingham,_Alabama_LCCN2010636886.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Skyline_of_Birmingham%2C_Alabama_LCCN2010636886.tif/lossy-page1-1920px-Skyline_of_Birmingham%2C_Alabama_LCCN2010636886.tif.jpg"
+      }
+    ],
+    "AK": [
+      {
+        "file": "public/art-src/states/AK/1.jpg",
+        "subject": "Alaska State Capitol, Juneau",
+        "title": "210103 Snowy capitol",
+        "creator": "James Brooks",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:210103_Snowy_capitol.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/210103_Snowy_capitol.jpg/1920px-210103_Snowy_capitol.jpg"
+      },
+      {
+        "file": "public/art-src/states/AK/2.jpg",
+        "subject": "Boney Courthouse, Anchorage, Alaska",
+        "title": "Boney Courthouse, Anchorage",
+        "creator": "James Brooks",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Boney_Courthouse,_Anchorage.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/Boney_Courthouse%2C_Anchorage.jpg/1920px-Boney_Courthouse%2C_Anchorage.jpg"
+      },
+      {
+        "file": "public/art-src/states/AK/3.jpg",
+        "subject": "Anchorage, Alaska skyline",
+        "title": "Anchorage, Alaska skyline",
+        "creator": "Quintin Soloviev",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Anchorage,_Alaska_skyline.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/be/Anchorage%2C_Alaska_skyline.jpg/1920px-Anchorage%2C_Alaska_skyline.jpg"
+      },
+      {
+        "file": "public/art-src/states/AK/4.jpg",
+        "subject": "Downtown Juneau, Alaska",
+        "title": "Juneau. Alaska (8108133318)",
+        "creator": "Bernard Spragg. NZ from Christchurch, New Zealand",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Juneau._Alaska_(8108133318).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Juneau._Alaska_%288108133318%29.jpg/1920px-Juneau._Alaska_%288108133318%29.jpg"
+      }
+    ],
+    "AZ": [
+      {
+        "file": "public/art-src/states/AZ/1.jpg",
+        "subject": "Arizona State Capitol, Phoenix",
+        "title": "AZ State Capitol Building 80635",
+        "creator": "",
+        "license": "CC BY 2.5",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:AZ_State_Capitol_Building_80635.JPG",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/99/AZ_State_Capitol_Building_80635.JPG"
+      },
+      {
+        "file": "public/art-src/states/AZ/2.jpg",
+        "subject": "Arizona Supreme Court, Phoenix",
+        "title": "Arizona Supreme Court, Phoenix, Arizona - panoramio (11)",
+        "creator": "davidpinter",
+        "license": "CC BY 3.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Arizona_Supreme_Court,_Phoenix,_Arizona_-_panoramio_(11).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/Arizona_Supreme_Court%2C_Phoenix%2C_Arizona_-_panoramio_%2811%29.jpg/1920px-Arizona_Supreme_Court%2C_Phoenix%2C_Arizona_-_panoramio_%2811%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/AZ/3.jpg",
+        "subject": "Sandra Day O'Connor U.S. Courthouse, Phoenix",
+        "title": "Sandra Day OConnor US Courthouse Phoenix, Arizona",
+        "creator": "Gonzo fan2007",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Sandra_Day_OConnor_US_Courthouse_Phoenix,_Arizona.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/84/Sandra_Day_OConnor_US_Courthouse_Phoenix%2C_Arizona.jpg/1920px-Sandra_Day_OConnor_US_Courthouse_Phoenix%2C_Arizona.jpg"
+      },
+      {
+        "file": "public/art-src/states/AZ/4.jpg",
+        "subject": "Phoenix, Arizona skyline",
+        "title": "Phoenix skyline Arizona USA",
+        "creator": "",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Phoenix_skyline_Arizona_USA.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Phoenix_skyline_Arizona_USA.jpg/1920px-Phoenix_skyline_Arizona_USA.jpg"
+      }
+    ],
+    "AR": [
+      {
+        "file": "public/art-src/states/AR/1.jpg",
+        "subject": "Arkansas State Capitol, Little Rock",
+        "title": "Arkansas State Capitol (2024)",
+        "creator": "xiquinhosilva",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Arkansas_State_Capitol_(2024).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Arkansas_State_Capitol_%282024%29.jpg/1920px-Arkansas_State_Capitol_%282024%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/AR/2.jpg",
+        "subject": "Richard Sheppard Arnold U.S. Post Office and Courthouse, Little Rock",
+        "title": "Exterior, Richard Sheppard Arnold U.S. Post Office and Courthouse is a monument five-story limestone building in Little Rock, Arkansas LCCN2010719649",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Exterior,_Richard_Sheppard_Arnold_U.S._Post_Office_and_Courthouse_is_a_monument_five-story_limestone_building_in_Little_Rock,_Arkansas_LCCN2010719649.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c0/Exterior%2C_Richard_Sheppard_Arnold_U.S._Post_Office_and_Courthouse_is_a_monument_five-story_limestone_building_in_Little_Rock%2C_Arkansas_LCCN2010719649.tif/lossy-page1-1920px-Exterior%2C_Richard_Sheppard_Arnold_U.S._Post_Office_and_Courthouse_is_a_monument_five-story_limestone_building_in_Little_Rock%2C_Arkansas_LCCN2010719649.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/AR/3.jpg",
+        "subject": "Little Rock, Arkansas skyline",
+        "title": "Little Rock, Arkansas skyline",
+        "creator": "Quintin Soloviev",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Little_Rock,_Arkansas_skyline.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Little_Rock%2C_Arkansas_skyline.jpg/1920px-Little_Rock%2C_Arkansas_skyline.jpg"
+      }
+    ],
+    "CO": [
+      {
+        "file": "public/art-src/states/CO/1.jpg",
+        "subject": "Colorado State Capitol, Denver",
+        "title": "Colorado State Capitol (2023)",
+        "creator": "xiquinhosilva",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Colorado_State_Capitol_(2023).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Colorado_State_Capitol_%282023%29.jpg/1920px-Colorado_State_Capitol_%282023%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/CO/2.jpg",
+        "subject": "Ralph L. Carr Colorado Judicial Center (Court of Appeals), Denver",
+        "title": "Colorado Court of Appeals",
+        "creator": "Jeffrey Beall",
+        "license": "CC BY 3.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Colorado_Court_of_Appeals.JPG",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/Colorado_Court_of_Appeals.JPG/1920px-Colorado_Court_of_Appeals.JPG"
+      },
+      {
+        "file": "public/art-src/states/CO/3.jpg",
+        "subject": "Byron R. White U.S. Courthouse, Denver",
+        "title": "Front exterior, Byron R. White U.S. Courthouse, Denver, Colorado LCCN2010719086",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Front_exterior,_Byron_R._White_U.S._Courthouse,_Denver,_Colorado_LCCN2010719086.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Front_exterior%2C_Byron_R._White_U.S._Courthouse%2C_Denver%2C_Colorado_LCCN2010719086.tif/lossy-page1-1920px-Front_exterior%2C_Byron_R._White_U.S._Courthouse%2C_Denver%2C_Colorado_LCCN2010719086.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/CO/4.jpg",
+        "subject": "Downtown Denver, Colorado skyline",
+        "title": "Downtown Denver, Colorado",
+        "creator": "Quintin Soloviev",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Downtown_Denver,_Colorado.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Downtown_Denver%2C_Colorado.jpg/1920px-Downtown_Denver%2C_Colorado.jpg"
+      }
+    ],
+    "CT": [
+      {
+        "file": "public/art-src/states/CT/1.jpg",
+        "subject": "Connecticut State Capitol, Hartford",
+        "title": "Connecticut State Capitol in Hartford CT",
+        "creator": "12019",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Connecticut_State_Capitol_in_Hartford_CT.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/Connecticut_State_Capitol_in_Hartford_CT.jpg/1920px-Connecticut_State_Capitol_in_Hartford_CT.jpg"
+      },
+      {
+        "file": "public/art-src/states/CT/2.jpg",
+        "subject": "Connecticut Supreme Court, Hartford",
+        "title": "Connecticut Supreme Court, Hartford CT",
+        "creator": "John Phelan",
+        "license": "CC BY 3.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Connecticut_Supreme_Court,_Hartford_CT.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Connecticut_Supreme_Court%2C_Hartford_CT.jpg/1920px-Connecticut_Supreme_Court%2C_Hartford_CT.jpg"
+      },
+      {
+        "file": "public/art-src/states/CT/3.jpg",
+        "subject": "Hartford, Connecticut skyline",
+        "title": "Hartford Skyline October 2025",
+        "creator": "Wobbanight",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Hartford_Skyline_October_2025.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Hartford_Skyline_October_2025.jpg/1920px-Hartford_Skyline_October_2025.jpg"
+      }
+    ],
+    "DE": [
+      {
+        "file": "public/art-src/states/DE/1.jpg",
+        "subject": "Delaware Legislative Hall (State Capitol), Dover",
+        "title": "Delaware State Capitol",
+        "creator": "",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Delaware_State_Capitol.jpg",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Delaware_State_Capitol.jpg"
+      },
+      {
+        "file": "public/art-src/states/DE/2.jpg",
+        "subject": "Wilmington, Delaware skyline",
+        "title": "Wilmington, Delaware skyline",
+        "creator": "Quintin Soloviev",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Wilmington,_Delaware_skyline.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Wilmington%2C_Delaware_skyline.jpg/1920px-Wilmington%2C_Delaware_skyline.jpg"
+      },
+      {
+        "file": "public/art-src/states/DE/3.jpg",
+        "subject": "Wilmington, Delaware",
+        "title": "Wilmington, Delaware, USA",
+        "creator": "Quintin Soloviev",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Wilmington,_Delaware,_USA.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/61/Wilmington%2C_Delaware%2C_USA.jpg/1920px-Wilmington%2C_Delaware%2C_USA.jpg"
+      },
+      {
+        "file": "public/art-src/states/DE/4.jpg",
+        "subject": "Wilmington, Delaware",
+        "title": "Wilmington",
+        "creator": "Luiz F. Castro, Lfcastro at pt.wikipedia",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Wilmington.jpeg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4f/Wilmington.jpeg/1920px-Wilmington.jpeg"
+      }
+    ],
+    "HI": [
+      {
+        "file": "public/art-src/states/HI/1.jpg",
+        "subject": "Hawaii State Capitol, Honolulu",
+        "title": "HAWAII--HAWAIIAN STATE CAPITOL, HONOLULU (OAHU I)",
+        "creator": "Charles O'Rear",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:HAWAII-HAWAIIAN_STATE_CAPITOL,_HONOLULU_(OAHU_I)_-_NARA_-_553744.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e8/HAWAII-HAWAIIAN_STATE_CAPITOL%2C_HONOLULU_%28OAHU_I%29_-_NARA_-_553744.jpg/1920px-HAWAII-HAWAIIAN_STATE_CAPITOL%2C_HONOLULU_%28OAHU_I%29_-_NARA_-_553744.jpg"
+      },
+      {
+        "file": "public/art-src/states/HI/2.jpg",
+        "subject": "Aliiolani Hale (Hawaii State Supreme Court), Honolulu",
+        "title": "Aliiolani Hale Honolulu",
+        "creator": "Radosław Botev",
+        "license": "CC BY 3.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Aliiolani_Hale_Honolulu.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/Aliiolani_Hale_Honolulu.jpg/1920px-Aliiolani_Hale_Honolulu.jpg"
+      },
+      {
+        "file": "public/art-src/states/HI/3.jpg",
+        "subject": "Prince Kuhio Federal Building & U.S. Courthouse, Honolulu",
+        "title": "Prince Kuhio Federal Building",
+        "creator": "No machine-readable author provided. Silver~commonswiki assumed (based on copyright claims).",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Prince_Kuhio_Federal_Building.JPG",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fb/Prince_Kuhio_Federal_Building.JPG/1920px-Prince_Kuhio_Federal_Building.JPG"
+      },
+      {
+        "file": "public/art-src/states/HI/4.jpg",
+        "subject": "Honolulu waterfront and Diamond Head, Hawaii",
+        "title": "HONOLULU WATERFRONT SEEN FROM THE TOP OF DIAMOND HEAD, THE EXTINCT VOLCANO WHICH IS THE ISLAND'S BEST-KNOWN LANDMARK",
+        "creator": "Charles O'Rear",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:HONOLULU_WATERFRONT_SEEN_FROM_THE_TOP_OF_DIAMOND_HEAD,_THE_EXTINCT_VOLCANO_WHICH_IS_THE_ISLAND%27S_BEST-KNOWN_LANDMARK_-_NARA_-_553675.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/84/HONOLULU_WATERFRONT_SEEN_FROM_THE_TOP_OF_DIAMOND_HEAD%2C_THE_EXTINCT_VOLCANO_WHICH_IS_THE_ISLAND%27S_BEST-KNOWN_LANDMARK_-_NARA_-_553675.jpg/1920px-HONOLULU_WATERFRONT_SEEN_FROM_THE_TOP_OF_DIAMOND_HEAD%2C_THE_EXTINCT_VOLCANO_WHICH_IS_THE_ISLAND%27S_BEST-KNOWN_LANDMARK_-_NARA_-_553675.jpg"
+      }
+    ],
+    "ID": [
+      {
+        "file": "public/art-src/states/ID/1.jpg",
+        "subject": "Idaho State Capitol, Boise",
+        "title": "Idaho State Capitol building",
+        "creator": "Quintin Soloviev",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Idaho_State_Capitol_building.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Idaho_State_Capitol_building.jpg/1920px-Idaho_State_Capitol_building.jpg"
+      },
+      {
+        "file": "public/art-src/states/ID/2.jpg",
+        "subject": "Idaho Supreme Court Building, Boise",
+        "title": "Idaho Supreme Court building",
+        "creator": "PA Uploader",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Idaho_Supreme_Court_building.jpg",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Idaho_Supreme_Court_building.jpg"
+      },
+      {
+        "file": "public/art-src/states/ID/3.jpg",
+        "subject": "Downtown Boise skyline, Idaho",
+        "title": "Boise10-6",
+        "creator": "Lordchadwick79",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Boise10-6.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Boise10-6.jpg/1920px-Boise10-6.jpg"
+      }
+    ],
+    "IN": [
+      {
+        "file": "public/art-src/states/IN/1.jpg",
+        "subject": "Indiana Statehouse, Indianapolis",
+        "title": "Indiana Statehouse - ca 1984 01",
+        "creator": "Gary Todd",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Indiana_Statehouse_-_ca_1984_01.jpg",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Indiana_Statehouse_-_ca_1984_01.jpg"
+      },
+      {
+        "file": "public/art-src/states/IN/2.jpg",
+        "subject": "Birch Bayh Federal Building & U.S. Courthouse, Indianapolis",
+        "title": "Exterior of the Birch Bayh Federal Building & U.S. Courthouse - 2015-08-02 - 03",
+        "creator": "Alejandro",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Exterior_of_the_Birch_Bayh_Federal_Building_%26_U.S._Courthouse_-_2015-08-02_-_03.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/Exterior_of_the_Birch_Bayh_Federal_Building_%26_U.S._Courthouse_-_2015-08-02_-_03.jpg/1920px-Exterior_of_the_Birch_Bayh_Federal_Building_%26_U.S._Courthouse_-_2015-08-02_-_03.jpg"
+      },
+      {
+        "file": "public/art-src/states/IN/3.jpg",
+        "subject": "Indianapolis skyline, Indiana",
+        "title": "Indianapolis skyline - 2014 April - Chris Bowman",
+        "creator": "Chris Bowman",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Indianapolis_skyline_-_2014_April_-_Chris_Bowman.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ec/Indianapolis_skyline_-_2014_April_-_Chris_Bowman.jpg/1920px-Indianapolis_skyline_-_2014_April_-_Chris_Bowman.jpg"
+      }
+    ],
+    "IA": [
+      {
+        "file": "public/art-src/states/IA/1.jpg",
+        "subject": "Iowa State Capitol, Des Moines",
+        "title": "Capitol building, Des Moines, Iowa",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Capitol_building,_Des_Moines,_Iowa.jpg",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/12/Capitol_building%2C_Des_Moines%2C_Iowa.jpg"
+      },
+      {
+        "file": "public/art-src/states/IA/2.jpg",
+        "subject": "U.S. District Courthouse, Des Moines, Iowa",
+        "title": "Des Moines Federal Courthouse",
+        "creator": "McGhiever",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Des_Moines_Federal_Courthouse.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Des_Moines_Federal_Courthouse.jpg/1920px-Des_Moines_Federal_Courthouse.jpg"
+      },
+      {
+        "file": "public/art-src/states/IA/3.jpg",
+        "subject": "Downtown Des Moines skyline, Iowa",
+        "title": "Des Moines Iowa 20090110 Downtown View",
+        "creator": "Ashton B Crew",
+        "license": "CC BY 3.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Des_Moines_Iowa_20090110_Downtown_View.JPG",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1b/Des_Moines_Iowa_20090110_Downtown_View.JPG/1920px-Des_Moines_Iowa_20090110_Downtown_View.JPG"
+      }
+    ],
+    "KS": [
+      {
+        "file": "public/art-src/states/KS/1.jpg",
+        "subject": "Kansas State Capitol, Topeka",
+        "title": "Kansas State Capitol in summer 2024",
+        "creator": "Nils Huenerfuerst",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Kansas_State_Capitol_in_summer_2024.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/08/Kansas_State_Capitol_in_summer_2024.jpg/1920px-Kansas_State_Capitol_in_summer_2024.jpg"
+      },
+      {
+        "file": "public/art-src/states/KS/2.jpg",
+        "subject": "Kansas State Capitol, Topeka",
+        "title": "Kansas State Capitol (March 17, 2023) 01",
+        "creator": "Elli",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Kansas_State_Capitol_(March_17,_2023)_01.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Kansas_State_Capitol_%28March_17%2C_2023%29_01.jpg/1920px-Kansas_State_Capitol_%28March_17%2C_2023%29_01.jpg"
+      },
+      {
+        "file": "public/art-src/states/KS/3.jpg",
+        "subject": "Wichita skyline, Kansas",
+        "title": "Wichita, Kansas skyline",
+        "creator": "Quintin Soloviev",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Wichita,_Kansas_skyline.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/Wichita%2C_Kansas_skyline.jpg/1920px-Wichita%2C_Kansas_skyline.jpg"
+      },
+      {
+        "file": "public/art-src/states/KS/4.jpg",
+        "subject": "Wichita skyline, Kansas",
+        "title": "Wichita, Kansas skyline aerial view",
+        "creator": "Quintin Soloviev",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Wichita,_Kansas_skyline_aerial_view.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Wichita%2C_Kansas_skyline_aerial_view.jpg/1920px-Wichita%2C_Kansas_skyline_aerial_view.jpg"
+      }
+    ],
+    "KY": [
+      {
+        "file": "public/art-src/states/KY/1.jpg",
+        "subject": "Kentucky State Capitol, Frankfort",
+        "title": "Kentucky State Capitol - DSC09147",
+        "creator": "Daderot",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Kentucky_State_Capitol_-_DSC09147.JPG",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/Kentucky_State_Capitol_-_DSC09147.JPG/1920px-Kentucky_State_Capitol_-_DSC09147.JPG"
+      },
+      {
+        "file": "public/art-src/states/KY/2.jpg",
+        "subject": "Gene Snyder U.S. Courthouse, Louisville, Kentucky",
+        "title": "Gene Snyder U.S. Courthouse and Custom House, Louisville, KY Sept 03",
+        "creator": "General Services Administration",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Gene_Snyder_U.S._Courthouse_and_Custom_House,_Louisville,_KY_Sept_03.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e2/Gene_Snyder_U.S._Courthouse_and_Custom_House%2C_Louisville%2C_KY_Sept_03.jpg/1920px-Gene_Snyder_U.S._Courthouse_and_Custom_House%2C_Louisville%2C_KY_Sept_03.jpg"
+      },
+      {
+        "file": "public/art-src/states/KY/3.jpg",
+        "subject": "Downtown Louisville skyline, Kentucky",
+        "title": "Downtown skyline- Louisville, KY",
+        "creator": "Brando03",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Downtown_skyline-_Louisville,_KY.jpg",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d2/Downtown_skyline-_Louisville%2C_KY.jpg"
+      }
+    ],
+    "ME": [
+      {
+        "file": "public/art-src/states/ME/1.jpg",
+        "subject": "Maine State House, Augusta",
+        "title": "Maine State House exterior view",
+        "creator": "Quintin Soloviev",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Maine_State_House_exterior_view.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/Maine_State_House_exterior_view.jpg/1920px-Maine_State_House_exterior_view.jpg"
+      },
+      {
+        "file": "public/art-src/states/ME/2.jpg",
+        "subject": "Edward T. Gignoux U.S. Courthouse, Portland, Maine",
+        "title": "Edward T. Gignoux U.S. Courthouse, Portland, Maine LCCN2014630000",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Edward_T._Gignoux_U.S._Courthouse,_Portland,_Maine_LCCN2014630000.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/Edward_T._Gignoux_U.S._Courthouse%2C_Portland%2C_Maine_LCCN2014630000.tif/lossy-page1-1920px-Edward_T._Gignoux_U.S._Courthouse%2C_Portland%2C_Maine_LCCN2014630000.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/ME/3.jpg",
+        "subject": "Portland Head Light, Cape Elizabeth, Maine",
+        "title": "2021-09-03 01 North view of Portland Head Light (1791), at Cape Elizabeth, Maine",
+        "creator": "Gordon Leggett",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:2021-09-03_01_North_view_of_Portland_Head_Light_(1791),_at_Cape_Elizabeth,_Maine.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a1/2021-09-03_01_North_view_of_Portland_Head_Light_%281791%29%2C_at_Cape_Elizabeth%2C_Maine.jpg/1920px-2021-09-03_01_North_view_of_Portland_Head_Light_%281791%29%2C_at_Cape_Elizabeth%2C_Maine.jpg"
+      }
+    ],
+    "MD": [
+      {
+        "file": "public/art-src/states/MD/1.jpg",
+        "subject": "Maryland State House, Annapolis",
+        "title": "State House Annapolis Maryland",
+        "creator": "Bernini123",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:State_House_Annapolis_Maryland.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/State_House_Annapolis_Maryland.jpg/1920px-State_House_Annapolis_Maryland.jpg"
+      },
+      {
+        "file": "public/art-src/states/MD/2.jpg",
+        "subject": "United States Courthouse (Courthouse East), Baltimore, Maryland",
+        "title": "1Courthouse east",
+        "creator": "Marylandstater ( talk )",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:1Courthouse_east.JPG",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/75/1Courthouse_east.JPG"
+      },
+      {
+        "file": "public/art-src/states/MD/3.jpg",
+        "subject": "Baltimore skyline, Maryland",
+        "title": "Baltimore, Maryland skyline",
+        "creator": "Quintin Soloviev",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Baltimore,_Maryland_skyline.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Baltimore%2C_Maryland_skyline.jpg/1920px-Baltimore%2C_Maryland_skyline.jpg"
+      }
+    ],
+    "MA": [
+      {
+        "file": "public/art-src/states/MA/1.jpg",
+        "subject": "Massachusetts State House, Boston",
+        "title": "Massachusetts State House - Boston, MA - DSC05480",
+        "creator": "Daderot",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Massachusetts_State_House_-_Boston,_MA_-_DSC05480.JPG",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b8/Massachusetts_State_House_-_Boston%2C_MA_-_DSC05480.JPG/1920px-Massachusetts_State_House_-_Boston%2C_MA_-_DSC05480.JPG"
+      },
+      {
+        "file": "public/art-src/states/MA/2.jpg",
+        "subject": "John Adams Courthouse (Massachusetts Supreme Judicial Court), Boston",
+        "title": "John Adams Courthouse, Boston",
+        "creator": "Kenneth C. Zirkel",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:John_Adams_Courthouse,_Boston.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/58/John_Adams_Courthouse%2C_Boston.jpg/1920px-John_Adams_Courthouse%2C_Boston.jpg"
+      },
+      {
+        "file": "public/art-src/states/MA/3.jpg",
+        "subject": "John Joseph Moakley United States Courthouse, Boston",
+        "title": "John Joseph Moakley United States Courthouse September 2024",
+        "creator": "4300streetcar",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:John_Joseph_Moakley_United_States_Courthouse_September_2024.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/John_Joseph_Moakley_United_States_Courthouse_September_2024.jpg/1920px-John_Joseph_Moakley_United_States_Courthouse_September_2024.jpg"
+      },
+      {
+        "file": "public/art-src/states/MA/4.jpg",
+        "subject": "Downtown Boston skyline, Massachusetts",
+        "title": "Skyline of Downtown Boston 20240704",
+        "creator": "Nkon21",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Skyline_of_Downtown_Boston_20240704.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b8/Skyline_of_Downtown_Boston_20240704.jpg/1920px-Skyline_of_Downtown_Boston_20240704.jpg"
+      }
+    ],
+    "MI": [
+      {
+        "file": "public/art-src/states/MI/1.jpg",
+        "subject": "Michigan State Capitol, Lansing",
+        "title": "The Michigan Capitol, completed in 1879 in Lansing",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Michigan_Capitol,_completed_in_1879_in_Lansing.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9f/The_Michigan_Capitol%2C_completed_in_1879_in_Lansing.jpg/1920px-The_Michigan_Capitol%2C_completed_in_1879_in_Lansing.jpg"
+      },
+      {
+        "file": "public/art-src/states/MI/2.jpg",
+        "subject": "Michigan Hall of Justice (Michigan Supreme Court), Lansing",
+        "title": "Michigan Hall of Justice - Michigan Supreme Court - Lansing",
+        "creator": "Tony Webster",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Michigan_Hall_of_Justice_-_Michigan_Supreme_Court_-_Lansing.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/Michigan_Hall_of_Justice_-_Michigan_Supreme_Court_-_Lansing.jpg/1920px-Michigan_Hall_of_Justice_-_Michigan_Supreme_Court_-_Lansing.jpg"
+      },
+      {
+        "file": "public/art-src/states/MI/3.jpg",
+        "subject": "Theodore Levin United States Courthouse, Detroit, Michigan",
+        "title": "Theodore Levin United States Courthouse, Detroit Federal Building, Detroit, Michigan LCCN2010719527",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Theodore_Levin_United_States_Courthouse,_Detroit_Federal_Building,_Detroit,_Michigan_LCCN2010719527.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Theodore_Levin_United_States_Courthouse%2C_Detroit_Federal_Building%2C_Detroit%2C_Michigan_LCCN2010719527.tif/lossy-page1-1920px-Theodore_Levin_United_States_Courthouse%2C_Detroit_Federal_Building%2C_Detroit%2C_Michigan_LCCN2010719527.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/MI/4.jpg",
+        "subject": "Detroit skyline, Michigan",
+        "title": "Detroit Skyline August 2024",
+        "creator": "TheWxResearcher",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Detroit_Skyline_August_2024.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Detroit_Skyline_August_2024.jpg/1920px-Detroit_Skyline_August_2024.jpg"
+      }
+    ],
+    "MN": [
+      {
+        "file": "public/art-src/states/MN/1.jpg",
+        "subject": "Minnesota State Capitol, Saint Paul",
+        "title": "Minnesota State Capitol, Saint-Paul",
+        "creator": "Cody escouade delta",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Minnesota_State_Capitol,_Saint-Paul.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/be/Minnesota_State_Capitol%2C_Saint-Paul.jpg/1920px-Minnesota_State_Capitol%2C_Saint-Paul.jpg"
+      },
+      {
+        "file": "public/art-src/states/MN/2.jpg",
+        "subject": "Minnesota Judicial Center (Minnesota Supreme Court), Saint Paul",
+        "title": "Minnesota Judicial Center - St. Paul (45468221812)",
+        "creator": "Tony Webster from Minneapolis, Minnesota, United States",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Minnesota_Judicial_Center_-_St._Paul_(45468221812).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/Minnesota_Judicial_Center_-_St._Paul_%2845468221812%29.jpg/1920px-Minnesota_Judicial_Center_-_St._Paul_%2845468221812%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/MN/3.jpg",
+        "subject": "Diana E. Murphy United States Courthouse, Minneapolis, Minnesota",
+        "title": "Diana E. Murphy United States Courthouse - Minneapolis",
+        "creator": "Tony Webster",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Diana_E._Murphy_United_States_Courthouse_-_Minneapolis.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/85/Diana_E._Murphy_United_States_Courthouse_-_Minneapolis.jpg/1920px-Diana_E._Murphy_United_States_Courthouse_-_Minneapolis.jpg"
+      },
+      {
+        "file": "public/art-src/states/MN/4.jpg",
+        "subject": "Downtown Minneapolis Federal Courthouse and skyline, Minnesota",
+        "title": "United States Courthouse, Downtown Minneapolis (34515073476)",
+        "creator": "Tony Webster",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:United_States_Courthouse,_Downtown_Minneapolis_(34515073476).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/United_States_Courthouse%2C_Downtown_Minneapolis_%2834515073476%29.jpg/1920px-United_States_Courthouse%2C_Downtown_Minneapolis_%2834515073476%29.jpg"
+      }
+    ],
+    "MS": [
+      {
+        "file": "public/art-src/states/MS/1.jpg",
+        "subject": "Mississippi State Capitol, Jackson",
+        "title": "Mississippi State Capitol - Flickr - shawnzrossi",
+        "creator": "Shawn Rossi from Brandon, MS, US",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Mississippi_State_Capitol_-_Flickr_-_shawnzrossi.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Mississippi_State_Capitol_-_Flickr_-_shawnzrossi.jpg/1920px-Mississippi_State_Capitol_-_Flickr_-_shawnzrossi.jpg"
+      },
+      {
+        "file": "public/art-src/states/MS/2.jpg",
+        "subject": "Carroll Gartin Justice Building (Mississippi Supreme Court), Jackson",
+        "title": "Carroll Gartin Justice Building 01",
+        "creator": "Ktkvtsh",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Carroll_Gartin_Justice_Building_01.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/09/Carroll_Gartin_Justice_Building_01.jpg/1920px-Carroll_Gartin_Justice_Building_01.jpg"
+      },
+      {
+        "file": "public/art-src/states/MS/3.jpg",
+        "subject": "United States Courthouse and Post Office, Jackson, Mississippi",
+        "title": "United States Courthouse and Post Office, Jackson, Mississippi 1901",
+        "creator": "USgov",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:United_States_Courthouse_and_Post_Office,_Jackson,_Mississippi_1901.jpg",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0a/United_States_Courthouse_and_Post_Office%2C_Jackson%2C_Mississippi_1901.jpg"
+      },
+      {
+        "file": "public/art-src/states/MS/4.jpg",
+        "subject": "Downtown Jackson skyline, Mississippi",
+        "title": "JacksonMS Downtown Panorama",
+        "creator": "chmeredith from Jackson, MS, USA",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:JacksonMS_Downtown_Panorama.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/85/JacksonMS_Downtown_Panorama.jpg/1920px-JacksonMS_Downtown_Panorama.jpg"
+      }
+    ],
+    "MO": [
+      {
+        "file": "public/art-src/states/MO/1.jpg",
+        "subject": "Missouri State Capitol, Jefferson City",
+        "title": "AP of Missouri State Capitol Building",
+        "creator": "KTrimble at English Wikipedia",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:AP_of_Missouri_State_Capitol_Building.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8f/AP_of_Missouri_State_Capitol_Building.jpg/1920px-AP_of_Missouri_State_Capitol_Building.jpg"
+      },
+      {
+        "file": "public/art-src/states/MO/2.jpg",
+        "subject": "Supreme Court of Missouri Building, Jefferson City",
+        "title": "Missouri Supreme Court Building in Jefferson City (33622748228)",
+        "creator": "Tony Webster from Minneapolis, Minnesota, United States",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Missouri_Supreme_Court_Building_in_Jefferson_City_(33622748228).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/84/Missouri_Supreme_Court_Building_in_Jefferson_City_%2833622748228%29.jpg/1920px-Missouri_Supreme_Court_Building_in_Jefferson_City_%2833622748228%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/MO/3.jpg",
+        "subject": "Thomas F. Eagleton United States Courthouse, St. Louis, Missouri",
+        "title": "Thomas F. Eagleton U.S. Courthouse (2013-A)",
+        "creator": "United States District Court for the Eastern District of Missouri",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Thomas_F._Eagleton_U.S._Courthouse_(2013-A).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/Thomas_F._Eagleton_U.S._Courthouse_%282013-A%29.jpg/1920px-Thomas_F._Eagleton_U.S._Courthouse_%282013-A%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/MO/4.jpg",
+        "subject": "Gateway Arch, St. Louis, Missouri",
+        "title": "Gateway Arch as seen from East St. Louis, IL (5263761913)",
+        "creator": "Jefferson National Expansion Memorial, NPS from St. Louis, MO, USA",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Gateway_Arch_as_seen_from_East_St._Louis,_IL_(5263761913).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Gateway_Arch_as_seen_from_East_St._Louis%2C_IL_%285263761913%29.jpg/1920px-Gateway_Arch_as_seen_from_East_St._Louis%2C_IL_%285263761913%29.jpg"
+      }
+    ],
+    "MT": [
+      {
+        "file": "public/art-src/states/MT/1.jpg",
+        "subject": "Montana State Capitol, Helena",
+        "title": "20210805 77 Montana State Capitol, Helena, Montana (51813232911)",
+        "creator": "David Wilson from Oak Park, Illinois, USA",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:20210805_77_Montana_State_Capitol,_Helena,_Montana_(51813232911).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/20210805_77_Montana_State_Capitol%2C_Helena%2C_Montana_%2851813232911%29.jpg/1920px-20210805_77_Montana_State_Capitol%2C_Helena%2C_Montana_%2851813232911%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/MT/2.jpg",
+        "subject": "Federal Building, U.S. Post Office and Courthouse, Missoula, Montana",
+        "title": "Federal Building, U.S. Post Office and Courthouse, Missoula, MT Jun 03",
+        "creator": "General Services Administration",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Federal_Building,_U.S._Post_Office_and_Courthouse,_Missoula,_MT_Jun_03.gif",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/17/Federal_Building%2C_U.S._Post_Office_and_Courthouse%2C_Missoula%2C_MT_Jun_03.gif"
+      },
+      {
+        "file": "public/art-src/states/MT/3.jpg",
+        "subject": "Cathedral of Saint Helena, Helena, Montana",
+        "title": "Cathedral of Saint Helena Montana, Angled View, 2025",
+        "creator": "Zero Contradictions",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Cathedral_of_Saint_Helena_Montana,_Angled_View,_2025.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/64/Cathedral_of_Saint_Helena_Montana%2C_Angled_View%2C_2025.jpg/1920px-Cathedral_of_Saint_Helena_Montana%2C_Angled_View%2C_2025.jpg"
+      }
+    ],
+    "NE": [
+      {
+        "file": "public/art-src/states/NE/1.jpg",
+        "subject": "Nebraska State Capitol, Lincoln",
+        "title": "Nebraska State Capitol, July 2026",
+        "creator": "Hurstbergn",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Nebraska_State_Capitol,_July_2026.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Nebraska_State_Capitol%2C_July_2026.jpg/1920px-Nebraska_State_Capitol%2C_July_2026.jpg"
+      },
+      {
+        "file": "public/art-src/states/NE/2.jpg",
+        "subject": "Nebraska Supreme Court, Lincoln",
+        "title": "NE Supreme Court (424073960)",
+        "creator": "Brenda",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:NE_Supreme_Court_(424073960).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/NE_Supreme_Court_%28424073960%29.jpg/1920px-NE_Supreme_Court_%28424073960%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/NE/3.jpg",
+        "subject": "Douglas County Courthouse, Omaha, Nebraska",
+        "title": "Douglas County Courthouse NPS photo",
+        "creator": "David Calease",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Douglas_County_Courthouse_NPS_photo.jpg",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/89/Douglas_County_Courthouse_NPS_photo.jpg"
+      },
+      {
+        "file": "public/art-src/states/NE/4.jpg",
+        "subject": "Omaha skyline, Nebraska",
+        "title": "City of Omaha, Nebraska Skyline on Gene Leahy Mall",
+        "creator": "JNOJ1423",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:City_of_Omaha,_Nebraska_Skyline_on_Gene_Leahy_Mall.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/City_of_Omaha%2C_Nebraska_Skyline_on_Gene_Leahy_Mall.jpg/1920px-City_of_Omaha%2C_Nebraska_Skyline_on_Gene_Leahy_Mall.jpg"
+      }
+    ],
+    "NV": [
+      {
+        "file": "public/art-src/states/NV/1.jpg",
+        "subject": "Nevada State Capitol, Carson City",
+        "title": "Nevada State Capitol Building - Carson City",
+        "creator": "Quintin Soloviev",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Nevada_State_Capitol_Building_-_Carson_City.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Nevada_State_Capitol_Building_-_Carson_City.jpg/1920px-Nevada_State_Capitol_Building_-_Carson_City.jpg"
+      },
+      {
+        "file": "public/art-src/states/NV/2.jpg",
+        "subject": "Nevada Supreme Court, Carson City",
+        "title": "Nevada Supreme Court",
+        "creator": "Quintin Soloviev",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Nevada_Supreme_Court.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Nevada_Supreme_Court.jpg/1920px-Nevada_Supreme_Court.jpg"
+      },
+      {
+        "file": "public/art-src/states/NV/3.jpg",
+        "subject": "U.S. Post Office and Courthouse, Las Vegas, Nevada",
+        "title": "U.S. Post Office and Courthouse, Las Vegas",
+        "creator": "Tavo Olmos",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:U.S._Post_Office_and_Courthouse,_Las_Vegas.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/U.S._Post_Office_and_Courthouse%2C_Las_Vegas.jpg/1920px-U.S._Post_Office_and_Courthouse%2C_Las_Vegas.jpg"
+      },
+      {
+        "file": "public/art-src/states/NV/4.jpg",
+        "subject": "Las Vegas skyline, Nevada",
+        "title": "Las Vegas skyline. (39596477442)",
+        "creator": "Bernard Spragg. NZ from Christchurch, New Zealand",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Las_Vegas_skyline._(39596477442).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4f/Las_Vegas_skyline._%2839596477442%29.jpg/1920px-Las_Vegas_skyline._%2839596477442%29.jpg"
+      }
+    ],
+    "NH": [
+      {
+        "file": "public/art-src/states/NH/1.jpg",
+        "subject": "New Hampshire State House, Concord",
+        "title": "New Hampshire State House",
+        "creator": "Quintin Soloviev",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:New_Hampshire_State_House.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/New_Hampshire_State_House.jpg/1920px-New_Hampshire_State_House.jpg"
+      },
+      {
+        "file": "public/art-src/states/NH/2.jpg",
+        "subject": "New Hampshire Supreme Court, Concord",
+        "title": "NHSupremeCt",
+        "creator": "SayCheeeeeese",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:NHSupremeCt.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/61/NHSupremeCt.jpg/1920px-NHSupremeCt.jpg"
+      },
+      {
+        "file": "public/art-src/states/NH/3.jpg",
+        "subject": "Portsmouth, New Hampshire aerial view",
+        "title": "Portsmouth NH aerial view",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Portsmouth_NH_aerial_view.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Portsmouth_NH_aerial_view.jpg/1920px-Portsmouth_NH_aerial_view.jpg"
+      }
+    ],
+    "NJ": [
+      {
+        "file": "public/art-src/states/NJ/1.jpg",
+        "subject": "New Jersey State House, Trenton",
+        "title": "New Jersey State House (4453967195)",
+        "creator": "Woodrow Wilson Presidential Library Archives from Staunton, VA",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:New_Jersey_State_House_(4453967195).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/16/New_Jersey_State_House_%284453967195%29.jpg/1920px-New_Jersey_State_House_%284453967195%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/NJ/2.jpg",
+        "subject": "Martin Luther King Building & U.S. Courthouse, Newark, New Jersey",
+        "title": "Martin Luther King Building & U.S. Courthouse (55184176685)",
+        "creator": "ajay_suresh",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Martin_Luther_King_Building_%26_U.S._Courthouse_(55184176685).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Martin_Luther_King_Building_%26_U.S._Courthouse_%2855184176685%29.jpg/1920px-Martin_Luther_King_Building_%26_U.S._Courthouse_%2855184176685%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/NJ/3.jpg",
+        "subject": "Newark skyline, New Jersey",
+        "title": "Newark NJ Skyline",
+        "creator": "Gamezilla2019",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Newark_NJ_Skyline.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/Newark_NJ_Skyline.jpg/1920px-Newark_NJ_Skyline.jpg"
+      }
+    ],
+    "NM": [
+      {
+        "file": "public/art-src/states/NM/1.jpg",
+        "subject": "New Mexico State Capitol (Roundhouse), Santa Fe",
+        "title": "New Mexico state capitol west entrance",
+        "creator": "N salazar",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:New_Mexico_state_capitol_west_entrance.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/New_Mexico_state_capitol_west_entrance.jpg/1920px-New_Mexico_state_capitol_west_entrance.jpg"
+      },
+      {
+        "file": "public/art-src/states/NM/2.jpg",
+        "subject": "New Mexico Supreme Court, Santa Fe",
+        "title": "NMSupremeCourtSantaFe",
+        "creator": "WhisperToMe",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:NMSupremeCourtSantaFe.JPG",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/NMSupremeCourtSantaFe.JPG/1920px-NMSupremeCourtSantaFe.JPG"
+      },
+      {
+        "file": "public/art-src/states/NM/3.jpg",
+        "subject": "U.S. Courthouse, Albuquerque, New Mexico",
+        "title": "Exterior street view of the U.S. Courthouse, Albuquerque, New Mexico LCCN2013634311",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Exterior_street_view_of_the_U.S._Courthouse,_Albuquerque,_New_Mexico_LCCN2013634311.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/Exterior_street_view_of_the_U.S._Courthouse%2C_Albuquerque%2C_New_Mexico_LCCN2013634311.tif/lossy-page1-1920px-Exterior_street_view_of_the_U.S._Courthouse%2C_Albuquerque%2C_New_Mexico_LCCN2013634311.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/NM/4.jpg",
+        "subject": "Palace of the Governors, Santa Fe, New Mexico",
+        "title": "Palace of the Governors",
+        "creator": "Tony Hisgett from Birmingham, UK",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Palace_of_the_Governors.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/Palace_of_the_Governors.jpg/1920px-Palace_of_the_Governors.jpg"
+      }
+    ],
+    "NC": [
+      {
+        "file": "public/art-src/states/NC/1.jpg",
+        "subject": "North Carolina State Capitol, Raleigh",
+        "title": "Raleigh - North Carolina State Capitol",
+        "creator": "P. Hughes",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Raleigh_-_North_Carolina_State_Capitol.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/Raleigh_-_North_Carolina_State_Capitol.jpg/1920px-Raleigh_-_North_Carolina_State_Capitol.jpg"
+      },
+      {
+        "file": "public/art-src/states/NC/2.jpg",
+        "subject": "North Carolina Supreme Court (Law and Justice Building), Raleigh",
+        "title": "Law and Justice Building, Raleigh",
+        "creator": "Indy beetle",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Law_and_Justice_Building,_Raleigh.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fb/Law_and_Justice_Building%2C_Raleigh.jpg/1920px-Law_and_Justice_Building%2C_Raleigh.jpg"
+      },
+      {
+        "file": "public/art-src/states/NC/3.jpg",
+        "subject": "L. Richardson Preyer Federal Building & Courthouse, Greensboro, North Carolina",
+        "title": "Exterior. The L. Richardson Preyer Federal Building and Court House in Greensboro, North Carolina LCCN2014630085",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Exterior._The_L._Richardson_Preyer_Federal_Building_and_Court_House_in_Greensboro,_North_Carolina_LCCN2014630085.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Exterior._The_L._Richardson_Preyer_Federal_Building_and_Court_House_in_Greensboro%2C_North_Carolina_LCCN2014630085.tif/lossy-page1-1920px-Exterior._The_L._Richardson_Preyer_Federal_Building_and_Court_House_in_Greensboro%2C_North_Carolina_LCCN2014630085.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/NC/4.jpg",
+        "subject": "Charlotte skyline, North Carolina",
+        "title": "Skyline of Charlotte 2016",
+        "creator": "brandon walker",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Skyline_of_Charlotte_2016.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/Skyline_of_Charlotte_2016.jpg/1920px-Skyline_of_Charlotte_2016.jpg"
+      }
+    ],
+    "ND": [
+      {
+        "file": "public/art-src/states/ND/1.jpg",
+        "subject": "North Dakota State Capitol, Bismarck",
+        "title": "North Dakota State Capitol",
+        "creator": "Quintin Soloviev",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:North_Dakota_State_Capitol.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/North_Dakota_State_Capitol.jpg/1920px-North_Dakota_State_Capitol.jpg"
+      },
+      {
+        "file": "public/art-src/states/ND/2.jpg",
+        "subject": "Federal Building and U.S. Courthouse, Fargo, North Dakota",
+        "title": "Exterior, Federal Building and U.S. Courthouse, Fargo, North Dakota LCCN2010719569",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Exterior,_Federal_Building_and_U.S._Courthouse,_Fargo,_North_Dakota_LCCN2010719569.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/Exterior%2C_Federal_Building_and_U.S._Courthouse%2C_Fargo%2C_North_Dakota_LCCN2010719569.tif/lossy-page1-1920px-Exterior%2C_Federal_Building_and_U.S._Courthouse%2C_Fargo%2C_North_Dakota_LCCN2010719569.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/ND/3.jpg",
+        "subject": "Downtown Fargo, North Dakota",
+        "title": "Downtown Fargo District 01",
+        "creator": "P. Hughes",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Downtown_Fargo_District_01.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/Downtown_Fargo_District_01.jpg/1920px-Downtown_Fargo_District_01.jpg"
+      }
+    ],
+    "OH": [
+      {
+        "file": "public/art-src/states/OH/1.jpg",
+        "subject": "Ohio Statehouse, Columbus",
+        "title": "Ohio Statehouse from High Street FE",
+        "creator": "General Ization",
+        "license": "CC BY 3.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Ohio_Statehouse_from_High_Street_FE.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Ohio_Statehouse_from_High_Street_FE.jpg/1920px-Ohio_Statehouse_from_High_Street_FE.jpg"
+      },
+      {
+        "file": "public/art-src/states/OH/2.jpg",
+        "subject": "Supreme Court of Ohio, Columbus",
+        "title": "Supreme Court of Ohio Building, Columbus, OH - 48310816257",
+        "creator": "w_lemay",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Supreme_Court_of_Ohio_Building,_Columbus,_OH_-_48310816257.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Supreme_Court_of_Ohio_Building%2C_Columbus%2C_OH_-_48310816257.jpg/1920px-Supreme_Court_of_Ohio_Building%2C_Columbus%2C_OH_-_48310816257.jpg"
+      },
+      {
+        "file": "public/art-src/states/OH/3.jpg",
+        "subject": "Potter Stewart U.S. Courthouse, Cincinnati",
+        "title": "Potter Stewart US Federal Courthouse, Cincinnati, OH (32278864737)",
+        "creator": "Warren LeMay from Cincinnati, OH, United States",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Potter_Stewart_US_Federal_Courthouse,_Cincinnati,_OH_(32278864737).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e7/Potter_Stewart_US_Federal_Courthouse%2C_Cincinnati%2C_OH_%2832278864737%29.jpg/1920px-Potter_Stewart_US_Federal_Courthouse%2C_Cincinnati%2C_OH_%2832278864737%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/OH/4.jpg",
+        "subject": "Columbus skyline, Ohio",
+        "title": "Skyline, Columbus, Ohio, 2009 LCCN2010630102",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Skyline,_Columbus,_Ohio,_2009_LCCN2010630102.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/68/Skyline%2C_Columbus%2C_Ohio%2C_2009_LCCN2010630102.tif/lossy-page1-1920px-Skyline%2C_Columbus%2C_Ohio%2C_2009_LCCN2010630102.tif.jpg"
+      }
+    ],
+    "OK": [
+      {
+        "file": "public/art-src/states/OK/1.jpg",
+        "subject": "Oklahoma State Capitol, Oklahoma City",
+        "title": "Oklahoma State Capitol 2024",
+        "creator": "Oklahoma Legislative Services Bureau",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Oklahoma_State_Capitol_2024.jpg",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/63/Oklahoma_State_Capitol_2024.jpg"
+      },
+      {
+        "file": "public/art-src/states/OK/2.jpg",
+        "subject": "U.S. Post Office & Courthouse, Oklahoma City",
+        "title": "OK-OKC-USPO-courthouse-northwest",
+        "creator": "Joel Bradshaw",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:OK-OKC-USPO-courthouse-northwest.JPG",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/OK-OKC-USPO-courthouse-northwest.JPG/1920px-OK-OKC-USPO-courthouse-northwest.JPG"
+      },
+      {
+        "file": "public/art-src/states/OK/3.jpg",
+        "subject": "Oklahoma City skyline",
+        "title": "Downtown Oklahoma City skyline",
+        "creator": "Urbanative",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Downtown_Oklahoma_City_skyline.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Downtown_Oklahoma_City_skyline.jpg/1920px-Downtown_Oklahoma_City_skyline.jpg"
+      }
+    ],
+    "OR": [
+      {
+        "file": "public/art-src/states/OR/1.jpg",
+        "subject": "Oregon State Capitol, Salem",
+        "title": "Oregon State Capitol 1",
+        "creator": "M.O. Stevens",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Oregon_State_Capitol_1.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ce/Oregon_State_Capitol_1.jpg/1920px-Oregon_State_Capitol_1.jpg"
+      },
+      {
+        "file": "public/art-src/states/OR/2.jpg",
+        "subject": "Oregon Supreme Court, Salem",
+        "title": "OregonSupremeCourtBuilding",
+        "creator": "M.O. Stevens at en.wikipedia",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:OregonSupremeCourtBuilding.JPG",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f4/OregonSupremeCourtBuilding.JPG/1920px-OregonSupremeCourtBuilding.JPG"
+      },
+      {
+        "file": "public/art-src/states/OR/3.jpg",
+        "subject": "Portland skyline, Oregon",
+        "title": "Portland Oregon Aerial, June 2024",
+        "creator": "Spicypepper999",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Portland_Oregon_Aerial,_June_2024.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ed/Portland_Oregon_Aerial%2C_June_2024.jpg/1920px-Portland_Oregon_Aerial%2C_June_2024.jpg"
+      }
+    ],
+    "PA": [
+      {
+        "file": "public/art-src/states/PA/1.jpg",
+        "subject": "Pennsylvania State Capitol, Harrisburg",
+        "title": "The Pennsylvania State Capitol in Fall (22158965144)",
+        "creator": "Governor Tom Wolf from Harrisburg, PA",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Pennsylvania_State_Capitol_in_Fall_(22158965144).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/The_Pennsylvania_State_Capitol_in_Fall_%2822158965144%29.jpg/1920px-The_Pennsylvania_State_Capitol_in_Fall_%2822158965144%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/PA/2.jpg",
+        "subject": "Robert N.C. Nix Federal Building, Philadelphia",
+        "title": "Exterior, Robert N.C. Nix Federal Building, Philadelphia, Pennsylvania LCCN2010718960",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Exterior,_Robert_N.C._Nix_Federal_Building,_Philadelphia,_Pennsylvania_LCCN2010718960.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/Exterior%2C_Robert_N.C._Nix_Federal_Building%2C_Philadelphia%2C_Pennsylvania_LCCN2010718960.tif/lossy-page1-1920px-Exterior%2C_Robert_N.C._Nix_Federal_Building%2C_Philadelphia%2C_Pennsylvania_LCCN2010718960.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/PA/3.jpg",
+        "subject": "Philadelphia skyline",
+        "title": "Philadelphia skyline panorama",
+        "creator": "Pierre Blaché",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Philadelphia_skyline_panorama.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/44/Philadelphia_skyline_panorama.jpg/1920px-Philadelphia_skyline_panorama.jpg"
+      }
+    ],
+    "RI": [
+      {
+        "file": "public/art-src/states/RI/1.jpg",
+        "subject": "Rhode Island State House, Providence",
+        "title": "2024 Rhode Island State House",
+        "creator": "Farragutful",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:2024_Rhode_Island_State_House.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/2024_Rhode_Island_State_House.jpg/1920px-2024_Rhode_Island_State_House.jpg"
+      },
+      {
+        "file": "public/art-src/states/RI/2.jpg",
+        "subject": "Federal Building & U.S. Courthouse, Providence",
+        "title": "Exterior, Federal Building and U.S. Courthouse, Providence, Rhode Island LCCN2010718932",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Exterior,_Federal_Building_and_U.S._Courthouse,_Providence,_Rhode_Island_LCCN2010718932.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Exterior%2C_Federal_Building_and_U.S._Courthouse%2C_Providence%2C_Rhode_Island_LCCN2010718932.tif/lossy-page1-1920px-Exterior%2C_Federal_Building_and_U.S._Courthouse%2C_Providence%2C_Rhode_Island_LCCN2010718932.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/RI/3.jpg",
+        "subject": "Providence skyline, Rhode Island",
+        "title": "Providence RI skyline",
+        "creator": "Quintin Soloviev",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Providence_RI_skyline.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ec/Providence_RI_skyline.jpg/1920px-Providence_RI_skyline.jpg"
+      }
+    ],
+    "SC": [
+      {
+        "file": "public/art-src/states/SC/1.jpg",
+        "subject": "South Carolina State House, Columbia",
+        "title": "Historic American Buildings Survey, April, 1960 SOUTH FACADE. - South Carolina State House, Capitol Square, Columbia, Richland County, SC",
+        "creator": "Jack Boucher",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Historic_American_Buildings_Survey,_April,_1960_SOUTH_FACADE._-_South_Carolina_State_House,_Capitol_Square,_Columbia,_Richland_County,_SC_HABS_SC,40-COLUM,9-1.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Historic_American_Buildings_Survey%2C_April%2C_1960_SOUTH_FACADE._-_South_Carolina_State_House%2C_Capitol_Square%2C_Columbia%2C_Richland_County%2C_SC_HABS_SC%2C40-COLUM%2C9-1.tif/lossy-page1-1920px-thumbnail.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/SC/2.jpg",
+        "subject": "South Carolina Supreme Court, Columbia",
+        "title": "SupremeCourtSCbuilding",
+        "creator": "Abductive",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:SupremeCourtSCbuilding.JPG",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/SupremeCourtSCbuilding.JPG/1920px-SupremeCourtSCbuilding.JPG"
+      },
+      {
+        "file": "public/art-src/states/SC/3.jpg",
+        "subject": "Columbia skyline, South Carolina",
+        "title": "Columbia, South Carolina, skyline",
+        "creator": "Runner1928",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Columbia,_South_Carolina,_skyline.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/Columbia%2C_South_Carolina%2C_skyline.jpg/1920px-Columbia%2C_South_Carolina%2C_skyline.jpg"
+      }
+    ],
+    "SD": [
+      {
+        "file": "public/art-src/states/SD/1.jpg",
+        "subject": "South Dakota State Capitol, Pierre",
+        "title": "South Dakota State Capitol (1919)",
+        "creator": "Internet Archive Book Images",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:South_Dakota_State_Capitol_(1919).jpg",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/60/South_Dakota_State_Capitol_%281919%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/SD/2.jpg",
+        "subject": "U.S. Courthouse, Sioux Falls",
+        "title": "Sioux Falls Federal Courthouse - U.S. Court House for the District of South Dakota",
+        "creator": "Tony Webster",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Sioux_Falls_Federal_Courthouse_-_U.S._Court_House_for_the_District_of_South_Dakota.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/Sioux_Falls_Federal_Courthouse_-_U.S._Court_House_for_the_District_of_South_Dakota.jpg/1920px-Sioux_Falls_Federal_Courthouse_-_U.S._Court_House_for_the_District_of_South_Dakota.jpg"
+      },
+      {
+        "file": "public/art-src/states/SD/3.jpg",
+        "subject": "Mount Rushmore, South Dakota",
+        "title": "Public Lands Institute - Mount Rushmore National Memorial - 007",
+        "creator": "Public Lands Institute",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Public_Lands_Institute_-_Mount_Rushmore_National_Memorial_-_007.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/Public_Lands_Institute_-_Mount_Rushmore_National_Memorial_-_007.tif/lossy-page1-1920px-Public_Lands_Institute_-_Mount_Rushmore_National_Memorial_-_007.tif.jpg"
+      }
+    ],
+    "TN": [
+      {
+        "file": "public/art-src/states/TN/1.jpg",
+        "subject": "Tennessee State Capitol, Nashville",
+        "title": "Capitol, Nashville, Tennessee LCCN2011630997",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Capitol,_Nashville,_Tennessee_LCCN2011630997.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f4/Capitol%2C_Nashville%2C_Tennessee_LCCN2011630997.tif/lossy-page1-1920px-Capitol%2C_Nashville%2C_Tennessee_LCCN2011630997.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/TN/2.jpg",
+        "subject": "Joel Solomon Federal Building and U.S. Courthouse, Chattanooga",
+        "title": "Exterior. The Joel Solomon Federal Building and U.S. Courthouse, Chattanooga, Tennessee LCCN2014630060",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Exterior._The_Joel_Solomon_Federal_Building_and_U.S._Courthouse,_Chattanooga,_Tennessee_LCCN2014630060.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Exterior._The_Joel_Solomon_Federal_Building_and_U.S._Courthouse%2C_Chattanooga%2C_Tennessee_LCCN2014630060.tif/lossy-page1-1920px-Exterior._The_Joel_Solomon_Federal_Building_and_U.S._Courthouse%2C_Chattanooga%2C_Tennessee_LCCN2014630060.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/TN/3.jpg",
+        "subject": "Nashville skyline, Tennessee",
+        "title": "Skyline, Nashville, Tennessee LCCN2010630791",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Skyline,_Nashville,_Tennessee_LCCN2010630791.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/Skyline%2C_Nashville%2C_Tennessee_LCCN2010630791.tif/lossy-page1-1920px-Skyline%2C_Nashville%2C_Tennessee_LCCN2010630791.tif.jpg"
+      }
+    ],
+    "UT": [
+      {
+        "file": "public/art-src/states/UT/1.jpg",
+        "subject": "Utah State Capitol, Salt Lake City",
+        "title": "Utah State Capitol, Salt Lake City, United States (Unsplash s4vuMuapk4Y)",
+        "creator": "Zac Nielson zacherynielson",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Utah_State_Capitol,_Salt_Lake_City,_United_States_(Unsplash_s4vuMuapk4Y).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6b/Utah_State_Capitol%2C_Salt_Lake_City%2C_United_States_%28Unsplash_s4vuMuapk4Y%29.jpg/1920px-Utah_State_Capitol%2C_Salt_Lake_City%2C_United_States_%28Unsplash_s4vuMuapk4Y%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/UT/2.jpg",
+        "subject": "Scott M. Matheson Courthouse (Utah Supreme Court), Salt Lake City",
+        "title": "Mathesoncourthouse",
+        "creator": "Staplegunther at English Wikipedia",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Mathesoncourthouse.jpg",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Mathesoncourthouse.jpg"
+      },
+      {
+        "file": "public/art-src/states/UT/3.jpg",
+        "subject": "Salt Lake City skyline, Utah",
+        "title": "Salt Lake City, Utah, United States skyline",
+        "creator": "888emmanuelc888",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Salt_Lake_City,_Utah,_United_States_skyline.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/Salt_Lake_City%2C_Utah%2C_United_States_skyline.jpg/1920px-Salt_Lake_City%2C_Utah%2C_United_States_skyline.jpg"
+      }
+    ],
+    "VT": [
+      {
+        "file": "public/art-src/states/VT/1.jpg",
+        "subject": "Vermont State House, Montpelier",
+        "title": "- Vermont State House, State Street at Western Avenue, Montpelier, Washington County, VT",
+        "creator": "",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Vermont_State_House,_State_Street_at_Western_Avenue,_Montpelier,_Washington_County,_VT_HABS_VT,12-MONT,2-1.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Vermont_State_House%2C_State_Street_at_Western_Avenue%2C_Montpelier%2C_Washington_County%2C_VT_HABS_VT%2C12-MONT%2C2-1.tif/lossy-page1-1920px-Vermont_State_House%2C_State_Street_at_Western_Avenue%2C_Montpelier%2C_Washington_County%2C_VT_HABS_VT%2C12-MONT%2C2-1.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/VT/2.jpg",
+        "subject": "Vermont Supreme Court, Montpelier",
+        "title": "VT Supreme Court",
+        "creator": "",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:VT_Supreme_Court.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/69/VT_Supreme_Court.jpg/1920px-VT_Supreme_Court.jpg"
+      },
+      {
+        "file": "public/art-src/states/VT/3.jpg",
+        "subject": "U.S. Post Office and Courthouse, Burlington, Vermont",
+        "title": "U. S. Post Office and court house, Burlington, Vt (66389)",
+        "creator": "Pub. by Riverside Paper Co., Burlington, Vt. \"Tichnor Quality Views\", Reg,U.S.Pat.Off., Made Only by Tichnor Bros., Inc., Boston, Mass.",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:U._S._Post_Office_and_court_house,_Burlington,_Vt_(66389).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/84/U._S._Post_Office_and_court_house%2C_Burlington%2C_Vt_%2866389%29.jpg/1920px-U._S._Post_Office_and_court_house%2C_Burlington%2C_Vt_%2866389%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/VT/4.jpg",
+        "subject": "Burlington skyline, Vermont",
+        "title": "Burlington vermont skyline",
+        "creator": "Dicky Hayward",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Burlington_vermont_skyline.jpg",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Burlington_vermont_skyline.jpg"
+      }
+    ],
+    "VA": [
+      {
+        "file": "public/art-src/states/VA/1.jpg",
+        "subject": "Virginia State Capitol, Richmond",
+        "title": "SOUTHWEST FACADE, MAIN BLOCK WITH APPROACHING STEPS - Virginia State Capitol, Bank and 10th Streets, Capitol Square, Richmond, Independent City, VA",
+        "creator": "",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:SOUTHWEST_FACADE,_MAIN_BLOCK_WITH_APPROACHING_STEPS_-_Virginia_State_Capitol,_Bank_and_10th_Streets,_Capitol_Square,_Richmond,_Independent_City,_VA_HABS_VA,44-RICH,9-2.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/SOUTHWEST_FACADE%2C_MAIN_BLOCK_WITH_APPROACHING_STEPS_-_Virginia_State_Capitol%2C_Bank_and_10th_Streets%2C_Capitol_Square%2C_Richmond%2C_Independent_City%2C_VA_HABS_VA%2C44-RICH%2C9-2.tif/lossy-page1-1920px-thumbnail.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/VA/2.jpg",
+        "subject": "State Library and Supreme Court of Appeals building, Richmond",
+        "title": "The new State Library and Supreme Court of Appeals building, Richmond, Va. (8631870100)",
+        "creator": "Boston Public Library",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:The_new_State_Library_and_Supreme_Court_of_Appeals_building,_Richmond,_Va._(8631870100).jpg",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/0/06/The_new_State_Library_and_Supreme_Court_of_Appeals_building%2C_Richmond%2C_Va._%288631870100%29.jpg"
+      },
+      {
+        "file": "public/art-src/states/VA/3.jpg",
+        "subject": "U.S. Court of Appeals for the Fourth Circuit, Richmond",
+        "title": "4th Circuit US Court of Appeals, Richmond, VA",
+        "creator": "Taber Andrew Bain",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:4th_Circuit_US_Court_of_Appeals,_Richmond,_VA.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/4th_Circuit_US_Court_of_Appeals%2C_Richmond%2C_VA.jpg/1920px-4th_Circuit_US_Court_of_Appeals%2C_Richmond%2C_VA.jpg"
+      },
+      {
+        "file": "public/art-src/states/VA/4.jpg",
+        "subject": "Richmond skyline, Virginia",
+        "title": "Richmond, Virginia skyline from Shockoe Bottom",
+        "creator": "Packer1028",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Richmond,_Virginia_skyline_from_Shockoe_Bottom.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e9/Richmond%2C_Virginia_skyline_from_Shockoe_Bottom.jpg/1920px-Richmond%2C_Virginia_skyline_from_Shockoe_Bottom.jpg"
+      }
+    ],
+    "WA": [
+      {
+        "file": "public/art-src/states/WA/1.jpg",
+        "subject": "Washington State Capitol, Olympia",
+        "title": "Washington State Capitol aerial view in summer",
+        "creator": "Nils Huenerfuerst",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Washington_State_Capitol_aerial_view_in_summer.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/Washington_State_Capitol_aerial_view_in_summer.jpg/1920px-Washington_State_Capitol_aerial_view_in_summer.jpg"
+      },
+      {
+        "file": "public/art-src/states/WA/2.jpg",
+        "subject": "Temple of Justice (Washington Supreme Court), Olympia",
+        "title": "Temple of Justice, Washington",
+        "creator": "Harvey Barrison from Massapequa, NY, USA",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Temple_of_Justice,_Washington.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/44/Temple_of_Justice%2C_Washington.jpg/1920px-Temple_of_Justice%2C_Washington.jpg"
+      },
+      {
+        "file": "public/art-src/states/WA/3.jpg",
+        "subject": "William Kenzo Nakamura U.S. Courthouse, Seattle",
+        "title": "William Kenzo Nakamura U.S. Courthouse, Seattle, Washington LCCN2010720886",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:William_Kenzo_Nakamura_U.S._Courthouse,_Seattle,_Washington_LCCN2010720886.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/William_Kenzo_Nakamura_U.S._Courthouse%2C_Seattle%2C_Washington_LCCN2010720886.tif/lossy-page1-1920px-William_Kenzo_Nakamura_U.S._Courthouse%2C_Seattle%2C_Washington_LCCN2010720886.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/WA/4.jpg",
+        "subject": "Seattle skyline, Washington",
+        "title": "Skyline, Seattle, Washington LCCN2010630402",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Skyline,_Seattle,_Washington_LCCN2010630402.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/28/Skyline%2C_Seattle%2C_Washington_LCCN2010630402.tif/lossy-page1-1920px-Skyline%2C_Seattle%2C_Washington_LCCN2010630402.tif.jpg"
+      }
+    ],
+    "WV": [
+      {
+        "file": "public/art-src/states/WV/1.jpg",
+        "subject": "West Virginia State Capitol, Charleston",
+        "title": "West Virginia State Capitol building",
+        "creator": "Quintin Soloviev",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:West_Virginia_State_Capitol_building.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/West_Virginia_State_Capitol_building.jpg/1920px-West_Virginia_State_Capitol_building.jpg"
+      },
+      {
+        "file": "public/art-src/states/WV/2.jpg",
+        "subject": "Charleston Federal Center, Charleston, West Virginia",
+        "title": "The Charleston Federal Center federal office building in Charleston, West Virginia LCCN2015631784",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Charleston_Federal_Center_federal_office_building_in_Charleston,_West_Virginia_LCCN2015631784.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/The_Charleston_Federal_Center_federal_office_building_in_Charleston%2C_West_Virginia_LCCN2015631784.tif/lossy-page1-1920px-The_Charleston_Federal_Center_federal_office_building_in_Charleston%2C_West_Virginia_LCCN2015631784.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/WV/3.jpg",
+        "subject": "Charleston across the Kanawha River, West Virginia",
+        "title": "View across the Kanawha River of Charleston, the capital city of West Virginia LCCN2015631775",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:View_across_the_Kanawha_River_of_Charleston,_the_capital_city_of_West_Virginia_LCCN2015631775.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/View_across_the_Kanawha_River_of_Charleston%2C_the_capital_city_of_West_Virginia_LCCN2015631775.tif/lossy-page1-1920px-View_across_the_Kanawha_River_of_Charleston%2C_the_capital_city_of_West_Virginia_LCCN2015631775.tif.jpg"
+      }
+    ],
+    "WI": [
+      {
+        "file": "public/art-src/states/WI/1.jpg",
+        "subject": "Wisconsin State Capitol, Madison",
+        "title": "Wisconsin State Capitol Building 6",
+        "creator": "Wikideas1",
+        "license": "CC0 1.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Wisconsin_State_Capitol_Building_6.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/Wisconsin_State_Capitol_Building_6.jpg/1920px-Wisconsin_State_Capitol_Building_6.jpg"
+      },
+      {
+        "file": "public/art-src/states/WI/2.jpg",
+        "subject": "U.S. Courthouse & Federal Office Building, Milwaukee",
+        "title": "The U.S. Courthouse & Federal Office Building in Milwaukee",
+        "creator": "Carol M. Highsmith",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:The_U.S._Courthouse_%26_Federal_Office_Building_in_Milwaukee.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a6/The_U.S._Courthouse_%26_Federal_Office_Building_in_Milwaukee.tif/lossy-page1-1920px-The_U.S._Courthouse_%26_Federal_Office_Building_in_Milwaukee.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/WI/3.jpg",
+        "subject": "Milwaukee Art Museum, Quadracci Pavilion, Wisconsin",
+        "title": "Perspective view looking east - Milwaukee Art Museum, Quadracci Pavilion, 700 North Art Museum Drive, Milwaukee, Milwaukee County, WI",
+        "creator": "Rosenthal, James W., creator",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Perspective_view_looking_east_-_Milwaukee_Art_Museum,_Quadracci_Pavilion,_700_North_Art_Museum_Drive,_Milwaukee,_Milwaukee_County,_WI_HABS_WI-370-B-1.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Perspective_view_looking_east_-_Milwaukee_Art_Museum%2C_Quadracci_Pavilion%2C_700_North_Art_Museum_Drive%2C_Milwaukee%2C_Milwaukee_County%2C_WI_HABS_WI-370-B-1.tif/lossy-page1-1920px-Perspective_view_looking_east_-_Milwaukee_Art_Museum%2C_Quadracci_Pavilion%2C_700_North_Art_Museum_Drive%2C_Milwaukee%2C_Milwaukee_County%2C_WI_HABS_WI-370-B-1.tif.jpg"
+      }
+    ],
+    "WY": [
+      {
+        "file": "public/art-src/states/WY/1.jpg",
+        "subject": "Wyoming State Capitol, Cheyenne",
+        "title": "General view from southeast - State Capitol Building, Twenty-fourth Street and Capitol Avenue, Cheyenne, Laramie County, WY",
+        "creator": "Jack Boucher",
+        "license": "Public Domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:General_view_from_southeast_-_State_Capitol_Building,_Twenty-fourth_Street_and_Capitol_Avenue,_Cheyenne,_Laramie_County,_WY_HABS_WYO,11-CHEY,4-3.tif",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b7/General_view_from_southeast_-_State_Capitol_Building%2C_Twenty-fourth_Street_and_Capitol_Avenue%2C_Cheyenne%2C_Laramie_County%2C_WY_HABS_WYO%2C11-CHEY%2C4-3.tif/lossy-page1-1920px-General_view_from_southeast_-_State_Capitol_Building%2C_Twenty-fourth_Street_and_Capitol_Avenue%2C_Cheyenne%2C_Laramie_County%2C_WY_HABS_WYO%2C11-CHEY%2C4-3.tif.jpg"
+      },
+      {
+        "file": "public/art-src/states/WY/2.jpg",
+        "subject": "Wyoming Supreme Court Building, Cheyenne",
+        "title": "Wyoming Supreme Court Building in Cheyenne",
+        "creator": "Tony Webster",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Wyoming_Supreme_Court_Building_in_Cheyenne.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/94/Wyoming_Supreme_Court_Building_in_Cheyenne.jpg/1920px-Wyoming_Supreme_Court_Building_in_Cheyenne.jpg"
+      },
+      {
+        "file": "public/art-src/states/WY/3.jpg",
+        "subject": "U.S. District Court (Cheyenne Federal Courthouse), Wyoming",
+        "title": "United States District Court for the District of Wyoming - Cheyenne Federal Courthouse",
+        "creator": "Tony Webster",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:United_States_District_Court_for_the_District_of_Wyoming_-_Cheyenne_Federal_Courthouse.jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/United_States_District_Court_for_the_District_of_Wyoming_-_Cheyenne_Federal_Courthouse.jpg/1920px-United_States_District_Court_for_the_District_of_Wyoming_-_Cheyenne_Federal_Courthouse.jpg"
+      },
+      {
+        "file": "public/art-src/states/WY/4.jpg",
+        "subject": "Downtown Cheyenne (Lincolnway), Wyoming",
+        "title": "Lincolnway - Cheyenne - Wyoming (51837641009)",
+        "creator": "Tony Webster",
+        "license": "CC BY 2.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Lincolnway_-_Cheyenne_-_Wyoming_(51837641009).jpg",
+        "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Lincolnway_-_Cheyenne_-_Wyoming_%2851837641009%29.jpg/1920px-Lincolnway_-_Cheyenne_-_Wyoming_%2851837641009%29.jpg"
+      }
     ]
   }
 }
