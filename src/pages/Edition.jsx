@@ -6,6 +6,7 @@ import EditionCover from '../components/edition/EditionCover';
 import ChapterIndex from '../components/edition/ChapterIndex';
 import Chapter from '../components/edition/Chapter';
 import EditionPostcards from '../components/edition/EditionPostcards';
+import ExhibitCards from '../components/edition/ExhibitCards';
 import { useScrollReveals } from '../components/edition/hooks';
 
 /**
@@ -85,11 +86,13 @@ export default function Edition() {
                 </Chapter>
               ))}
 
+              <ExhibitCards />
+
               <footer className="ed-coda ed-reveal">
-                <p className="ed-coda__fin">Fin.</p>
+                <p className="ed-coda__fin">So ordered.</p>
                 <p className="ed-coda__note">
-                  Artwork from the public domain (Art Institute of Chicago, CC0); see credits.
-                  Firmward, {new Date().getFullYear()}.
+                  <sup>†</sup> Artwork from the public domain (Art Institute of Chicago, CC0); see the
+                  record of credits. Firmward, {new Date().getFullYear()}. No part of this constitutes legal advice.
                 </p>
                 <a className="ed-cta" href="/sprint">Start the Sprint</a>
               </footer>
