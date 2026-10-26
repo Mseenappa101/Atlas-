@@ -329,7 +329,6 @@
   background: var(--ed-green-bright); color: #06130d;
   text-decoration: none;
   transition: transform 220ms var(--ed-ease, cubic-bezier(0.22,1,0.36,1)), background 220ms ease;
-  will-change: transform;
 }
 .ed-cta::after { content: '→'; transition: transform 220ms var(--ed-ease, cubic-bezier(0.22,1,0.36,1)); }
 .ed-cta:hover { transform: translateY(-2px); background: #83e0b0; }

@@ -51,6 +51,7 @@ export function useViewProgress() {
       return;
     }
     let raf = 0;
+    let active = false; // only read layout while the plate is near the viewport
     const update = () => {
       raf = 0;
       const r = el.getBoundingClientRect();
@@ -62,12 +63,22 @@ export function useViewProgress() {
       el.style.setProperty('--reveal', String(Math.max(0, Math.min(1, p))));
     };
     const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
+      if (active && !raf) raf = requestAnimationFrame(update);
     };
+    // Gate the scroll work: run getBoundingClientRect only for plates in/near view.
+    const io = new IntersectionObserver(
+      (entries) => {
+        active = entries[0].isIntersecting;
+        if (active) update();
+      },
+      { rootMargin: '40% 0px 40% 0px' }
+    );
+    io.observe(el);
     update();
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
     return () => {
+      io.disconnect();
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
       if (raf) cancelAnimationFrame(raf);
