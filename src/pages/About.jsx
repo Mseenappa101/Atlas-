@@ -1,6 +1,6 @@
 import { SITE } from '../../site.config';
 import usePageMeta from '../hooks/usePageMeta';
-import { Cta, DraftTag, Eyebrow, H1, Page, Section } from '../components/marketing/kit';
+import { Cta, DraftTag, Eyebrow, Figure, H1, Page, Section } from '../components/marketing/kit';
 
 export default function About() {
   usePageMeta({
@@ -9,9 +9,10 @@ export default function About() {
   });
   return (
     <Page narrow>
-      <Eyebrow>About</Eyebrow>
+      <Eyebrow>Of Counsel · About</Eyebrow>
       <H1>Built by a law student who wasn’t handed BigLaw.<DraftTag /></H1>
-      <div className="mt-6 space-y-4 text-t16 leading-relaxed">
+      <Figure slug="about" alt="The colonnade of the United States Supreme Court building" caption="The U.S. Supreme Court colonnade." ratio="16/6" />
+      <div className="mt-6 space-y-4 font-serif text-[18px] leading-relaxed">
         <p>
           I’m {SITE.founder}, a 3L. I started law school at Brooklyn Law and transferred to Columbia Law. Transferring meant missing much of the usual on-campus pipeline, so I ran my own search.
         </p>

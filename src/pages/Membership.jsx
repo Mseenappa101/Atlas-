@@ -1,7 +1,7 @@
 import { SITE, foundingOpen } from '../../site.config';
 import usePageMeta from '../hooks/usePageMeta';
 import Countdown from '../components/Countdown';
-import { Checks, Cta, Eyebrow, Faq, H1, Lead, Page, ResponsiveTable, Section } from '../components/marketing/kit';
+import { Checks, Cta, Eyebrow, Faq, Figure, H1, Lead, Page, ResponsiveTable, Section } from '../components/marketing/kit';
 import LadderCrossSell from '../components/offers/LadderCrossSell';
 import { money } from '../lib/money';
 
@@ -34,6 +34,8 @@ export default function Membership() {
       <Eyebrow>Firmward Membership</Eyebrow>
       <H1>Keep sending, every week, with someone reading your drafts.</H1>
       <Lead>Most searches stall after the first burst of applications. Membership keeps you sending all season, with live feedback on what you send, for summer and post-grad roles.</Lead>
+
+      <Figure slug="membership" alt="A grand law-library reading room" caption="The chambers: a grand law library." />
 
       <div className="mt-6 rounded-app border border-line bg-card p-5">
         <p className="text-t16">

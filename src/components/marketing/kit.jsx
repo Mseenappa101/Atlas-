@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { isPlaceholder } from '../../../site.config';
 import { track, withUtm } from '../../lib/tracking';
 import Reveal from '../motion/Reveal';
@@ -14,26 +14,36 @@ export function Page({ children, narrow = false }) {
   );
 }
 
+// Case-caption docket line above the title (e.g. "In re · 20-Firm Sprint").
 export function Eyebrow({ children }) {
-  return <p className="text-t12 font-semibold uppercase tracking-[0.12em] text-brand">{children}</p>;
+  return (
+    <p className="font-serif text-[15px] italic text-brass md:text-[17px]" style={{ fontVariant: 'small-caps', letterSpacing: '0.1em' }}>
+      <span aria-hidden="true">§ </span>{children}
+    </p>
+  );
 }
 
 export function H1({ children }) {
-  return <h1 className="mt-2 text-[34px] font-bold leading-[1.1] tracking-tight md:text-[48px]">{children}</h1>;
+  return <h1 className="mt-2 text-[30px] font-semibold uppercase leading-[1.02] tracking-[0.01em] md:text-[46px]">{children}</h1>;
 }
 
 export function Lead({ children }) {
-  return <p className="mt-4 max-w-2xl text-t16 leading-relaxed text-fg-2 md:text-t20">{children}</p>;
+  return <p className="mt-4 max-w-2xl font-serif text-[19px] leading-[1.5] text-fg md:text-[22px]">{children}</p>;
 }
 
-// Sections fade up 12px once at 20% visibility. `reveal={false}` for sections that contain a
-// position:sticky child (an ancestor transform would break the sticky).
+// Section openings are portico-style: a brass register rule + a carved § heading. Sections fade up once.
+// `reveal={false}` for sections that contain a position:sticky child.
 export function Section({ title, intro, children, id, className = '', reveal = true }) {
   const common = { id, 'aria-labelledby': id ? `${id}-h` : undefined, className: `mt-14 md:mt-20 ${className}` };
   const inner = (
     <>
-      {title && <h2 id={id ? `${id}-h` : undefined} className="text-t24 font-bold tracking-tight md:text-t32">{title}</h2>}
-      {intro && <p className="mt-2 max-w-2xl text-t16 text-fg-2">{intro}</p>}
+      {title && (
+        <>
+          <div className="mb-3 h-px w-full max-w-[20rem] bg-brass/40" aria-hidden="true" />
+          <h2 id={id ? `${id}-h` : undefined} className="font-display text-[22px] font-semibold uppercase tracking-[0.01em] md:text-[30px]">{title}</h2>
+        </>
+      )}
+      {intro && <p className="mt-2 max-w-2xl font-serif text-[17px] text-fg-2">{intro}</p>}
       <div className={title ? 'mt-6' : ''}>{children}</div>
     </>
   );
@@ -42,10 +52,10 @@ export function Section({ title, intro, children, id, className = '', reveal = t
 
 export function Checks({ items }) {
   return (
-    <ul className="space-y-2">
+    <ul className="space-y-2.5">
       {items.map((i) => (
         <li key={i} className="flex gap-2.5 text-t16 leading-snug">
-          <Check size={18} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />
+          <span aria-hidden="true" className="mt-0.5 shrink-0 font-serif font-semibold text-brass">§</span>
           <span>{i}</span>
         </li>
       ))}
@@ -83,6 +93,24 @@ export function Cta({ to, href, children, variant = 'primary', event, props, str
       {children}
       <ArrowRight size={18} aria-hidden="true" />
     </Link>
+  );
+}
+
+// A legal-imagery band (public-domain judicial architecture; see public/art/CREDITS.md).
+export function Figure({ slug, alt, caption, ratio = '16/7' }) {
+  return (
+    <figure className="my-10 overflow-hidden rounded-[2px] border-t-[3px] border-brass bg-navy md:my-14">
+      <img
+        src={`/art/${slug}/color-1024.webp`}
+        srcSet={`/art/${slug}/color-640.webp 640w, /art/${slug}/color-1024.webp 1024w, /art/${slug}/color-1600.webp 1600w`}
+        sizes="(max-width: 768px) 100vw, 768px"
+        alt={alt}
+        loading="lazy"
+        className="w-full object-cover"
+        style={{ aspectRatio: ratio }}
+      />
+      {caption && <figcaption className="px-1 pt-2 font-serif text-[14px] italic text-fg-2">{caption}</figcaption>}
+    </figure>
   );
 }
 

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { SITE, foundingOpen, isPlaceholder } from '../../site.config';
 import usePageMeta from '../hooks/usePageMeta';
 import { Button } from '../components/app/controls';
-import { Checks, Cta, Eyebrow, Faq, H1, Lead, Page, ResponsiveTable, Section } from '../components/marketing/kit';
+import { Checks, Cta, Eyebrow, Faq, Figure, H1, Lead, Page, ResponsiveTable, Section } from '../components/marketing/kit';
 import LadderCrossSell from '../components/offers/LadderCrossSell';
 // Lazy so Framer Motion (scroll-pinned phases) loads only when Placement renders, not in the initial chunk.
 const ScrollPhases = lazy(() => import('../components/motion/ScrollPhases'));
@@ -181,6 +181,8 @@ export default function Placement() {
       <div className="mt-6">
         <Cta to="#book">Book a strategy call</Cta>
       </div>
+
+      <Figure slug="placement" alt="The United States Supreme Court courtroom" caption="Argued to a result: the U.S. Supreme Court courtroom." />
 
       <Section id="phases" title="How the 90 days run" reveal={false}>
         {/* Reserve the scroll-pinned height (phases × 85vh on desktop) so the lazy load doesn't shift layout. */}

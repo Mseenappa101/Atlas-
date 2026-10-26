@@ -1,7 +1,7 @@
 import { SITE, nextSprint } from '../../site.config';
 import usePageMeta from '../hooks/usePageMeta';
 import Countdown from '../components/Countdown';
-import { Checks, Cta, Eyebrow, Faq, H1, Lead, Page, ResponsiveTable, Section, TextLink } from '../components/marketing/kit';
+import { Checks, Cta, Eyebrow, Faq, Figure, H1, Lead, Page, ResponsiveTable, Section, TextLink } from '../components/marketing/kit';
 import LadderCrossSell from '../components/offers/LadderCrossSell';
 import { money } from '../lib/money';
 
@@ -38,6 +38,8 @@ export default function Sprint() {
       <Eyebrow>20-Firm Sprint · {money(P.sprint)}</Eyebrow>
       <H1>20 emails to firms that are hiring, in 5 days.</H1>
       <Lead>In 5 days you’ll have a target list, a fixed resume, and 20 outreach emails sent to firms that are actually hiring for your role.</Lead>
+
+      <Figure slug="the-sprint" alt="A Beaux-Arts United States federal courthouse" caption="Where the filings land: a U.S. federal courthouse." />
 
       <div className="mt-6 rounded-app border border-line bg-card p-5">
         {sprint ? (
