@@ -1,0 +1,62 @@
+/* Judiciary site header — dark navy masthead with carved wordmark, docket links, brass rules.
+   Applied on every page (the Edition supplies its own cover nav). Fades/slides in on load, hides on
+   scroll down and reveals on scroll up. */
+.jnav {
+  position: sticky; top: 0; z-index: 30;
+  background: var(--app-navy); color: #f4f1ea;
+  border-bottom: 1px solid rgba(180, 144, 78, 0.4); /* taste-skill-ignore: brass register rule — masthead device */
+  transform: translateY(-110%); opacity: 0;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), opacity 420ms ease;
+}
+.jnav.is-loaded { transform: translateY(0); opacity: 1; }
+.jnav.is-hidden { transform: translateY(-110%); }
+@media (prefers-reduced-motion: reduce) { .jnav { transition: none; transform: none; opacity: 1; } }
+
+/* founding notice strip (themed, replaces the old light banner) */
+.jnav__notice {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.4rem clamp(1rem, 4vw, 3rem);
+  border-bottom: 1px solid rgba(180, 144, 78, 0.22); /* taste-skill-ignore: brass sub-rule */
+  font-family: 'EB Garamond', Georgia, serif; font-size: 0.95rem; color: rgba(244, 241, 234, 0.82);
+}
+.jnav__notice a { color: var(--app-brass); text-decoration: none; }
+.jnav__notice a:hover { text-decoration: underline; }
+.jnav__notice .data { color: #8fe8bb; }
+.jnav__notice-x { margin-left: auto; display: inline-flex; height: 28px; width: 28px; align-items: center; justify-content: center; color: rgba(244,241,234,0.6); background: none; border: 0; cursor: pointer; }
+.jnav__notice-x:hover { color: #f4f1ea; }
+
+.jnav__bar { position: relative; display: flex; align-items: center; gap: clamp(1rem, 3vw, 2rem); padding: 0.7rem clamp(1rem, 4vw, 3rem); max-width: 1320px; margin: 0 auto; }
+.jnav__mark { font-family: 'Cinzel', Georgia, serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; font-size: 1.15rem; color: #f4f1ea; text-decoration: none; }
+.jnav__mark:focus-visible { outline: 2px solid var(--app-brass); outline-offset: 3px; }
+.jnav__links { display: none; align-items: center; gap: clamp(0.75rem, 2vw, 1.6rem); list-style: none; margin: 0; padding: 0; }
+@media (min-width: 860px) { .jnav__links { display: flex; } }
+.jnav__links a {
+  font-family: 'EB Garamond', Georgia, serif; font-variant: small-caps; letter-spacing: 0.06em; font-size: 1rem;
+  color: rgba(244, 241, 234, 0.76); text-decoration: none; transition: color 160ms ease; white-space: nowrap;
+}
+.jnav__links a:hover, .jnav__links a[aria-current='page'] { color: #f4f1ea; }
+.jnav__links a[aria-current='page'] { color: var(--app-brass); }
+.jnav__sec { color: var(--app-brass); margin-right: 0.2em; }
+.jnav__count { font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.7rem; background: var(--app-brand); color: #fff; border-radius: 999px; padding: 0 0.35rem; margin-left: 0.3rem; }
+.jnav__right { margin-left: auto; display: flex; align-items: center; gap: 0.6rem; }
+.jnav__signin { display: none; font-family: 'EB Garamond', Georgia, serif; font-variant: small-caps; letter-spacing: 0.05em; font-size: 1rem; color: rgba(244,241,234,0.8); text-decoration: none; }
+@media (min-width: 860px) { .jnav__signin { display: inline; } }
+.jnav__signin:hover { color: #f4f1ea; }
+.jnav__cta { font-family: 'EB Garamond', Georgia, serif; font-variant: small-caps; letter-spacing: 0.05em; font-size: 0.95rem; color: #0b1120; background: #57d29a; padding: 0.4rem 0.9rem; border-radius: 2px; text-decoration: none; }
+.jnav__cta:hover { background: #83e0b0; }
+
+/* mobile menu button + sheet */
+.jnav__menu-btn { display: inline-flex; height: 40px; width: 40px; align-items: center; justify-content: center; color: #f4f1ea; background: none; border: 0; cursor: pointer; }
+@media (min-width: 860px) { .jnav__menu-btn { display: none; } }
+.jnav__sheet { position: absolute; inset: 100% 0 auto 0; background: var(--app-navy); border-bottom: 1px solid rgba(180,144,78,0.4); }
+.jnav__sheet ul { list-style: none; margin: 0; padding: 0.3rem clamp(1rem, 4vw, 3rem) 0.8rem; }
+.jnav__sheet a { display: flex; min-height: 48px; align-items: center; font-family: 'EB Garamond', Georgia, serif; font-variant: small-caps; letter-spacing: 0.05em; font-size: 1.05rem; color: rgba(244,241,234,0.85); text-decoration: none; border-bottom: 1px solid rgba(180,144,78,0.18); }
+.jnav__sheet a:last-child { border-bottom: 0; }
+
+/* account avatar (signed in) */
+.jnav__avatar { display: inline-flex; height: 34px; width: 34px; align-items: center; justify-content: center; border-radius: 999px; background: var(--app-brand); color: #fff; font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.72rem; font-weight: 600; border: 0; cursor: pointer; }
+.jnav__account { position: relative; }
+.jnav__account-menu { position: absolute; right: 0; top: 100%; margin-top: 0.4rem; width: 14rem; background: #fbf8f1; color: #241a12; border-top: 3px solid var(--app-brass); box-shadow: 0 10px 30px rgba(8,12,22,0.35); z-index: 40; padding: 0.3rem; }
+.jnav__account-menu a, .jnav__account-menu button { display: flex; min-height: 40px; width: 100%; align-items: center; padding: 0 0.7rem; font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.9rem; color: #241a12; text-decoration: none; background: none; border: 0; cursor: pointer; text-align: left; }
+.jnav__account-menu a:hover, .jnav__account-menu button:hover { background: #f0ebdf; }
+.jnav__account-email { padding: 0.4rem 0.7rem; font-size: 0.75rem; color: #6a5b49; }

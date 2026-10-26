@@ -32,7 +32,6 @@ import Workshop from './pages/Workshop';
 import Families from './pages/Families';
 import About from './pages/About';
 import { ThanksCall, ThanksSignup } from './pages/Thanks';
-import FoundingBanner from './components/FoundingBanner';
 import { MarketPage, TypePage } from './pages/SeoList';
 
 // Pre-pivot features. Loaded only when their flag is on, so they stay out of the public bundle.
@@ -153,7 +152,6 @@ function AppShell() {
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-2 focus:z-50 focus:rounded-app focus:bg-card focus:px-3 focus:py-2 focus:text-t14">
         Skip to content
       </a>
-      {!takeover && <FoundingBanner />}
       {!takeover && <AppNav />}
       <Toaster position="bottom-right" toastOptions={{ className: 'font-app', style: { borderRadius: '6px' } }} />
       <div id="main">
