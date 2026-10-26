@@ -4,6 +4,7 @@ import { CHAPTERS } from '../components/edition/chapters';
 import ConstructionIntro from '../components/edition/ConstructionIntro';
 import ChapterIndex from '../components/edition/ChapterIndex';
 import Chapter from '../components/edition/Chapter';
+import EditionPostcards from '../components/edition/EditionPostcards';
 import { useScrollReveals } from '../components/edition/hooks';
 
 /**
@@ -72,7 +73,9 @@ export default function Edition() {
             <ChapterIndex chapters={CHAPTERS} variant="rail" />
             <div>
               {CHAPTERS.map((c, i) => (
-                <Chapter key={c.id} chapter={c} eager={i === 0} />
+                <Chapter key={c.id} chapter={c} eager={i === 0}>
+                  {c.id === 'ch-where' && <EditionPostcards />}
+                </Chapter>
               ))}
 
               <footer className="ed-reveal" style={{ padding: '4rem 0 6rem', color: 'var(--ed-gold-soft)', fontFamily: 'var(--ed-serif)', fontStyle: 'italic', fontSize: '1.05rem' }}>

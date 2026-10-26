@@ -349,6 +349,16 @@
   background-size: 4px 4px;
 }
 
+/* ── Chapter V state postcards (live <StatePostcard> reused) ── */
+.ed-postcards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+  margin-top: clamp(2rem, 5vh, 3.5rem);
+}
+.ed-postcard { border-radius: 8px; overflow: hidden; }
+.ed-postcard--ph { aspect-ratio: 5 / 7; background: rgba(26, 22, 19, 0.06); border-radius: 8px; }
+
 /* ── Layout rails ── */
 .ed-wrap { max-width: 1240px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 3rem); }
 .ed-grid-rail { display: grid; grid-template-columns: 220px 1fr; gap: clamp(1.5rem, 5vw, 4rem); align-items: start; }
