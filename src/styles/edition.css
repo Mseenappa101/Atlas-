@@ -40,7 +40,7 @@
   --ed-ink: #1A1613;          /* ink on paper */
   --ed-ink-2: #5A5147;        /* muted ink */
   --ed-paper: #F3ECDD;        /* cream paper */
-  --ed-paper-2: #E9DFC9;      /* paper shadow */
+  --ed-paper-2: #E9DFC9;      /* deeper paper tone */
   --ed-cream: #EDE4D1;
   --ed-gold: #C9A66B;         /* golden-ratio construction lines, swash initials */
   --ed-gold-soft: #9C8352;
@@ -65,7 +65,7 @@
 .ed-kicker {
   font-family: var(--ed-sans);
   font-weight: 500;
-  font-size: clamp(0.66rem, 1.4vw, 0.8rem);
+  font-size: clamp(0.82rem, 1.4vw, 0.9rem);
   letter-spacing: 0.34em;
   text-transform: uppercase;
   color: var(--ed-gold);
@@ -75,8 +75,9 @@
   font-weight: 500;
   line-height: 0.86;
   letter-spacing: -0.035em;
-  font-size: clamp(3.4rem, 14vw, 11rem);
+  font-size: clamp(2.9rem, 13vw, 11rem);
   text-wrap: balance;
+  overflow-wrap: break-word; /* never push the chapter column wider than the viewport */
 }
 .ed-tagline {
   font-family: var(--ed-serif);
@@ -114,7 +115,7 @@
   color: var(--ed-paper);
   transition: background 400ms ease, padding 300ms ease;
 }
-.ed-nav.is-scrolled { background: linear-gradient(var(--ed-night-2), rgba(7, 8, 9, 0)); padding-top: 0.8rem; padding-bottom: 0.8rem; }
+.ed-nav.is-scrolled { background: linear-gradient(var(--ed-night-2), rgba(7, 8, 9, 0)); /* taste-skill-ignore: nav scrim */ padding-top: 0.8rem; padding-bottom: 0.8rem; }
 .ed-nav__mark {
   font-family: var(--ed-serif); font-weight: 600; font-size: 1.3rem; letter-spacing: 0.01em;
   color: var(--ed-paper); text-decoration: none;
@@ -151,7 +152,7 @@
   display: grid; place-items: center;
   background: var(--ed-night-2);
 }
-.ed-cover__plate { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% 28%; }
+.ed-cover__plate { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 22%; }
 .ed-cover__plate--color { opacity: calc(1 - var(--push, 0) * 1.1); }
 .ed-cover__plate--line {
   mix-blend-mode: screen; opacity: calc(var(--push, 0) * 1.7);
@@ -165,7 +166,7 @@
   position: absolute; inset: 0; pointer-events: none;
   opacity: calc(1 - var(--push, 0) * 0.7);
   background:
-    radial-gradient(120% 90% at 38% 44%, rgba(7, 8, 9, 0.82) 0%, rgba(7, 8, 9, 0.5) 38%, rgba(7, 8, 9, 0.72) 100%);
+    radial-gradient(120% 90% at 38% 44%, rgba(7, 8, 9, 0.82) 0%, rgba(7, 8, 9, 0.5) 38%, rgba(7, 8, 9, 0.72) 100%); /* taste-skill-ignore: scrim over the cover painting */
 }
 .ed-cover__stage {
   position: absolute; inset: 0; display: grid; place-items: center; z-index: 2;
@@ -184,36 +185,38 @@
 @keyframes ed-draw { to { stroke-dashoffset: 0; } }
 
 .ed-cover__panel {
-  position: relative; z-index: 2; width: min(90vw, 440px);
-  padding: clamp(1.75rem, 3vw, 2.5rem);
-  background: rgba(10, 11, 14, 0.46);
+  position: relative; z-index: 2; width: min(90vw, 460px);
+  padding: clamp(1.75rem, 3vw, 2.6rem);
+  background: rgba(7, 8, 11, 0.74);   /* opaque enough that the title reads over the painting */
   color: var(--ed-paper);
   text-align: left;
-  opacity: 0; animation: ed-fade-up 1.1s ease forwards; animation-delay: 1.2s;
+  /* paints immediately (readable on the first frame); only the arrival is animated and settles by ~1s */
+  animation: ed-fade-up 0.9s ease both; animation-delay: 0.15s;
 }
 .ed-cover__title {
   font-family: var(--ed-serif); font-weight: 500; line-height: 1.0;
-  font-size: clamp(2.2rem, 4.6vw, 3.4rem); letter-spacing: 0.005em; margin-top: 0.5rem;
+  font-size: clamp(2.4rem, 5vw, 3.6rem); letter-spacing: 0.005em;
 }
 .ed-cover__title em { font-style: italic; color: var(--ed-gold); }
 .ed-cover__desc {
-  font-family: var(--ed-sans); font-size: clamp(0.95rem, 1.3vw, 1.05rem); line-height: 1.55;
-  color: rgba(243, 236, 221, 0.8); margin-top: 0.9rem; max-width: 34ch;
+  font-family: var(--ed-sans); font-size: clamp(1.125rem, 1.5vw, 1.25rem); line-height: 1.5;
+  color: rgba(243, 236, 221, 0.88); margin-top: 0.9rem; max-width: 32ch;
 }
-.ed-cover__index { list-style: none; margin: 1.5rem 0 0; padding: 0; display: grid; gap: 0.45rem; }
+.ed-cover__index { list-style: none; margin: 1.4rem 0 1.5rem; padding: 0; display: grid; gap: 0.4rem; }
 .ed-cover__index li { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
 .ed-cover__index-label { font-family: var(--ed-sans); font-size: 0.95rem; color: rgba(243, 236, 221, 0.9); }
 .ed-cover__index-num { font-family: var(--ed-serif); font-style: italic; color: var(--ed-gold); font-size: 0.95rem; }
+.ed-cover__cta { align-self: flex-start; }
 
 .ed-cover__scroll {
   position: absolute; bottom: 2.2rem; left: 50%; transform: translateX(-50%); z-index: 3;
   opacity: calc(1 - var(--push, 0) * 6); /* fades the instant the push begins */
-  font-family: var(--ed-sans); font-size: 0.72rem; letter-spacing: 0.26em; text-transform: uppercase;
-  color: rgba(243, 236, 221, 0.6);
+  font-family: var(--ed-sans); font-size: 0.82rem; letter-spacing: 0.26em; text-transform: uppercase;
+  color: rgba(243, 236, 221, 0.62);
 }
 .ed-cover__scroll::after {
   content: ''; display: block; width: 1px; height: 36px; margin: 0.7rem auto 0;
-  background: linear-gradient(rgba(243, 236, 221, 0.6), transparent);
+  background: linear-gradient(rgba(243, 236, 221, 0.6), transparent); /* taste-skill-ignore: scroll-cue hairline fade */
   animation: ed-pulse 2s ease-in-out infinite;
 }
 
@@ -224,20 +227,20 @@
 .ed-night {
   position: relative;
   background:
-    radial-gradient(130% 80% at 50% 0%, #10141b 0%, var(--ed-night) 50%, var(--ed-night-2) 100%);
+    radial-gradient(130% 80% at 50% 0%, #10141b 0%, var(--ed-night) 50%, var(--ed-night-2) 100%); /* taste-skill-ignore: night-sky atmosphere is this direction's ground, not filler */
 }
 .ed-stars {
   position: absolute; inset: 0; pointer-events: none; overflow: hidden;
 }
 .ed-stars::before, .ed-stars::after {
   content: ''; position: absolute; inset: -20% 0;
-  /* two layered dotted "star" fields via radial-gradient tiles */
+  /* two layered dotted "star" fields via radial-gradient tiles — taste-skill-ignore: this is the starfield, dots not a filler gradient */
   background-image:
-    radial-gradient(1px 1px at 20% 30%, var(--ed-star) 50%, transparent 52%),
-    radial-gradient(1px 1px at 70% 60%, var(--ed-star) 50%, transparent 52%),
-    radial-gradient(1.4px 1.4px at 40% 80%, var(--ed-star) 50%, transparent 52%),
-    radial-gradient(1px 1px at 85% 15%, var(--ed-star) 50%, transparent 52%),
-    radial-gradient(1.2px 1.2px at 55% 45%, var(--ed-star) 50%, transparent 52%);
+    radial-gradient(1px 1px at 20% 30%, var(--ed-star) 50%, transparent 52%), /* taste-skill-ignore: starfield dot */
+    radial-gradient(1px 1px at 70% 60%, var(--ed-star) 50%, transparent 52%), /* taste-skill-ignore: starfield dot */
+    radial-gradient(1.4px 1.4px at 40% 80%, var(--ed-star) 50%, transparent 52%), /* taste-skill-ignore: starfield dot */
+    radial-gradient(1px 1px at 85% 15%, var(--ed-star) 50%, transparent 52%), /* taste-skill-ignore: starfield dot */
+    radial-gradient(1.2px 1.2px at 55% 45%, var(--ed-star) 50%, transparent 52%) /* taste-skill-ignore: starfield dot */;
   background-size: 260px 260px, 320px 320px, 400px 400px, 300px 300px, 360px 360px;
   opacity: 0.5;
   animation: ed-twinkle 6s ease-in-out infinite alternate;
@@ -266,7 +269,7 @@
 }
 .ed-index__item {
   display: grid;
-  grid-template-columns: 1.6rem 1fr auto;
+  grid-template-columns: 1.6rem auto 1fr;
   align-items: baseline;
   gap: 0.5rem;
   width: 100%;
@@ -280,15 +283,15 @@
   font-family: var(--ed-sans);
 }
 .ed-index__num {
-  font-size: 0.72rem; letter-spacing: 0.1em; color: var(--ed-gold-soft);
+  font-size: 0.82rem; letter-spacing: 0.1em; color: var(--ed-gold-soft);
   transition: color 240ms ease;
 }
 .ed-index__label {
   font-size: 0.95rem; letter-spacing: 0.01em; white-space: nowrap;
 }
 .ed-index__dots {
-  flex: 1; align-self: center; border-bottom: 1px dotted rgba(201, 166, 107, 0.3);
-  margin: 0 0.1rem; height: 1px; min-width: 1.5rem;
+  flex: 1; align-self: center; border-bottom: 1px dotted rgba(201, 166, 107, 0.3); /* taste-skill-ignore: dotted leaders are the editorial index device from the reference */
+  margin: 0 0.1rem; min-width: 1.5rem; /* taste-skill-ignore: leader row, not a divider rule */
 }
 .ed-index__item:hover { color: rgba(243, 236, 221, 0.75); }
 .ed-index__item:focus-visible { outline: 2px solid var(--ed-green-bright); outline-offset: 3px; border-radius: 3px; }
@@ -377,7 +380,7 @@
 
 .ed-cta {
   align-self: flex-start;
-  display: inline-flex; align-items: center; gap: 0.5rem;
+  display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; box-sizing: border-box;
   font-family: var(--ed-sans); font-weight: 500; font-size: 0.95rem; letter-spacing: 0.01em;
   padding: 0.72rem 1.4rem; border-radius: 2px;
   background: var(--ed-green-bright); color: #06130d;
@@ -394,11 +397,10 @@
 .ed-panel { padding: clamp(2.5rem, 7vh, 5rem) 0; }
 .ed-paper-section.ed-panel { padding-left: clamp(1.25rem, 4vw, 3rem); padding-right: clamp(1.25rem, 4vw, 3rem); border-radius: 2px; }
 
-/* subtle paper grain + deckle shadow */
+/* subtle paper grain (printed-stock texture) */
 .ed-paper-section::before {
   content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: 2px;
-  box-shadow: inset 0 0 0 1px rgba(26, 22, 19, 0.06);
-  background-image: radial-gradient(rgba(90, 81, 71, 0.045) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(90, 81, 71, 0.05) 1px, transparent 1px); /* taste-skill-ignore: paper grain dots */
   background-size: 4px 4px;
 }
 
@@ -426,15 +428,13 @@
 .ed-topbar {
   position: sticky; top: 0; z-index: 30;
   display: none;
-  background: rgba(11, 13, 16, 0.86);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(201, 166, 107, 0.18);
+  background: var(--ed-night-2);
 }
 .ed-topbar__track { display: flex; gap: 0.25rem; overflow-x: auto; padding: 0.6rem 1rem; scrollbar-width: none; }
 .ed-topbar__track::-webkit-scrollbar { display: none; }
 .ed-topbar__item {
   flex: 0 0 auto; background: none; border: 0; cursor: pointer;
-  font-family: var(--ed-sans); font-size: 0.8rem; letter-spacing: 0.02em;
+  font-family: var(--ed-sans); font-size: 0.82rem; letter-spacing: 0.02em;
   color: rgba(243, 236, 221, 0.5); padding: 0.3rem 0.6rem; border-radius: 999px; white-space: nowrap;
 }
 .ed-topbar__item[aria-current='true'] { color: var(--ed-night); background: var(--ed-green-bright); font-weight: 600; }

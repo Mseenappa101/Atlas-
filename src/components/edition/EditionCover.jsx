@@ -49,7 +49,6 @@ export default function EditionCover({ chapters }) {
         </svg>
 
         <div className="ed-cover__panel">
-          <p className="ed-kicker">Firmward presents</p>
           <h1 className="ed-cover__title">The Firmward <em>Edition</em></h1>
           <p className="ed-cover__desc">
             A field guide to the law-student job search — the map, the sprint, and the way to a signed offer, in six chapters.
@@ -62,6 +61,7 @@ export default function EditionCover({ chapters }) {
               </li>
             ))}
           </ol>
+          <a className="ed-cta ed-cover__cta" href="/sprint">Start the Sprint</a>
         </div>
       </div>
 

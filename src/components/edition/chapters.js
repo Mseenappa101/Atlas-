@@ -14,7 +14,6 @@ export const CHAPTERS = [
   {
     id: 'ch-map',
     roman: 'I',
-    num: '01',
     label: 'The Map',
     kicker: 'Chapter I',
     title: 'The Map',
@@ -29,7 +28,6 @@ export const CHAPTERS = [
   {
     id: 'ch-sprint',
     roman: 'II',
-    num: '02',
     label: 'The Sprint',
     kicker: 'Chapter II',
     title: 'The Sprint',
@@ -45,7 +43,6 @@ export const CHAPTERS = [
   {
     id: 'ch-membership',
     roman: 'III',
-    num: '03',
     label: 'Membership',
     kicker: 'Chapter III',
     title: 'Membership',
@@ -61,7 +58,6 @@ export const CHAPTERS = [
   {
     id: 'ch-placement',
     roman: 'IV',
-    num: '04',
     label: 'The 90-Day Placement',
     kicker: 'Chapter IV',
     title: 'The 90-Day Placement',
@@ -77,7 +73,6 @@ export const CHAPTERS = [
   {
     id: 'ch-where',
     roman: 'V',
-    num: '05',
     label: 'Where Firms Hire',
     kicker: 'Chapter V',
     title: 'Where Firms Hire',
@@ -92,7 +87,6 @@ export const CHAPTERS = [
   {
     id: 'ch-about',
     roman: 'VI',
-    num: '06',
     label: 'About',
     kicker: 'Chapter VI',
     title: 'About',

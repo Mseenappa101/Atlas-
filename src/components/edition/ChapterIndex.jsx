@@ -49,7 +49,6 @@ export default function ChapterIndex({ chapters, variant = 'rail' }) {
           <span className="ed-index__num ed-roman">{c.roman}</span>
           <span className="ed-index__label">{c.label}</span>
           <span className="ed-index__dots" aria-hidden="true" />
-          <span className="ed-index__num">{c.num}</span>
         </button>
       ))}
     </nav>
