@@ -1,0 +1,49 @@
+/* Immersive phase-in map — the WebGL canvas fills the frame; HUD + case files overlay as DOM. */
+.phasemap {
+  position: relative; width: 100%; border-radius: 2px; overflow: hidden;
+  background: #0b1120; border-top: 3px solid #b4904e; /* taste-skill-ignore: brass register rule framing the docket table */
+  touch-action: pan-y;
+}
+.phasemap canvas { display: block; }
+.phasemap-skel { width: 100%; background: #0b1120; border-top: 3px solid #b4904e; border-radius: 2px; }
+
+.phasemap__hud { position: absolute; inset: 0; pointer-events: none; }
+.phasemap__hint, .phasemap__state {
+  position: absolute; bottom: 1.1rem; left: 50%; transform: translateX(-50%);
+  font-family: 'EB Garamond', Georgia, serif; font-style: italic; font-size: 1.05rem;
+  color: rgba(244, 241, 234, 0.78); text-align: center; width: max-content; max-width: 90%;
+}
+.phasemap__back {
+  position: absolute; top: 1rem; left: 1rem; pointer-events: auto;
+  font-family: 'EB Garamond', Georgia, serif; font-variant: small-caps; letter-spacing: 0.08em;
+  font-size: 0.95rem; color: #0b1120; background: #57d29a; border: 0;
+  padding: 0.5rem 1rem; border-radius: 2px; cursor: pointer;
+  transition: transform 160ms cubic-bezier(0.22,1,0.36,1), background 160ms ease;
+}
+.phasemap__back:hover { background: #83e0b0; transform: translateX(-2px); }
+.phasemap__back:focus-visible { outline: 2px solid #b4904e; outline-offset: 3px; }
+
+/* Case files slide in from the right (or bottom on mobile) */
+.phasemap__files {
+  position: absolute; top: 0; right: 0; height: 100%; width: min(92vw, 340px);
+  background: #f4f1ea; color: #241a12; overflow-y: auto;
+  padding: clamp(1.25rem, 2.4vw, 1.9rem); display: flex; flex-direction: column; gap: 1rem;
+  border-left: 3px solid #b4904e; /* taste-skill-ignore: brass register rule, legal-document device */
+  animation: phasemap-in 280ms cubic-bezier(0.22,1,0.36,1);
+}
+@keyframes phasemap-in { from { transform: translateX(16px); opacity: 0; } }
+.phasemap__files header h3 { font-family: 'Cinzel', Georgia, serif; text-transform: uppercase; font-size: clamp(1.2rem, 2vw, 1.6rem); letter-spacing: 0.01em; line-height: 1.05; margin: 0.2rem 0; }
+.phasemap__files-no { color: #8c6f3c; font-family: 'EB Garamond', Georgia, serif; letter-spacing: 0.12em; font-size: 0.8rem; }
+.phasemap__files header p { font-family: 'EB Garamond', Georgia, serif; font-style: italic; color: #1f5c45; font-size: 1rem; margin: 0; }
+.phasemap__filelist { display: flex; flex-direction: column; gap: 0.75rem; }
+.phasemap__case { background: #fbf8f1; border-top: 2px solid #b4904e; padding: 0.8rem 0.9rem; }
+.phasemap__case-ex { color: #8c6f3c; font-family: 'EB Garamond', Georgia, serif; font-size: 0.72rem; letter-spacing: 0.1em; }
+.phasemap__case-practice { font-family: 'Hanken Grotesk', system-ui, sans-serif; font-weight: 600; font-size: 0.98rem; margin: 0.15rem 0; color: #241a12; }
+.phasemap__case-hiring { font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.85rem; color: #6a5b49; margin: 0; }
+.phasemap__case-sealed { font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.8rem; color: #8c6f3c; margin: 0.4rem 0 0; }
+.phasemap__case-sealed a { color: #1f5c45; text-decoration: underline; text-underline-offset: 2px; }
+
+@media (max-width: 640px) {
+  .phasemap__files { top: auto; bottom: 0; width: 100%; height: 62%; border-left: 0; border-top: 3px solid #b4904e; }
+  @keyframes phasemap-in { from { transform: translateY(16px); opacity: 0; } }
+}
