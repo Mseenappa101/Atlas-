@@ -7,6 +7,7 @@ import { EmptyState } from '../components/app/feedback';
 import Positions from '../components/explore/Positions';
 import CaseFile from '../components/explore/immersive/CaseFile';
 import CaseList from '../components/explore/immersive/CaseList';
+import SaveSearch from '../components/explore/immersive/SaveSearch';
 import '../components/explore/immersive/immersive.css';
 import '../components/explore/explore-docket.css';
 import {
@@ -21,7 +22,7 @@ import useCatalog from '../hooks/useCatalog';
 import useListings from '../hooks/useListings';
 import useMyList from '../hooks/useMyList';
 import useSession from '../hooks/useSession';
-import { FIRM_TYPES, STATE_NAMES, byDeadline, byName, countsByState, recommended } from '../lib/catalog';
+import { FIRM_TYPES, STATE_NAMES, byDeadline, byName, countsByState, groupByType, recommended } from '../lib/catalog';
 import { STATUS_FILTERS } from '../lib/status';
 
 const PhaseMap = lazy(() => import('../components/map3d/PhaseMap'));
@@ -95,6 +96,7 @@ function ExplorePage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [saveOpen, setSaveOpen] = useState(false);
   const [q, setQ] = useState(() => params.get('q') ?? '');
 
   // Toast when the record unlocks.
@@ -133,6 +135,10 @@ function ExplorePage() {
   const goToAbbr = filters.state || (firmOpen ? selected.states?.[0] : null) || null;
   const goTo = useMemo(() => ({ abbr: goToAbbr }), [goToAbbr]);
 
+  // In a single-state view, section the docket by register (group-by-type), BigLaw last — the legacy layout.
+  const grouped = Boolean(filters.state) && !firmOpen && !positionsOpen;
+  const groups = useMemo(() => (grouped ? groupByType(results) : null), [grouped, results]);
+
   const setFilters = (f) => { const next = writeFilters(params, f); next.delete('firm'); setParams(next, { replace: true }); };
   const set = (patch) => setFilters({ ...filters, ...patch });
   const setSort = (v) => { const next = new URLSearchParams(params); if (v === 'recommended') next.delete('sort'); else next.set('sort', v); setParams(next, { replace: true }); };
@@ -145,6 +151,7 @@ function ExplorePage() {
   const activeRoles = useMemo(() => filters.role || [], [filters.role]);
   const toggleRole = (r) => set({ role: activeRoles.includes(r) ? activeRoles.filter((x) => x !== r) : [...activeRoles, r] });
   const toggleSave = (f) => { if (!session) return navigate(`/signup?next=${encodeURIComponent(location.pathname + location.search)}`); toggle(f.id); };
+  const openSave = () => { if (!session) return navigate(`/signup?next=${encodeURIComponent(location.pathname + location.search)}`); setSaveOpen(true); };
 
   useEffect(() => { document.title = filters.state ? `${STATE_NAMES[filters.state]} firms — Firmward` : 'Explore — Firmward'; }, [filters.state]);
   useEffect(() => { setQ(params.get('q') ?? ''); }, [params]);
@@ -176,6 +183,7 @@ function ExplorePage() {
           ))}
           <button type="button" className={`explore-docket__tab${positionsOpen ? ' is-on' : ''}`} aria-pressed={positionsOpen} onClick={() => showTab(positionsOpen ? 'firms' : 'positions')}>Open positions</button>
           <button type="button" className="explore-docket__tab" onClick={() => setFiltersOpen(true)}>More filters{appliedChips.length ? ` (${appliedChips.length})` : ''}</button>
+          {isFiltered(filters) && <button type="button" className="explore-docket__tab" onClick={openSave}>Save search</button>}
         </div>
         <form className="explore-docket__search" role="search" onSubmit={(e) => { e.preventDefault(); submitSearch(q.trim()); }}>
           <input aria-label="Case lookup — search firms by name, city or practice" placeholder="Case lookup — firm, city, practice" value={q} onChange={(e) => { setQ(e.target.value); submitSearch(e.target.value.trim()); }} />
@@ -218,7 +226,7 @@ function ExplorePage() {
               ) : firmOpen ? (
                 <CaseFile firm={selected} listings={firmListings} saved={savedIds.has(selected.id)} onToggleSave={toggleSave} />
               ) : (
-                <CaseList firms={results} onOpen={openFirm} savedIds={savedIds} onToggleSave={toggleSave} emptyLabel="No firms match this docket. Clear a filter above." />
+                <CaseList firms={results} groups={groups} onOpen={openFirm} savedIds={savedIds} onToggleSave={toggleSave} emptyLabel="No firms match this docket. Clear a filter above." />
               )}
             </div>
           </aside>
@@ -240,6 +248,8 @@ function ExplorePage() {
       <Drawer open={filtersOpen} onClose={() => setFiltersOpen(false)} title="More filters" footer={<Button className="w-full" onClick={() => setFiltersOpen(false)}>Show {results.length} firms</Button>}>
         <AllFilters options={options} filters={filters} set={set} sort={sort} setSort={setSort} />
       </Drawer>
+
+      {saveOpen && <SaveSearch session={session} filters={filters} sort={sort} onClose={() => setSaveOpen(false)} />}
 
       <MapCtaBar />
     </div>

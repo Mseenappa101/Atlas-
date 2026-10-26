@@ -32,7 +32,7 @@ export default function Footer() {
           <p>Not affiliated with or endorsed by any law school or law firm.</p>
           <p>
             <Link to="/terms" className="hover:underline">Terms</Link> · <Link to="/privacy" className="hover:underline">Privacy</Link> ·{' '}
-            <Link to="/disclaimer" className="hover:underline">Disclaimer</Link> · <Link to="/signin" className="hover:underline">Sign in</Link>
+            <Link to="/disclaimer" className="hover:underline">Disclaimer</Link> · <Link to="/credits" className="hover:underline">Plate credits</Link> · <Link to="/signin" className="hover:underline">Sign in</Link>
           </p>
         </div>
       </div>

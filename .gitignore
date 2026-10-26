@@ -24,3 +24,9 @@ dist-ssr
 *.sln
 *.sw?
 out
+
+# Agent tooling / skills (not part of the app)
+.agents/
+.claude/
+.taste-skill/
+skills-lock.json

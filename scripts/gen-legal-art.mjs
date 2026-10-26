@@ -15,6 +15,8 @@ const OUT = join(ROOT, 'public/art');
 const manifest = JSON.parse(readFileSync(join(ROOT, 'public/art-src/manifest.json'), 'utf8'));
 const COLOR_SIZES = [640, 1024, 1600];
 const isBySa = (lic) => /BY-SA/i.test(lic || '');
+// Attribution is required for CC BY (not for Public Domain / CC0). Used to show credit lines in the UI.
+const creditRequired = (lic) => /\bBY\b/i.test(lic || '') && !isBySa(lic);
 
 // XDoG line-art (same method as gen-art.mjs; architectural edges are clean, so a mid eps works well).
 async function lineArt(src, { pre = 3, eps = 3.6 } = {}) {
@@ -49,23 +51,29 @@ for (const p of manifest.plates) {
 
 // ── State ring images (colour; exclude BY-SA) ──
 const index = {};
+// Richer, per-image provenance the app can fetch (map credit lines + the Plate-credits page).
+const creditsJson = { plates: credits.plates.map((p) => ({ ...p, creditRequired: creditRequired(p.license) })), states: {} };
 for (const [st, imgs] of Object.entries(manifest.states)) {
   const dir = join(OUT, 'states', st);
   mkdirSync(dir, { recursive: true });
   const used = imgs.filter((x) => !isBySa(x.license));
   index[st] = [];
   credits.states[st] = [];
+  creditsJson.states[st] = [];
   let n = 1;
   for (const img of used) {
     const file = `${n}.webp`;
+    const url = `/art/states/${st}/${file}`;
     await sharp(join(ROOT, img.file)).resize({ width: 960, height: 640, fit: 'cover' }).webp({ quality: 74 }).toFile(join(dir, file));
-    index[st].push(`/art/states/${st}/${file}`);
+    index[st].push(url);
     credits.states[st].push(img);
+    creditsJson.states[st].push({ url, subject: img.subject, title: img.title, creator: img.creator || null, license: img.license, sourcePage: img.sourcePage, creditRequired: creditRequired(img.license) });
     n++;
   }
   console.log(`✓ state ${st}: ${used.length} ring images (${imgs.length - used.length} BY-SA excluded)`);
 }
 writeFileSync(join(OUT, 'states', 'index.json'), JSON.stringify(index));
+writeFileSync(join(OUT, 'credits.json'), JSON.stringify(creditsJson));
 
 // ── CREDITS.md ──
 let md = '# Art credits\n\nEvery image below is used under **Public Domain, CC0, or CC BY** (attribution given). '

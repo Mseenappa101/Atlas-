@@ -34,6 +34,35 @@
 .cl__save { position: absolute; top: 0.6rem; right: 0.6rem; background: none; border: 0; color: #b4904e; font-size: 1.1rem; cursor: pointer; line-height: 1; }
 .cl__empty { font-family: 'EB Garamond', Georgia, serif; font-style: italic; color: #6a5b49; padding: 1rem 0; }
 
+/* ── Case list grouped by register (state view) ── */
+.cl-groups { display: flex; flex-direction: column; gap: 1.1rem; }
+.cl-group__h { display: flex; align-items: baseline; justify-content: space-between; gap: 0.6rem; margin: 0 0 0.5rem; padding-bottom: 0.3rem; border-bottom: 1px solid rgba(180,144,78,0.4); /* taste-skill-ignore: brass register rule */ font-family: 'Cinzel', Georgia, serif; text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.82rem; color: #241a12; }
+.cl-group__n { font-family: 'Hanken Grotesk', system-ui, sans-serif; letter-spacing: 0; font-size: 0.78rem; color: #8c6f3c; }
+
+/* ── Save search (standing order) ── */
+.imm-save { position: absolute; inset: 0; z-index: 40; display: grid; place-items: center; padding: 1rem; background: rgba(8,12,22,0.62); animation: imm-fade 180ms ease; }
+@keyframes imm-fade { from { opacity: 0; } }
+.imm-save__card { width: min(94vw, 420px); background: #f4f1ea; color: #241a12; border-top: 3px solid #b4904e; box-shadow: 0 30px 70px rgba(8,12,22,0.5); animation: imm-pop 260ms cubic-bezier(0.22,1,0.36,1); }
+@keyframes imm-pop { from { opacity: 0; transform: translateY(14px) scale(0.98); } }
+@media (prefers-reduced-motion: reduce) { .imm-save, .imm-save__card { animation: none; } }
+.imm-save__bar { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 1rem; background: #0b1120; }
+.imm-save__ex { color: #b4904e; font-family: 'EB Garamond', Georgia, serif; font-size: 0.78rem; letter-spacing: 0.12em; }
+.imm-save__x { display: inline-flex; height: 32px; width: 32px; align-items: center; justify-content: center; color: rgba(244,241,234,0.75); background: none; border: 0; cursor: pointer; }
+.imm-save__x:hover { color: #f4f1ea; }
+.imm-save__body { display: flex; flex-direction: column; gap: 0.7rem; padding: 1.1rem; }
+.imm-save__h { font-family: 'Cinzel', Georgia, serif; text-transform: uppercase; font-size: 1.05rem; letter-spacing: 0.02em; margin: 0; }
+.imm-save__label { font-family: 'EB Garamond', Georgia, serif; font-variant: small-caps; letter-spacing: 0.05em; font-size: 0.9rem; color: #6a5b49; }
+.imm-save__input { min-height: 44px; background: #fbf8f1; color: #241a12; border: 1px solid rgba(180,144,78,0.5); border-radius: 2px; padding: 0 0.8rem; font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.95rem; }
+.imm-save__input:focus-visible { outline: 2px solid #1f5c45; outline-offset: 1px; }
+.imm-save__check { display: flex; align-items: flex-start; gap: 0.5rem; font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.86rem; color: #3a3025; }
+.imm-save__check input { margin-top: 0.15rem; width: 1rem; height: 1rem; accent-color: #1f5c45; }
+.imm-save__fine { display: block; color: #6a5b49; font-size: 0.78rem; margin-top: 0.1rem; }
+.imm-save__submit { min-height: 44px; background: #1f5c45; color: #fff; border: 0; border-radius: 2px; cursor: pointer; font-family: 'EB Garamond', Georgia, serif; font-variant: small-caps; letter-spacing: 0.06em; font-size: 1rem; }
+.imm-save__submit:hover { background: #174a37; }
+.imm-save__submit:disabled { opacity: 0.6; cursor: default; }
+.imm-save__done { font-family: 'EB Garamond', Georgia, serif; font-size: 1.05rem; color: #241a12; }
+.imm-save__err { color: #8a2b2b; font-size: 0.85rem; }
+
 /* ── Case file ── */
 .cf { font-family: 'Hanken Grotesk', system-ui, sans-serif; }
 .cf__head { position: relative; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(180,144,78,0.3); }

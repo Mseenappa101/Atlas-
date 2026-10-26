@@ -220,6 +220,7 @@ export default function PhaseMap({ height = '72vh', counts = null, onOpenDocket 
   const [city, setCity] = useState(null);
   const [hoverCity, setHoverCity] = useState(null);
   const [images, setImages] = useState({});
+  const [credits, setCredits] = useState({});
   const labelRefs = useRef([]);
   const openDocket = (abbr) => { if (onOpenDocket) onOpenDocket(abbr); else window.location.href = '/explore'; };
 
@@ -242,6 +243,15 @@ export default function PhaseMap({ height = '72vh', counts = null, onOpenDocket 
   useEffect(() => { let live = true; buildStates().then((s) => live && setStates(s)); return () => { live = false; }; }, []);
   // Per-state ring image URLs (populated once the imagery pipeline has emitted them).
   useEffect(() => { fetch('/art/states/index.json').then((r) => r.ok ? r.json() : {}).then(setImages).catch(() => {}); }, []);
+  // Provenance per state, so CC BY ring imagery carries a visible credit line (PD/CC0 need none).
+  useEffect(() => { fetch('/art/credits.json').then((r) => r.ok ? r.json() : null).then((j) => j && setCredits(j.states || {})).catch(() => {}); }, []);
+  const ringCredit = useMemo(() => {
+    const list = (focus && credits[focus]) || [];
+    const names = [...new Set(list.filter((x) => x.creditRequired).map((x) => x.creator).filter(Boolean))];
+    if (!names.length) return null;
+    const who = names.length > 2 ? `${names.slice(0, 2).join(', ')} & others` : names.join(' & ');
+    return `Imagery: ${who} · CC BY`;
+  }, [focus, credits]);
 
   const pick = (abbr) => { setCity(null); setHoverCity(null); if (controlled) onState?.(abbr); else setInternalFocus(abbr); };
   const back = () => { if (city) { setCity(null); return; } setHoverCity(null); if (controlled) onState?.(null); else setInternalFocus(null); };
@@ -310,6 +320,12 @@ export default function PhaseMap({ height = '72vh', counts = null, onOpenDocket 
           </div>
         )}
       </div>
+
+      {focus && ringCredit && (
+        <p className="phasemap__credit">
+          {ringCredit} · <a href="/credits">Plate credits ↗</a>
+        </p>
+      )}
 
       {city && (
         <aside className="phasemap__files" aria-label={`Firms in ${city.name}`}>

@@ -134,12 +134,91 @@ async function fetchPrivate({ token, accessToken }) {
   return res.json();
 }
 
+// ─── DEV-ONLY UNLOCK ───────────────────────────────────────────────────────
+// A local stand-in for /api/catalog/private so the unlocked UI (exhibit tabs, the On-Record stamp,
+// windows, positions) can be built and screenshotted without a real unlock token. Trigger it with
+// /explore?unlock=dev-unlock in `npm run dev`. Gated on import.meta.env.DEV: Vite dead-code-strips this
+// whole branch from production builds, and the token is inert in prod anyway (the API 401s it), so the
+// real server-side gate is never weakened.
+export const DEV_UNLOCK_TOKEN = 'dev-unlock';
+
+// A stable 32-bit hash of a row id, so the synthetic fields are deterministic (screenshots don't drift).
+function hashId(s) {
+  let h = 2166136261;
+  const str = String(s);
+  for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return h >>> 0;
+}
+const DEV_ROLES = ['1l-summer', '2l-summer', 'post-grad', 'entry-lateral'];
+const DEV_TITLES = ['Summer Associate', 'Entry-Level Associate', 'Judicial Clerk', 'Litigation Associate'];
+const DEV_YEARS = [['2L'], ['1L', '2L'], ['3L'], []];
+
+function devDetail(firmRows, officeRows) {
+  const iso = (d) => d.toISOString().slice(0, 10);
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const byFirm = new Map(firmRows.map((r) => [r.id, r]));
+  const firms = firmRows.map((r) => {
+    const h = hashId(r.id);
+    return {
+      id: r.id,
+      hires_1l: h % 2 ? 'yes' : 'no',
+      hires_for: DEV_ROLES.slice(0, 1 + (h % 3)),
+      recruiting_email: `recruiting@${(r.slug || slugify(r.name)).slice(0, 40)}.example`,
+      split_summers: h % 3 === 0,
+      program_length_weeks: 8 + (h % 5) * 2,
+      has_fellowship: h % 4 === 0,
+      fellowship_name: 'Diversity Fellowship',
+      notes: 'Sample dev data — windows, contacts and positions here are synthetic for local preview only.',
+    };
+  });
+  const offices = officeRows.map((r) => {
+    const h = hashId(r.id);
+    const start = new Date(today); start.setDate(start.getDate() + ((h % 60) - 20));
+    const end = new Date(start); end.setDate(end.getDate() + 21 + (h % 30));
+    const ff = byFirm.get(r.firm_id);
+    return {
+      id: r.id,
+      window_kind: 'dated',
+      app_window_start: iso(start),
+      app_window_end: iso(end),
+      hires_1l: h % 2 ? 'yes' : 'no',
+      hires_for: DEV_ROLES.slice(0, 1 + (h % 3)),
+      careers_url: ff?.website || 'https://example.com/careers',
+      apply_url: 'https://example.com/apply',
+    };
+  });
+  const listings = firmRows.flatMap((r) => {
+    const h = hashId(r.id);
+    if (h % 3 === 2) return []; // ~a third of firms have an open posting
+    const start = new Date(today); start.setDate(start.getDate() + ((h % 40) - 10));
+    const due = new Date(start); due.setDate(due.getDate() + 30 + (h % 25));
+    return [{
+      id: `dev-${r.id}`,
+      firm_id: r.id,
+      title: DEV_TITLES[h % DEV_TITLES.length],
+      employer_name: r.name,
+      class_years: DEV_YEARS[h % DEV_YEARS.length],
+      roles: DEV_ROLES.slice(0, 1 + (h % 2)),
+      posting_type: ['summer-associate', 'law-clerk', 'fellowship', 'associate'][h % 4],
+      city: r.city || null,
+      state: r.state || null,
+      window_start: iso(start),
+      deadline: iso(due),
+      apply_url: 'https://example.com/apply',
+      summary: null,
+    }];
+  });
+  return { firms, offices, listings };
+}
+
 export async function fetchCatalog({ token = null, accessToken = null } = {}) {
-  const [firmRows, officeRows, detail] = await Promise.all([
+  const devUnlock = import.meta.env.DEV && token === DEV_UNLOCK_TOKEN;
+  const [firmRows, officeRows, remoteDetail] = await Promise.all([
     selectAll('firms', PUBLIC_FIRM),
     selectAll('offices', PUBLIC_OFFICE),
-    token || accessToken ? fetchPrivate({ token, accessToken }) : null,
+    (token || accessToken) && !devUnlock ? fetchPrivate({ token, accessToken }) : null,
   ]);
+  const detail = devUnlock ? devDetail(firmRows, officeRows) : remoteDetail;
   const merge = (rows, extra) => {
     if (!extra) return rows;
     const byId = new Map(extra.map((r) => [r.id, r]));
