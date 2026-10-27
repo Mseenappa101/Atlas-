@@ -9,6 +9,9 @@ import ResumeBuilder from '../components/resume/ResumeBuilder';
 import ResumeEditor from '../components/resume/ResumeEditor';
 import CoachingNote from '../components/CoachingNote';
 import { Button, ButtonLink } from '../components/app/controls';
+import { Stamp, Docket } from '../components/marketing/judiciary';
+import { Eyebrow, Figure } from '../components/marketing/kit';
+import Reveal from '../components/motion/Reveal';
 import { api } from '../lib/api';
 import { downloadDoc, printDocument, resumeToHtml, slug } from '../lib/documents';
 
@@ -53,8 +56,9 @@ function Choose({ profile, pro, onResume, onStored }) {
   if (mode === 'build') return <ResumeBuilder profile={profile} pro={pro} onDone={onResume} onCancel={() => setMode(null)} />;
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      <section aria-labelledby="upload-h" className="rounded-app border border-line bg-card p-5">
-        <h2 id="upload-h" className="flex items-center gap-2 text-t16 font-semibold">
+      <Reveal as="section" aria-labelledby="upload-h" className="rounded-app border border-line bg-card p-5">
+        <div className="mb-2 h-px w-full max-w-[14rem] bg-brass/40" aria-hidden="true" />
+        <h2 id="upload-h" className="flex items-center gap-2 font-display text-t16 font-semibold uppercase tracking-[0.04em]">
           <FileUp size={18} aria-hidden="true" className="text-brand" />
           Upload the resume you have
         </h2>
@@ -69,9 +73,10 @@ function Choose({ profile, pro, onResume, onStored }) {
             <Link to="/membership" className="text-brand hover:underline">Membership</Link> reads your file into an editable resume.
           </p>
         )}
-      </section>
-      <section aria-labelledby="build-h" className="rounded-app border border-line bg-card p-5">
-        <h2 id="build-h" className="flex items-center gap-2 text-t16 font-semibold">
+      </Reveal>
+      <Reveal as="section" aria-labelledby="build-h" className="rounded-app border border-line bg-card p-5">
+        <div className="mb-2 h-px w-full max-w-[14rem] bg-brass/40" aria-hidden="true" />
+        <h2 id="build-h" className="flex items-center gap-2 font-display text-t16 font-semibold uppercase tracking-[0.04em]">
           <ListChecks size={18} aria-hidden="true" className="text-brand" />
           Fill in the resume form
         </h2>
@@ -82,7 +87,7 @@ function Choose({ profile, pro, onResume, onStored }) {
         <Button variant="secondary" onClick={() => setMode('build')}>
           Start the form
         </Button>
-      </section>
+      </Reveal>
     </div>
   );
 }
@@ -109,19 +114,35 @@ function ResumePage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 pb-24 pt-6 md:px-6 md:pb-12">
-      <header className="mb-6 flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h1 className="text-t24 font-bold tracking-tight md:text-t32">Your resume</h1>
-          <p className="mt-1 text-t16 text-fg-2">
+      <header className="relative mb-6">
+        {resume && (
+          <Stamp
+            label="On Record"
+            sub="Firmward · exhibit"
+            className="mb-3 block md:absolute md:right-0 md:top-0 md:mb-0"
+          />
+        )}
+        <Eyebrow>Exhibit A</Eyebrow>
+        <Docket>Your resume of record</Docket>
+        <h1 className="mt-2 font-display text-[30px] uppercase leading-[1.02] tracking-[0.01em] md:text-[42px]">
+          Your Resume
+        </h1>
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          <p className="max-w-2xl font-serif text-[17px] text-fg-2">
             {resume ? 'Check every line, then pick firms and write a cover letter for each.' : 'Every cover letter starts from this, so it only needs doing once.'}
           </p>
+          {usage && (
+            <span className="rounded-pill border border-line bg-card px-2.5 py-0.5 text-t12 text-fg-2">
+              {pro ? 'Pro' : 'Free plan'}
+            </span>
+          )}
         </div>
-        {usage && (
-          <span className="rounded-pill border border-line bg-card px-2.5 py-0.5 text-t12 text-fg-2">
-            {pro ? 'Pro' : 'Free plan'}
-          </span>
-        )}
+        <div className="mt-5 h-px w-full bg-brass/40" aria-hidden="true" />
       </header>
+
+      {!resume && (
+        <Figure slug="about" alt="Classical judicial columns in cream marble" ratio="16/5" />
+      )}
 
       {fileName && mode !== 'edit' && (
         <div className="mb-4">

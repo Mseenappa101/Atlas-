@@ -10,6 +10,9 @@ import useUsage from '../hooks/useUsage';
 import { api } from '../lib/api';
 import { supabase } from '../lib/supabase';
 import { CLASS_YEARS } from '../lib/profileOptions';
+import { Stamp, Docket } from '../components/marketing/judiciary';
+import { Eyebrow } from '../components/marketing/kit';
+import Reveal from '../components/motion/Reveal';
 
 const PLAN_LABEL = { free: 'Free', pro: 'Pro', member: 'Membership (includes Pro)', retainer: 'Retainer (includes Pro)' };
 const PROVIDER = { gmail: 'Gmail', outlook: 'Outlook' };
@@ -202,6 +205,22 @@ function Newsletter() {
   );
 }
 
+// A docket-styled wrapper: a brass register rule + "§ Exhibit" small-caps label above a fade-up card.
+// Presentation only — the card and its behavior pass through untouched.
+function Exhibit({ id, label, children }) {
+  return (
+    <Reveal as="section" className="jx-exhibit-section">
+      <div className="mb-2 flex items-center gap-3">
+        <span className="ed-smallcaps shrink-0 text-[13px] text-brass">
+          <span aria-hidden="true">§ </span>Exhibit {id} — {label}
+        </span>
+        <span className="h-px flex-1 bg-brass/40" aria-hidden="true" />
+      </div>
+      {children}
+    </Reveal>
+  );
+}
+
 function AccountPage() {
   const { signOut } = useSession();
   const navigate = useNavigate();
@@ -210,15 +229,21 @@ function AccountPage() {
   }, []);
   return (
     <div className="mx-auto max-w-3xl px-4 pb-24 pt-6 md:px-6 md:pb-12">
-      <h1 className="mb-5 text-t24 font-bold tracking-tight md:text-t32">Account</h1>
+      <header className="relative mb-7">
+        <Stamp label="Admitted" sub="Firmward · member" className="jx-account-stamp mb-3 block md:absolute md:right-0 md:top-0 md:mb-0" />
+        <Eyebrow>Chambers</Eyebrow>
+        <Docket>Account of record</Docket>
+        <h1 className="mt-2 font-display uppercase tracking-[0.01em] text-[30px] leading-[1.02] md:text-[42px]">Account</h1>
+        <div className="mt-5 h-px w-full bg-brass/40" aria-hidden="true" />
+      </header>
       <ConnectNotice />
-      <div className="space-y-4">
-        <Profile />
-        <Email />
-        <Plan />
-        <Newsletter />
-        <Password />
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-2 text-t14">
+      <div className="space-y-8">
+        <Exhibit id="A" label="Profile"><Profile /></Exhibit>
+        <Exhibit id="B" label="Sending applications"><Email /></Exhibit>
+        <Exhibit id="C" label="Plan and billing"><Plan /></Exhibit>
+        <Exhibit id="D" label="Email from Firmward"><Newsletter /></Exhibit>
+        <Exhibit id="E" label="Password"><Password /></Exhibit>
+        <Reveal as="div" className="flex flex-wrap items-center justify-between gap-3 pt-2 text-t14">
           <p className="text-fg-2">
             <Link to="/privacy" className="hover:underline">Privacy</Link> · <Link to="/terms" className="hover:underline">Terms</Link>
           </p>
@@ -231,7 +256,7 @@ function AccountPage() {
           >
             Sign out
           </Button>
-        </div>
+        </Reveal>
       </div>
     </div>
   );

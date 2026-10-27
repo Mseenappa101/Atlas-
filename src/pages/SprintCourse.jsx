@@ -7,7 +7,12 @@ import { money } from '../lib/money';
 import { api, ApiError } from '../lib/api';
 import { track } from '../lib/tracking';
 import usePageMeta from '../hooks/usePageMeta';
-import { Page, Eyebrow, H1, Lead, Section, Checks, Cta } from '../components/marketing/kit';
+import { Page, Eyebrow, H1, Lead, Section, Checks, Cta, Figure } from '../components/marketing/kit';
+import { Exhibits, Stamp, Docket } from '../components/marketing/judiciary';
+import Reveal from '../components/motion/Reveal';
+
+// Exhibit A–E labels, one per sprint day, derived from the (unchanged) course data.
+const EXHIBIT_IDS = ['A', 'B', 'C', 'D', 'E'];
 
 const TOKEN_KEY = 'firmward_sprint_access';
 const P = SITE.PRICES;
@@ -74,9 +79,23 @@ export default function SprintCourse() {
 
   return (
     <Page narrow>
-      <Eyebrow>20-Firm Sprint · Course</Eyebrow>
-      <H1>The Sprint course</H1>
-      <Lead>Five short lessons, one a day, Monday to Friday. Watch at your own pace and send alongside the cohort.</Lead>
+      <div className="relative">
+        {/* Filed stamp: floated to the top-right of the masthead on wide screens; static block on phones so it never overlaps. */}
+        <div className="pointer-events-none absolute right-0 top-0 hidden md:block">
+          <Stamp label="Filed" sub="20-Firm Sprint" />
+        </div>
+        <Eyebrow>In re · 20-Firm Sprint</Eyebrow>
+        <Docket no="20">The Sprint course of record</Docket>
+        <H1>The Sprint course</H1>
+        <Lead>Five short lessons, one a day, Monday to Friday. Watch at your own pace and send alongside the cohort.</Lead>
+        <div className="mt-6 md:hidden">
+          <Stamp label="Filed" sub="20-Firm Sprint" />
+        </div>
+      </div>
+
+      <Reveal as="div">
+        <Figure slug="the-sprint" alt="U.S. federal courthouse" caption="The Sprint, entered into the record — one filing a day, Monday to Friday." />
+      </Reveal>
 
       {status === 'checking' && <CheckingState />}
       {status === 'error' && (
@@ -122,19 +141,25 @@ function LockedState() {
         </div>
       </div>
 
-      <Section title="What’s inside" className="mt-12">
-        <ol className="divide-y divide-line rounded-app border border-line bg-card">
-          {SPRINT_COURSE.map((lesson, i) => (
-            <li key={lesson.key} className="flex gap-4 px-4 py-4 md:px-5">
-              <span className="data mt-0.5 shrink-0 text-t14 font-medium text-fg-2">{String(i + 1).padStart(2, '0')}</span>
+      <Section title="The exhibits" intro="The five daily filings, entered as Exhibit A through E. Join the Sprint to admit the videos into evidence." className="mt-12">
+        <Exhibits
+          label="Sprint lessons"
+          items={SPRINT_COURSE.map((lesson, i) => ({
+            id: EXHIBIT_IDS[i],
+            label: `${lesson.day} — ${lesson.title}`,
+            content: (
               <div>
                 <p className="data text-t12 uppercase tracking-wide text-fg-2">{lesson.day}</p>
-                <p className="text-t16 font-semibold">{lesson.title}</p>
-                <p className="mt-0.5 text-t14 text-fg-2">{lesson.summary}</p>
+                <h3 className="mt-0.5 font-display text-t20 font-semibold tracking-tight">{lesson.title}</h3>
+                <p className="mt-1 text-t16 text-fg-2">{lesson.summary}</p>
+                <div className="mt-4">
+                  <p className="data text-t12 uppercase tracking-wide text-fg-2">In this lesson</p>
+                  <div className="mt-2"><Checks items={lesson.notes} /></div>
+                </div>
               </div>
-            </li>
-          ))}
-        </ol>
+            ),
+          }))}
+        />
       </Section>
     </>
   );
@@ -144,10 +169,13 @@ function UnlockedState({ email, videos, justPurchased }) {
   return (
     <>
       {justPurchased && (
-        <div className="mt-8 rounded-app border border-brand bg-brand-tint p-5">
+        <div className="relative mt-8 overflow-hidden rounded-app border border-brand bg-brand-tint p-5">
+          <div className="pointer-events-none absolute right-2 top-2 hidden sm:block">
+            <Stamp label="Admitted" sub="Access granted" />
+          </div>
           <p className="text-t20 font-semibold">Payment received — you’re in.</p>
-          <p className="mt-1 text-t16">
-            Start with Monday below. Your {money(P.sprint)} counts toward Membership if you join within {SITE.FOUNDING.sprintCreditHours} hours
+          <p className="mt-1 max-w-xl text-t16">
+            Start with Exhibit A (Monday) below. Your {money(P.sprint)} counts toward Membership if you join within {SITE.FOUNDING.sprintCreditHours} hours
             {foundingOpen() ? `, and founding members lock ${money(P.membershipMonthly)}/month for life until Dec 21` : ''}.
           </p>
         </div>
@@ -156,32 +184,28 @@ function UnlockedState({ email, videos, justPurchased }) {
         Access unlocked{email ? ` · ${email}` : ''}
       </p>
 
-      {/* Lesson index: a compact jump list on wide screens. */}
-      <nav aria-label="Lessons" className="mt-8 hidden flex-wrap gap-x-5 gap-y-1 md:flex">
-        {SPRINT_COURSE.map((lesson, i) => (
-          <a key={lesson.key} href={`#${lesson.key}`} className="text-t14 text-fg-2 hover:text-brand">
-            <span className="data">{String(i + 1).padStart(2, '0')}</span> {lesson.title}
-          </a>
-        ))}
-      </nav>
-
-      <div className="mt-6 space-y-12">
-        {SPRINT_COURSE.map((lesson, i) => (
-          <Lesson key={lesson.key} lesson={lesson} index={i} url={videos[lesson.key]} />
-        ))}
-      </div>
+      <Section title="The record" intro="All five filings admitted. Select an exhibit to watch the lesson and work its notes." className="mt-12">
+        <Exhibits
+          label="Sprint lessons"
+          items={SPRINT_COURSE.map((lesson, i) => ({
+            id: EXHIBIT_IDS[i],
+            label: `${lesson.day} — ${lesson.title}`,
+            content: <Lesson lesson={lesson} index={i} url={videos[lesson.key]} />,
+          }))}
+        />
+      </Section>
     </>
   );
 }
 
 function Lesson({ lesson, index, url }) {
   return (
-    <section id={lesson.key} className="scroll-mt-20">
+    <div id={lesson.key} className="scroll-mt-20">
       <div className="flex items-baseline gap-3">
         <span className="data text-t14 font-medium text-fg-2">{String(index + 1).padStart(2, '0')}</span>
         <p className="data text-t12 uppercase tracking-wide text-fg-2">{lesson.day}</p>
       </div>
-      <h2 className="mt-1 text-t24 font-bold tracking-tight">{lesson.title}</h2>
+      <h3 className="mt-1 font-display text-t24 font-bold tracking-tight">{lesson.title}</h3>
       <p className="mt-1 text-t16 text-fg-2">{lesson.summary}</p>
 
       <LessonVideo title={lesson.title} url={url} />
@@ -190,7 +214,7 @@ function Lesson({ lesson, index, url }) {
         <p className="data text-t12 uppercase tracking-wide text-fg-2">In this lesson</p>
         <div className="mt-2"><Checks items={lesson.notes} /></div>
       </div>
-    </section>
+    </div>
   );
 }
 

@@ -1,0 +1,41 @@
+/* Judiciary devices on the light content/app pages. Brass rules, Cinzel caps, green banker's-lamp stamp. */
+
+/* ── Ink stamp (reveal-on-view) ── */
+.jx-stamp { position: relative; display: inline-block; width: clamp(7rem, 11vw, 9rem); }
+.jx-stamp .ed-stamp {
+  position: static; display: block; width: 100%;
+  color: #1f5c45; mix-blend-mode: multiply; opacity: 0;
+  transform: scale(1.55) rotate(-22deg); transform-origin: 60% 42%;
+  transition: opacity 120ms linear, transform 480ms cubic-bezier(0.18, 1.5, 0.5, 1);
+}
+.jx-stamp.is-in .ed-stamp { opacity: 0.88; transform: scale(1) rotate(-11deg); }
+@media (prefers-reduced-motion: reduce) {
+  .jx-stamp .ed-stamp { transition: none; opacity: 0.88; transform: rotate(-11deg); }
+}
+/* The ink-stamp SVG internals (normally styled by edition.css, which only loads on the Edition route). */
+.jx-stamp .ed-stamp__ring { fill: none; stroke: currentColor; stroke-width: 4; opacity: 0.85; }
+.jx-stamp .ed-stamp__ring--thin { stroke-width: 2; }
+.jx-stamp .ed-stamp__label { font-family: 'Cinzel', Georgia, serif; font-weight: 700; text-transform: uppercase; font-size: 34px; letter-spacing: 0.04em; fill: currentColor; }
+.jx-stamp .ed-stamp__arc { font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 12px; letter-spacing: 0.22em; fill: currentColor; text-transform: uppercase; }
+.jx-stamp .ed-stamp__arc--b { font-size: 10px; letter-spacing: 0.12em; }
+
+/* ── Exhibit tabs ── */
+.jx-exhibits { margin-top: 1.25rem; }
+.jx-tabs { display: flex; flex-wrap: wrap; gap: 0.3rem; border-bottom: 1px solid rgba(180, 144, 78, 0.4); /* taste-skill-ignore: brass register rule */ }
+.jx-tab {
+  display: flex; flex-direction: column; gap: 0.1rem; align-items: flex-start;
+  background: none; border: 0; padding: 0.5rem 0.7rem 0.7rem; cursor: pointer; min-height: 44px;
+  color: var(--fg-2, #5c5349); font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.9rem;
+  transition: color 160ms ease, box-shadow 160ms ease;
+}
+.jx-tab:hover { color: var(--fg, #241a12); }
+.jx-tab.is-on { color: var(--fg, #241a12); box-shadow: inset 0 -2px 0 #b4904e; }
+.jx-tab:focus-visible { outline: 2px solid #1f5c45; outline-offset: 2px; }
+.jx-tab-ex { color: #8c6f3c; font-family: 'EB Garamond', Georgia, serif; font-size: 0.68rem; letter-spacing: 0.1em; }
+.jx-tab-label { font-weight: 500; }
+.jx-panel { padding-top: 1rem; animation: jx-fade 320ms ease both; }
+@keyframes jx-fade { from { opacity: 0; transform: translateY(6px); } }
+@media (prefers-reduced-motion: reduce) { .jx-panel { animation: none; } }
+
+/* ── Docket caption ── */
+.jx-docket { font-family: 'EB Garamond', Georgia, serif; font-variant: small-caps; letter-spacing: 0.1em; color: #8c6f3c; font-size: 0.85rem; }
