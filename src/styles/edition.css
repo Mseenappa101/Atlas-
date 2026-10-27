@@ -151,6 +151,7 @@
   display: grid; place-items: center;
   background: var(--ed-night-2);
 }
+.ed-cover__pic { display: contents; } /* <picture> wrapper must not affect the absolutely-placed plate */
 .ed-cover__plate { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; }
 .ed-cover__plate--color { opacity: calc(1 - var(--push, 0) * 1.1); }
 .ed-cover__plate--line {

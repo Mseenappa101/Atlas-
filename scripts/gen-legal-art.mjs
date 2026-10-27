@@ -43,6 +43,8 @@ for (const p of manifest.plates) {
   const src = join(ROOT, p.file);
   for (const s of COLOR_SIZES) {
     await sharp(src).resize({ width: s }).webp({ quality: 80 }).toFile(join(dir, `color-${s}.webp`));
+    // AVIF too: ~30-45% smaller than webp at matching quality — a lighter LCP for the cover, same crop.
+    await sharp(src).resize({ width: s }).avif({ quality: 50, effort: 5 }).toFile(join(dir, `color-${s}.avif`));
   }
   await (await lineArt(src)).webp({ quality: 60, effort: 6 }).toFile(join(dir, 'line-1024.webp'));
   credits.plates.push(p);

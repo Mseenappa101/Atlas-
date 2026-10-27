@@ -27,12 +27,19 @@ export default function EditionCover({ chapters }) {
   return (
     <section className="ed-cover" aria-label="The Firmward Edition — cover">
       {/* colour painting ground → etched line-art on push; citation field blooms behind */}
-      <img
-        className="ed-cover__plate ed-cover__plate--color"
-        src="/art/the-map/color-400.webp"
-        srcSet="/art/the-map/color-400.webp 400w, /art/the-map/color-640.webp 640w, /art/the-map/color-1024.webp 1024w, /art/the-map/color-1600.webp 1600w"
-        sizes="(max-width: 900px) 55vw, 100vw" alt="" aria-hidden="true" width={1024} height={1365} fetchPriority="high"
-      />
+      <picture className="ed-cover__pic">
+        <source
+          type="image/avif"
+          srcSet="/art/the-map/color-400.avif 400w, /art/the-map/color-640.avif 640w, /art/the-map/color-1024.avif 1024w, /art/the-map/color-1600.avif 1600w"
+          sizes="(max-width: 900px) 55vw, 100vw"
+        />
+        <img
+          className="ed-cover__plate ed-cover__plate--color"
+          src="/art/the-map/color-400.webp"
+          srcSet="/art/the-map/color-400.webp 400w, /art/the-map/color-640.webp 640w, /art/the-map/color-1024.webp 1024w, /art/the-map/color-1600.webp 1600w"
+          sizes="(max-width: 900px) 55vw, 100vw" alt="" aria-hidden="true" width={1024} height={1365} fetchPriority="high"
+        />
+      </picture>
       {/* Decorative overlay for the scroll "etch" effect — must not compete with the LCP colour plate. */}
       <img
         className="ed-cover__plate ed-cover__plate--line"
