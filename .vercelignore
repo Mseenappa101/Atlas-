@@ -3,6 +3,8 @@
 api/
 worker/
 scripts/*
-# The build runs this one (per-page titles, sitemap, robots.txt).
+# The build runs these two: per-page titles/sitemap/robots, then the SSR prerender of the marketing
+# routes. They MUST be kept in the Vercel upload (scripts/* excludes everything else in scripts/).
 !scripts/prerender-meta.mjs
+!scripts/prerender.mjs
 supabase/
