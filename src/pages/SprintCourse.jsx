@@ -9,6 +9,7 @@ import { track } from '../lib/tracking';
 import usePageMeta from '../hooks/usePageMeta';
 import { Page, Eyebrow, H1, Lead, Section, Checks, Cta, Figure } from '../components/marketing/kit';
 import { Exhibits, Stamp, Docket } from '../components/marketing/judiciary';
+import OfferCta from '../components/offers/OfferCta';
 import Reveal from '../components/motion/Reveal';
 
 // Exhibit A–E labels, one per sprint day, derived from the (unchanged) course data.
@@ -130,9 +131,9 @@ function LockedState() {
               and your {money(P.sprint)} counts toward Membership if you join within {SITE.FOUNDING.sprintCreditHours} hours.
             </p>
             <div className="mt-4">
-              <Cta href={SITE.STRIPE_SPRINT_LINK} stripe event="sprint_checkout_click" props={{ position: 'course_gate' }}>
+              <OfferCta link={SITE.STRIPE_SPRINT_LINK} offer="sprint" waitlistLabel="Reserve your seat" stripe event="sprint_checkout_click" props={{ position: 'course_gate' }}>
                 Join the Sprint · {money(P.sprint)}
-              </Cta>
+              </OfferCta>
             </div>
             <p className="mt-3 text-t14 text-fg-2">
               Already joined? Open the course from the link in your receipt email to unlock it on this device.

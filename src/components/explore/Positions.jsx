@@ -10,6 +10,7 @@ import useAccess from '../../hooks/useAccess';
 import UnlockForm from '../UnlockForm';
 import { POSTING_TYPES } from '../../lib/listings';
 import { STATE_NAMES } from '../../lib/catalog';
+import { flags } from '../../lib/flags';
 
 const YEARS = ['1L', '2L', '3L'];
 const POST_GRAD = ['post-grad', 'entry-lateral'];
@@ -116,9 +117,11 @@ export default function Positions({ params, setParams, firmById, onOpenFirm }) {
                 {l.deadline && <p className="data mt-0.5 text-t12 text-st-soon-text">Due {fmt(l.deadline)}</p>}
               </div>
               <span className="flex items-center gap-3 text-t14">
-                <Link to={`/letters/new?listing=${l.id}`} className="font-medium text-brand hover:underline">
-                  Write letter
-                </Link>
+                {flags.accounts && (
+                  <Link to={`/letters/new?listing=${l.id}`} className="font-medium text-brand hover:underline">
+                    Write letter
+                  </Link>
+                )}
                 {l.applyUrl && (
                   <a href={l.applyUrl} target="_blank" rel="noopener noreferrer" className="font-medium text-brand hover:underline">
                     Apply<span className="sr-only"> (opens in a new tab)</span> ↗

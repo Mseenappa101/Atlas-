@@ -33,7 +33,29 @@ function resolve(pathname) {
   return null;
 }
 
+// Mirror Vercel's /api rewrite to the Railway API so the preview behaves like production (forms, unlock).
+const API_ORIGIN = 'https://api-production-124e.up.railway.app';
+async function proxyApi(req, res) {
+  const chunks = [];
+  req.on('data', (c) => chunks.push(c));
+  req.on('end', async () => {
+    try {
+      const r = await fetch(API_ORIGIN + req.url, {
+        method: req.method,
+        headers: { ...req.headers, host: new URL(API_ORIGIN).host },
+        body: ['GET', 'HEAD'].includes(req.method) ? undefined : Buffer.concat(chunks),
+      });
+      res.statusCode = r.status;
+      r.headers.forEach((v, k) => { if (!/^(content-encoding|transfer-encoding|connection)$/i.test(k)) res.setHeader(k, v); });
+      res.end(Buffer.from(await r.arrayBuffer()));
+    } catch (e) {
+      res.statusCode = 502; res.end(`proxy error: ${e.message}`);
+    }
+  });
+}
+
 function handler(req, res) {
+  if (req.url.startsWith('/api/')) return proxyApi(req, res);
   const file = resolve(req.url) || join(DIST, 'index.html'); // SPA fallback (like Vercel's catch-all rewrite)
   const ext = extname(file);
   const type = TYPES[ext] || 'application/octet-stream';

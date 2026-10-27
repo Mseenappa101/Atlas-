@@ -9,6 +9,7 @@ import { portalUrl } from '../../../lib/application';
 import { ROLE_LABEL } from '../../../lib/roles';
 import InkStamp from '../../edition/InkStamp';
 import UnlockForm from '../../UnlockForm';
+import { flags } from '../../../lib/flags';
 
 const NP = <span className="cf-np">Not on the record</span>;
 const fmt = (d, year = false) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', ...(year ? { year: 'numeric' } : {}) });
@@ -66,7 +67,7 @@ export default function CaseFile({ firm, listings = [], saved, onToggleSave }) {
       <div className="cf__actions">
         <Link to={`/apply/${firm.slug}`} className="cf__btn cf__btn--primary">{saved ? 'Open my application' : 'Start application'}</Link>
         <button type="button" className="cf__btn" aria-pressed={saved} onClick={() => onToggleSave(firm)}>{saved ? 'Saved to My List' : 'Add to My List'}</button>
-        <Link to={`/letters/new?firm=${firm.id}`} className="cf__btn">Write cover letter</Link>
+        {flags.accounts && <Link to={`/letters/new?firm=${firm.id}`} className="cf__btn">Write cover letter</Link>}
         {portal && <a href={portal} target="_blank" rel="noopener noreferrer" className="cf__btn">{firm.applyUrl && !/^mailto:/i.test(firm.applyUrl) ? 'Firm’s application ↗' : 'Careers page ↗'}</a>}
       </div>
 
@@ -136,7 +137,7 @@ export default function CaseFile({ firm, listings = [], saved, onToggleSave }) {
                   <li key={l.id}>
                     <span className="cf__listing-main"><span className="cf__listing-title">{l.title}</span><span className="cf__listing-meta">{[l.yearsLabel, postingTypeLabel(l.type), l.place].filter(Boolean).join(' · ')}</span></span>
                     <span className="cf__listing-links">
-                      <Link to={`/letters/new?listing=${l.id}`}>Letter</Link>
+                      {flags.accounts && <Link to={`/letters/new?listing=${l.id}`}>Letter</Link>}
                       {l.applyUrl && <a href={l.applyUrl} target="_blank" rel="noopener noreferrer">Apply ↗</a>}
                     </span>
                   </li>

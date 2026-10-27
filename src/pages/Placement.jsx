@@ -5,6 +5,7 @@ import usePageMeta from '../hooks/usePageMeta';
 import { Button } from '../components/app/controls';
 import { Checks, Cta, Eyebrow, Faq, Figure, H1, Lead, Page, ResponsiveTable, Section } from '../components/marketing/kit';
 import LadderCrossSell from '../components/offers/LadderCrossSell';
+import { Stamp } from '../components/marketing/judiciary';
 // Lazy so Framer Motion (scroll-pinned phases) loads only when Placement renders, not in the initial chunk.
 const ScrollPhases = lazy(() => import('../components/motion/ScrollPhases'));
 import { toast } from 'sonner';
@@ -142,9 +143,15 @@ function Scheduler({ person }) {
   }, [navigate]);
 
   if (isPlaceholder(SITE.SCHEDULER_URL)) {
+    // Scheduling link not live yet — the applicant's details are already captured by the form above,
+    // so confirm instead of asking again (no dead scheduler embed).
+    const first = person?.name ? person.name.trim().split(' ')[0] : null;
     return (
-      <div className="rounded-app border-2 border-dashed border-st-soon-text bg-st-soon-bg p-6 text-t16 text-st-soon-text">
-        Scheduler goes here. Fill in SCHEDULER_URL (Cal.com or Calendly) in site.config.js.
+      <div className="relative rounded-app border border-brand bg-brand-tint p-5" role="status">
+        <div className="pointer-events-none absolute right-3 top-2 hidden sm:block"><Stamp label="Requested" sub="Firmward" /></div>
+        <p className="font-serif text-t16 font-medium text-brand sm:pr-28">
+          Thanks{first ? `, ${first}` : ''}. We’ve got your details and we’ll email you to schedule your strategy call — usually within a day.
+        </p>
       </div>
     );
   }

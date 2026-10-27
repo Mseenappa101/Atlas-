@@ -4,6 +4,7 @@ import useHydrated from '../lib/useHydrated';
 import Countdown from '../components/Countdown';
 import { Checks, Cta, Eyebrow, Faq, Figure, H1, Lead, Page, ResponsiveTable, Section, TextLink } from '../components/marketing/kit';
 import LadderCrossSell from '../components/offers/LadderCrossSell';
+import OfferCta from '../components/offers/OfferCta';
 import { money } from '../lib/money';
 
 const P = SITE.PRICES;
@@ -59,9 +60,9 @@ export default function Sprint() {
           <p className="text-t16">The next cohort dates are coming soon. Join the free workshop in the meantime.</p>
         )}
         <div className="mt-4 flex flex-wrap items-center gap-4">
-          <Cta href={SITE.STRIPE_SPRINT_LINK} stripe event="sprint_checkout_click" props={{ cohort: sprint?.start ?? 'none' }}>
+          <OfferCta link={SITE.STRIPE_SPRINT_LINK} offer="sprint" waitlistLabel="Reserve your seat" stripe event="sprint_checkout_click" props={{ cohort: sprint?.start ?? 'none' }}>
             Join the Sprint · {money(P.sprint)}
-          </Cta>
+          </OfferCta>
         </div>
         <p className="mt-3 text-t12 text-fg-2">
           One-time payment. Your {money(P.sprint)} counts toward Membership if you join within {SITE.FOUNDING.sprintCreditHours} hours.
@@ -110,9 +111,9 @@ export default function Sprint() {
         <p className="text-t20 font-semibold">Ready to send 20?</p>
         <p className="mt-1 text-t16 text-fg-2">{sprint ? `Next cohort starts ${longDate(sprint.start)}.` : 'New cohorts are added regularly.'}</p>
         <div className="mt-4">
-          <Cta href={SITE.STRIPE_SPRINT_LINK} stripe event="sprint_checkout_click" props={{ cohort: sprint?.start ?? 'none', position: 'bottom' }}>
+          <OfferCta link={SITE.STRIPE_SPRINT_LINK} offer="sprint" waitlistLabel="Reserve your seat" stripe event="sprint_checkout_click" props={{ cohort: sprint?.start ?? 'none', position: 'bottom' }}>
             Join the Sprint · {money(P.sprint)}
-          </Cta>
+          </OfferCta>
         </div>
       </div>
     </Page>

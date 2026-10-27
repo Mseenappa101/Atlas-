@@ -3,6 +3,7 @@ import usePageMeta from '../hooks/usePageMeta';
 import Countdown from '../components/Countdown';
 import { Checks, Cta, Eyebrow, Faq, Figure, H1, Lead, Page, ResponsiveTable, Section } from '../components/marketing/kit';
 import LadderCrossSell from '../components/offers/LadderCrossSell';
+import OfferCta from '../components/offers/OfferCta';
 import { money } from '../lib/money';
 
 const P = SITE.PRICES;
@@ -47,9 +48,9 @@ export default function Membership() {
           </p>
         )}
         <div className="mt-4">
-          <Cta href={SITE.SKOOL_MEMBERSHIP_URL} event="skool_join_click" props={{ area: 'membership' }}>
+          <OfferCta link={SITE.SKOOL_MEMBERSHIP_URL} offer="membership" waitlistLabel="Reserve your seat" event="skool_join_click" props={{ area: 'membership' }}>
             Join on Skool
-          </Cta>
+          </OfferCta>
         </div>
       </div>
 
