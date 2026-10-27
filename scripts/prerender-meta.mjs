@@ -57,7 +57,7 @@ for (const page of PAGES) {
 // The home page is the Edition: preload the LCP hero painting (responsive) and the two above-the-fold
 // Edition fonts so they download in parallel with the lazy chunk instead of after it mounts.
 const homeHead = `    <link rel="canonical" href="${SITE.url}/" />
-    <link rel="preload" as="image" href="/art/the-map/color-1024.webp" imagesrcset="/art/the-map/color-640.webp 640w, /art/the-map/color-1024.webp 1024w, /art/the-map/color-1600.webp 1600w" imagesizes="(max-width: 900px) 65vw, 100vw" fetchpriority="high" />
+    <link rel="preload" as="image" href="/art/the-map/color-400.webp" imagesrcset="/art/the-map/color-400.webp 400w, /art/the-map/color-640.webp 640w, /art/the-map/color-1024.webp 1024w, /art/the-map/color-1600.webp 1600w" imagesizes="(max-width: 900px) 55vw, 100vw" fetchpriority="high" />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/cinzel.woff2" crossorigin />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/eb-garamond.woff2" crossorigin />
   </head>`;

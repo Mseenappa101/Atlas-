@@ -10,6 +10,10 @@ import ExhibitCards from '../components/edition/ExhibitCards';
 import LazyPhaseMap from '../components/map3d/LazyPhaseMap';
 import { useScrollReveals } from '../components/edition/hooks';
 
+// Captured once at module load so the colophon year is identical on the server (prerender) and the
+// client — reading it during render would risk a hydration mismatch at a year boundary.
+const EDITION_YEAR = new Date().getFullYear();
+
 /**
  * The Firmward Edition — the homepage. An editorial, chaptered take on the job
  * search that recreates the *techniques* of a classical magazine "editions" page:
@@ -81,8 +85,10 @@ export default function Edition() {
           <div className="ed-grid-rail">
             <ChapterIndex chapters={CHAPTERS} variant="rail" />
             <div>
-              {CHAPTERS.map((c, i) => (
-                <Chapter key={c.id} chapter={c} eager={i === 0}>
+              {/* No chapter plate is eager: they all sit below the full-height cover intro, so eager
+                  loading would only steal bandwidth/preload priority from the cover's LCP image. */}
+              {CHAPTERS.map((c) => (
+                <Chapter key={c.id} chapter={c}>
                   {c.id === 'ch-map' && <LazyPhaseMap />}
                   {c.id === 'ch-where' && <EditionPostcards />}
                 </Chapter>
@@ -94,7 +100,7 @@ export default function Edition() {
                 <p className="ed-coda__fin">So ordered.</p>
                 <p className="ed-coda__note">
                   <sup>†</sup> Artwork from the public domain (Art Institute of Chicago, CC0); see the
-                  record of credits. Firmward, {new Date().getFullYear()}. No part of this constitutes legal advice.
+                  record of credits. Firmward, {EDITION_YEAR}. No part of this constitutes legal advice.
                 </p>
                 <a className="ed-cta" href="/sprint">Start the Sprint</a>
               </footer>

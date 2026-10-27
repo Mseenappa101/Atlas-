@@ -1,5 +1,6 @@
 import { SITE, nextSprint } from '../../site.config';
 import usePageMeta from '../hooks/usePageMeta';
+import useHydrated from '../lib/useHydrated';
 import Countdown from '../components/Countdown';
 import { Checks, Cta, Eyebrow, Faq, Figure, H1, Lead, Page, ResponsiveTable, Section, TextLink } from '../components/marketing/kit';
 import LadderCrossSell from '../components/offers/LadderCrossSell';
@@ -31,7 +32,10 @@ export default function Sprint() {
     description: `A 5-day challenge for law students and new grads: a target list, a fixed resume, and 20 outreach emails sent to firms hiring for your role. ${money(P.sprint)}.`,
   });
   const sprint = nextSprint();
-  const upcoming = SITE.NEXT_SPRINTS.filter((s) => new Date(s.registrationCloses) > new Date());
+  // First render (server + client) shows the full list so the markup matches; once hydrated we drop
+  // cohorts whose registration has already closed. Keeps hydration clean around a close boundary.
+  const hydrated = useHydrated();
+  const upcoming = hydrated ? SITE.NEXT_SPRINTS.filter((s) => new Date(s.registrationCloses) > new Date()) : SITE.NEXT_SPRINTS;
 
   return (
     <Page narrow>

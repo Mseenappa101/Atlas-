@@ -13,7 +13,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'public/art');
 const manifest = JSON.parse(readFileSync(join(ROOT, 'public/art-src/manifest.json'), 'utf8'));
-const COLOR_SIZES = [640, 1024, 1600];
+const COLOR_SIZES = [400, 640, 1024, 1600];
 const isBySa = (lic) => /BY-SA/i.test(lic || '');
 // Attribution is required for CC BY (not for Public Domain / CC0). Used to show credit lines in the UI.
 const creditRequired = (lic) => /\bBY\b/i.test(lic || '') && !isBySa(lic);

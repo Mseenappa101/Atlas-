@@ -29,13 +29,14 @@ export default function EditionCover({ chapters }) {
       {/* colour painting ground → etched line-art on push; citation field blooms behind */}
       <img
         className="ed-cover__plate ed-cover__plate--color"
-        src="/art/the-map/color-1024.webp"
-        srcSet="/art/the-map/color-640.webp 640w, /art/the-map/color-1024.webp 1024w, /art/the-map/color-1600.webp 1600w"
-        sizes="(max-width: 900px) 65vw, 100vw" alt="" aria-hidden="true" width={1024} height={1365} fetchPriority="high"
+        src="/art/the-map/color-400.webp"
+        srcSet="/art/the-map/color-400.webp 400w, /art/the-map/color-640.webp 640w, /art/the-map/color-1024.webp 1024w, /art/the-map/color-1600.webp 1600w"
+        sizes="(max-width: 900px) 55vw, 100vw" alt="" aria-hidden="true" width={1024} height={1365} fetchPriority="high"
       />
+      {/* Decorative overlay for the scroll "etch" effect — must not compete with the LCP colour plate. */}
       <img
         className="ed-cover__plate ed-cover__plate--line"
-        src="/art/the-map/line-1024.webp" alt="" aria-hidden="true" width={1024} height={1365} loading="eager"
+        src="/art/the-map/line-1024.webp" alt="" aria-hidden="true" width={1024} height={1365} loading="lazy" fetchPriority="low" decoding="async"
       />
       <div className="ed-cover__space ed-stars" aria-hidden="true" />
       <div className="ed-cover__veil" aria-hidden="true" />

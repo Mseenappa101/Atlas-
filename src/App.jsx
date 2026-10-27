@@ -146,7 +146,9 @@ function AppRoutes() {
   );
 }
 
-function AppShell() {
+// Router-agnostic shell: the client wraps it in BrowserRouter (main.jsx), the build-time prerender
+// wraps it in StaticRouter (entry-server.jsx). Keeping the router out of here lets both reuse it.
+export function AppShell() {
   const { pathname } = useLocation();
   const takeover = TAKEOVER_ROUTES.has(pathname); // Edition supplies its own dark nav + footer
   const routes = <AppRoutes />;

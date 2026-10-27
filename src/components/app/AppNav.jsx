@@ -5,6 +5,7 @@ import { SITE, foundingOpen } from '../../../site.config';
 import Countdown from '../Countdown';
 import useSession from '../../hooks/useSession';
 import useMyList from '../../hooks/useMyList';
+import useHydrated from '../../lib/useHydrated';
 import './jnav.css';
 
 // Docket links. Public visitors see the map + the offer ladder; signed-in users get the app nav.
@@ -73,9 +74,12 @@ export default function AppNav() {
   const [loaded, setLoaded] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [menu, setMenu] = useState(false);
-  const [dismissed, setDismissed] = useState(() => {
-    try { return localStorage.getItem(BANNER_KEY) === SITE.FOUNDING_DEADLINE; } catch { return false; }
-  });
+  // The notice is shown on the server render and the first client render (hydration-safe); once hydrated
+  // we consult localStorage for a prior dismissal. A click dismisses it for the rest of the session too.
+  const hydrated = useHydrated();
+  const [clickedDismiss, setClickedDismiss] = useState(false);
+  const storedDismiss = hydrated && (() => { try { return localStorage.getItem(BANNER_KEY) === SITE.FOUNDING_DEADLINE; } catch { return false; } })();
+  const dismissed = clickedDismiss || storedDismiss;
   const lastY = useRef(0);
 
   useEffect(() => { const t = setTimeout(() => setLoaded(true), 20); return () => clearTimeout(t); }, []);
@@ -91,7 +95,7 @@ export default function AppNav() {
   }, []);
 
   const showNotice = foundingOpen() && !dismissed && !pathname.startsWith('/thanks');
-  const dismiss = () => { setDismissed(true); try { localStorage.setItem(BANNER_KEY, SITE.FOUNDING_DEADLINE); } catch { /* visit only */ } };
+  const dismiss = () => { setClickedDismiss(true); try { localStorage.setItem(BANNER_KEY, SITE.FOUNDING_DEADLINE); } catch { /* visit only */ } };
 
   return (
     <>
